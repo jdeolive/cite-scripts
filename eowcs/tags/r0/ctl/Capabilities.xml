@@ -1,0 +1,164 @@
+<ctl:package
+ xmlns:ctl="http://www.occamlab.com/ctl"
+ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+ xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+ xmlns:ows='http://www.opengis.net/ows/2.0'
+ xmlns:gml='http://www.opengis.net/gml/3.2'
+ xmlns:wcs='http://www.opengis.net/wcs/2.0'
+ xmlns:ctlp="http://www.occamlab.com/te/parsers"
+ xmlns:wcs2="http://www.opengis.net/wcs/2.0"
+ xmlns:wcseo="http://www.opengis.net/spec/WCS_profile_earth-observation/1.0"
+ xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+
+  <ctl:test name="wcseo:main">
+    <ctl:param name="url"/>
+    <ctl:assertion>test wcseo.</ctl:assertion>
+    <ctl:code>
+
+      <xsl:variable name="response">
+       <ctl:request>
+          <ctl:url>
+            <xsl:value-of select="$url"/>
+          </ctl:url>
+          <ctl:method>get</ctl:method>
+          <ctl:param name="SERVICE">WCS</ctl:param>
+          <ctl:param name="VERSION">2.0.0</ctl:param>
+          <ctl:param name="REQUEST">GetCapabilities</ctl:param>
+           <ctlp:HTTPParser><ctlp:parse>
+             <ctlp:XMLValidatingParser>
+	        <ctlp:schemas>
+                        <ctlp:schema type="file">scripts/EO-WCS/trunk/resources/xsd/ogc/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+	        </ctlp:schemas>
+             </ctlp:XMLValidatingParser>
+           </ctlp:parse></ctlp:HTTPParser>
+        </ctl:request>
+      </xsl:variable>
+      <xsl:choose>
+        <xsl:when test="$response/*">
+	  <ctl:call-test name="wcseo:req30">
+	     <ctl:with-param name="Capabilities" select="$response"/>	    
+	  </ctl:call-test>
+	  <ctl:call-test name="wcseo:req31">
+	     <ctl:with-param name="Capabilities" select="$response"/>    
+	  </ctl:call-test>	  
+	  <ctl:call-test name="wcseo:req32">
+	     <ctl:with-param name="url" select="$url"/>		  
+	     <ctl:with-param name="Capabilities" select="$response"/>	    
+	  </ctl:call-test>
+	  <ctl:call-test name="wcseo:req33">
+	     <ctl:with-param name="url" select="$url"/>		  
+	     <ctl:with-param name="Capabilities" select="$response"/>	    
+	  </ctl:call-test>	
+	  <ctl:call-test name="wcseo:req37">
+	     <ctl:with-param name="url" select="$url"/>		  
+	     <ctl:with-param name="Capabilities" select="$response"/>	    
+	  </ctl:call-test>	  
+	  
+        </xsl:when>
+        <xsl:otherwise>
+          <ctl:message>Parsing or validation failed.</ctl:message>
+          <ctl:fail/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </ctl:code>
+  </ctl:test>
+
+<!--req30-->  
+    
+  				  
+  <ctl:test name="wcseo:req30">
+    <ctl:param name="Capabilities"/>
+    <ctl:assertion>Req30:Determine the list of supported extensions via a valid GetCapabilities request; check that the extension required is listed.</ctl:assertion>
+    <ctl:code>
+      <xsl:if test="not(contains(string-join(($Capabilities//ows:ServiceIdentification//ows:Profile),' '), 'http://www.opengis.net/spec/WCS_profile_earth-observation/1.0/conf/ap-eo'))">
+        <ctl:message>http://www.opengis.net/spec/WCS_profile_earth-observation/1.0/conf/ap-eo can not be found</ctl:message>
+        <ctl:fail/>
+      </xsl:if>
+    </ctl:code>
+  </ctl:test>  
+  
+<!--req31-->  
+    
+  				  
+  <ctl:test name="wcseo:req31">
+    <ctl:param name="Capabilities"/>
+    <ctl:assertion>Req31:Send a valid GetCapabilities request to the server under test, check the result consists of an XML document of type Capabilities and the appropriate components, as defined in the places referenced.</ctl:assertion>
+    <ctl:code>
+       <xsl:if test="not($Capabilities//wcs:Capabilities)">
+         <ctl:message>Parsing or validation failed.</ctl:message>
+         <ctl:fail/>
+       </xsl:if>
+    </ctl:code>
+  </ctl:test>   
+  
+<!--req32--> 
+
+  <ctl:test name="wcseo:req32">
+    <ctl:param name="Capabilities"/>
+    <ctl:param name="url"/>
+    <ctl:assertion>Req32:Send a GetCapabilities request to the service under test. If a wcseo:DatasetSeriesSummary section is contained in the response then send, for each DatasetSeriesId, a valid DescribeCoverage request. Check that none of these requests results in an exception. Test passes if all checks are successful.</ctl:assertion>
+    <ctl:code>
+      <xsl:if test="empty($Capabilities//ows:ServiceIdentification//ows:Profile)">
+        <ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('wcseo:DatasetSeriesIds',' do not exsist')" />
+        <ctl:fail/>
+      </xsl:if>
+      <xsl:for-each select="$Capabilities//wcseo:DatasetSeriesSummary/wcseo:DatasetSeriesId">
+        <ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('test',.)" />
+        <xsl:variable name="DescribeCoverage">
+            <ctl:request>
+               <ctl:url>
+                  <xsl:value-of select="$url"/>
+               </ctl:url>
+          <ctl:param name="SERVICE">WCS</ctl:param>
+          <ctl:param name="VERSION">2.0.0</ctl:param>
+          <ctl:param name="REQUEST">DescribeEOCoverageSet</ctl:param>
+          <ctl:param name="EOID"><xsl:value-of select="."/></ctl:param>          
+           <ctlp:HTTPParser><ctlp:parse>
+             <ctlp:XMLValidatingParser>
+	        <ctlp:schemas>
+                        <ctlp:schema type="file">C:\OGCTG2\scripts\EO-WCS\trunk\resources\xsd\ogc\wcseo\1.0\wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+	        </ctlp:schemas>
+             </ctlp:XMLValidatingParser>
+           </ctlp:parse></ctlp:HTTPParser>
+            </ctl:request>
+        </xsl:variable>
+        <xsl:if test="not(empty($DescribeCoverage//ows:ExceptionReport))">
+          <ctl:message>DescribeCoverage for <xsl:value-of select="."/> is not available.</ctl:message>
+          <ctl:fail/>
+        </xsl:if>
+      </xsl:for-each>
+    </ctl:code>
+  </ctl:test> 
+  
+<!--req33-->      
+  				  
+  <ctl:test name="wcseo:req33">
+    <ctl:param name="Capabilities"/>
+    <ctl:assertion>Req33:Send a valid GetCapabilities request to the server under test, check the result does not contain any duplicate Dataset Series identifier.</ctl:assertion>
+    <ctl:code>
+      <xsl:if test="count(distinct-values(($Capabilities//wcseo:DatasetSeriesSummary/wcseo:DatasetSeriesId)))!=count($Capabilities//wcseo:DatasetSeriesSummary/wcseo:DatasetSeriesId)">
+        <ctl:message>There are duplicate Dataset Series identifiers</ctl:message>
+        <ctl:fail/>
+      </xsl:if>
+    </ctl:code>
+  </ctl:test>  
+  
+<!--req37-->      
+  				  
+  <ctl:test name="wcseo:req37">
+    <ctl:param name="Capabilities"/>
+    <ctl:assertion>Req37:Send a valid GetCapabilities request to the server under test, check that each EO Coverage listed contains at least one WCS::CoverageSubtype element.</ctl:assertion>
+    <ctl:code>
+      <xsl:for-each select="$Capabilities//wcs:Contents/wcs:CoverageSummary">  
+        <xsl:if test="count(./wcs:CoverageSubtype)=0">
+          <ctl:message> There is not CoverageSubtype available for <xsl:value-of select="./wcs:CoverageId"/>.</ctl:message>
+          <ctl:fail/>
+        </xsl:if>
+      </xsl:for-each>  
+    </ctl:code>
+  </ctl:test>  
+  
+</ctl:package>

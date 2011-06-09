@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ctl:package 
+	xmlns:ctl="http://www.occamlab.com/ctl" 
+	xmlns:gml="http://www.opengis.net/gml" 
+	xmlns:html="http://www.w3.org/1999/xhtml" 	
+	xmlns:ogc="http://www.opengis.net/ogc"
+	xmlns:ows="http://www.opengis.net/ows/1.1" 
+	xmlns:parsers="http://www.occamlab.com/te/parsers"
+	xmlns:saxon="http://saxon.sf.net/" 
+	xmlns:tep="http://teamengine.sourceforge.net/parsers" 
+	xmlns:xi="http://www.w3.org/2001/XInclude" 
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xml="http://www.w3.org/XML/1998/namespace"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:wmts="http://www.opengis.net/wmts/1.0"
+	xmlns:wmtsFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/functions.xml"	
+>
+	<ctl:suite name="wmts:suite">		
+		<ctl:title>WMTS 1.0 Compliance Test Suite</ctl:title>
+		<ctl:description>Verifies that a WMTS 1.0 client or server implementation complies with a given conformance classes.</ctl:description>
+        <ctl:link>docs/wmts/1.0/</ctl:link>		
+		<ctl:starting-test>wmts:Main</ctl:starting-test>
+	</ctl:suite>
+	
+	<ctl:test name="wmts:Main">
+		<ctl:assertion>The IUT satisfies all applicable assertions.</ctl:assertion>
+		<ctl:code>
+			<xsl:variable name="form-values"> 
+				<ctl:form height="1000" width="1200">
+					<body>
+						<h2 align="center">Compliance test suite for Web Map Tile Service (WMTS) 1.0</h2>
+						<h3 align="center">Service metadata and test options</h3>
+						<p>Please provide a WMTS Server URL from which a capabilities document can be retrieved. </p>
+						<p>Modify the URL template below to specify the location of an OGC WMTS server implementation.</p>	
+						<blockquote>
+							<table border="1" padding="4" bgcolor="#00ffff" align="center">
+								<tr>
+									<td align="left">WMTS Service URL:</td>                        
+									<td align="center">
+										<input name="service-url" size="128" 
+										type="text" 
+										value="http://sdftest.ndbc.noaa.gov/sos/server.php"/>
+									</td>
+								</tr>				
+							</table>
+						</blockquote>
+						<p>Please select whether to run client tests, or server tests.</p>
+						<blockquote>
+							<table border="1" padding="4" bgcolor="#00ffff" align="center">
+								<tr>
+									<td><input type="radio" name="which-tests" value="client">Run client tests</input></td>
+									<td><input type="radio" name="which-tests" checked="true" value="server">Run server tests</input></td>
+								</tr>				
+							</table>						
+						</blockquote>
+						<p>Please press the "Start" button to select which architectural style interfaces to test.</p>
+						<div align="center">
+							<input type="submit" value="Start"/>						
+						</div>
+					</body>
+				</ctl:form>
+			</xsl:variable>
+			
+			<!-- Get user input, message user options -->	
+			<xsl:variable name="wmts.service.url" select="$form-values/values/value[@key='service-url']"/>
+			<!-- New messages and user option variables added 2010-12-30 PwD -->
+			<ctl:message select="concat('wmts.service.url ',$wmts.service.url)"/>
+			<xsl:variable name="which-tests" select="$form-values/values/value[@key='which-tests']"/>
+			<ctl:message select="concat('which tests: ',$which-tests)"/>
+			
+			
+		</ctl:code>
+	</ctl:test>
+	
+</ctl:package>
