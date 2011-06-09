@@ -1,0 +1,2108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ctl:package 
+	xmlns:ctl="http://www.occamlab.com/ctl" 
+	xmlns:gml="http://www.opengis.net/gml" 
+	xmlns:html="http://www.w3.org/1999/xhtml" 	
+	xmlns:ogc="http://www.opengis.net/ogc"
+	xmlns:ows="http://www.opengis.net/ows/1.1" 
+	xmlns:parsers="http://www.occamlab.com/te/parsers"
+	xmlns:saxon="http://saxon.sf.net/" 
+	xmlns:tep="http://teamengine.sourceforge.net/parsers" 
+	xmlns:xi="http://www.w3.org/2001/XInclude" 
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xml="http://www.w3.org/XML/1998/namespace"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:wmts="http://www.opengis.net/wmts/1.0"
+	xmlns:ctlFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/ctlFunctions.xml"
+	xmlns:wmtsFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wmtsFunctions.xml"	
+	xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFunctions.xml"	
+>
+
+<ctl:function name="wmtsFunctions:isNormativeSchema">
+	<ctl:param name="schemaLocation"/>
+	<ctl:description>Tests that the schema location is the normative wmts.xsd</ctl:description>
+	<ctl:code>
+		<xsl:value-of select="contains($schemaLocation,'wmts.xsd')"/>
+	</ctl:code>
+</ctl:function>
+	
+<ctl:function name="wmtsFunctions:allLayerLegendURLCorrectResource">
+	<ctl:param name="wmts.capabilities.doc">WMTS Capabilities Document</ctl:param>
+	<ctl:description>Performs tests on all LegendURL to support Server.KVP.GET.GetCapabilities.Response.Layer.LegendURL.Correct.Resource and wmtsBootstrap:bootstrap. </ctl:description>
+	<ctl:code>
+		<!-- <xsl:message>wcd <xsl:value-of select="node-name($wmts.capabilities.doc)"/></xsl:message> -->
+		<xsl:variable name="result">
+			<xsl:for-each select="$wmts.capabilities.doc/wmts:Contents/wmts:Layer[wmts:Style/wmts:LegendURL]">
+				<xsl:variable name="layer" select = "."/>
+				<xsl:for-each select="wmts:Style/wmts:LegendURL">
+					<xsl:variable name="legend" select="."/>
+					<xsl:variable name="correct" select="wmtsFunctions:layerLegendURLCorrectResource($wmts.capabilities.doc, $layer, $legend)"/>
+					<!-- <xsl:message>all layer <xsl:value-of select="$layer/ows:identifier"/> legend <xsl:value-of select="$legend/@xlink:href"/> correct <xsl:value-of select="$correct"/></xsl:message> -->
+					<xsl:if test="not($correct = 'true')">
+						<fail/>
+					</xsl:if>
+				</xsl:for-each>
+			</xsl:for-each>
+		</xsl:variable>
+		<!-- <xsl:message>result <xsl:copy-of select="$result"/> not($result/fail) <xsl:value-of select="not($result/fail)"/></xsl:message> -->
+		<xsl:value-of select="not($result/fail)"/>
+	</ctl:code>
+</ctl:function>	
+	
+<ctl:function name="wmtsFunctions:layerLegendURLCorrectResource">
+	<ctl:param name="wmts.capabilities.doc">WMTS Capabilities Document</ctl:param>
+	<ctl:param name="layer">Layer in capabilities document with LegendURL</ctl:param>
+	<ctl:param name="legendURL">LegendURL in Layer</ctl:param>
+	<ctl:description>Performs tests on one LegendURL to support Server.KVP.GET.GetCapabilities.Response.Layer.LegendURL.Correct.Resource and wmtsBootstrap:bootstrap. </ctl:description>
+	<ctl:code>
+		<xsl:variable name="imageFormat" select="ctl:getImageType($legendURL/@xlink:href)"/>
+		<xsl:variable name="format" select="wwwFunctions:image-format($legendURL/@format)"/>
+		<xsl:variable name="tileMatrixSets">
+			<xsl:for-each select="$layer/wmts:TileMatrixSetLink/wmts:TileMatrixSet">
+				<xsl:value-of select="."/>
+				<xsl:if test="not(position() = last())">
+					<xsl:text>,</xsl:text>
+				</xsl:if>
+			</xsl:for-each>
+		 </xsl:variable>
+		<xsl:variable name="minScaleDenominator" select="wmtsFunctions:validScaleDenominator($wmts.capabilities.doc, $tileMatrixSets,$legendURL/@minScaleDenominator)"/> 
+		<xsl:variable name="maxScaleDenominator" select="wmtsFunctions:validScaleDenominator($wmts.capabilities.doc, $tileMatrixSets,$legendURL/@maxScaleDenominator)"/> 
+		<xsl:variable name="imageWidth" select="ctlFunctions:getImageWidth($legendURL/@xlink:href)"/>
+		<xsl:variable name="imageHeight" select="ctlFunctions:getImageHeight($legendURL/@xlink:href)"/>
+		
+<!--		<xsl:message>xlink:href <xsl:value-of select="$legendURL/@xlink:href"/> format <xsl:value-of select="$legendURL/@format"/> minScaleDenominator <xsl:value-of select="$legendURL/@minScaleDenominator"/> maxScaleDenominator <xsl:value-of select="$legendURL/@maxScaleDenominator"/> width <xsl:value-of select="$legendURL/@width"/> height <xsl:value-of select="$legendURL/@height"/> imageFormat <xsl:value-of select="$imageFormat"/> format <xsl:value-of select="$format"/> tms <xsl:value-of select="$tileMatrixSets"/> mnsd <xsl:value-of select="$minScaleDenominator"/> masd <xsl:value-of select="$maxScaleDenominator"/> imageWidth <xsl:value-of select="$imageWidth"/> imageHeight <xsl:value-of select="$imageHeight"/></xsl:message> -->
+		
+		<xsl:variable name="result">
+			<xsl:if test = "not ($imageFormat)">
+				<ctl:message>No image format found for LegendURL</ctl:message>
+				<fail/>
+			</xsl:if>
+			<xsl:if test = "not (ends-with(normalize-space($legendURL/@format), normalize-space($imageFormat)))">
+				<ctl:message>Layer <xsl:value-of select="$layer/ows:Identifier"/> image format found for LegendURL <xsl:value-of select="$imageFormat"/> does not match specified format <xsl:value-of select="$legendURL/@format"/> </ctl:message>
+				<fail/>
+			</xsl:if>
+			<xsl:if test="$minScaleDenominator != 'true' ">
+				<ctl:message>Layer <xsl:value-of select="$layer/ows:Identifier"/> minScaleDenominator <xsl:value-of select="$legendURL/@minScaleDenominator"/> not found for TileMatrix from any TileMatrix set for Layer.</ctl:message>
+				<fail/>
+			</xsl:if>
+			<xsl:if test="$maxScaleDenominator != 'true' ">
+				<ctl:message>Layer <xsl:value-of select="$layer/ows:Identifier"/> maxScaleDenominator <xsl:value-of select="$legendURL/@maxScaleDenominator"/> not found for TileMatrix from any TileMatrix set for Layer.</ctl:message>
+				<fail/>
+			</xsl:if>
+			<xsl:if test="$imageWidth != $legendURL/@width">
+				<ctl:message>Layer <xsl:value-of select="$layer/ows:Identifier"/> image width found for LegendURL <xsl:value-of select="$imageWidth"/> does not match specified width <xsl:value-of select="$legendURL/@width"/></ctl:message>
+				<fail/>
+			</xsl:if>
+			<xsl:if test="$imageHeight != $legendURL/@height">
+				<ctl:message>Layer <xsl:value-of select="$layer/ows:Identifier"/> image height found for LegendURL <xsl:value-of select="$imageHeight"/> does not match specified height <xsl:value-of select="$legendURL/@height"/></ctl:message>
+				<fail/>
+			</xsl:if>
+		</xsl:variable>
+		<xsl:variable name="return" select="not($result/fail)"/>
+		<!-- <xsl:message>result <xsl:value-of select="$return"/></xsl:message> -->
+		<xsl:value-of select="$return"/>
+	</ctl:code>
+</ctl:function>	
+
+<ctl:function name="wmtsFunctions:validScaleDenominator">
+	<ctl:param name="wmts.capabilities.doc">WMTS Capabilities Document</ctl:param>
+	<ctl:param name="tileMatrixSets">TileMatrixSets for Layer in capabilities document with LegendURL, as comma separated list</ctl:param>
+	<ctl:param name="scaleDenominator">Scale denominator to validate for Layer</ctl:param>
+	<ctl:description>Tests whether scaleDenominator is specified in a TileMatrix for specified TileMatrixSets; returns true or false.</ctl:description>
+	<ctl:code>	
+		<xsl:variable name="isValid" select="some $sd in $wmts.capabilities.doc/wmts:Contents/wmts:TileMatrixSet[some $tms in tokenize($tileMatrixSets,',') satisfies ows:Identifier = $tms]/wmts:TileMatrix/wmts:ScaleDenominator satisfies $sd = $scaleDenominator"/>
+		<!-- <xsl:message>tms <xsl:value-of select="$tileMatrixSets"/> count tms <xsl:value-of select="count($tileMatrixSets)"/> sd <xsl:value-of select="$scaleDenominator"/> isValid <xsl:value-of select="$isValid"/></xsl:message> -->
+		<xsl:value-of select="$isValid"/>
+	</ctl:code>
+</ctl:function>
+
+<ctl:function name="wmts:testMenus">
+		<ctl:param name="bootstrap">bootstrap document of elements containing test prerequisite check results</ctl:param>
+		<ctl:description>Presents menus of checkboxes and radio buttons for client and server tests whose prerequisites were met during bootstrap are presented for user selection.Returns a document fragment with elements that indicate selected tests.</ctl:description>
+		<ctl:code>
+			<!--			<xsl:message>testMenus bs <xsl:copy-of select="$bootstrap"/></xsl:message> -->
+			<xsl:variable name="group-form-values"> 
+				<ctl:form  width="1200" height="740">						
+					<body>
+						<h2 align="center">Compliance test suite for Web Map Tile Service (WMTS) 1.0</h2>
+						<p/>
+						<blockquote>
+							<table width="1100" height="520"  border="1" padding="4" bgcolor="#00ffff" align="left">
+								<tr>
+									<th colspan="13" align="center">Test Group Selection</th>
+								</tr>
+								<tr>
+									<td colspan="13" align="center">Click checkboxes of test groups to execute, and radio buttons for tests within groups, then click "OK"</td>
+								</tr>
+								<tr>
+									<th colspan="13" align = "center">Client Tests</th>							
+								</tr>
+								<tr>
+									<th colspan="4"/><th colspan="3" align="center">Get Capabilities</th><th colspan="3" align="center">Get Tile</th><th colspan="3" align="center">Get Feature Info</th>
+								</tr>
+		<xsl:choose>
+			<xsl:when test="$bootstrap/getCapabilitiesKVPGET = 'true' or $bootstrap/getTileKVPGET = 'true' or $bootstrap/getFeatureInfoKVPGET = 'true' ">
+								<tr><td width="50"><input type="checkbox" name="clientKVPGET">Client KVP GET</input></td>
+									   <td colspan="3"/>
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getCapabilitiesKVPGET = 'true' ">
+										<td width="40"><input type="radio" name="whichClientGetCapabilitiesKVPGETtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichClientGetCapabilitiesKVPGETtests" value="selected">Selected</input></td>
+										<td width="40"><input type="radio" name="whichClientGetCapabilitiesKVPGETtests" value="none">None</input></td>
+					</xsl:when>
+					<xsl:otherwise>
+						<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getTileKVPGET = 'true'">
+										<td width="40"><input type="radio" name="whichClientGetTileKVPGETtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichClientGetTileKVPGETtests" value="selected">Selected</input></td>			
+										<td width="40"><input type="radio" name="whichClientGetTileKVPGETtests" value="none">None</input></td>			
+					</xsl:when>
+					<xsl:otherwise>
+							<td colspan="3">Not Available  - prerequisites not met</td>				
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getFeatureInfoKVPGET = 'true' ">
+										<td width="40"><input type="radio" name="whichClientGetFeatureInfoKVPGETtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichClientGetFeatureInfoKVPGETtests" value="selected">Selected</input></td>
+										<td width="40"><input type="radio" name="whichClientGetFeatureInfoKVPGETtests" value="none">None</input></td>					
+					</xsl:when>
+					<xsl:otherwise>
+							<td colspan="3">Not Available  - prerequisites not met</td>				
+					</xsl:otherwise>
+				</xsl:choose>				
+							</tr>	
+			</xsl:when>
+			<xsl:otherwise>
+								<tr><td>.....Client KVP GET tests not available - prerequisites not met</td><td colspan="7"/></tr>			
+			</xsl:otherwise>
+		</xsl:choose>
+		<xsl:choose>
+			<xsl:when test="$bootstrap/getCapabilitiesKVPPOST = 'true' or $bootstrap/getTileKVPPOST = 'true' or $bootstrap/getFeatureInfoKVPPOST = 'true' ">
+								 <tr><td><input type="checkbox" name="clientKVPPOST">Client KVP POST</input></td>
+									   <td colspan="3"/>
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getCapabilitiesKVPPOST = 'true'">
+										<td width="40"><input type="radio" name="whichClientGetCapabilitiesKVPPOSTtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichClientGetCapabilitiesKVPPOSTtests" value="selected">Selected</input></td>
+										<td width="40"><input type="radio" name="whichClientGetCapabilitiesKVPPOSTtests" value="none">None</input></td>
+					</xsl:when>
+					<xsl:otherwise>
+						<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getTileKVPPOST = 'true'">
+										<td width="40"><input type="radio" name="whichClientGetTileKVPPOSTtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichClientGetTileKVPPOSTtests" value="selected">Selected</input></td>			
+										<td width="40"><input type="radio" name="whichClientGetTileKVPPOSTtests" value="none">None</input></td>			
+					</xsl:when>
+					<xsl:otherwise>
+						<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getFeatureInfoKVPPOST = 'true'">
+										<td width="40"><input type="radio" name="whichClientGetFeatureInfoKVPPOSTtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichClientGetFeatureInfoKVPPOSTtests" value="selected">Selected</input></td>
+										<td width="40"><input type="radio" name="whichClientGetFeatureInfoKVPPOSTtests" value="none">None</input></td>					
+					</xsl:when>
+					<xsl:otherwise>
+						<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+								 </tr>
+			</xsl:when>
+			<xsl:otherwise>
+								<tr><td>.....Client KVP POST prerequisites not met</td><td colspan="7"/></tr>			
+			</xsl:otherwise>
+		</xsl:choose>
+		<xsl:choose>
+			<xsl:when test="$bootstrap/getCapabilitiesXMLPOST = 'true' or $bootstrap/getTileXMLPOST = 'true' or $bootstrap/getFeatureInfoXMLPOST = 'true' ">
+								 <tr><td><input type="checkbox" name="clientXMLPOST">Client XML POST</input></td>
+									   <td colspan="3"/>
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getCapabilitiesXMLPOST = 'true'">
+										<td width="40"><input type="radio" name="whichClientGetCapabilitiesXMLPOSTtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichClientGetCapabilitiesXMLPOSTtests" value="selected">Selected</input></td>
+										<td width="40"><input type="radio" name="whichClientGetCapabilitiesXMLPOSTtests" value="none">None</input></td>
+					</xsl:when>
+					<xsl:otherwise>
+						<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getTileXMLPOST = 'true'">
+										<td width="40"><input type="radio" name="whichClientGetTileXMLPOSTtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichClientGetTileXMLPOSTtests" value="selected">Selected</input></td>			
+										<td width="40"><input type="radio" name="whichClientGetTileXMLPOSTtests" value="none">None</input></td>			
+					</xsl:when>
+					<xsl:otherwise>
+						<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getFeatureInfoXMLPOST = 'true'">
+										<td width="40"><input type="radio" name="whichClientGetFeatureInfoXMLPOSTtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichClientGetFeatureInfoXMLPOSTtests" value="selected">Selected</input></td>
+										<td width="40"><input type="radio" name="whichClientGetFeatureInfoXMLPOSTtests" value="none">None</input></td>					
+					</xsl:when>
+					<xsl:otherwise>
+						<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+								 </tr>
+			</xsl:when>
+			<xsl:otherwise>
+								<tr><td>.....Client XML POST prerequisites not met</td><td colspan="7"/></tr>			
+			</xsl:otherwise>
+		</xsl:choose>
+		<xsl:choose>
+			<xsl:when test="$bootstrap/getCapabilitiesSOAPPOST = 'true' or $bootstrap/getTileSOAPPOST = 'true' or $bootstrap/getFeatureInfoSOAPPOST = 'true' ">
+								 <tr><td><input type="checkbox" name="clientSOAPPOST">Client SOAP POST</input></td>
+									   <td colspan="3"/>
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getCapabilitiesSOAPPOST = 'true'">
+										<td width="40"><input type="radio" name="whichClientGetCapabilitiesSOAPPOSTtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichClientGetCapabilitiesSOAPPOSTtests" value="selected">Selected</input></td>
+										<td width="40"><input type="radio" name="whichClientGetCapabilitiesSOAPPOSTtests" value="none">None</input></td>
+					</xsl:when>
+					<xsl:otherwise>
+							<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getTileSOAPPOST = 'true'">
+										<td width="40"><input type="radio" name="whichClientGetTileSOAPPOSTtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichClientGetTileSOAPPOSTtests" value="selected">Selected</input></td>			
+										<td width="40"><input type="radio" name="whichClientGetTileSOAPPOSTtests" value="none">None</input></td>			
+					</xsl:when>
+					<xsl:otherwise>
+							<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getFeatureInfoSOAPPOST = 'true'">
+										<td width="40"><input type="radio" name="whichClientGetFeatureInfoSOAPPOSTtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichClientGetFeatureInfoSOAPPOSTtests" value="selected">Selected</input></td>
+										<td width="40"><input type="radio" name="whichClientGetFeatureInfoSOAPPOSTtests" value="none">None</input></td>					
+					</xsl:when>
+					<xsl:otherwise>
+						<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+								 </tr>
+			</xsl:when>
+			<xsl:otherwise>
+								<tr><td>.....Client SOAP POST prerequisites not met</td><td colspan="7"/></tr>			
+			</xsl:otherwise>
+		</xsl:choose>
+		<xsl:choose>
+			<xsl:when test="$bootstrap/getCapabilitiesRESTful = 'true' or $bootstrap/getTileRESTful = 'true' or $bootstrap/getFeatureInfoRESTful = 'true' ">
+								 <tr><td><input type="checkbox" name="clientRESTful">Client RESTful</input></td>
+									   <td colspan="3"/>
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getCapabilitiesRESTful = 'true'">
+										<td width="40"><input type="radio" name="whichClientGetCapabilitiesRESTfulTests" checked="true" value="all">All</input></td>
+										<td width="40"/><!-- nothing else to select for restful <td width="40"><input type="radio" name="whichClientGetCapabilitiesRESTfulTests" value="selected">Selected</input></td> -->
+										<td width="40"><input type="radio" name="whichClientGetCapabilitiesRESTfulTests" value="none">None</input></td>
+					</xsl:when>
+					<xsl:otherwise>
+							<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getTileRESTful = 'true'">
+										<td width="40"><input type="radio" name="whichClientGetTileRESTfulTests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichClientGetTileRESTfulTests" value="selected">Selected</input></td>			
+										<td width="40"><input type="radio" name="whichClientGetTileRESTfulTests" value="none">None</input></td>			
+					</xsl:when>
+					<xsl:otherwise>
+							<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getFeatureInfoRESTful = 'true'">
+										<td width="40"><input type="radio" name="whichClientGetFeatureInfoRESTfulTests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichClientGetFeatureInfoRESTfulTests" value="selected">Selected</input></td>
+										<td width="40"><input type="radio" name="whichClientGetFeatureInfoRESTfulTests" value="none">None</input></td>					
+					</xsl:when>
+					<xsl:otherwise>
+						<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+								 </tr>
+			</xsl:when>
+			<xsl:otherwise>
+								<tr><td>.....Client RESTful prerequisites not met</td><td colspan="13"/></tr>			
+			</xsl:otherwise>
+		</xsl:choose>
+								 <tr>
+									<th colspan="13" align = "center">Server Tests</th>							
+								</tr>
+								<tr>
+									<th/><th colspan="3" align="center">Common Operations</th><th colspan="3" align="center">Get Capabilities</th><th colspan="3" align="center">Get Tile</th><th colspan="3" align="center">Get Feature Info</th>
+								</tr>
+		<xsl:choose>
+			<xsl:when test="$bootstrap/getCapabilitiesKVPGET = 'true' or $bootstrap/getTileKVPGET = 'true' or $bootstrap/getFeatureInfoKVPGET = 'true' ">
+								<tr><td><input type="checkbox" name="serverKVPGET">Server KVP GET</input></td>
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getCapabilitiesKVPGET = 'true' ">
+										<td width="40"><input type="radio" name="whichServerCommonOperationsKVPGETtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichServerCommonOperationsKVPGETtests" value="selected">Selected</input></td> 
+										<td width="40"><input type="radio" name="whichServerCommonOperationsKVPGETtests" value="none">None</input></td> 
+					</xsl:when>
+					<xsl:otherwise>
+						<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getCapabilitiesKVPGET = 'true' ">
+										<td width="40"><input type="radio" name="whichServerGetCapabilitiesKVPGETtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichServerGetCapabilitiesKVPGETtests" value="selected">Selected</input></td> 
+										<td width="40"><input type="radio" name="whichServerGetCapabilitiesKVPGETtests" value="none">None</input></td> 
+					</xsl:when>
+					<xsl:otherwise>
+						<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getTileKVPGET = 'true'">
+										<td width="40"><input type="radio" name="whichServerGetTileKVPGETtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichServerGetTileKVPGETtests" value="selected">Selected</input></td>			
+										<td width="40"><input type="radio" name="whichServerGetTileKVPGETtests" value="none">None</input></td>			
+					</xsl:when>
+					<xsl:otherwise>
+							<td colspan="3">Not Available  - prerequisites not met</td>				
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getFeatureInfoKVPGET = 'true' ">
+										<td width="40"><input type="radio" name="whichServerGetFeatureInfoKVPGETtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichServerGetFeatureInfoKVPGETtests" value="selected">Selected</input></td>
+										<td width="40"><input type="radio" name="whichServerGetFeatureInfoKVPGETtests" value="none">None</input></td>					
+					</xsl:when>
+					<xsl:otherwise>
+							<td colspan="3">Not Available  - prerequisites not met</td>				
+					</xsl:otherwise>
+				</xsl:choose>				
+								</tr>	
+			</xsl:when>
+			<xsl:otherwise>
+								<tr><td>.....Server KVP GET prerequisites not met</td><td colspan="6"/></tr>			
+			</xsl:otherwise>
+		</xsl:choose>
+		<xsl:choose>
+			<xsl:when test="$bootstrap/getCapabilitiesKVPPOST = 'true' or $bootstrap/getTileKVPPOST = 'true' or $bootstrap/getFeatureInfoKVPPOST = 'true' ">
+								 <tr><td><input type="checkbox" name="serverKVPPOST">Server KVP POST</input></td>
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getCapabilitiesKVPPOST = 'true'">
+										<td width="40"><input type="radio" name="whichServerCommonOperationsKVPPOSTtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichServerCommonOperationsKVPPOSTtests" value="selected">Selected</input></td>
+										<td width="40"><input type="radio" name="whichServerCommonOperationsKVPPOSTtests" value="none">None</input></td>
+					</xsl:when>
+					<xsl:otherwise>
+						<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getCapabilitiesKVPPOST = 'true'">
+										<td width="40"><input type="radio" name="whichServerGetCapabilitiesKVPPOSTtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichServerGetCapabilitiesKVPPOSTtests" value="selected">Selected</input></td>
+										<td width="40"><input type="radio" name="whichServerGetCapabilitiesKVPPOSTtests" value="none">None</input></td>
+					</xsl:when>
+					<xsl:otherwise>
+						<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getTileKVPPOST = 'true'">
+										<td width="40"><input type="radio" name="whichServerGetTileKVPPOSTtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichServerGetTileKVPPOSTtests" value="selected">Selected</input></td>			
+										<td width="40"><input type="radio" name="whichServerGetTileKVPPOSTtests" value="none">None</input></td>			
+					</xsl:when>
+					<xsl:otherwise>
+						<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getFeatureInfoKVPPOST = 'true'">
+										<td width="40"><input type="radio" name="whichServerGetFeatureInfoKVPPOSTtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichServerGetFeatureInfoKVPPOSTtests" value="selected">Selected</input></td>
+										<td width="40"><input type="radio" name="whichServerGetFeatureInfoKVPPOSTtests" value="none">None</input></td>					
+					</xsl:when>
+					<xsl:otherwise>
+						<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+								 </tr>
+			</xsl:when>
+			<xsl:otherwise>
+								<tr><td>.....Server KVP POST prerequisites not met</td><td colspan="6"/></tr>			
+			</xsl:otherwise>
+		</xsl:choose>
+		<xsl:choose>
+			<xsl:when test="$bootstrap/getCapabilitiesXMLPOST = 'true' or $bootstrap/getTileXMLPOST = 'true' or $bootstrap/getFeatureInfoXMLPOST = 'true' ">
+								 <tr><td><input type="checkbox" name="serverXMLPOST">Server XML POST</input></td>
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getCapabilitiesXMLPOST = 'true'">
+										<td width="40"><input type="radio" name="whichServerCommonOperationsXMLPOSTtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichServerCommonOperationsXMLPOSTtests" value="selected">Selected</input></td>
+										<td width="40"><input type="radio" name="whichServerCommonOperationsXMLPOSTtests" value="none">None</input></td>
+					</xsl:when>
+					<xsl:otherwise>
+						<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getCapabilitiesXMLPOST = 'true'">
+										<td width="40"><input type="radio" name="whichServerGetCapabilitiesXMLPOSTtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichServerGetCapabilitiesXMLPOSTtests" value="selected">Selected</input></td>
+										<td width="40"><input type="radio" name="whichServerGetCapabilitiesXMLPOSTtests" value="none">None</input></td>
+					</xsl:when>
+					<xsl:otherwise>
+						<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getTileXMLPOST = 'true'">
+										<td width="40"><input type="radio" name="whichServerGetTileXMLPOSTtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichServerGetTileXMLPOSTtests" value="selected">Selected</input></td>			
+										<td width="40"><input type="radio" name="whichServerGetTileXMLPOSTtests" value="none">None</input></td>			
+					</xsl:when>
+					<xsl:otherwise>
+						<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getFeatureInfoXMLPOST = 'true'">
+										<td width="40"><input type="radio" name="whichServerGetFeatureInfoXMLPOSTtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichServerGetFeatureInfoXMLPOSTtests" value="selected">Selected</input></td>
+										<td width="40"><input type="radio" name="whichServerGetFeatureInfoXMLPOSTtests" value="none">None</input></td>					
+					</xsl:when>
+					<xsl:otherwise>
+						<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+
+								 </tr>
+			</xsl:when>
+			<xsl:otherwise>
+								<tr><td>.....Server XML POST prerequisites not met</td><td colspan="9"/></tr>			
+			</xsl:otherwise>
+		</xsl:choose>
+		<xsl:choose>
+			<xsl:when test="$bootstrap/getCapabilitiesSOAPPOST = 'true' or $bootstrap/getTileSOAPPOST = 'true' or $bootstrap/getFeatureInfoSOAPPOST = 'true' ">
+								 <tr><td><input type="checkbox" name="serverSOAPPOST">Server SOAP POST</input></td>
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getCapabilitiesSOAPPOST = 'true'">
+										<td width="40"><input type="radio" name="whichServerCommonOperationsSOAPPOSTtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichServerCommonOperationsSOAPPOSTtests" value="selected">Selected</input></td>
+										<td width="40"><input type="radio" name="whichServerCommonOperationsSOAPPOSTtests" value="none">None</input></td>
+					</xsl:when>
+					<xsl:otherwise>
+							<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getCapabilitiesSOAPPOST = 'true'">
+										<td width="40"><input type="radio" name="whichServerGetCapabilitiesSOAPPOSTtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichServerGetCapabilitiesSOAPPOSTtests" value="selected">Selected</input></td>
+										<td width="40"><input type="radio" name="whichServerGetCapabilitiesSOAPPOSTtests" value="none">None</input></td>
+					</xsl:when>
+					<xsl:otherwise>
+							<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getTileSOAPPOST = 'true'">
+										<td width="40"><input type="radio" name="whichServerGetTileSOAPPOSTtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichServerGetTileSOAPPOSTtests" value="selected">Selected</input></td>			
+										<td width="40"><input type="radio" name="whichServerGetTileSOAPPOSTtests" value="none">None</input></td>			
+					</xsl:when>
+					<xsl:otherwise>
+							<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getFeatureInfoSOAPPOST = 'true'">
+										<td width="40"><input type="radio" name="whichServerGetFeatureInfoSOAPPOSTtests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichServerGetFeatureInfoSOAPPOSTtests" value="selected">Selected</input></td>
+										<td width="40"><input type="radio" name="whichServerGetFeatureInfoSOAPPOSTtests" value="none">None</input></td>					
+					</xsl:when>
+					<xsl:otherwise>
+						<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+								 </tr>
+			</xsl:when>
+			<xsl:otherwise>
+								<tr><td>.....Server SOAP POST prerequisites not met</td><td colspan="9"/></tr>			
+			</xsl:otherwise>
+		</xsl:choose>
+		<xsl:choose>
+			<xsl:when test="$bootstrap/getCapabilitiesRESTful = 'true' or $bootstrap/getTileRESTful = 'true' or $bootstrap/GetFeatureInfoRESTful = 'true' ">
+								 <tr><td><input type="checkbox" name="serverRESTful">Server RESTful</input></td>
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getCapabilitiesRESTful = 'true'">
+										<td width="40"><input type="radio" name="whichServerCommonOperationsRESTfulTests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichServerCommonOperationsRESTfulTests" value="selected">Selected</input></td> 
+										<td width="40"><input type="radio" name="whichServerCommonOperationsRESTfulTests" value="none">None</input></td> 
+					</xsl:when>
+					<xsl:otherwise>
+							<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getCapabilitiesRESTful = 'true'">
+										<td width="40"><input type="radio" name="whichServerGetCapabilitiesRESTfulTests" checked="true" value="all">All</input></td>
+										<td width="40"/><!-- nothing else to select for restful <td width="40"><input type="radio" name="whichServerGetCapabilitiesRESTfulTests" value="selected">Selected</input></td> -->
+										<td width="40"><input type="radio" name="whichServerGetCapabilitiesRESTfulTests" value="none">None</input></td> 
+					</xsl:when>
+					<xsl:otherwise>
+							<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getTileRESTful = 'true'">
+										<td width="40"><input type="radio" name="whichServerGetTileRESTfulTests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichServerGetTileRESTfulTests" value="selected">Selected</input></td>			
+										<td width="40"><input type="radio" name="whichServerGetTileRESTfulTests" value="none">None</input></td>			
+					</xsl:when>
+					<xsl:otherwise>
+							<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+				<xsl:choose>
+					<xsl:when test="$bootstrap/getFeatureInfoRESTful = 'true'">
+										<td width="40"><input type="radio" name="whichServerGetFeatureInfoRESTfulTests" checked="true" value="all">All</input></td>
+										<td width="40"><input type="radio" name="whichServerGetFeatureInfoRESTfulTests" value="selected">Selected</input></td>
+										<td width="40"><input type="radio" name="whichServerGetFeatureInfoRESTfulTests" value="none">None</input></td>					
+					</xsl:when>
+					<xsl:otherwise>
+						<td colspan="3">Not Available  - prerequisites not met</td>
+					</xsl:otherwise>
+				</xsl:choose>				
+								 </tr>
+			</xsl:when>
+			<xsl:otherwise>
+								<tr><td>.....Server RESTful prerequisites not met</td><td colspan="6"/></tr>			
+			</xsl:otherwise>
+		</xsl:choose>
+								<tr>
+									<td colspan="13" align="right"><input type="submit" value="OK" /></td>
+								</tr>			
+							</table>
+						</blockquote>
+					</body>
+				</ctl:form>
+			</xsl:variable>
+		
+		<xsl:variable name="testClientKVPGET" select="$group-form-values/values/value[@key='clientKVPGET']"/>
+		<!--
+		<xsl:variable name="whichClientGetCapabilitiesKVPGETtests" select="$group-form-values/values/value[@key='whichClientGetCapabilitiesKVPGETtests']"/>
+		<xsl:variable name="whichClientGetTileKVPGETtests" select="$group-form-values/values/value[@key='whichClientGetTileKVPGETtests']"/>
+		<xsl:variable name="whichClientGetFeatureInfoKVPGETtests" select="$group-form-values/values/value[@key='whichClientGetFeatureInfoKVPGETtests']"/>
+		<xsl:message>testClientKVPGET <xsl:value-of select="$testClientKVPGET"/> GC <xsl:value-of select="$whichClientGetCapabilitiesKVPGETtests"/> GT  <xsl:value-of select="$whichClientGetTileKVPGETtests"/> GFI  <xsl:value-of select="$whichClientGetFeatureInfoKVPGETtests"/></xsl:message>
+		 -->
+		
+		<xsl:variable name="testClientKVPPOST" select="$group-form-values/values/value[@key='clientKVPPOST']"/>
+		<!-- <xsl:message>testClientKVPPOST <xsl:value-of select="$testClientKVPPOST"/></xsl:message> -->
+		<xsl:variable name="testClientXMLPOST" select="$group-form-values/values/value[@key='clientXMLPOST']"/>
+		<!-- <xsl:message>testClientXMLPOST <xsl:value-of select="$testClientXMLPOST"/></xsl:message> -->
+		<xsl:variable name="testClientSOAPPOST" select="$group-form-values/values/value[@key='clientSOAPPOST']"/>
+		<!-- <xsl:message>testClientSOAPPOST <xsl:value-of select="$testClientSOAPPOST"/></xsl:message> -->
+		<xsl:variable name="testClientRESTful" select="$group-form-values/values/value[@key='clientRESTful']"/>
+		<!-- <xsl:message>testClientRESTful <xsl:value-of select="$testClientRESTful"/></xsl:message> -->
+
+		<xsl:variable name="testServerKVPGET" select="$group-form-values/values/value[@key='serverKVPGET']"/>
+		<!-- <xsl:message>testServerKVPGET <xsl:value-of select="$testServerKVPGET"/></xsl:message> -->
+		<xsl:variable name="testServerKVPPOST" select="$group-form-values/values/value[@key='serverKVPPOST']"/>
+		<!-- <xsl:message>testServerKVPPOST <xsl:value-of select="$testServerKVPPOST"/></xsl:message> -->
+		<xsl:variable name="testServerXMLPOST" select="$group-form-values/values/value[@key='serverXMLPOST']"/>
+		<!-- <xsl:message>testServerXMLPOST <xsl:value-of select="$testServerXMLPOST"/></xsl:message> -->
+		<xsl:variable name="testServerSOAPPOST" select="$group-form-values/values/value[@key='serverSOAPPOST']"/>
+		<!-- <xsl:message>testServerSOAPPOST <xsl:value-of select="$testServerSOAPPOST"/></xsl:message> -->
+		<xsl:variable name="testServerRESTful" select="$group-form-values/values/value[@key='serverRESTful']"/>
+		<!-- <xsl:message>testServerRESTful <xsl:value-of select="$testServerRESTful"/></xsl:message> -->
+
+		<xsl:choose>
+			<xsl:when test="$testClientKVPGET = 'on' or $testClientKVPPOST = 'on' or $testClientXMLPOST = 'on' or $testClientSOAPPOST = 'on' or $testClientRESTful = 'on' or $testServerKVPGET = 'on' or $testServerKVPPOST = 'on' or $testServerXMLPOST = 'on' or $testServerSOAPPOST = 'on' or $testServerRESTful = 'on' ">
+			
+				<ctl:message>Get options to run tests</ctl:message>			
+				<xsl:variable name="selected">
+					<xsl:element name="sel">
+						<xsl:choose>
+							<xsl:when test="$group-form-values/values/value[@key='clientKVPGET'] = 'on' ">
+								<!-- <xsl:message>client KVPGET ON</xsl:message> -->
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetCapabilitiesKVPGETtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetCapabilitiesAll">
+													<ctl:with-param name="interfaceType">KVP.GET</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetCapabilitiesKVPGETtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetCapabilitiesMenu">
+													<ctl:with-param name="interfaceType">KVP.GET</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetTileKVPGETtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetTileAll">
+													<ctl:with-param name="interfaceType">KVP.GET</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetTileKVPGETtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetTileMenu">
+													<ctl:with-param name="interfaceType">KVP.GET</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>			
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetFeatureInfoKVPGETtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetFeatureInfoAll">
+													<ctl:with-param name="interfaceType">KVP.GET</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetFeatureInfoKVPGETtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetFeatureInfoMenu">
+													<ctl:with-param name="interfaceType">KVP.GET</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>			
+										</xsl:when>
+										<xsl:otherwise>								
+										</xsl:otherwise>
+									</xsl:choose>
+							</xsl:when>
+							<xsl:otherwise>
+								<!-- <xsl:message>client KVPGET OFF</xsl:message> -->
+							</xsl:otherwise>
+						</xsl:choose>
+						<xsl:choose>
+							<xsl:when test="$group-form-values/values/value[@key='clientKVPPOST'] = 'on' ">
+								<!-- <xsl:message>client KVPPOST ON</xsl:message> -->
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetCapabilitiesKVPPOSTtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetCapabilitiesAll">
+													<ctl:with-param name="interfaceType">KVP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetCapabilitiesKVPPOSTtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetCapabilitiesMenu">
+													<ctl:with-param name="interfaceType">KVP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetTileKVPPOSTtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetTileAll">
+													<ctl:with-param name="interfaceType">KVP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetTileKVPPOSTtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetTileMenu">
+													<ctl:with-param name="interfaceType">KVP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>			
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetFeatureInfoKVPPOSTtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetFeatureInfoAll">
+													<ctl:with-param name="interfaceType">KVP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetFeatureInfoKVPPOSTtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetFeatureInfoMenu">
+													<ctl:with-param name="interfaceType">KVP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>			
+										</xsl:when>
+										<xsl:otherwise>								
+										</xsl:otherwise>
+									</xsl:choose>
+							</xsl:when>
+							<xsl:otherwise>
+								<!-- <xsl:message>client KVPPOST OFF</xsl:message> -->
+							</xsl:otherwise>
+						</xsl:choose>
+						<xsl:choose>
+							<xsl:when test="$group-form-values/values/value[@key='clientXMLPOST'] = 'on' ">
+								<!-- <xsl:message>client XMLPOST ON</xsl:message> -->
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetCapabilitiesXMLPOSTtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetCapabilitiesAll">
+													<ctl:with-param name="interfaceType">XML.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetCapabilitiesXMLPOSTtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetCapabilitiesMenu">
+													<ctl:with-param name="interfaceType">XML.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetTileXMLPOSTtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetTileAll">
+													<ctl:with-param name="interfaceType">XML.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetTileXMLPOSTtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetTileMenu">
+													<ctl:with-param name="interfaceType">XML.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>			
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetFeatureInfoXMLPOSTtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetFeatureInfoAll">
+													<ctl:with-param name="interfaceType">XML.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetFeatureInfoXMLPOSTtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetFeatureInfoMenu">
+													<ctl:with-param name="interfaceType">XML.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>			
+										</xsl:when>
+										<xsl:otherwise>								
+										</xsl:otherwise>
+									</xsl:choose>
+							</xsl:when>
+							<xsl:otherwise>
+								<!-- <xsl:message>client XMLPOST OFF</xsl:message> -->
+							</xsl:otherwise>
+						</xsl:choose>
+						<xsl:choose>	
+							<xsl:when test="$group-form-values/values/value[@key='clientSOAPPOST'] = 'on' ">
+								<!-- <xsl:message>client SOAPPOST ON</xsl:message> -->
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetCapabilitiesSOAPPOSTtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetCapabilitiesAll">
+													<ctl:with-param name="interfaceType">SOAP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetCapabilitiesSOAPPOSTtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetCapabilitiesMenu">
+													<ctl:with-param name="interfaceType">SOAP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetTileSOAPPOSTtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetTileAll">
+													<ctl:with-param name="interfaceType">SOAP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetTileSOAPPOSTtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetTileMenu">
+													<ctl:with-param name="interfaceType">SOAP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>			
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetFeatureInfoSOAPPOSTtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetFeatureInfoAll">
+													<ctl:with-param name="interfaceType">SOAP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetFeatureInfoSOAPPOSTtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetFeatureInfoMenu">
+													<ctl:with-param name="interfaceType">SOAP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>			
+										</xsl:when>
+										<xsl:otherwise>								
+										</xsl:otherwise>
+									</xsl:choose>
+							</xsl:when>
+							<xsl:otherwise>
+								<!-- <xsl:message>client SOAPPOST OFF</xsl:message> -->
+							</xsl:otherwise>
+						</xsl:choose>
+						<xsl:choose>
+							<xsl:when test="$group-form-values/values/value[@key='clientRESTful'] = 'on' ">
+								<!-- <xsl:message>client RESTful ON</xsl:message> -->
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetCapabilitiesRESTfulTests'] = 'all' ">
+											<xsl:variable name="sel">
+												<xsl:element name="sel">
+													<xsl:element name="Client.RESTful.GetCapabilities.Mandatory.Selected">true</xsl:element>
+												</xsl:element>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetTileRESTfulTests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetTileAll">
+													<ctl:with-param name="interfaceType">RESTful</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetTileRESTfulTests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetTileMenu">
+													<ctl:with-param name="interfaceType">RESTful</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>			
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetFeatureInfoRESTfulTests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetFeatureInfoAll">
+													<ctl:with-param name="interfaceType">RESTful</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichClientGetFeatureInfoRESTfulTests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:clientGetFeatureInfoMenu">
+													<ctl:with-param name="interfaceType">RESTful</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>			
+										</xsl:when>
+										<xsl:otherwise>								
+										</xsl:otherwise>
+									</xsl:choose>
+							</xsl:when>	
+							<xsl:otherwise>
+							<!--	<xsl:message>client RESTful OFF</xsl:message> -->
+							</xsl:otherwise>
+						</xsl:choose>
+						
+						<xsl:choose>
+							<xsl:when test="$group-form-values/values/value[@key='serverKVPGET'] = 'on' ">
+								<!-- <xsl:message>server KVP GET ON</xsl:message> -->
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerCommonOperationsKVPGETtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverCommonOperationsAll">
+													<ctl:with-param name="interfaceType">KVP.GET</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerCommonOperationsKVPGETtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverCommonOperationsMenu">
+													<ctl:with-param name="interfaceType">KVP.GET</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetCapabilitiesKVPGETtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetCapabilitiesAll">
+													<ctl:with-param name="interfaceType">KVP.GET</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetCapabilitiesKVPGETtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetCapabilitiesMenu">
+													<ctl:with-param name="interfaceType">KVP.GET</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetTileKVPGETtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetTileAll">
+													<ctl:with-param name="interfaceType">KVP.GET</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetTileKVPGETtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetTileMenu">
+													<ctl:with-param name="interfaceType">KVP.GET</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>			
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetFeatureInfoKVPGETtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetFeatureInfoAll">
+													<ctl:with-param name="interfaceType">KVP.GET</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetFeatureInfoKVPGETtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetFeatureInfoMenu">
+													<ctl:with-param name="interfaceType">KVP.GET</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>			
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+							</xsl:when>
+							<xsl:otherwise>
+								<!-- <xsl:message>server KVP GET OFF</xsl:message>		-->					
+							</xsl:otherwise>
+						</xsl:choose>
+						
+						<xsl:choose>
+							<xsl:when test="$group-form-values/values/value[@key='serverKVPPOST'] = 'on' ">
+							<!--	<xsl:message>server KVP POST ON</xsl:message> -->
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerCommonOperationsKVPPOSTtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverCommonOperationsAll">
+													<ctl:with-param name="interfaceType">KVP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerCommonOperationsKVPPOSTtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverCommonOperationsMenu">
+													<ctl:with-param name="interfaceType">KVP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetCapabilitiesKVPPOSTtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetCapabilitiesAll">
+													<ctl:with-param name="interfaceType">KVP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetCapabilitiesKVPPOSTtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetCapabilitiesMenu">
+													<ctl:with-param name="interfaceType">KVP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetTileKVPPOSTtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetTileAll">
+													<ctl:with-param name="interfaceType">KVP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetTileKVPPOSTtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetTileMenu">
+													<ctl:with-param name="interfaceType">KVP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>			
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetFeatureInfoKVPPOSTtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetFeatureInfoAll">
+													<ctl:with-param name="interfaceType">KVP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetFeatureInfoKVPPOSTtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetFeatureInfoMenu">
+													<ctl:with-param name="interfaceType">KVP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>			
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+							</xsl:when>
+							<xsl:otherwise>
+								<!-- <xsl:message>server KVP POST OFF</xsl:message> -->
+							</xsl:otherwise>
+						</xsl:choose>
+
+						<xsl:choose>
+							<xsl:when test="$group-form-values/values/value[@key='serverXMLPOST'] = 'on' ">
+								<!-- <xsl:message>server XML POST ON</xsl:message> -->
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerCommonOperationsXMLPOSTtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverCommonOperationsAll">
+													<ctl:with-param name="interfaceType">XML.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerCommonOperationsXMLPOSTtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverCommonOperationsMenu">
+													<ctl:with-param name="interfaceType">XML.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetCapabilitiesXMLPOSTtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetCapabilitiesAll">
+													<ctl:with-param name="interfaceType">XML.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetCapabilitiesXMLPOSTtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetCapabilitiesMenu">
+													<ctl:with-param name="interfaceType">XML.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetTileXMLPOSTtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetTileAll">
+													<ctl:with-param name="interfaceType">XML.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetTileXMLPOSTtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetTileMenu">
+													<ctl:with-param name="interfaceType">XML.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>			
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetFeatureInfoXMLPOSTtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetFeatureInfoAll">
+													<ctl:with-param name="interfaceType">XML.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetFeatureInfoXMLPOSTtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetFeatureInfoMenu">
+													<ctl:with-param name="interfaceType">XML.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>			
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+							</xsl:when>
+							<xsl:otherwise>
+							<!--	<xsl:message>server XML POST OFF</xsl:message> -->
+							</xsl:otherwise>
+						</xsl:choose>
+
+						<xsl:choose>
+							<xsl:when test="$group-form-values/values/value[@key='serverSOAPPOST'] = 'on' ">
+								<!-- <xsl:message>server SOAP POST ON</xsl:message> -->
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerCommonOperationsSOAPPOSTtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverCommonOperationsAll">
+													<ctl:with-param name="interfaceType">SOAP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerCommonOperationsSOAPPOSTtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverCommonOperationsMenu">
+													<ctl:with-param name="interfaceType">SOAP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetCapabilitiesSOAPPOSTtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetCapabilitiesAll">
+													<ctl:with-param name="interfaceType">SOAP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetCapabilitiesSOAPPOSTtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetCapabilitiesMenu">
+													<ctl:with-param name="interfaceType">SOAP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetTileSOAPPOSTtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetTileAll">
+													<ctl:with-param name="interfaceType">SOAP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetTileSOAPPOSTtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetTileMenu">
+													<ctl:with-param name="interfaceType">SOAP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>			
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetFeatureInfoSOAPPOSTtests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetFeatureInfoAll">
+													<ctl:with-param name="interfaceType">SOAP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetFeatureInfoSOAPPOSTtests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetFeatureInfoMenu">
+													<ctl:with-param name="interfaceType">SOAP.POST</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>			
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+							</xsl:when>
+							<xsl:otherwise>
+							<!--	<xsl:message>server SOAP POST OFF</xsl:message> -->
+							</xsl:otherwise>
+						</xsl:choose>
+
+						<xsl:choose>
+							<xsl:when test="$group-form-values/values/value[@key='serverRESTful'] = 'on' ">
+							<!--	<xsl:message>server RESTful ON</xsl:message> -->
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerCommonOperationsRESTfulTests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverCommonOperationsAll">
+													<ctl:with-param name="interfaceType">RESTful</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerCommonOperationsRESTfulTests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverCommonOperationsMenu">
+													<ctl:with-param name="interfaceType">RESTful</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetCapabilitiesRESTfulTests'] = 'all' ">
+											<xsl:variable name="sel">
+												<xsl:element name="sel">
+													<xsl:element name="Server.RESTful.GetCapabilities.Mandatory.Selected">true</xsl:element>
+												</xsl:element>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetTileRESTfulTests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetTileAll">
+													<ctl:with-param name="interfaceType">RESTful</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetTileRESTfulTests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetTileMenu">
+													<ctl:with-param name="interfaceType">RESTful</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>			
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetFeatureInfoRESTfulTests'] = 'all' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetFeatureInfoAll">
+													<ctl:with-param name="interfaceType">RESTful</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>
+										</xsl:when>
+										<xsl:when test="$group-form-values/values/value[@key='whichServerGetFeatureInfoRESTfulTests'] = 'selected' ">
+											<xsl:variable name="sel">
+												<ctl:call-function name="wmts:serverGetFeatureInfoMenu">
+													<ctl:with-param name="interfaceType">RESTful</ctl:with-param>
+												</ctl:call-function>
+											</xsl:variable>
+											<xsl:copy-of select="$sel/*/*"/>			
+										</xsl:when>
+										<xsl:otherwise>
+										</xsl:otherwise>
+									</xsl:choose>
+							</xsl:when>
+							<xsl:otherwise>
+							<!--	<xsl:message>server RESTful OFF</xsl:message> -->
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:element>	
+				</xsl:variable>
+<!--				
+				<xsl:message>selected <xsl:copy-of select="$selected"/></xsl:message>
+				<ctl:call-function name="wmtsFunctions:printSelected">
+					<ctl:with-param name="selected" select="$selected"/>
+				</ctl:call-function> 
+-->
+				<xsl:copy-of select="$selected"/>	
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>No test groups selected.</ctl:message>
+				<ctl:fail/>
+			</xsl:otherwise>
+		</xsl:choose>
+		</ctl:code>
+	</ctl:function>
+	
+	<ctl:function name="wmts:clientGetCapabilitiesAll">
+		<ctl:param name="interfaceType">The HTTP service interface type:  KVP.GET | KVP.POST | XML.POST | SOAP.POST
+		 (not applicable to RESTful)</ctl:param>
+		<ctl:description>Create document fragment with child elements indicating all GetCapabiliteis Tests for specified interfaceType</ctl:description>
+		<ctl:code>
+			<xsl:element name="sel">
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetCapabilities.Mandatory.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetCapabilities.AcceptVersions.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetCapabilities.Sections.All.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetCapabilities.Sections.ServiceIdentification.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetCapabilities.Sections.ServiceProvider.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetCapabilities.Sections.OperationsMetadata.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetCapabilities.Sections.Contents.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetCapabilities.Sections.Themes.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetCapabilities.Sections.Multiple.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetCapabilities.UpdateSequence.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetCapabilities.AcceptFormats.Selected')}">true</xsl:element>
+			</xsl:element>
+		</ctl:code>
+	</ctl:function>
+
+	<ctl:function name="wmts:clientGetCapabilitiesMenu">
+		<ctl:param name="interfaceType">The HTTP service interface type:  KVP.GET | KVP.POST | XML.POST | SOAP.POST
+		 (not applicable to RESTful)</ctl:param>
+      	<ctl:context>wmts:main</ctl:context>
+		<ctl:description>Checkboxes for client GetCapabilities tests whose prerequisites were met during bootstrap are presented for user selection.</ctl:description>
+		<ctl:code>
+			<xsl:variable name="gc-form-values"> 
+				<ctl:form  width="600" height="700">						
+					<body>
+						<h2 align="center">Compliance test suite for Web Map Tile Service (WMTS) 1.0</h2>
+						<p/>
+						<blockquote>
+							<table width="350" height="350"  border="1" padding="4" bgcolor="#00ffff" align="center">
+								<tr>
+									<th align="center">Client <xsl:value-of select="$interfaceType"/> GetCapabilities Test Selection</th>
+								</tr>
+								<tr>
+									<td align="center">Click checkboxes of Client GetCapabilities tests to execute, then click "OK"</td>
+								</tr>
+								<tr><td width="250"><input type="checkbox" name="mandatoryParameters">Mandatory Parameters</input></td></tr>
+								<tr><td width="250"><input type="checkbox" name="acceptVersions">Accept Versions</input></td></tr>
+								<tr><td width="250"><input type="checkbox" name="sectionsAll">Sections - All</input></td></tr>
+								<tr><td width="250"><input type="checkbox" name="sectionsServiceIdentification">Sections - Service Identification</input></td></tr>
+								<tr><td width="250"><input type="checkbox" name="sectionsServiceProvider">Sections - Service Provider</input></td></tr>
+								<tr><td width="250"><input type="checkbox" name="sectionsOperationsMetadata">Sections - Operations Metadata</input></td></tr>
+								<tr><td width="250"><input type="checkbox" name="sectionsContents"></input>Sections - Contents</td></tr>
+								<tr><td width="250"><input type="checkbox" name="sectionsThemes"></input>Sections - Themes</td></tr>
+								<tr><td width="250"><input type="checkbox" name="sectionsMultiple"></input>sections - Multiple (Contents and Themes)</td></tr>
+								<tr><td width="250"><input type="checkbox" name="updateSequence"></input>Update Sequence</td></tr>
+								<tr><td width="250"><input type="checkbox" name="acceptFormats">Accept Formats</input></td></tr>
+								<tr>
+									<td align="right"><input type="submit" value="OK" /></td>
+								</tr>			
+							</table>
+						</blockquote>
+					</body>
+				</ctl:form>
+			</xsl:variable>
+			<!--<xsl:variable name="mandatoryParameters" select="$gc-form-values/values/value[@key='mandatoryParameters']"/>
+			<xsl:message>mandatoryParameters <xsl:value-of select="$mandatoryParameters"/></xsl:message> -->
+			<xsl:element name="sel">
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetCapabilities.Mandatory.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='mandatoryParameters'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetCapabilities.AcceptVersions.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='acceptVersions'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetCapabilities.Sections.All.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='sectionsAll'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetCapabilities.Sections.ServiceIdentification.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='sectionsServiceIdentification'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetCapabilities.Sections.ServiceProvider.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='sectionsServiceProvider'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetCapabilities.Sections.OperationsMetadata.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='sectionsOperationsMetadata'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetCapabilities.Sections.Contents.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='sectionsContents'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetCapabilities.Sections.Themes.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='sectionsThemes'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetCapabilities.Sections.Multiple.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='sectionsMultiple'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetCapabilities.UpdateSequence.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='updateSequence'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetCapabilities.AcceptFormats.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='acceptFormats'] = 'on')"/></xsl:element>
+			</xsl:element>
+		</ctl:code>
+	</ctl:function>
+
+	<ctl:function name="wmts:clientGetTileAll">
+		<ctl:param name="interfaceType">The HTTP service interface type:  KVP.GET | KVP.POST | XML.POST | SOAP.POST | RESTful</ctl:param>
+		<ctl:description>Create document fragment with child elements indicating all GetTile Tests for specified interfaceType</ctl:description>
+		<ctl:code>
+			<xsl:element name="sel">
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetTile.Mandatory.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetTile.Optional.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetTile.Contiguous.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetTile.Overlay.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetTile.TileMatrixSets.Selected')}">true</xsl:element>	
+			</xsl:element>
+		</ctl:code>
+	</ctl:function>
+
+	<ctl:function name="wmts:clientGetTileMenu">
+		<ctl:param name="interfaceType">The HTTP service interface type:  KVP.GET | KVP.POST | XML.POST | SOAP.POST
+		 (not applicable to RESTful)</ctl:param>
+      	<ctl:context>wmts:main</ctl:context>
+		<ctl:description>Checkboxes for client GetTile tests whose prerequisites were met during bootstrap are presented for user selection.</ctl:description>
+		<ctl:code>
+			<xsl:variable name="gc-form-values"> 
+				<ctl:form  width="450" height="500">						
+					<body>
+						<h2 align="center">Compliance test suite for Web Map Tile Service (WMTS) 1.0</h2>
+						<p/>
+						<blockquote>
+							<table width="300" height="400"  border="1" padding="4" bgcolor="#00ffff" align="center">
+								<tr>
+									<th align="center">Client <xsl:value-of select="$interfaceType"/> GetTile Test Selection</th>
+								</tr>
+								<tr>
+									<td align="center">Click checkboxes of Client GetTile tests to execute, then click "OK"</td>
+								</tr>
+								<tr><td width="250"><input type="checkbox" name="mandatoryParameters">Mandatory Parameters</input></td></tr>
+								<tr><td width="250"><input type="checkbox" name="optionalParameters">Optional Parameters</input></td></tr>
+								<tr><td width="250"><input type="checkbox" name="contiguous">Congituous Tiles</input></td></tr>
+								<tr><td width="250"><input type="checkbox" name="overlay">Overlay Tiles</input></td></tr>
+								<tr><td width="250"><input type="checkbox" name="tileMatrixSets">Tile Matrix Sets</input></td></tr>
+								<tr>
+									<td align="right"><input type="submit" value="OK" /></td>
+								</tr>			
+							</table>
+						</blockquote>
+					</body>
+				</ctl:form>
+			</xsl:variable>
+			<!--<xsl:variable name="mandatoryParameters" select="$gc-form-values/values/value[@key='mandatoryParameters']"/>
+			<xsl:message>mandatoryParameters <xsl:value-of select="$mandatoryParameters"/></xsl:message> -->
+			<xsl:element name="sel">
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetTile.Mandatory.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='mandatoryParameters'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetTile.Optional.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalParameters'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetTile.Contiguous.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='contiguous'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetTile.Overlay.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='overlay'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetTile.TileMatrixSets.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='tileMatrixSets'] = 'on')"/></xsl:element>
+			</xsl:element>
+		</ctl:code>
+	</ctl:function>
+
+	<ctl:function name="wmts:clientGetFeatureInfoAll">
+		<ctl:param name="interfaceType">The HTTP service interface type:  KVP.GET | KVP.POST | XML.POST | SOAP.POST | RESTful</ctl:param>
+		<ctl:description>Create document fragment with child elements indicating all GetTile Tests for specified interfaceType</ctl:description>
+		<ctl:code>
+			<xsl:element name="sel">
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetFeatureInfo.Mandatory.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetFeatureInfo.Optional.Selected')}">true</xsl:element>
+			</xsl:element>
+		</ctl:code>
+	</ctl:function>
+
+	<ctl:function name="wmts:clientGetFeatureInfoMenu">
+		<ctl:param name="interfaceType">The HTTP service interface type:  KVP.GET | KVP.POST | XML.POST | SOAP.POST
+		 (not applicable to RESTful)</ctl:param>
+      	<ctl:context>wmts:main</ctl:context>
+		<ctl:description>Checkboxes for client GetTile tests whose prerequisites were met during bootstrap are presented for user selection.</ctl:description>
+		<ctl:code>
+			<xsl:variable name="gc-form-values"> 
+				<ctl:form  width="450" height="400">						
+					<body>
+						<h2 align="center">Compliance test suite for Web Map Tile Service (WMTS) 1.0</h2>
+						<p/>
+						<blockquote>
+							<table width="350" height="300"  border="1" padding="4" bgcolor="#00ffff" align="center">
+								<tr>
+									<th  align="center">Client <xsl:value-of select="$interfaceType"/> GetFeatureInfo Test Selection</th>
+								</tr>
+								<tr>
+									<td  align="center">Click checkboxes of Client GetFeatureInfo tests to execute, then click "OK"</td>
+								</tr>
+								<tr><td width="250"><input type="checkbox" name="mandatoryParameters">Mandatory Parameters</input></td></tr>
+								<tr><td width="250"><input type="checkbox" name="optionalParameters">Optional Parameters</input></td></tr>
+								<tr>
+									<td align="right"><input type="submit" value="OK" /></td>
+								</tr>			
+							</table>
+						</blockquote>
+					</body>
+				</ctl:form>
+			</xsl:variable>
+			<!--<xsl:variable name="mandatoryParameters" select="$gc-form-values/values/value[@key='mandatoryParameters']"/>
+			<xsl:message>mandatoryParameters <xsl:value-of select="$mandatoryParameters"/></xsl:message> -->
+			<xsl:element name="sel">
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetFeatureInfo.Mandatory.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='mandatoryParameters'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Client.', $interfaceType, '.GetFeatureInfo.Optional.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalParameters'] = 'on')"/></xsl:element>
+			</xsl:element>
+		</ctl:code>
+	</ctl:function>
+
+	<ctl:function name="wmts:serverCommonOperationsAll">
+		<ctl:param name="interfaceType">The HTTP service interface type: KVP.GET | KVP.POST | XML.POST | SOAP.POST | RESTful</ctl:param>
+		<ctl:description>Create document fragment with child elements indicating all Common Operation Tests for specified interfaceType</ctl:description>
+		<ctl:code>
+			<xsl:element name="sel">
+				<xsl:element name="{concat('Server.', $interfaceType, '.CommonOperations.MandatoryHTTPprotocolUsage.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.CommonOperations.InvalidQueryStringMandatory')}">true</xsl:element>
+				<xsl:if test="not(starts-with($interfaceType, 'REST'))">
+					<xsl:element name="{concat('Server.', $interfaceType, '.CommonOperations.InvalidServiceMandatory')}">true</xsl:element>
+					<xsl:element name="{concat('Server.', $interfaceType, '.CommonOperations.InvalidRequestMandatory')}">true</xsl:element>
+				</xsl:if>
+			</xsl:element>
+		</ctl:code>
+	</ctl:function>
+
+	<ctl:function name="wmts:serverCommonOperationsMenu">
+		<ctl:param name="interfaceType">The HTTP service interface type: KVP.GET | KVP.POST | XML.POST | SOAP.POST | RESTful</ctl:param>
+		<ctl:description>Checkboxes for server Common Operations tests whose prerequisites were met during bootstrap are presented for user selection.</ctl:description>
+		<ctl:code>
+			<xsl:variable name="gc-form-values"> 
+				<ctl:form  width="550" height="450">						
+					<body>
+						<h2 align="center">Compliance test suite for Web Map Tile Service (WMTS) 1.0</h2>
+						<p/>
+						<blockquote>
+							<table width="350" height="350"  border="1" padding="4" bgcolor="#00ffff" align="center">
+								<tr>
+									<th align="center">Server <xsl:value-of select="$interfaceType"/> Common Operations Test Selection</th>
+								</tr>
+								<tr>
+									<td align="center">Click checkboxes of Server Common Operations tests to execute, then click "OK"</td>
+								</tr>
+								<tr><td width="250"><input type="checkbox" name="mandatoryHTTPprotocolUsage">Mandatory HTTP Protocol Usage</input></td></tr>
+								<tr><td width="250"><input type="checkbox" name="invalidQueryStringMandatory">Invalid Query String Mandatory</input></td></tr>
+					<xsl:if test="not(starts-with($interfaceType, 'REST'))">								
+								<tr><td width="250"><input type="checkbox" name="invalidServiceMandatory">Invalid Service Mandatory</input></td></tr>
+								<tr><td width="250"><input type="checkbox" name="invalidRequestMandatory">Invalid Request Mandatory</input></td></tr>
+					</xsl:if>
+								<tr>
+									<td align="right"><input type="submit" value="OK" /></td>
+								</tr>			
+							</table>
+						</blockquote>
+					</body>
+				</ctl:form>
+			</xsl:variable>		
+			<xsl:element name="sel">
+				<xsl:element name="{concat('Server.', $interfaceType, '.CommonOperations.MandatoryHTTPprotocolUsage.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='mandatoryHTTPprotocolUsage'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.CommonOperations.InvalidQueryStringMandatory.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidQueryStringMandatory'] = 'on')"/></xsl:element>
+		<xsl:if test="not(starts-with($interfaceType, 'REST'))">								
+				<xsl:element name="{concat('Server.', $interfaceType, '.CommonOperations.InvalidServiceMandatory.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidServiceMandatory'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.CommonOperations.InvalidRequestMandatory.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidRequestMandatory'] = 'on')"/></xsl:element>
+		</xsl:if>
+			</xsl:element>
+		</ctl:code>
+	</ctl:function>
+
+	<ctl:function name="wmts:serverGetCapabilitiesAll">
+		<ctl:param name="interfaceType">The HTTP service interface type: KVP.GET | KVP.POST | XML.POST | SOAP.POST | RESTful</ctl:param>
+		<ctl:description>Create document fragment with child elements indicating all GetCapabilities Tests for specified interfaceType</ctl:description>
+		<ctl:code>
+			<xsl:element name="sel">
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Mandatory.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.NoServiceParameter.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Invalid.ServiceParameter.Value.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.AcceptVersions.Valid.ParameterValue.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.AcceptVersions.Invalid.ParameterValue.Selected')}">true</xsl:element>
+				<xsl:if test="starts-with($interfaceType, 'KVP')">
+					<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.CaseInsensitive.KVP.Names.Selected')}">true</xsl:element>
+				</xsl:if>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.All.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.ServiceIdentification.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.ServiceProvider.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.OperationsMetadata.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.Contents.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.Themes.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.Multiple.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.Bogus.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.Missing.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.UpdateSequence.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.AcceptFormats.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Services.Metadata.Document.XML.WellFormed.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Services.Metadata.Document.References.Normative.Schema.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Services.Metadata.Document.SchemaValid.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Advertised.Format.ApplicationXML.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.OnlineResource.Only.ResourcePrefix.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Includes.GetEncoding.Constraint.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Layer.Identifiers.Unique.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.No.Layers.Contains.OtherSource.URL.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Style.Identifiers.Unique.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.LayerLegendURLs.Correct.Resources.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.LayerLegendURLs.Correct.Formats.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.LayerLegendURLs.Correct.Sizes.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Dimension.Identifiers.Unique.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Layer.TileMatrixSets.Valid.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.TileMatrixSet.Identifiers.Unique.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.TileMatrix.Identifiers.Unique.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.TileMatrixSet.ScaleDenominators.Unique.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.TileMatrixSet.WellKnownScaleSets.Compatible.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Theme.LayerRef.Valid.Selected')}">true</xsl:element>
+			</xsl:element>
+		</ctl:code>
+	</ctl:function>
+
+	<ctl:function name="wmts:serverGetCapabilitiesMenu">
+		<ctl:param name="interfaceType">The HTTP service interface type: KVP.GET | KVP.POST | XML.POST | SOAP.POST | RESTful</ctl:param>
+		<ctl:description>Checkboxes for server GetCapabilities tests whose prerequisites were met during bootstrap are presented for user selection.</ctl:description>
+		<ctl:code>
+			<xsl:variable name="gc-form-values"> 
+				<ctl:form  width="900" height="900">						
+					<body>
+						<h2 align="center">Compliance test suite for Web Map Tile Service (WMTS) 1.0</h2>
+						<p/>
+						<blockquote>
+							<table width="800" height="800"  border="1" padding="4" bgcolor="#00ffff" align="center">
+								<tr>
+									<th colspan="2" align="center">Server <xsl:value-of select="$interfaceType"/> GetCapabilities Test Selection</th>
+								</tr>
+								<tr>
+									<td colspan="2" align="center">Click checkboxes of Server GetCapabilities tests to execute, then click "OK"</td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="mandatoryParameters">Mandatory Parameters</input></td>
+									<td width="300"><input type="checkbox" name="noServiceParameter">No Service Parameter</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="invalidServiceParameter">Invalid Service Parameter</input></td>
+				<xsl:choose>
+					<xsl:when test="starts-with($interfaceType, 'KVP')">
+									<td width="300"><input type="checkbox" name="caseInsensitiveKVPnames">Case Insensitive KVP Names</input></td>
+					</xsl:when>
+					<xsl:otherwise>
+									<td/>
+					</xsl:otherwise>
+				</xsl:choose>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="acceptVersionsValidParameterValue">Accept Versions Valid Parameter Value</input></td>
+									<td width="300"><input type="checkbox" name="acceptVersionsInvalidParameterValue">Accept Versions Invalid Parameter Value</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="optionalSectionsAll">Optional Sections - All</input></td>
+									<td width="300"><input type="checkbox" name="optionalSectionsServiceIdentification">Optional Sections - Service Identification</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="optionalSectionsServiceProvider">Optional Sections - Service Provider</input></td>
+									<td width="300"><input type="checkbox" name="optionalSectionsServiceMetadata">Optional Sections - Service Metadata</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="optionalSectionsContents">Optional Sections - Contents</input></td>
+									<td width="300"><input type="checkbox" name="optionalsectionsThemes">Optional Sections - Themes</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="optionalSectionsMultiple">Optional Sections - Contents, Themes</input></td>
+									<td width="300"><input type="checkbox" name="optionalSectionsBogus">Optional Sections - Bogus</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="optionalSectionsMissing">Optional Sections - Missing</input></td>
+									<td width="300"><input type="checkbox" name="optionalUpdateSequence">Optional Update Sequence</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="optionalAcceptFormats">Optional Accept Formats</input></td>
+									<td width="300"><input type="checkbox" name="servicesMetadataDocumentXMLwellFormed">Services Metadata Document XML Well-Formed</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="servicesMetadataDocumentReferencesNormativeSchema">Services Metadata Document References Normative Schema</input></td>
+									<td width="300"><input type="checkbox" name="servicesMetadataDocumentSchemaValid">Services Metadata Document is Schema Valid</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="advertisedFormatApplicationXML">Advertised Format application/xml</input></td>
+									<td width="300"><input type="checkbox" name="onlineResourceOnlyResourcePrefix">Online Resource Only Resource Prefix</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="includesGetEncodingConstraint">Includes GET Encoding Constraint</input></td>
+									<td width="300"><input type="checkbox" name="layerIdentifiersUnique">Layer Identifiers Unique</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="noLayersContainsOtherSourceURL">No Layers Response Contains Other Source URL</input></td>
+									<td width="300"><input type="checkbox" name="styleIdentifiersUnique">Style Identifiers Unique</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="layerLegendURLsCorrectResources">Layer Legend URLs are Correct Resources</input></td>
+									<td width="300"><input type="checkbox" name="layerLegendURLsCorrectFormats">LayerLegend URLs are Correct Formats</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="layerLegendURLsCorrectSizes">Layer Legend URLs are Correct Sizes</input></td>
+									<td width="300"><input type="checkbox" name="dimensionIdentifiersUnique">Dimension Identifiers Are Unique</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="layerTileMatrixSetsValid">Layer Tile Matrix Sets Are Valid</input></td>
+									<td width="300"><input type="checkbox" name="tileMatrixSetIdentifiersUnique">Tile Matrix Set Identifiers Are Unique</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="tileMatrixIdentifiersUnique">Tile Matrix Identifiers Are Unique</input></td>
+									<td width="300"><input type="checkbox" name="tileMatrixSetScaleDenomincatorsUnique">Tile Matrix Set Scale Denominators Are Unique</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="tileMatrixSetWellKnownScaleSetsCompatible">Tile Matrix Set Well Known Scale Sets Are Compatible</input></td>
+									<td width="300"><input type="checkbox" name="themeLayerRefValid">Theme Layer References Are Valid</input></td>
+								</tr>
+								<tr>
+									<td colspan="2" align="right"><input type="submit" value="OK" /></td>
+								</tr>			
+							</table>
+						</blockquote>
+					</body>
+				</ctl:form>
+			</xsl:variable>		
+			<xsl:element name="sel">
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Mandatory.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='mandatoryParameters'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.NoServiceParameter.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='noServiceParameter'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Invalid.ServiceParameter.Value.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidServiceParameter'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.AcceptVersions.Valid.ParameterValue.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='acceptVersionsValidParameterValue'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.AcceptVersions.Invalid.ParameterValue.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='acceptVersionsInvalidParameterValue'] = 'on')"/></xsl:element>
+				<xsl:if test="starts-with($interfaceType, 'KVP')">
+					<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.CaseInsensitive.KVP.Names.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='caseInsensitiveKVPnames'] = 'on')"/></xsl:element>
+				</xsl:if>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.All.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsAll'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.ServiceIdentification.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsServiceIdentification'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.ServiceProvider.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsServiceProvider'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.OperationsMetadata.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsServiceMetadata'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.Contents.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsContents'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.Themes.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalsectionsThemes'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.Multiple.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsMultiple'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.Bogus.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsBogus'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.Missing.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsMissing'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.UpdateSequence.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalUpdateSequence'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.AcceptFormats.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalAcceptFormats'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Services.Metadata.Document.XML.WellFormed.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='servicesMetadataDocumentXMLwellFormed'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Services.Metadata.Document.References.Normative.Schema.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='servicesMetadataDocumentReferencesNormativeSchema'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Services.Metadata.Document.SchemaValid.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='servicesMetadataDocumentSchemaValid'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Advertised.Format.ApplicationXML.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='advertisedFormatApplicationXML'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.OnlineResource.Only.ResourcePrefix.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='onlineResourceOnlyResourcePrefix'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Includes.GetEncoding.Constraint.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='includesGetEncodingConstraint'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Layer.Identifiers.Unique.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='layerIdentifiersUnique'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.No.Layers.Contains.OtherSource.URL.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='noLayersContainsOtherSourceURL'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Style.Identifiers.Unique.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='styleIdentifiersUnique'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.LayerLegendURLs.Correct.Resources.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='layerLegendURLsCorrectResources'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.LayerLegendURLs.Correct.Formats.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='layerLegendURLsCorrectFormats'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.LayerLegendURLs.Correct.Sizes.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='layerLegendURLsCorrectSizes'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Dimension.Identifiers.Unique.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='dimensionIdentifiersUnique'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Layer.TileMatrixSets.Valid.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='layerTileMatrixSetsValid'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.TileMatrixSet.Identifiers.Unique.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='tileMatrixSetIdentifiersUnique'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.TileMatrix.Identifiers.Unique.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='tileMatrixIdentifiersUnique'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.TileMatrixSet.ScaleDenominators.Unique.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='tileMatrixSetScaleDenomincatorsUnique'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.TileMatrixSet.WellKnownScaleSets.Compatible.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='tileMatrixSetWellKnownScaleSetsCompatible'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Theme.LayerRef.Valid.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='themeLayerRefValid'] = 'on')"/></xsl:element>
+			</xsl:element>
+		</ctl:code>
+	</ctl:function>
+	
+	<ctl:function name="wmts:serverGetTileAll">
+		<ctl:param name="interfaceType">The HTTP service interface type: KVP.GET | KVP.POST | XML.POST | SOAP.POST | RESTful</ctl:param>
+		<ctl:description>Create document fragment with child elements indicating all GetTile Tests for specified interfaceType</ctl:description>
+		<ctl:code>
+			<xsl:element name="sel">
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Mandatory.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Optional.SampleDimensions.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Missing.Parameters.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Layer.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.TileMatrixSet.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.TileMatrix.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Row.No.TileMatrixSetLimits.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Col.NoTileMatrixSetLimits.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Row.TileMatrixSetLimits.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Col.TileMatrixSetLimits.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Style.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.SampleDimension.Name.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.SampleDimension.Value.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Default.SampleDimension.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Current.SampleDimension.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Valid.Tile.Format.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Format.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Valid.Tile.Size.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Valid.Tile.Transparency.Selected')}">true</xsl:element>
+			</xsl:element>
+		</ctl:code>
+	</ctl:function>
+
+	<ctl:function name="wmts:serverGetTileMenu">
+		<ctl:param name="interfaceType">The HTTP service interface type: KVP.GET | KVP.POST | XML.POST | SOAP.POST | RESTful</ctl:param>
+		<ctl:description>Checkboxes for server GetTile tests whose prerequisites were met during bootstrap are presented for user selection.</ctl:description>
+		<ctl:code>
+			<xsl:variable name="gc-form-values"> 
+				<ctl:form  width="900" height="650">						
+					<body>
+						<h2 align="center">Compliance test suite for Web Map Tile Service (WMTS) 1.0</h2>
+						<p/>
+						<blockquote>
+							<table width="800" height="550"  border="1" padding="4" bgcolor="#00ffff" align="center">
+								<tr>
+									<th colspan="2" align="center">Server <xsl:value-of select="$interfaceType"/> GetTile Test Selection</th>
+								</tr>
+								<tr>
+									<td colspan="2" align="center">Click checkboxes of Server GetTile tests to execute, then click "OK"</td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="mandatoryParameters">Mandatory Parameters</input></td>
+									<td width="300"><input type="checkbox" name="optionalSampleDimension">Optional Sample Dimension</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="missing.Parameters">Missing Parameters</input></td>
+									<td width="300"><input type="checkbox" name="invalidLayer">Invalid Layer</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="invalidTileMatrixSet">Invalid Tile Matrix Set</input></td>
+									<td width="300"><input type="checkbox" name="invalidTileMatrix">Invalid Tile Matrix</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="invalidTileRowNoTileMatrixSetLimits">Invalid Tile Row - No Tile Matrix Set Limits</input></td>
+									<td width="300"><input type="checkbox" name="invalidTileColNoTileMatrixSetLimits">Invalid Tile Column - No Tile Matrix Set Limits</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="invalidTileRowTileMatrixSetLimits">Invalid Tile Row - Tile Matrix Set Limits</input></td>
+									<td width="300"><input type="checkbox" name="invalidTileColTileMatrixSetLimits">Invalid Tile Column - Tile Matrix Set Limits</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="invalidTileStyle">Invalid Tile Style</input></td>
+									<td />
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="invalidSampleDimensionName">Invalid Sample Dimension Name</input></td>
+									<td width="300"><input type="checkbox" name="invalidSampleDimensionValue">Invalid Sample Dimension Value</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="defaultSampleDimension">Default Sample Dimension</input></td>
+									<td width="300"><input type="checkbox" name="currentSampleDimension">CurrentSampleDimension</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="validTileFormat">Valid Tile Format</input></td>
+									<td width="300"><input type="checkbox" name="invalidTileFormat">Invalid Tile Format</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="validTileSize">Valid Tile Size</input></td>
+									<td width="300"><input type="checkbox" name="validTileTransparency">Valid Tile Transparency</input></td>
+								</tr>
+								<tr>
+									<td colspan="2" align="right"><input type="submit" value="OK" /></td>
+								</tr>			
+							</table>
+						</blockquote>
+					</body>
+				</ctl:form>
+			</xsl:variable>		
+			<xsl:element name="sel">
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Mandatory.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='mandatoryParameters'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Optional.SampleDimensions.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSampleDimension'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Missing.Parameters.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='missing.Parameters'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Layer.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidLayer'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.TileMatrixSet.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileMatrixSet'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.TileMatrix.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileMatrix'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Row.No.TileMatrixSetLimits.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileRowNoTileMatrixSetLimits'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Col.NoTileMatrixSetLimits.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileColNoTileMatrixSetLimits'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Row.TileMatrixSetLimits.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileRowTileMatrixSetLimits'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Col.TileMatrixSetLimits.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileColTileMatrixSetLimits'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Style.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileStyle'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.SampleDimension.Name.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidSampleDimensionName'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.SampleDimension.Value.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidSampleDimensionValue'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Default.SampleDimension.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='defaultSampleDimension'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Current.SampleDimension.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='currentSampleDimension'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Valid.Tile.Format.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='validTileFormat'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Format.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileFormat'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Valid.Tile.Size.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='validTileSize'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Valid.Tile.Transparency.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='validTileTransparency'] = 'on')"/></xsl:element>
+			</xsl:element>
+		</ctl:code>
+	</ctl:function>
+		
+	<ctl:function name="wmts:serverGetFeatureInfoAll">
+		<ctl:param name="interfaceType">The HTTP service interface type: KVP.GET | KVP.POST | XML.POST | SOAP.POST | RESTful</ctl:param>
+		<ctl:description>Create document fragment with child elements indicating all GetFeatureInfo Tests for specified interfaceType</ctl:description>
+		<ctl:code>
+			<xsl:element name="sel">
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Mandatory.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Optional.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Missing.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.Layer.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.TileMatrixSet.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.TileMatrix.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.Tile.Style.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.SampleDimension.Name.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.SampleDimension.Value.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Default.SampleDimension.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Current.SampleDimension.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Non.Queryable.Layer.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Valid.InfoFormat.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.InfoFormat.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.Pixel.Row.J.Selected')}">true</xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.Pixel.Col.I.Selected')}">true</xsl:element>
+			</xsl:element>
+		</ctl:code>
+	</ctl:function>
+
+	<ctl:function name="wmts:serverGetFeatureInfoMenu">
+		<ctl:param name="interfaceType">The HTTP service interface type: KVP.GET | KVP.POST | XML.POST | SOAP.POST | RESTful</ctl:param>
+		<ctl:description>Checkboxes for server GetTile tests whose prerequisites were met during bootstrap are presented for user selection.</ctl:description>
+		<ctl:code>
+			<xsl:variable name="gc-form-values"> 
+				<ctl:form  width="900" height="650">						
+					<body>
+						<h2 align="center">Compliance test suite for Web Map Tile Service (WMTS) 1.0</h2>
+						<p/>
+						<blockquote>
+							<table width="800" height="550"  border="1" padding="4" bgcolor="#00ffff" align="center">
+								<tr>
+									<th colspan="2" align="center">Server <xsl:value-of select="$interfaceType"/> GetFeatureInfo Test Selection</th>
+								</tr>
+								<tr>
+									<td colspan="2" align="center">Click checkboxes of Server GetFeatureInfo tests to execute, then click "OK"</td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="mandatoryParameters">Mandatory Parameters</input></td>
+									<td width="300"><input type="checkbox" name="optionalParameters">Optional Parameters</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="missingParameters">Missing Parameters</input></td>
+									<td width="300"><input type="checkbox" name="invalidLayer">Invalid Layer</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="invalidTileMatrixSet">Invalid Tile Matrix Set</input></td>
+									<td width="300"><input type="checkbox" name="invalidTileMatrix">Invalid Tile Matrix</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="invalidTileRowNoTileMatrixSetLimits">Invalid Tile Row - No Tile Matrix Set Limits</input></td>
+									<td width="300"><input type="checkbox" name="invalidTileColNoTileMatrixSetLimits">Invalid Tile Column - No Tile Matrix Set Limits</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="invalidTileRowTileMatrixSetLimits">Invalid Tile Row - Tile Matrix Set Limits</input></td>
+									<td width="300"><input type="checkbox" name="invalidTileColTileMatrixSetLimits">Invalid Tile Col - Tile Matrix Set Limits</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="invalidSampleDimensionName">Invalid Sample Dimension Name</input></td>
+									<td width="300"><input type="checkbox" name="invalidSampleDimensionValue">Invalid Dample Dimension Value</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="defaultSampleDimension">Default Sample Dimension</input></td>
+									<td width="300"><input type="checkbox" name="currentSampleDimension">Current Sample Dimension</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="invalidTileStyle">Invalid Tile Style</input></td>
+									<td width="300"><input type="checkbox" name="nonQueryableLayer">Non Queryable Layer</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="validInfoFormat">Valid InfoFormat</input></td>
+									<td width="300"><input type="checkbox" name="invalidInfoFormat">Invalid InfoFormat</input></td>
+								</tr>
+								<tr>
+									<td width="300"><input type="checkbox" name="invalidPixelRowJ">Invalid Pixel Row J</input></td>
+									<td width="300"><input type="checkbox" name="invalidPixelColI">Invalid Pixel Column I</input></td>
+								</tr>
+								
+								<tr>
+									<td colspan="2" align="right"><input type="submit" value="OK" /></td>
+								</tr>			
+							</table>
+						</blockquote>
+					</body>
+				</ctl:form>
+			</xsl:variable>		
+			<xsl:element name="sel">
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Mandatory.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='mandatoryParameters'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Optional.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalParameters'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Missing.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='missingParameters'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.Layer.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidLayer'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.TileMatrixSet.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileMatrixSet'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.TileMatrix.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileMatrix'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileRowNoTileMatrixSetLimits'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileColNoTileMatrixSetLimits'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileRowTileMatrixSetLimits'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileColTileMatrixSetLimits'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.Tile.Style.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileStyle'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.SampleDimension.Name.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidSampleDimensionName'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.SampleDimension.Value.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidSampleDimensionValue'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Default.SampleDimension.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='defaultSampleDimension'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Current.SampleDimension.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='currentSampleDimension'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Non.Queryable.Layer.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='nonQueryableLayer'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Valid.InfoFormat.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='validInfoFormat'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.InfoFormat.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidInfoFormat'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.Pixel.Row.J.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidPixelRowJ'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.Pixel.Col.I.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidPixelColI'] = 'on')"/></xsl:element>
+			</xsl:element>
+		</ctl:code>
+	</ctl:function>
+			
+<ctl:function name="wmtsFunctions:printSelected">
+	<ctl:param name="selected"/>
+		<ctl:code>
+			<xsl:for-each select="$selected/sel/*">
+					<ctl:message><xsl:value-of select="node-name(.)"/>:<xsl:value-of select="."/></ctl:message>
+			</xsl:for-each>				
+		</ctl:code>
+</ctl:function>
+
+</ctl:package>
