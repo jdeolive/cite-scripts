@@ -81,6 +81,13 @@
           <th colspan="2">Revision History</th>
         </tr>
  		<tr>
+		  <td>Revision 0.4</td>
+          <td>2011-05-10 -- 2011-05-16</td>
+        </tr>
+        <tr>
+          <td colspan="2">Added test prerequisites, corrected errata.</td>
+        </tr>
+ 		<tr>
 		  <td>Revision 0.3</td>
           <td>2011-04-08</td>
         </tr>
@@ -1750,6 +1757,9 @@ is a comma-separated prioritized sequence of one or more specification versions 
 										<p><a id="Client.KVP.GET.GetTile.Mandatory.Prerequisite-1"></a>the response entity has an &lt;ows:Operation name="GetTile"&gt; element 
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Get&gt;&lt;ows:Constraint name="GetEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
+									<li>
+										<p><a id="Client.KVP.GET.GetTile.Mandatory.Prerequisite-2"></a>the response entity has one or more Layers with one TileMatrixSet with two or more TileMatrices.</p>		
+									</li>
 								</ol>
 							</div>
 						</td>
@@ -2067,6 +2077,9 @@ is a comma-separated prioritized sequence of one or more specification versions 
 										<p><a id="Client.KVP.GET.GetTile.Contiguous.Prerequisite-1"></a>the response entity has an &lt;ows:Operation name="GetTile"&gt; element 
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Get&gt;&lt;ows:Constraint name="GetEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
+									<li>
+										<p><a id="Client.KVP.GET.GetTile.Contiguous.Prerequisite-2"></a>the response entity has two or more contiguous tiles from the same Layer and TileMatrixSet</p>
+									</li>
 								</ol>
 							</div>
 						</td>
@@ -2162,6 +2175,9 @@ is a comma-separated prioritized sequence of one or more specification versions 
 										<p><a id="Client.KVP.GET.GetTile.Overlay.Prerequisite-1"></a>the response entity has an &lt;ows:Operation name="GetTile"&gt; element 
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Get&gt;&lt;ows:Constraint name="GetEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
+									<li>
+										<p><a id="Client.KVP.GET.GetTile.Overlay.Prerequisite-2"></a>the response entity has two or more Layers with tiles from the same TileMatrixSet that overlay each other.</p>
+									</li>
 								</ol>
 							</div>
 						</td>
@@ -2256,6 +2272,9 @@ is a comma-separated prioritized sequence of one or more specification versions 
 									<li>
 										<p><a id="Client.KVP.GET.GetTile.TileMatrixSets.Prerequisite-1"></a>the response entity has an &lt;ows:Operation name="GetTile"&gt; element 
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Get&gt;&lt;ows:Constraint name="GetEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
+									</li>
+									<li>
+										<p><a id="Client.KVP.GET.GetTile.TileMatrixSets.Prerequisite-2"></a>the response entity has two or more Layers with tiles from different TileMatrixSets that overlay each other.</p>
 									</li>
 								</ol>
 							</div>
@@ -2555,11 +2574,7 @@ is a comma-separated prioritized sequence of one or more specification versions 
 									</li>
 									<li>
 										<p><a id="Client.KVP.GET.GetFeatureInfo.Optional.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Client.KVP.GET.GetFeatureInfo.Optional.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with three or more &lt;Dimension&gt;s.</p>
+										&lt;InfoFormat&gt;s and three or more &lt;Dimension&gt;s.</a></p>
 									</li>
 								</ol>
 							</div>
@@ -3852,6 +3867,9 @@ is a comma-separated prioritized sequence of one or more specification versions 
 										<p><a id="Client.KVP.POST.GetTile.Mandatory.Prerequisite-1"></a>the response entity has an &lt;ows:Operation name="GetTile"&gt; element 
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
+									<li>
+										<p><a id="Client.KVP.POST.GetTile.Mandatory.Prerequisite-2"></a>the response entity has one or more Layers with one TileMatrixSet with two or more TileMatrices.</p>
+									</li>
 								</ol>
 							</div>
 						</td>
@@ -4180,6 +4198,9 @@ is a comma-separated prioritized sequence of one or more specification versions 
 										<p><a id="Client.KVP.POST.GetTile.Contiguous.Prerequisite-1"></a>the response entity has an &lt;ows:Operation name="GetTile"&gt; element 
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
+									<li>
+										<p><a id="Client.KVP.POST.GetTile.Contiguous.Prerequisite-2"></a>the response entity has two or more contiguous tiles from the same Layer and TileMatrixSet.</p>
+									</li>
 								</ol>
 							</div>
 						</td>
@@ -4278,6 +4299,9 @@ is a comma-separated prioritized sequence of one or more specification versions 
 										<p><a id="Client.KVP.POST.GetTile.Overlay.Prerequisite-1"></a>the response entity has an &lt;ows:Operation name="GetTile"&gt; element 
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
+									<li>
+										<p><a id="Client.KVP.POST.GetTile.Overlay.Prerequisite-2"></a>the response entity has two or more Layers with tiles from the same TileMatrixSet that overlay each other.</p>
+									</li>
 								</ol>
 							</div>
 						</td>
@@ -4375,6 +4399,9 @@ is a comma-separated prioritized sequence of one or more specification versions 
 									<li>
 										<p><a id="Client.KVP.POST.GetTile.TileMatrixSets.Prerequisite-1"></a>the response entity has an &lt;ows:Operation name="GetTile"&gt; element 
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
+									</li>
+									<li>
+										<p><a id="Client.KVP.POST.GetTile.TileMatrixSets.Prerequisite-2"></a>the response entity has two or more Layers with tiles from different TileMatrixSets that overlay each other.</p>
 									</li>
 								</ol>
 							</div>
@@ -4680,11 +4707,7 @@ is a comma-separated prioritized sequence of one or more specification versions 
 									</li>
 									<li>
 										<p><a id="Client.KVP.POST.GetFeatureInfo.Optional.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Client.KVP.POST.GetFeatureInfo.Optional.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with three or more &lt;Dimension&gt;s.</p>
+										&lt;InfoFormat&gt;s and three or more &lt;Dimension&gt;s.</a></p>
 									</li>
 								</ol>
 							</div>
@@ -5965,6 +5988,9 @@ is a comma-separated prioritized sequence of one or more specification versions 
 										&lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt;
 										child element with a value of "XML".</p>
 									</li>
+									<li>
+										<p><a id="Client.XML.POST.GetTile.Mandatory.Prerequisite-2"></a>the response entity has one or more Layers with one TileMatrixSet with two or more TileMatrices.</p>
+									</li>
 								</ol>
 							</div>
 						</td>
@@ -6284,6 +6310,9 @@ is a comma-separated prioritized sequence of one or more specification versions 
 										&lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt;
 										child element with a value of "XML".</p>
 									</li>
+									<li>
+										<p><a id="Client.XML.POST.GetTile.Contiguous.Prerequisite-2"></a>the response entity has two or more contiguous tiles from the same Layer and TileMatrixSet.</p>
+									</li>
 								</ol>
 							</div>
 						</td>
@@ -6378,6 +6407,9 @@ is a comma-separated prioritized sequence of one or more specification versions 
 										&lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt;
 										child element with a value of "XML".</p>
 									</li>
+									<li>
+										<p><a id="Client.XML.POST.GetTile.Overlay.Prerequisite-2"></a>the response entity has two or more Layers with tiles from the same TileMatrixSet that overlay each other.</p>
+									</li>
 								</ol>
 							</div>
 						</td>
@@ -6471,6 +6503,9 @@ is a comma-separated prioritized sequence of one or more specification versions 
 										&lt;ows:Operation name="GetTile"&gt; element that contains a 
 										&lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt;
 										child element with a value of "XML".</p>
+									</li>
+									<li>
+										<p><a id="Client.XML.POST.GetTile.TileMatrixSets.Prerequisite-2"></a>the response entity has two or more Layers with tiles from different TileMatrixSets that overlay each other.</p>
 									</li>
 								</ol>
 							</div>
@@ -6765,11 +6800,7 @@ is a comma-separated prioritized sequence of one or more specification versions 
 									</li>
 									<li>
 										<p><a id="Client.XML.POST.GetFeatureInfo.Optional.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Client.XML.POST.GetFeatureInfo.Optional.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with three or more &lt;Dimension&gt;s.</p>
+										&lt;InfoFormat&gt;s and three or more &lt;Dimension&gt;s.</a></p>
 									</li>
 								</ol>
 							</div>
@@ -8107,6 +8138,9 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										&lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt;
 										child element with a value of "SOAP".</p>
 									</li>
+									<li>
+										<p><a id="Client.SOAP.POST.GetTile.Mandatory.Prerequisite-2"></a>the response entity has one or more Layers with one TileMatrixSet with two or more TileMatrices.</p>
+									</li>
 								</ol>
 							</div>
 						</td>
@@ -8435,6 +8469,9 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										&lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt;
 										child element with a value of "SOAP".</p>
 									</li>
+									<li>
+										<p><a id="Client.SOAP.POST.GetTile.Contiguous.Prerequisite-2"></a>the response entity has two or more contiguous tiles from the same Layer and TileMatrixSet</p>
+									</li>
 								</ol>
 							</div>
 						</td>
@@ -8532,6 +8569,9 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										&lt;ows:Operation name="GetTile"&gt; element that contains a 
 										&lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt;
 										child element with a value of "SOAP".</p>
+									</li>
+									<li>
+										<p><a id="Client.SOAP.POST.GetTile.Overlay.Prerequisite-2"></a>the response entity has two or more Layers with tiles from the same TileMatrixSet that overlay each other.</p>
 									</li>
 								</ol>
 							</div>
@@ -8636,6 +8676,9 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										&lt;ows:Operation name="GetTile"&gt; element that contains a 
 										&lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt;
 										child element with a value of "SOAP".</p>
+									</li>
+									<li>
+										<p><a id="Client.SOAP.POST.GetTile.TileMatrixSets.Prerequisite-2"></a>the response entity has two or more Layers with tiles from different TileMatrixSets that overlay each other.</p>
 									</li>
 								</ol>
 							</div>
@@ -8941,11 +8984,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 									</li>
 									<li>
 										<p><a id="Client.SOAP.POST.GetFeatureInfo.Optional.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Client.SOAP.POST.GetFeatureInfo.Optional.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with three or more &lt;Dimension&gt;s.</p>
+										&lt;InfoFormat&gt;s and three or more &lt;Dimension&gt;s.</a></p>
 									</li>
 								</ol>
 							</div>
@@ -9159,7 +9198,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 								<ol type="1">
 									<li>
 										<p><a id="Client.RESTful.GetCapabilities.Mandatory.Prerequisite-1"></a>
-										the response entity has a &lt;ServiceMetadataURL&gt; element indicating the same URL specified in the request.</p>
+										the response entity has a &lt;ServiceMetadataURL&gt; element.</p>
 									</li>
 								</ol>
 							</div>
@@ -9279,6 +9318,10 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 									<li>
 										<p><a id="Client.RESTful.GetTile.Mandatory.Prerequisite-1"></a>
 										the resonse entity has a &lt;ResourceURL&gt; template element for the "GetTile" operation for each advertised Layer.</p>
+									</li>
+									<li>
+										<p><a id="Client.RESTful.GetTile.Mandatory.Prerequisite-2"></a>
+										the resonse entity has one or more Layers with one TileMatrixSet with two or more TileMatrices.</p>
 									</li>
 								</ol>
 							</div>
@@ -9583,8 +9626,12 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 							<div class="orderedlist">
 								<ol type="1">
 									<li>
-										<p><a id="Client.RESTful.GetTile.Mandatory.Prerequisite-1"></a>
+										<p><a id="Client.RESTful.GetTile.Contiguous.Prerequisite-1"></a>
 										the resonse entity has a &lt;ResourceURL&gt; template element for the "GetTile" operation for each advertised Layer.</p>
+									</li>
+									<li>
+										<p><a id="Client.RESTful.GetTile.Contiguous.Prerequisite-2"></a>
+										the resonse entity has two or more contiguous tiles from the same Layer and TileMatrixSet</p>
 									</li>
 								</ol>
 							</div>
@@ -9675,8 +9722,12 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 							<div class="orderedlist">
 								<ol type="1">
 									<li>
-										<p><a id="Client.RESTful.GetTile.Mandatory.Prerequisite-1"></a>
+										<p><a id="Client.RESTful.GetTile.Overlay.Prerequisite-1"></a>
 										the resonse entity has a &lt;ResourceURL&gt; template element for the "GetTile" operation for each advertised Layer.</p>
+									</li>
+									<li>
+										<p><a id="Client.RESTful.GetTile.Overlay.Prerequisite-2"></a>
+										the resonse entity has two or more Layers with tiles from the same TileMatrixSet that overlay each other.</p>
 									</li>
 								</ol>
 							</div>
@@ -9771,8 +9822,12 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 							<div class="orderedlist">
 								<ol type="1">
 									<li>
-										<p><a id="Client.RESTful.GetTile.Mandatory.Prerequisite-1"></a>
+										<p><a id="Client.RESTful.GetTile.TileMatrixSets.Prerequisite-1"></a>
 										the resonse entity has a &lt;ResourceURL&gt; template element for the "GetTile" operation for each advertised Layer.</p>
+									</li>
+									<li>
+										<p><a id="Client.RESTful.GetTile.TileMatrixSets.Prerequisite-2"></a>
+										the resonse entity has two or more Layers with tiles from different TileMatrixSets that overlay each other.</p>
 									</li>
 								</ol>
 							</div>
@@ -9891,7 +9946,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 							<div class="orderedlist">
 								<ol type="1">
 									<li>
-										<p><a id="Client.RESTful.GetFeatureInfo.Mandatory.Prerequisite-1"></a>the resonse entity has a &lt;ResourceURL&gt; template element for the "GetFeatureInfo" operation for each advertised Layer.</p>
+										<p><a id="Client.RESTful.GetFeatureInfo.Mandatory.Prerequisite-1"></a>the resonse entity has a &lt;ResourceURL&gt; template element for the "GetFeatureInfo" operation for each advertised Layer with one or more <InfoFormat>s.</p>
 									</li>
 									<li>
 										<p><a id="Client.RESTful.GetFeatureInfo.Mandatory.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
@@ -10060,15 +10115,10 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 							<div class="orderedlist">
 								<ol type="1">
 									<li>
-										<p><a id="Client.RESTful.GetFeatureInfo.Optional.Prerequisite-1"></a>the resonse entity has a &lt;ResourceURL&gt; template element for the "GetFeatureInfo" operation for each advertised Layer.</p>
+										<p><a id="Client.RESTful.GetFeatureInfo.Optional.Prerequisite-1"></a>the resonse entity has a &lt;ResourceURL&gt; template element for the "GetFeatureInfo" operation for each advertised Layer with one or more &lt;InfoFormat&gt;s.</p>
 									</li>
 									<li>
-										<p><a id="Client.RESTful.GetFeatureInfo.Optional.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Client.RESTful.GetFeatureInfo.Optional.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with three or more &lt;Dimension&gt;s.</p>
+										<p><a id="Client.RESTful.GetFeatureInfo.Optional.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more &lt;InfoFormat&gt;s and three or more &lt;Dimension&gt;s.</a></p>
 									</li>
 								</ol>
 							</div>
@@ -10276,7 +10326,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 							<div class="orderedlist">
 								<ol type="1">
 									<li>
-										<p><a id="Server.KVP.GET.GetCapabilities.Request.Mandatory.Prerequisite-1"></a>the response entity has an &lt;ows:Operation name="GetCapabilities"&gt; element 
+										<p><a id="Server.KVP.GET.HTTP.Mandatory.Prerequisite-1"></a>the response entity has an &lt;ows:Operation name="GetCapabilities"&gt; element 
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Get&gt;&lt;ows:Constraint name="GetEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
 								</ol>
@@ -11017,8 +11067,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Get&gt;&lt;ows:Constraint name="GetEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
 									<li>
-										<p><a id="Server.KVP.GET.GetCapabilities.Request.AcceptVersions.Valid.Prerequisite-2"></a>the response entity has an &lt;ows:Capabilities name="GetCapabilities"&gt; element 
-										that contains a version attribute with a version number value that contains three non-negative integers separated by decimal points, in the form "x.y.z". The integers y and z shall not exceed 99..</p>
+										<p><a id="Server.KVP.GET.GetCapabilities.Request.AcceptVersions.Valid.Prerequisite-2"></a>the response entity has an &lt;ows:Operation name="GetCapabilities"&gt; element 
+										that contains an &lt;ows:Parameter name="Versions"&gt; element with an &lt;ows:AllowedValues&gt element with an &lt;ows:Value&gt; element with a value that contains three non-negative integers separated by decimal points, in the form "x.y.z". The integers y and z shall not exceed 99.</p>
 									</li>
 								</ol>
 							</div>
@@ -11130,8 +11180,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Get&gt;&lt;ows:Constraint name="GetEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
 									<li>
-										<p><a id="Server.KVP.GET.GetCapabilities.Request.AcceptVersions.Inalid.Prerequisite-2"></a>the response entity has an &lt;ows:Capabilities name="GetCapabilities"&gt; element 
-										that contains a version attribute with a version number value that contains three non-negative integers separated by decimal points, in the form "x.y.z". The integers y and z shall not exceed 99..</p>
+										<p><a id="Server.KVP.GET.GetCapabilities.Request.AcceptVersions.Inalid.Prerequisite-2"></a>the response entity has an &lt;ows:Operation name="GetCapabilities"&gt; element 
+										that contains an &lt;ows:Parameter name="Versions"&gt; element with an &lt;ows:AllowedValues&gt element with an &lt;ows:Value&gt; element with a value that contains three non-negative integers separated by decimal points, in the form "x.y.z". The integers y and z shall not exceed 99.</p>
 									</li>
 								</ol>
 							</div>
@@ -11409,7 +11459,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 	</div>	
 	<br class="atc-break" />
 	<div class="atc"><a id="Server.KVP.GET.GetCapabilities.Request.Sections.ServiceIdentification"></a>
-		<p class="title"><b>Table&nbsp;18.8.&nbsp;Client KVP GET - GetCapabilities - Optional parameter - Sections - value = ServiceIdentification</b></p>
+		<p class="title"><b>Table&nbsp;18.8.&nbsp;Server KVP GET - GetCapabilities - Optional parameter - Sections - value = ServiceIdentification</b></p>
 		<div class="atc-contents">
 			<table summary="Client KVP GET - GetCapabilities - Optional parameter - Sections - value = ServiceIdentification" border="1">
 				<colgroup>
@@ -11718,7 +11768,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 							<div class="orderedlist">
 								<ol type="1">
 									<li>
-										<p><a id="Server.KVP.GET.GetCapabilities.Reaquest.Sections.Contentss.Prerequisite-1"></a>the response entity has an &lt;ows:Operation name="GetCapabilities"&gt; element 
+										<p><a id="Server.KVP.GET.GetCapabilities.Request.Sections.Contents.Prerequisite-1"></a>the response entity has an &lt;ows:Operation name="GetCapabilities"&gt; element 
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Get&gt;&lt;ows:Constraint name="GetEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
 								</ol>
@@ -13476,13 +13526,13 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 												<p><a id="Server.KVP.GET.GetCapabilities.Response.Layer.LegendURL.Correct.Resource-3-1"></a>format - must be a MIME type supported output format for the legend image</p>
 											</li>
 											<li>
-												<p><a id="Server.KVP.GET.GetCapabilities.Response.Layer.LegendURL.Correct.Resource-3-1"></a>xlink:href - must reference an image</p>
+												<p><a id="Server.KVP.GET.GetCapabilities.Response.Layer.LegendURL.Correct.Resource-3-1"></a>xlink:href - must reference an image of the specified format.</p>
 											</li>
 											<li>
-												<p><a id="Server.KVP.GET.GetCapabilities.Response.Layer.LegendURL.Correct.Resource-3-1"></a>minScaleDenominator - must be the denominator of the minimum scale (inclusive) for which this legend image is valid</p>
+												<p><a id="Server.KVP.GET.GetCapabilities.Response.Layer.LegendURL.Correct.Resource-3-1"></a>minScaleDenominator - must be the denominator of the minimum scale (inclusive) for which this legend image is valid, and must equal a &lt;wmts:ScaleDenominator&gt; from one of the &lt;wmts:TileMatrix&gt;s from one of the &lt;wmts:TileMatrixSet&gt;s for the &lt;wmts:Layer&gt;.</p>
 											</li>
 											<li>
-												<p><a id="Server.KVP.GET.GetCapabilities.Response.Layer.LegendURL.Correct.Resource-3-1"></a>maxScaleDenominator - must be the denominator of the maximum scale (exclusive) for which this legend image is valid</p>
+												<p><a id="Server.KVP.GET.GetCapabilities.Response.Layer.LegendURL.Correct.Resource-3-1"></a>maxScaleDenominator - must be the denominator of the maximum scale (exclusive) for which this legend image is valid, and must equal a &lt;wmts:ScaleDenominator&gt; from one of the &lt;wmts:TileMatrix&gt;s from one of the &lt;wmts:TileMatrixSet&gt;s for the &lt;wmts:Layer&gt;.</p>
 											</li>
 											<li>
 												<p><a id="Server.KVP.GET.GetCapabilities.Response.Layer.LegendURL.Correct.Resource-3-1"></a>width - must be the width (in pixels) of the legend image</p>
@@ -14319,7 +14369,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										<p><a id="Server.KVP.GET.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisite-1"></a>the response entity is schema-valid with respect to the normative (wmts.xsd) XML schema.</p>
 									</li>
 									<li>
-										<p><a id="Server.KVP.GET.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisite-1"></a>the response entity must contain at least one
+										<p><a id="Server.KVP.GET.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisite-2"></a>the response entity must contain at least one
 										&lt;Contents&gt;&lt;TileMatrixSet&gt;&lt;WellKnownScaleSet&gt; element with one of the following values:</p>
 										<ul>
 											<li>urn:ogc:def:wkss:OGC:1.0:GlobalCRS84Scale</li>
@@ -14355,7 +14405,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										<code class="code">WMTS</code>;</p>
 									</li>
 									<li>
-										<p><a id="Server.KVP.GET.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet-3"></a>the &lt;TileMatrixset&gt;&lt;SupportedCRS&gt;
+										<p><a id="Server.KVP.GET.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet-3"></a>the &lt;TileMatrixSet&gt;&lt;SupportedCRS&gt;
 										element value must match the CRS for the well known scale set:</p>
 										<table>
 											<tbody>
@@ -15109,6 +15159,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 									<li>
 										<p><a id="Server.KVP.GET.GetTile.Invalid.Layer.Prerequisite-1"></a>the response entity has an &lt;ows:Operation name="GetTile"&gt; element 
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Get&gt;&lt;ows:Constraint name="GetEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
+										<p><a id="Server.KVP.GET.GetTile.Invalid.Layer.Prerequisite-2"></a>the response entity has one or more &lt;Layer&gt; elements.</p>
 									</li>
 								</ol>
 							</div>
@@ -15268,6 +15319,9 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 									<li>
 										<p><a id="Server.KVP.GET.GetTile.Invalid.TileMatrixSet.Prerequisite-1"></a>the response entity has an &lt;ows:Operation name="GetTile"&gt; element 
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Get&gt;&lt;ows:Constraint name="GetEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
+									</li>
+									<li>
+										<p><a id="Server.KVP.GET.GetTile.Invalid.TileMatrixSet.Prerequisite-2"></a>the response entity has one or more &lt;TileMatrixSet&gt; elements.</p>
 									</li>
 								</ol>
 							</div>
@@ -17926,11 +17980,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 									</li>
 									<li>
 										<p><a id="Server.KVP.GET.GetFeatureInfo.Optional.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.KVP.GET.GetFeatureInfo.Optional.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with three or more &lt;Dimension&gt;s.</p>
+										&lt;InfoFormat&gt;s and  with three or more &lt;Dimension&gt;s.</a></p>
 									</li>
 								</ol>
 							</div>
@@ -18675,10 +18725,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 									</li>
 									<li>
 										<p><a id="Server.KVP.GET.GetFeatureInfo.Invalid.TileMatrix.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.KVP.GET.GetFeatureInfo.Invalid.TileMatrix.Prerequisite-3"></a>the response entity has two or more &lt;TileMatrix&gt; elements.</p>
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; to a &lt;TileMatrixSet&gt; with two or more &lt;TileMatrix&gt; elements.</a></p>
 									</li>
 								</ol>
 							</div>
@@ -18848,11 +18895,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Get&gt;&lt;ows:Constraint name="GetEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
 									<li>
-										<p><a id="Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-3"></a>the response entity advertises a Layer with no TileMatrixSetLimits.</p>
+										<p><a id="Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; with no &lt;TileMatrixSetLimits&gt;.</p>
 									</li>
 								</ol>
 							</div>
@@ -19023,12 +19067,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Get&gt;&lt;ows:Constraint name="GetEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
 									<li>
-										<p><a id="Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-3"></a>the response entity advertises a Layer with no TileMatrixSetLimits.</p>
-									</li>
+										<p><a id="Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; with no &lt;TileMatrixSetLimits&gt;.</p>
 								</ol>
 							</div>
 						</td>
@@ -19198,11 +19238,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Get&gt;&lt;ows:Constraint name="GetEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
 									<li>
-										<p><a id="Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-3"></a>the response entity advertises a Layer with TileMatrixSetLimits.</p>
+										<p><a id="Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; with &lt;TileMatrixSetLimits&gt;.</p>
 									</li>
 								</ol>
 							</div>
@@ -19374,11 +19411,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Get&gt;&lt;ows:Constraint name="GetEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
 									<li>
-										<p><a id="Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-3"></a>the response entity advertises a Layer with TileMatrixSetLimits.</p>
+										<p><a id="Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; with &lt;TileMatrixSetLimits&gt;.</p>
 									</li>
 								</ol>
 							</div>
@@ -19732,12 +19766,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Get&gt;&lt;ows:Constraint name="GetEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
 									<li>
-										<p><a id="Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with one or more &lt;Dimension&gt;s.</p>
+										<p><a id="Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and one or more &lt;Dimension&gt;s.</p>
 									</li>
 								</ol>
 							</div>
@@ -19928,13 +19958,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Get&gt;&lt;ows:Constraint name="GetEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
 									<li>
-										<p><a id="Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with one or more &lt;Dimension&gt;s.</p>
-									</li>
+										<p><a id="Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and one or more &lt;Dimension&gt;s.</p>
 								</ol>
 							</div>
 						</td>
@@ -20127,12 +20152,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Get&gt;&lt;ows:Constraint name="GetEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
 									<li>
-										<p><a id="Server.KVP.GET.GetFeatureInfo.Default.SampleDimension.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.KVP.GET.GetFeatureInfo.Default.SampleDimension.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with one or more &lt;Dimension&gt;s with a &lt;Default&gt; element text value.</p>
+										<p><a id="Server.KVP.GET.GetFeatureInfo.Default.SampleDimension.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and one or more &lt;Dimension&gt;s with a &lt;Default&gt; element text value.</p>
 									</li>
 								</ol>
 							</div>
@@ -20315,12 +20336,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Get&gt;&lt;ows:Constraint name="GetEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
 									<li>
-										<p><a id="Server.KVP.GET.GetFeatureInfo.Current.SampleDimension.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.KVP.GET.GetFeatureInfo.Current.SampleDimension.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with one or more &lt;Dimension&gt;s with a &lt;Current&gt; element text value.</p>
+										<p><a id="Server.KVP.GET.GetFeatureInfo.Current.SampleDimension.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and one or more &lt;Dimension&gt;s with a &lt;Current&gt; element text value.</p>
 									</li>
 								</ol>
 							</div>
@@ -22260,8 +22277,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
 									<li>
-										<p><a id="Server.KVP.POST.GetCapabilities.Request.AcceptVersions.Valid.Prerequisite-2"></a>the response entity has an &lt;ows:Capabilities name="GetCapabilities"&gt; element 
-										that contains a version attribute with a version number value that contains three non-negative integers separated by decimal points, in the form "x.y.z". The integers y and z shall not exceed 99..</p>
+										<p><a id="Server.KVP.POST.GetCapabilities.Request.AcceptVersions.Valid.Prerequisite-2"></a>the response entity has an &lt;ows:Operation name="GetCapabilities"&gt; element 
+										that contains an &lt;ows:Parameter name="Versions"&gt; element with an &lt;ows:AllowedValues&gt element with an &lt;ows:Value&gt; element with a value that contains three non-negative integers separated by decimal points, in the form "x.y.z". The integers y and z shall not exceed 99.</p>
 									</li>
 								</ol>
 							</div>
@@ -26535,6 +26552,9 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										<p><a id="Server.KVP.POST.GetTile.Invalid.TileMatrixSet.Prerequisite-1"></a>the response entity has an &lt;ows:Operation name="GetTile"&gt; element 
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
+									<li>
+										<p><a id="Server.KVP.POST.GetTile.Invalid.TileMatrixSet.Prerequisite-2"></a>the response entity has one or more &lt;TileMatrixSet&gt; elements.</p>
+									</li>
 								</ol>
 							</div>
 						</td>
@@ -29245,11 +29265,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 									</li>
 									<li>
 										<p><a id="Server.KVP.POST.GetFeatureInfo.Optional.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.KVP.POST.GetFeatureInfo.Optional.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with three or more &lt;Dimension&gt;s.</p>
+										&lt;InfoFormat&gt;s and  with three or more &lt;Dimension&gt;s.</a></p>
 									</li>
 								</ol>
 							</div>
@@ -30006,10 +30022,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 									</li>
 									<li>
 										<p><a id="Server.KVP.POST.GetFeatureInfo.Invalid.TileMatrix.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.KVP.POST.GetFeatureInfo.Invalid.TileMatrix.Prerequisite-3"></a>the response entity has two or more &lt;TileMatrix&gt; elements.</p>
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; to a &lt;TileMatrixSet&gt; with two or more &lt;TileMatrix&gt; elements.</a></p>
 									</li>
 								</ol>
 							</div>
@@ -30182,11 +30195,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
 									<li>
-										<p><a id="Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-3"></a>the response entity advertises a Layer with no TileMatrixSetLimits.</p>
+										<p><a id="Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; with no &lt;TileMatrixSetLimits&gt;.</p>
 									</li>
 								</ol>
 							</div>
@@ -30360,11 +30370,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
 									<li>
-										<p><a id="Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-3"></a>the response entity advertises a Layer with no TileMatrixSetLimits.</p>
+										<p><a id="Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; with no &lt;TileMatrixSetLimits&gt;.</p>
 									</li>
 								</ol>
 							</div>
@@ -30538,11 +30545,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
 									<li>
-										<p><a id="Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-3"></a>the response entity advertises a Layer with TileMatrixSetLimits.</p>
+										<p><a id="Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; with &lt;TileMatrixSetLimits&gt;.</p>
 									</li>
 								</ol>
 							</div>
@@ -30717,11 +30721,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
 									<li>
-										<p><a id="Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-3"></a>the response entity advertises a Layer with TileMatrixSetLimits.</p>
+										<p><a id="Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; with &lt;TileMatrixSetLimits&gt;.</p>
 									</li>
 								</ol>
 							</div>
@@ -31081,12 +31082,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;PostPOST&gt; child element.</p>
 									</li>
 									<li>
-										<p><a id="Server.KVP.POST.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.KVP.POST.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with one or more &lt;Dimension&gt;s.</p>
+										<p><a id="Server.KVP.POST.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and one or more &lt;Dimension&gt;s.</p>
 									</li>
 								</ol>
 							</div>
@@ -31280,12 +31277,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
 									<li>
-										<p><a id="Server.KVP.POST.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.KVP.POST.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with one or more &lt;Dimension&gt;s.</p>
+										<p><a id="Server.KVP.POST.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and one or more &lt;Dimension&gt;s.</p>
 									</li>
 								</ol>
 							</div>
@@ -31482,12 +31475,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
 									<li>
-										<p><a id="Server.KVP.POST.GetFeatureInfo.Default.SampleDimension.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.KVP.POST.GetFeatureInfo.Default.SampleDimension.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with one or more &lt;Dimension&gt;s with a &lt;Default&gt; element text value.</p>
+										<p><a id="Server.KVP.POST.GetFeatureInfo.Default.SampleDimension.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and one or more &lt;Dimension&gt;s with a &lt;Default&gt; element text value.</p>
 									</li>
 								</ol>
 							</div>
@@ -31673,12 +31662,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										that contains a &lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt; child element with a value of "KVP".</p>
 									</li>
 									<li>
-										<p><a id="Server.KVP.POST.GetFeatureInfo.Current.SampleDimension.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.KVP.POST.GetFeatureInfo.Current.SampleDimension.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with one or more &lt;Dimension&gt;s with a &lt;Current&gt; element text value.</p>
+										<p><a id="Server.KVP.POST.GetFeatureInfo.Current.SampleDimension.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and one or more &lt;Dimension&gt;s with a &lt;Current&gt; element text value.</p>
 									</li>
 								</ol>
 							</div>
@@ -33648,8 +33633,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										child element with a value of "XML".</p>
 									</li>
 									<li>
-										<p><a id="Server.XML.POST.GetCapabilities.Request.AcceptVersions.Valid.Prerequisite-2"></a>the response entity has an &lt;ows:Capabilities name="GetCapabilities"&gt; element 
-										that contains a version attribute with a version number value that contains three non-negative integers separated by decimal points, in the form "x.y.z". The integers y and z shall not exceed 99..</p>
+										<p><a id="Server.XML.POST.GetCapabilities.Request.AcceptVersions.Valid.Prerequisite-2"></a>the response entity has an &lt;ows:Operation name="GetCapabilities"&gt; element 
+										that contains an &lt;ows:Parameter name="Versions"&gt; element with an &lt;ows:AllowedValues&gt element with an &lt;ows:Value&gt; element with a value that contains three non-negative integers separated by decimal points, in the form "x.y.z". The integers y and z shall not exceed 99.</p>
 									</li>
 								</ol>
 							</div>
@@ -37783,6 +37768,9 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										&lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt;
 										child element with a value of "XML".</p>
 									</li>
+									<li>
+										<p><a id="Server.KVP.POST.GetTile.Invalid.TileMatrixSet.Prerequisite-2"></a>the response entity has one or more &lt;TileMatrixSet&gt; elements.</p>
+									</li>
 								</ol>
 							</div>
 						</td>
@@ -40521,11 +40509,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 									</li>
 									<li>
 										<p><a id="Server.XML.POST.GetFeatureInfo.Optional.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.XML.POST.GetFeatureInfo.Optional.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with three or more &lt;Dimension&gt;s.</p>
+										&lt;InfoFormat&gt;s and  with three or more &lt;Dimension&gt;s.</a></p>
 									</li>
 								</ol>
 							</div>
@@ -41290,10 +41274,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 									</li>
 									<li>
 										<p><a id="Server.XML.POST.GetFeatureInfo.Invalid.TileMatrix.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.XML.POST.GetFeatureInfo.Invalid.TileMatrix.Prerequisite-3"></a>the response entity has two or more &lt;TileMatrix&gt; elements.</p>
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; to a &lt;TileMatrixSet&gt; with two or more &lt;TileMatrix&gt; elements.</a></p>
 									</li>
 								</ol>
 							</div>
@@ -41468,11 +41449,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										child element with a value of "XML".</p>
 									</li>
 									<li>
-										<p><a id="Server.XML.POST.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.XML.POST.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-3"></a>the response entity advertises a Layer with no TileMatrixSetLimits.</p>
+										<p><a id="Server.XML.POST.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; with no &lt;TileMatrixSetLimits&gt;.</p>
 									</li>
 								</ol>
 							</div>
@@ -41648,11 +41626,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										child element with a value of "XML".</p>
 									</li>
 									<li>
-										<p><a id="Server.XML.POST.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.XML.POST.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-3"></a>the response entity advertises a Layer with no TileMatrixSetLimits.</p>
+										<p><a id="Server.XML.POST.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; with no &lt;TileMatrixSetLimits&gt;.</p>
 									</li>
 								</ol>
 							</div>
@@ -41828,11 +41803,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										child element with a value of "XML".</p>
 									</li>
 									<li>
-										<p><a id="Server.XML.POST.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.XML.POST.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-3"></a>the response entity advertises a Layer with TileMatrixSetLimits.</p>
+										<p><a id="Server.XML.POST.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; with &lt;TileMatrixSetLimits&gt;.</p>
 									</li>
 								</ol>
 							</div>
@@ -42009,11 +41981,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										child element with a value of "XML".</p>
 									</li>
 									<li>
-										<p><a id="Server.XML.POST.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.XML.POST.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-3"></a>the response entity advertises a Layer with TileMatrixSetLimits.</p>
+										<p><a id="Server.XML.POST.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; with &lt;TileMatrixSetLimits&gt;.</p>
 									</li>
 								</ol>
 							</div>
@@ -42377,12 +42346,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										child element with a value of "XML".</p>
 									</li>
 									<li>
-										<p><a id="Server.XML.POST.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.XML.POST.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with one or more &lt;Dimension&gt;s.</p>
+										<p><a id="Server.XML.POST.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and one or more &lt;Dimension&gt;s.</p>
 									</li>
 								</ol>
 							</div>
@@ -42578,12 +42543,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										child element with a value of "XML".</p>
 									</li>
 									<li>
-										<p><a id="Server.XML.POST.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.XML.POST.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with one or more &lt;Dimension&gt;s.</p>
+										<p><a id="Server.XML.POST.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and one or more &lt;Dimension&gt;s.</p>
 									</li>
 								</ol>
 							</div>
@@ -42782,12 +42743,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										child element with a value of "XML".</p>
 									</li>
 									<li>
-										<p><a id="Server.XML.POST.GetFeatureInfo.Default.SampleDimension.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.XML.POST.GetFeatureInfo.Default.SampleDimension.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with one or more &lt;Dimension&gt;s with a &lt;Default&gt; element text value.</p>
+										<p><a id="Server.XML.POST.GetFeatureInfo.Default.SampleDimension.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and one or more &lt;Dimension&gt;s with a &lt;Default&gt; element text value.</p>
 									</li>
 								</ol>
 							</div>
@@ -42975,12 +42932,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										child element with a value of "XML".</p>
 									</li>
 									<li>
-										<p><a id="Server.XML.POST.GetFeatureInfo.Current.SampleDimension.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.XML.POST.GetFeatureInfo.Current.SampleDimension.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with one or more &lt;Dimension&gt;s with a &lt;Current&gt; element text value.</p>
+										<p><a id="Server.XML.POST.GetFeatureInfo.Current.SampleDimension.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and one or more &lt;Dimension&gt;s with a &lt;Current&gt; element text value.</p>
 									</li>
 								</ol>
 							</div>
@@ -45012,8 +44965,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										child element with a value of "SOAP".</p>
 									</li>
 									<li>
-										<p><a id="Server.SOAP.POST.GetCapabilities.Request.AcceptVersions.Valid.Prerequisite-2"></a>the response entity has an &lt;ows:Capabilities name="GetCapabilities"&gt; element 
-										that contains a version attribute with a version number value that contains three non-negative integers separated by decimal points, in the form "x.y.z". The integers y and z shall not exceed 99..</p>
+										<p><a id="Server.SOAP.POST.GetCapabilities.Request.AcceptVersions.Valid.Prerequisite-2"></a>the response entity has an &lt;ows:Operation name="GetCapabilities"&gt; element that contains an &lt;ows:Parameter name="Versions"&gt; element with an &lt;ows:AllowedValues&gt element with an &lt;ows:Value&gt; element with a value that contains three non-negative integers separated by decimal points, in the form "x.y.z". The integers y and z shall not exceed 99.</p>
 									</li>
 								</ol>
 							</div>
@@ -49437,6 +49389,9 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										&lt;ows:DCP&gt;&lt;ows:HTTP&gt;&lt;ows:Post&gt;&lt;ows:Constraint name="PostEncoding"&gt;&lt;ows:AllowedValues&gt;&lt;ows:Value&gt;
 										child element with a value of "SOAP".</p>
 									</li>
+									<li>
+										<p><a id="Server.SOAP.POST.GetTile.Invalid.TileMatrixSet.Prerequisite-2"></a>the response entity has one or more &lt;TileMatrixSet&gt; elements.</p>
+									</li>
 								</ol>
 							</div>
 						</td>
@@ -52294,11 +52249,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 									</li>
 									<li>
 										<p><a id="Server.SOAP.POST.GetFeatureInfo.Optional.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.SOAP.POST.GetFeatureInfo.Optional.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with three or more &lt;Dimension&gt;s.</p>
+										&lt;InfoFormat&gt;s and  with three or more &lt;Dimension&gt;s.</a></p>
 									</li>
 								</ol>
 							</div>
@@ -53091,10 +53042,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 									</li>
 									<li>
 										<p><a id="Server.SOAP.POST.GetFeatureInfo.Invalid.TileMatrix.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.SOAP.POST.GetFeatureInfo.Invalid.TileMatrix.Prerequisite-3"></a>the response entity has two or more &lt;TileMatrix&gt; elements.</p>
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; to a &lt;TileMatrixSet&gt; with two or more &lt;TileMatrix&gt; elements.</a></p>
 									</li>
 								</ol>
 							</div>
@@ -53276,11 +53224,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										child element with a value of "SOAP".</p>
 									</li>
 									<li>
-										<p><a id="Server.SOAP.POST.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.SOAP.POST.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-3"></a>the response entity advertises a Layer with no TileMatrixSetLimits.</p>
+										<p><a id="Server.SOAP.POST.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; with no &lt;TileMatrixSetLimits&gt;.</p>
 									</li>
 								</ol>
 							</div>
@@ -53463,11 +53408,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										child element with a value of "SOAP".</p>
 									</li>
 									<li>
-										<p><a id="Server.SOAP.POST.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.SOAP.POST.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-3"></a>the response entity advertises a Layer with no TileMatrixSetLimits.</p>
+										<p><a id="Server.SOAP.POST.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; with no &lt;TileMatrixSetLimits&gt;.</p>
 									</li>
 								</ol>
 							</div>
@@ -53650,11 +53592,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										child element with a value of "SOAP".</p>
 									</li>
 									<li>
-										<p><a id="Server.SOAP.POST.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.SOAP.POST.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-3"></a>the response entity advertises a Layer with TileMatrixSetLimits.</p>
+										<p><a id="Server.SOAP.POST.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; with &lt;TileMatrixSetLimits&gt;.</p>
 									</li>
 								</ol>
 							</div>
@@ -53838,11 +53777,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										child element with a value of "SOAP".</p>
 									</li>
 									<li>
-										<p><a id="Server.SOAP.POST.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.SOAP.POST.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-3"></a>the response entity advertises a Layer with TileMatrixSetLimits.</p>
+										<p><a id="Server.SOAP.POST.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; with &lt;TileMatrixSetLimits&gt;.</p>
 									</li>
 								</ol>
 							</div>
@@ -54220,12 +54156,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										child element with a value of "SOAP".</p>
 									</li>
 									<li>
-										<p><a id="Server.SOAP.POST.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.SOAP.POST.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with one or more &lt;Dimension&gt;s.</p>
+										<p><a id="Server.SOAP.POST.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and one or more &lt;Dimension&gt;s.</p>
 									</li>
 								</ol>
 							</div>
@@ -54428,12 +54360,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										child element with a value of "SOAP".</p>
 									</li>
 									<li>
-										<p><a id="Server.SOAP.POST.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.SOAP.POST.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with one or more &lt;Dimension&gt;s.</p>
+										<p><a id="Server.SOAP.POST.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and one or more &lt;Dimension&gt;s.</p>
 									</li>
 								</ol>
 							</div>
@@ -54639,12 +54567,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										child element with a value of "SOAP".</p>
 									</li>
 									<li>
-										<p><a id="Server.SOAP.POST.GetFeatureInfo.Default.SampleDimension.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.SOAP.POST.GetFeatureInfo.Default.SampleDimension.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with one or more &lt;Dimension&gt;s with a &lt;Default&gt; element text value.</p>
+										<p><a id="Server.SOAP.POST.GetFeatureInfo.Default.SampleDimension.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and one or more &lt;Dimension&gt;s with a &lt;Default&gt; element text value.</p>
 									</li>
 								</ol>
 							</div>
@@ -54840,12 +54764,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										child element with a value of "SOAP".</p>
 									</li>
 									<li>
-										<p><a id="Server.SOAP.POST.GetFeatureInfo.Current.SampleDimension.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.SOAP.POST.GetFeatureInfo.Current.SampleDimension.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with one or more &lt;Dimension&gt;s with a &lt;Current&gt; element text value.</p>
+										<p><a id="Server.SOAP.POST.GetFeatureInfo.Current.SampleDimension.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and one or more &lt;Dimension&gt;s with a &lt;Current&gt; element text value.</p>
 									</li>
 								</ol>
 							</div>
@@ -57061,6 +56981,9 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 									<li>
 										<p><a id="Server.RESTful.GetTile.Invalid.TileMatrixSet.Prerequisite-1"></a>
 										the resonse entity has a &lt;ResourceURL&gt; template element for the "GetTile" operation for each advertised Layer.</p>
+									</li>
+									<li>
+										<p><a id="Server.RESTful.GetTile.Invalid.TileMatrixSet.Prerequisite-2"></a>the response entity has one or more &lt;TileMatrixSet&gt; elements.</p>
 									</li>
 								</ol>
 							</div>
@@ -59738,11 +59661,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 									</li>
 									<li>
 										<p><a id="Server.RESTful.GetFeatureInfo.Optional.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Optional.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with three or more &lt;Dimension&gt;s.</p>
+										&lt;InfoFormat&gt;s and  with three or more &lt;Dimension&gt;s.</a></p>
 									</li>
 								</ol>
 							</div>
@@ -60484,10 +60403,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 									</li>
 									<li>
 										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.TileMatrix.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.TileMatrix.Prerequisite-3"></a>the response entity has two or more &lt;TileMatrix&gt; elements.</p>
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; to a &lt;TileMatrixSet&gt; with two or more &lt;TileMatrix&gt; elements.</a></p>
 									</li>
 								</ol>
 							</div>
@@ -60671,11 +60587,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										the resonse entity has a &lt;ResourceURL&gt; template element for the "GetFeatureInfo" operation for each advertised Layer.</p>
 									</li>
 									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-3"></a>the response entity advertises a Layer with no TileMatrixSetLimits.</p>
+										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; with no &lt;TileMatrixSetLimits&gt;.</p>
 									</li>
 								</ol>
 							</div>
@@ -60852,11 +60765,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										the resonse entity has a &lt;ResourceURL&gt; template element for the "GetFeatureInfo" operation for each advertised Layer.</p>
 									</li>
 									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-3"></a>the response entity advertises a Layer with no TileMatrixSetLimits.</p>
+										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; with no &lt;TileMatrixSetLimits&gt;.</p>
 									</li>
 								</ol>
 							</div>
@@ -61032,11 +60942,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										the resonse entity has a &lt;ResourceURL&gt; template element for the "GetFeatureInfo" operation for each advertised Layer.</p>
 									</li>
 									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-3"></a>the response entity advertises a Layer with TileMatrixSetLimits.</p>
+										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; with &lt;TileMatrixSetLimits&gt;.</p>
 									</li>
 								</ol>
 							</div>
@@ -61213,11 +61120,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										the resonse entity has a &lt;ResourceURL&gt; template element for the "GetFeatureInfo" operation for each advertised Layer.</p>
 									</li>
 									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-3"></a>the response entity advertises a Layer with TileMatrixSetLimits.</p>
+										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and a &lt;TileMatrixSetLink&gt; with &lt;TileMatrixSetLimits&gt;.</p>
 									</li>
 								</ol>
 							</div>
@@ -61582,12 +61486,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										name for each &lt;Dimension&gt;&lt;ows:Identifier&gt; element defined for each Layer.</p>
 									</li>
 									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with one or more &lt;Dimension&gt;s.</p>
+										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and one or more &lt;Dimension&gt;s.</p>
 									</li>
 								</ol>
 							</div>
@@ -61784,12 +61684,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										name for each &lt;Dimension&gt;&lt;ows:Identifier&gt; element defined for each Layer.</p>
 									</li>
 									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with one or more &lt;Dimension&gt;s.</p>
+										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and one or more &lt;Dimension&gt;s.</p>
 									</li>
 								</ol>
 							</div>
@@ -61989,12 +61885,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										name for each &lt;Dimension&gt;&lt;ows:Identifier&gt; element defined for each Layer.</p>
 									</li>
 									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Default.SampleDimension.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Default.SampleDimension.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with one or more &lt;Dimension&gt;s with a &lt;Default&gt; element text value.</p>
+										<p><a id="Server.RESTful.GetFeatureInfo.Default.SampleDimension.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and one or more &lt;Dimension&gt;s with a &lt;Default&gt; element text value.</p>
 									</li>
 								</ol>
 							</div>
@@ -62167,12 +62059,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 										name for each &lt;Dimension&gt;&lt;ows:Identifier&gt; element defined for each Layer.</p>
 									</li>
 									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Current.SampleDimension.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Current.SampleDimension.Prerequisite-3"></a>the response entity has a 
-										&lt;Layer&gt; with one or more &lt;Dimension&gt;s with a &lt;Current&gt; element text value.</p>
+										<p><a id="Server.RESTful.GetFeatureInfo.Current.SampleDimension.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
+										&lt;InfoFormat&gt;s and one or more &lt;Dimension&gt;s with a &lt;Current&gt; element text value.</p>
 									</li>
 								</ol>
 							</div>
