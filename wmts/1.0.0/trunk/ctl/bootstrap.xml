@@ -64,26 +64,33 @@
 						<xsl:choose>
 							<xsl:when test="$serviceMetadataURL = $wmts.capabilities.url">
 								<ctl:message>Service Metadata URL <xsl:value-of select="$serviceMetadataURL"/> matches wmts.capabilities.url <xsl:value-of select="$wmts.capabilities.url"/></ctl:message>
-								<xsl:for-each select="$wmts.capabilities.doc/wmts:Contents/wmts:Layer">
-									<xsl:choose>
-										<xsl:when test="boolean(wmts:ResourceURL)">
-											<xsl:variable name="hasResourceURLforGetTile" select="some $ru in wmts:ResourceURL satisfies $ru/@resourceType = 'tile'"/>
-											<xsl:choose>
-												<xsl:when test="$hasResourceURLforGetTile">
-													<ctl:message>ResourceURL template for GetTile operation for layer <xsl:value-of select="ows:Identifier"/> is <xsl:value-of select="wmts:ResourceURL/@template"/></ctl:message>
-												</xsl:when>
-												<xsl:otherwise>
-													<ctl:message>No ResourceURL found for GetTile operation for layer <xsl:value-of select="ows:Identifier"/></ctl:message>
-													<ctl:fail/> 
-												</xsl:otherwise>
-											</xsl:choose>
-										</xsl:when>
-										<xsl:otherwise>
-											<ctl:message>No ResourceURL found for layer <xsl:value-of select="ows:Identifier"/></ctl:message>
-											<ctl:fail/>
-										</xsl:otherwise>
-									</xsl:choose>
-								</xsl:for-each>								
+								<xsl:variable name="status">
+									<xsl:for-each select="$wmts.capabilities.doc/wmts:Contents/wmts:Layer">
+										<xsl:choose>
+											<xsl:when test="boolean(wmts:ResourceURL)">
+												<xsl:variable name="hasResourceURLforGetTile" select="some $ru in wmts:ResourceURL satisfies $ru/@resourceType = 'tile'"/>
+												<xsl:choose>
+													<xsl:when test="$hasResourceURLforGetTile">
+														<ctl:message>ResourceURL template for GetTile operation for layer <xsl:value-of select="ows:Identifier"/> is <xsl:value-of select="wmts:ResourceURL/@template"/></ctl:message>
+													</xsl:when>
+													<xsl:otherwise>
+														<ctl:message>No ResourceURL found for GetTile operation for layer <xsl:value-of select="ows:Identifier"/></ctl:message>
+														<xsl:text>fail</xsl:text>
+														<ctl:fail/> 
+													</xsl:otherwise>
+												</xsl:choose>
+											</xsl:when>
+											<xsl:otherwise>
+												<ctl:message>No ResourceURL found for layer <xsl:value-of select="ows:Identifier"/></ctl:message>
+												<xsl:text>fail</xsl:text>
+												<ctl:fail/>
+											</xsl:otherwise>
+										</xsl:choose>
+									</xsl:for-each>								
+								</xsl:variable>	
+								<xsl:if test="contains($status,'fail')">
+									<ctl:message>wmtsBootstrap:main failure for ResourceURL: result is <xsl:value-of select="ctl:getResult()"/></ctl:message>
+								</xsl:if>
 							</xsl:when>
 							<xsl:otherwise>
 								<ctl:message>Service Metadata URL <xsl:value-of select="$serviceMetadataURL"/> does not match wmts.capabilities.url <xsl:value-of select="$wmts.capabilities.url"/></ctl:message>
@@ -97,6 +104,8 @@
 					<ctl:fail/>
 				</xsl:otherwise>
 			</xsl:choose>
+			<xsl:variable name="result"><ctl:getResult/></xsl:variable> 
+			<ctl:message>wmtsBootstrap:main result is <xsl:value-of select="$result"/></ctl:message>
 		</ctl:code>
 	</ctl:test>
 
