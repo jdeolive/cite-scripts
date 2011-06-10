@@ -155,7 +155,7 @@
 								<h2 align="center">Compliance test suite for Web Map Tile Service (WMTS) 1.0</h2>
 								<p/>
 								<blockquote>
-									<table width="600" border="0" padding="4" bgcolor="#00ffff" align="left">
+									<table width="600" border="0" padding="4" bgcolor="#00ffff" align="center">
 										<tr>
 											<th colspan="3" align="center">Service metadata and Test Options</th>
 										</tr>
