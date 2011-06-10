@@ -124,12 +124,12 @@
 		<ctl:code>
 			<!--			<xsl:message>testMenus bs <xsl:copy-of select="$bootstrap"/></xsl:message> -->
 			<xsl:variable name="group-form-values"> 
-				<ctl:form  width="1200" height="740">						
+				<ctl:form  width="1400" height="1000">						
 					<body>
 						<h2 align="center">Compliance test suite for Web Map Tile Service (WMTS) 1.0</h2>
 						<p/>
 						<blockquote>
-							<table width="1100" height="520"  border="1" padding="4" bgcolor="#00ffff" align="left">
+							<table width="1300" height="520"  border="1" padding="4" bgcolor="#00ffff" align="left">
 								<tr>
 									<th colspan="13" align="center">Test Group Selection</th>
 								</tr>
@@ -144,7 +144,7 @@
 								</tr>
 		<xsl:choose>
 			<xsl:when test="$bootstrap/getCapabilitiesKVPGET = 'true' or $bootstrap/getTileKVPGET = 'true' or $bootstrap/getFeatureInfoKVPGET = 'true' ">
-								<tr><td width="50"><input type="checkbox" name="clientKVPGET">Client KVP GET</input></td>
+								<tr><td width="120"><input type="checkbox" name="clientKVPGET">Client KVP GET</input></td>
 									   <td colspan="3"/>
 				<xsl:choose>
 					<xsl:when test="$bootstrap/getCapabilitiesKVPGET = 'true' ">
@@ -184,7 +184,7 @@
 		</xsl:choose>
 		<xsl:choose>
 			<xsl:when test="$bootstrap/getCapabilitiesKVPPOST = 'true' or $bootstrap/getTileKVPPOST = 'true' or $bootstrap/getFeatureInfoKVPPOST = 'true' ">
-								 <tr><td><input type="checkbox" name="clientKVPPOST">Client KVP POST</input></td>
+								 <tr><td width="120"><input type="checkbox" name="clientKVPPOST">Client KVP POST</input></td>
 									   <td colspan="3"/>
 				<xsl:choose>
 					<xsl:when test="$bootstrap/getCapabilitiesKVPPOST = 'true'">
@@ -224,7 +224,7 @@
 		</xsl:choose>
 		<xsl:choose>
 			<xsl:when test="$bootstrap/getCapabilitiesXMLPOST = 'true' or $bootstrap/getTileXMLPOST = 'true' or $bootstrap/getFeatureInfoXMLPOST = 'true' ">
-								 <tr><td><input type="checkbox" name="clientXMLPOST">Client XML POST</input></td>
+								 <tr><td width="120"><input type="checkbox" name="clientXMLPOST">Client XML POST</input></td>
 									   <td colspan="3"/>
 				<xsl:choose>
 					<xsl:when test="$bootstrap/getCapabilitiesXMLPOST = 'true'">
@@ -264,7 +264,7 @@
 		</xsl:choose>
 		<xsl:choose>
 			<xsl:when test="$bootstrap/getCapabilitiesSOAPPOST = 'true' or $bootstrap/getTileSOAPPOST = 'true' or $bootstrap/getFeatureInfoSOAPPOST = 'true' ">
-								 <tr><td><input type="checkbox" name="clientSOAPPOST">Client SOAP POST</input></td>
+								 <tr><td width="120"><input type="checkbox" name="clientSOAPPOST">Client SOAP POST</input></td>
 									   <td colspan="3"/>
 				<xsl:choose>
 					<xsl:when test="$bootstrap/getCapabilitiesSOAPPOST = 'true'">
@@ -304,7 +304,7 @@
 		</xsl:choose>
 		<xsl:choose>
 			<xsl:when test="$bootstrap/getCapabilitiesRESTful = 'true' or $bootstrap/getTileRESTful = 'true' or $bootstrap/getFeatureInfoRESTful = 'true' ">
-								 <tr><td><input type="checkbox" name="clientRESTful">Client RESTful</input></td>
+								 <tr><td width="120"><input type="checkbox" name="clientRESTful">Client RESTful</input></td>
 									   <td colspan="3"/>
 				<xsl:choose>
 					<xsl:when test="$bootstrap/getCapabilitiesRESTful = 'true'">
@@ -350,7 +350,7 @@
 								</tr>
 		<xsl:choose>
 			<xsl:when test="$bootstrap/getCapabilitiesKVPGET = 'true' or $bootstrap/getTileKVPGET = 'true' or $bootstrap/getFeatureInfoKVPGET = 'true' ">
-								<tr><td><input type="checkbox" name="serverKVPGET">Server KVP GET</input></td>
+								<tr><td width="120"><input type="checkbox" name="serverKVPGET">Server KVP GET</input></td>
 				<xsl:choose>
 					<xsl:when test="$bootstrap/getCapabilitiesKVPGET = 'true' ">
 										<td width="40"><input type="radio" name="whichServerCommonOperationsKVPGETtests" checked="true" value="all">All</input></td>
@@ -399,7 +399,7 @@
 		</xsl:choose>
 		<xsl:choose>
 			<xsl:when test="$bootstrap/getCapabilitiesKVPPOST = 'true' or $bootstrap/getTileKVPPOST = 'true' or $bootstrap/getFeatureInfoKVPPOST = 'true' ">
-								 <tr><td><input type="checkbox" name="serverKVPPOST">Server KVP POST</input></td>
+								 <tr><td width="120"><input type="checkbox" name="serverKVPPOST">Server KVP POST</input></td>
 				<xsl:choose>
 					<xsl:when test="$bootstrap/getCapabilitiesKVPPOST = 'true'">
 										<td width="40"><input type="radio" name="whichServerCommonOperationsKVPPOSTtests" checked="true" value="all">All</input></td>
@@ -448,7 +448,7 @@
 		</xsl:choose>
 		<xsl:choose>
 			<xsl:when test="$bootstrap/getCapabilitiesXMLPOST = 'true' or $bootstrap/getTileXMLPOST = 'true' or $bootstrap/getFeatureInfoXMLPOST = 'true' ">
-								 <tr><td><input type="checkbox" name="serverXMLPOST">Server XML POST</input></td>
+								 <tr><td width="120"><input type="checkbox" name="serverXMLPOST">Server XML POST</input></td>
 				<xsl:choose>
 					<xsl:when test="$bootstrap/getCapabilitiesXMLPOST = 'true'">
 										<td width="40"><input type="radio" name="whichServerCommonOperationsXMLPOSTtests" checked="true" value="all">All</input></td>
@@ -498,7 +498,7 @@
 		</xsl:choose>
 		<xsl:choose>
 			<xsl:when test="$bootstrap/getCapabilitiesSOAPPOST = 'true' or $bootstrap/getTileSOAPPOST = 'true' or $bootstrap/getFeatureInfoSOAPPOST = 'true' ">
-								 <tr><td><input type="checkbox" name="serverSOAPPOST">Server SOAP POST</input></td>
+								 <tr><td width="120"><input type="checkbox" name="serverSOAPPOST">Server SOAP POST</input></td>
 				<xsl:choose>
 					<xsl:when test="$bootstrap/getCapabilitiesSOAPPOST = 'true'">
 										<td width="40"><input type="radio" name="whichServerCommonOperationsSOAPPOSTtests" checked="true" value="all">All</input></td>
@@ -547,7 +547,7 @@
 		</xsl:choose>
 		<xsl:choose>
 			<xsl:when test="$bootstrap/getCapabilitiesRESTful = 'true' or $bootstrap/getTileRESTful = 'true' or $bootstrap/GetFeatureInfoRESTful = 'true' ">
-								 <tr><td><input type="checkbox" name="serverRESTful">Server RESTful</input></td>
+								 <tr><td width="120"><input type="checkbox" name="serverRESTful">Server RESTful</input></td>
 				<xsl:choose>
 					<xsl:when test="$bootstrap/getCapabilitiesRESTful = 'true'">
 										<td width="40"><input type="radio" name="whichServerCommonOperationsRESTfulTests" checked="true" value="all">All</input></td>
