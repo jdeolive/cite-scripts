@@ -25,7 +25,7 @@
 	<ctl:suite name="wmts:suite">		
 		<ctl:title>WMTS 1.0 Compliance Test Suite</ctl:title>
 		<ctl:description>Verifies that a WMTS 1.0 client or server implementation complies with a given conformance classes.</ctl:description>
-        <ctl:link>docs/wmts/1.0/</ctl:link>		
+        <ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html</ctl:link>		
 		<ctl:defaultResult>Pass</ctl:defaultResult>
 		<ctl:starting-test>wmts:main</ctl:starting-test>
 	</ctl:suite>
@@ -113,7 +113,11 @@
 										<ctl:with-param name="selected" select="$selected"/>
 									</ctl:call-function>
 
-
+									<ctl:message>calling wmtsFunctions:invokeSelectedTest in RedoFromCache mode</ctl:message>
+									<ctl:call-function name="wmtsFunctions:invokeSelectedTests">
+										<ctl:with-param name="bootstrap" select="$bootstrap/*"/>
+										<ctl:with-param name="selected" select="$selected"/>
+									</ctl:call-function>
 
 								</xsl:when>
 								<xsl:otherwise>
@@ -318,8 +322,12 @@
 																		<ctl:with-param name="selected" select="$selected"/>
 																	</ctl:call-function>
 		
-			
-			
+																	<ctl:message>calling wmtsFunctions:invokeSelectedTest in Test mode</ctl:message>
+																	<ctl:call-function name="wmtsFunctions:invokeSelectedTests">
+																		<ctl:with-param name="bootstrap" select="$bootstrap/*"/>
+																		<ctl:with-param name="selected" select="$selected"/>
+																	</ctl:call-function>
+		
 																</xsl:when>
 																<xsl:otherwise>
 																	<ctl:message>No tests selected -- failed test selection</ctl:message>
