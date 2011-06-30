@@ -1755,7 +1755,7 @@
 											<xsl:when test="$group-form-values/values/value[@key='whichServerGetCapabilitiesRESTfulTests'] = 'all' ">
 												<xsl:variable name="sel">
 													<xsl:element name="sel">
-														<xsl:element name="Server.RESTful.GetCapabilities.Mandatory.Selected">true</xsl:element>
+														<xsl:element name="Server.RESTful.GetCapabilities.Request.Mandatory.Selected">true</xsl:element>
 													</xsl:element>
 												</xsl:variable>
 												<xsl:copy-of select="$sel/*/*"/>
@@ -1763,7 +1763,7 @@
 											<xsl:otherwise>
 												<xsl:variable name="sel">
 													<xsl:element name="sel">
-														<xsl:element name="Server.RESTful.GetCapabilities.Mandatory.Selected">false</xsl:element>
+														<xsl:element name="Server.RESTful.GetCapabilities.Request.Mandatory.Selected">false</xsl:element>
 													</xsl:element>
 												</xsl:variable>
 												<xsl:copy-of select="$sel/*/*"/>
@@ -1834,7 +1834,7 @@
 											<ctl:with-param name="interfaceType">RESTful</ctl:with-param>
 										</ctl:call-function>
 										<xsl:element name="sel">
-											<xsl:element name="Server.RESTful.GetCapabilities.Mandatory.Selected">false</xsl:element>
+											<xsl:element name="Server.RESTful.GetCapabilities.Request.Mandatory.Selected">false</xsl:element>
 										</xsl:element>
 										<ctl:call-function name="wmts:serverGetTileAllOrNone">
 											<ctl:with-param name="allOrNone">false</ctl:with-param>
@@ -2059,11 +2059,11 @@
 		<ctl:description>Create document fragment with child elements indicating all or none Server Common Operation Tests for specified interfaceType</ctl:description>
 		<ctl:code>
 			<xsl:element name="sel">
-				<xsl:element name="{concat('Server.', $interfaceType, '.CommonOperations.MandatoryHTTPprotocolUsage.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.CommonOperations.InvalidQueryStringMandatory.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.HTTP.Mandatory.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.InvalidQueryString.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
 				<xsl:if test="not(starts-with($interfaceType, 'REST'))">
-					<xsl:element name="{concat('Server.', $interfaceType, '.CommonOperations.InvalidServiceMandatory.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-					<xsl:element name="{concat('Server.', $interfaceType, '.CommonOperations.InvalidRequestMandatory.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+					<xsl:element name="{concat('Server.', $interfaceType, '.InvalidService.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+					<xsl:element name="{concat('Server.', $interfaceType, '.InvalidRequest.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
 				</xsl:if>
 			</xsl:element>
 		</ctl:code>
@@ -2101,11 +2101,11 @@
 				</ctl:form>
 			</xsl:variable>		
 			<xsl:element name="sel">
-				<xsl:element name="{concat('Server.', $interfaceType, '.CommonOperations.MandatoryHTTPprotocolUsage.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='mandatoryHTTPprotocolUsage'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.CommonOperations.InvalidQueryStringMandatory.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidQueryStringMandatory'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.HTTP.Mandatory.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='mandatoryHTTPprotocolUsage'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.InvalidQueryString.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidQueryStringMandatory'] = 'on')"/></xsl:element>
 		<xsl:if test="not(starts-with($interfaceType, 'REST'))">								
-				<xsl:element name="{concat('Server.', $interfaceType, '.CommonOperations.InvalidServiceMandatory.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidServiceMandatory'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.CommonOperations.InvalidRequestMandatory.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidRequestMandatory'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.InvalidService.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidServiceMandatory'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.InvalidRequest.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidRequestMandatory'] = 'on')"/></xsl:element>
 		</xsl:if>
 			</xsl:element>
 		</ctl:code>
@@ -2117,44 +2117,44 @@
 		<ctl:description>Create document fragment with child elements indicating all or none Server GetCapabilities Tests for specified interfaceType</ctl:description>
 		<ctl:code>
 			<xsl:element name="sel">
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Mandatory.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.NoServiceParameter.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Invalid.ServiceParameter.Value.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.AcceptVersions.Valid.ParameterValue.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.AcceptVersions.Invalid.ParameterValue.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.Mandatory.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.NoService.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.InvalidService.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.AcceptVersions.Valid.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.AcceptVersions.Invalid.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
 				<xsl:if test="starts-with($interfaceType, 'KVP')">
-					<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.CaseInsensitive.KVP.Names.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+					<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.CaseInsensitive.KVP.Names.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
 				</xsl:if>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.All.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.ServiceIdentification.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.ServiceProvider.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.OperationsMetadata.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.Contents.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.Themes.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.Multiple.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.Bogus.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.Missing.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.UpdateSequence.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.AcceptFormats.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Services.Metadata.Document.XML.WellFormed.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Services.Metadata.Document.References.Normative.Schema.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Services.Metadata.Document.SchemaValid.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Advertised.Format.ApplicationXML.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.OnlineResource.Only.ResourcePrefix.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Includes.GetEncoding.Constraint.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Layer.Identifiers.Unique.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.No.Layers.Contains.OtherSource.URL.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Style.Identifiers.Unique.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.LayerLegendURLs.Correct.Resources.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.LayerLegendURLs.Correct.Formats.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.LayerLegendURLs.Correct.Sizes.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Dimension.Identifiers.Unique.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Layer.TileMatrixSets.Valid.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.TileMatrixSet.Identifiers.Unique.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.TileMatrix.Identifiers.Unique.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.TileMatrixSet.ScaleDenominators.Unique.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.TileMatrixSet.WellKnownScaleSets.Compatible.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Theme.LayerRef.Valid.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.Sections.All.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.Sections.ServiceIdentification.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.Sections.ServiceProvider.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.Sections.OperationsMetadata.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.Sections.Contents.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.Sections.Themes.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.Sections.Multiple.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.Sections.Invalid.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.Sections.Missing.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.UpdateSequence.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.AcceptFormats.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.XML.Well.Formed.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.SchemaReferenced.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.SchemaValid.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.AdvertisedFormat.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.OnlineResource.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.GetEncoding.Constraint.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.Layer.Identifiers.Unique.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.No.Layers.OtherSource.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.Style.Identifiers.Unique.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.Layer.LegendURL.Correct.Resource.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.Layer.LegendURL.Correct.Format.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.Layer.LegendURL.Correct.Size.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.Dimension.Identifiers.Unique.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.Layer.TileMatrixSet.Valid.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.TileMatrixSet.Identifiers.Unique.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.TileMatrix.Identifiers.Unique.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.TileMatrixSet.ScaleDenominators.Unique.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.Theme.LayerRef.Valid.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
 			</xsl:element>
 		</ctl:code>
 	</ctl:function>
@@ -2264,44 +2264,44 @@
 				</ctl:form>
 			</xsl:variable>		
 			<xsl:element name="sel">
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Mandatory.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='mandatoryParameters'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.NoServiceParameter.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='noServiceParameter'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Invalid.ServiceParameter.Value.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidServiceParameter'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.AcceptVersions.Valid.ParameterValue.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='acceptVersionsValidParameterValue'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.AcceptVersions.Invalid.ParameterValue.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='acceptVersionsInvalidParameterValue'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.Mandatory.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='mandatoryParameters'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.NoService.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='noServiceParameter'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.InvalidService.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidServiceParameter'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.AcceptVersions.Valid.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='acceptVersionsValidParameterValue'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.AcceptVersions.Invalid.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='acceptVersionsInvalidParameterValue'] = 'on')"/></xsl:element>
 				<xsl:if test="starts-with($interfaceType, 'KVP')">
-					<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.CaseInsensitive.KVP.Names.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='caseInsensitiveKVPnames'] = 'on')"/></xsl:element>
+					<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.CaseInsensitive.KVP.Names.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='caseInsensitiveKVPnames'] = 'on')"/></xsl:element>
 				</xsl:if>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.All.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsAll'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.ServiceIdentification.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsServiceIdentification'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.ServiceProvider.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsServiceProvider'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.OperationsMetadata.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsServiceMetadata'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.Contents.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsContents'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.Themes.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalsectionsThemes'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.Multiple.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsMultiple'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.Bogus.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsBogus'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.Sections.Missing.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsMissing'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.UpdateSequence.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalUpdateSequence'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Optional.AcceptFormats.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalAcceptFormats'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Services.Metadata.Document.XML.WellFormed.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='servicesMetadataDocumentXMLwellFormed'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Services.Metadata.Document.References.Normative.Schema.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='servicesMetadataDocumentReferencesNormativeSchema'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Services.Metadata.Document.SchemaValid.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='servicesMetadataDocumentSchemaValid'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Advertised.Format.ApplicationXML.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='advertisedFormatApplicationXML'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.OnlineResource.Only.ResourcePrefix.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='onlineResourceOnlyResourcePrefix'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Includes.GetEncoding.Constraint.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='includesGetEncodingConstraint'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Layer.Identifiers.Unique.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='layerIdentifiersUnique'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.No.Layers.Contains.OtherSource.URL.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='noLayersContainsOtherSourceURL'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Style.Identifiers.Unique.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='styleIdentifiersUnique'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.LayerLegendURLs.Correct.Resources.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='layerLegendURLsCorrectResources'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.LayerLegendURLs.Correct.Formats.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='layerLegendURLsCorrectFormats'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.LayerLegendURLs.Correct.Sizes.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='layerLegendURLsCorrectSizes'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Dimension.Identifiers.Unique.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='dimensionIdentifiersUnique'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Layer.TileMatrixSets.Valid.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='layerTileMatrixSetsValid'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.TileMatrixSet.Identifiers.Unique.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='tileMatrixSetIdentifiersUnique'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.TileMatrix.Identifiers.Unique.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='tileMatrixIdentifiersUnique'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.TileMatrixSet.ScaleDenominators.Unique.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='tileMatrixSetScaleDenomincatorsUnique'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.TileMatrixSet.WellKnownScaleSets.Compatible.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='tileMatrixSetWellKnownScaleSetsCompatible'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Theme.LayerRef.Valid.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='themeLayerRefValid'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.Sections.All.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsAll'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.Sections.ServiceIdentification.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsServiceIdentification'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.Sections.ServiceProvider.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsServiceProvider'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.Sections.OperationsMetadata.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsServiceMetadata'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.Sections.Contents.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsContents'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.Sections.Themes.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalsectionsThemes'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.Sections.Multiple.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsMultiple'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.Sections.Invalid.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsBogus'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.Sections.Missing.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSectionsMissing'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.UpdateSequence.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalUpdateSequence'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Request.AcceptFormats.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalAcceptFormats'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.XML.Well.Formed.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='servicesMetadataDocumentXMLwellFormed'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.SchemaReferenced.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='servicesMetadataDocumentReferencesNormativeSchema'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.SchemaValid.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='servicesMetadataDocumentSchemaValid'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.AdvertisedFormat.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='advertisedFormatApplicationXML'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.OnlineResource.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='onlineResourceOnlyResourcePrefix'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.GetEncoding.Constraint.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='includesGetEncodingConstraint'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.Layer.Identifiers.Unique.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='layerIdentifiersUnique'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.No.Layers.OtherSource.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='noLayersContainsOtherSourceURL'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.Style.Identifiers.Unique.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='styleIdentifiersUnique'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.Layer.LegendURL.Correct.Resource.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='layerLegendURLsCorrectResources'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.Layer.LegendURL.Correct.Format.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='layerLegendURLsCorrectFormats'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.Layer.LegendURL.Correct.Size.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='layerLegendURLsCorrectSizes'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.Dimension.Identifiers.Unique.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='dimensionIdentifiersUnique'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.Layer.TileMatrixSet.Valid.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='layerTileMatrixSetsValid'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.TileMatrixSet.Identifiers.Unique.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='tileMatrixSetIdentifiersUnique'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.TileMatrix.Identifiers.Unique.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='tileMatrixIdentifiersUnique'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.TileMatrixSet.ScaleDenominators.Unique.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='tileMatrixSetScaleDenomincatorsUnique'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='tileMatrixSetWellKnownScaleSetsCompatible'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetCapabilities.Response.Theme.LayerRef.Valid.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='themeLayerRefValid'] = 'on')"/></xsl:element>
 			</xsl:element>
 		</ctl:code>
 	</ctl:function>
@@ -2313,13 +2313,13 @@
 		<ctl:code>
 			<xsl:element name="sel">
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Mandatory.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Optional.SampleDimensions.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Missing.Parameters.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Optional.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Missing.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Layer.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.TileMatrixSet.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.TileMatrix.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Row.No.TileMatrixSetLimits.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Col.NoTileMatrixSetLimits.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Col.No.TileMatrixSetLimits.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Row.TileMatrixSetLimits.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Col.TileMatrixSetLimits.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Style.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
@@ -2402,13 +2402,13 @@
 			</xsl:variable>		
 			<xsl:element name="sel">
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Mandatory.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='mandatoryParameters'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Optional.SampleDimensions.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSampleDimension'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Missing.Parameters.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='missing.Parameters'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Optional.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='optionalSampleDimension'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Missing.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='missing.Parameters'] = 'on')"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Layer.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidLayer'] = 'on')"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.TileMatrixSet.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileMatrixSet'] = 'on')"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.TileMatrix.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileMatrix'] = 'on')"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Row.No.TileMatrixSetLimits.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileRowNoTileMatrixSetLimits'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Col.NoTileMatrixSetLimits.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileColNoTileMatrixSetLimits'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Col.No.TileMatrixSetLimits.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileColNoTileMatrixSetLimits'] = 'on')"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Row.TileMatrixSetLimits.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileRowTileMatrixSetLimits'] = 'on')"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Col.TileMatrixSetLimits.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileColTileMatrixSetLimits'] = 'on')"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetTile.Invalid.Tile.Style.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidTileStyle'] = 'on')"/></xsl:element>
@@ -2445,7 +2445,7 @@
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.SampleDimension.Value.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Default.SampleDimension.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Current.SampleDimension.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Non.Queryable.Layer.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.NonQueryable.Layer.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Valid.InfoFormat.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.InfoFormat.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.Pixel.Row.J.Selected')}"><xsl:value-of select="$allOrNone"/></xsl:element>
@@ -2536,7 +2536,7 @@
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.SampleDimension.Value.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidSampleDimensionValue'] = 'on')"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Default.SampleDimension.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='defaultSampleDimension'] = 'on')"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Current.SampleDimension.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='currentSampleDimension'] = 'on')"/></xsl:element>
-				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Non.Queryable.Layer.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='nonQueryableLayer'] = 'on')"/></xsl:element>
+				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.NonQueryable.Layer.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='nonQueryableLayer'] = 'on')"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Valid.InfoFormat.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='validInfoFormat'] = 'on')"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.InfoFormat.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidInfoFormat'] = 'on')"/></xsl:element>
 				<xsl:element name="{concat('Server.', $interfaceType, '.GetFeatureInfo.Invalid.Pixel.Row.J.Selected')}"><xsl:value-of select="string($gc-form-values/values/value[@key='invalidPixelRowJ'] = 'on')"/></xsl:element>
@@ -2559,7 +2559,15 @@
 		<ctl:param name="selected">Selected tests in XML</ctl:param>
 		<ctl:description>Invoke selected WMTS tests</ctl:description>
 		<ctl:code>
-		
+			<ctl:message>wmtsFunctions:invokeSelectedTests</ctl:message>
+			<xsl:for-each select="$bootstrap/*[starts-with(local-name(.),'Client') or starts-with(local-name(.),'Server')]">
+				<xsl:variable name="metPrerequisites" select="."/>
+				<xsl:variable name="testSelectedName" select="concat(substring-before(local-name(.),'Prerequisites'),'Selected')"/>
+				<xsl:variable name="testSelected" select="$selected/sel/*[local-name(.) = $testSelectedName]"/>
+				<xsl:if test="not($testSelected) or $testSelected = '' ">
+					<ctl:message>local name: <xsl:value-of select="local-name(.)"/> met prereqs <xsl:value-of select="$metPrerequisites"/> selected name <xsl:value-of select="$testSelectedName"/> selected <xsl:value-of select="$testSelected"/></ctl:message>
+				</xsl:if>
+			</xsl:for-each>
 		</ctl:code>
 	</ctl:function>
 	
