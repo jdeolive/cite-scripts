@@ -219,7 +219,7 @@
 				<xsl:element name="Client.XML.POST.GetCapabilities.Sections.ServiceProvider.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
 				<xsl:element name="Client.XML.POST.GetCapabilities.Sections.OperationsMetadata.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
 				<xsl:element name="Client.XML.POST.GetCapabilities.Sections.Contents.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
-				<xsl:element name="Client.XML.POST.GetCapabilities.Themes.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
+				<xsl:element name="Client.XML.POST.GetCapabilities.Sections.Themes.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
 				<xsl:element name="Client.XML.POST.GetCapabilities.Sections.Multiple.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
 				<xsl:element name="Client.XML.POST.GetCapabilities.UpdateSequence.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
 				<xsl:element name="Client.XML.POST.GetCapabilities.AcceptFormats.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
@@ -512,7 +512,6 @@
 				<xsl:element name="Server.XML.POST.GetCapabilities.Request.InvalidService.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetCapabilities.Request.AcceptVersions.Valid.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST and $Server.KVP.GET.GetCapabilities.Request.AcceptVersions.Valid.Prerequisite-2)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetCapabilities.Request.AcceptVersions.Invalid.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST and $Server.KVP.GET.GetCapabilities.Request.AcceptVersions.Invalid.Prerequisite-2)"/></xsl:element>
-				<xsl:element name="Server.XML.POST.GetCapabilities.Request.CaseInsensitive.KVP.Names.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetCapabilities.Request.Sections.All.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetCapabilities.Request.Sections.ServiceIdentification.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetCapabilities.Request.Sections.ServiceProvider.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
@@ -597,7 +596,6 @@
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.InvalidService.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.AcceptVersions.Valid.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST and $Server.KVP.GET.GetCapabilities.Request.AcceptVersions.Valid.Prerequisite-2)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.AcceptVersions.Invalid.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST and $Server.KVP.GET.GetCapabilities.Request.AcceptVersions.Invalid.Prerequisite-2)"/></xsl:element>
-				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.CaseInsensitive.KVP.Names.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.Sections.All.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.Sections.ServiceIdentification.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.Sections.ServiceProvider.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
@@ -673,7 +671,7 @@
 				<!-- Server RESTful-->
 				
 				<xsl:element name="Server.RESTful.HTTP.Mandatory.Prerequisites"><xsl:value-of select="string($getCapabilitiesRESTful)"/></xsl:element>
-				<xsl:element name="Server.RESTful.InvalidRequest.Prerequisites"><xsl:value-of select="string($getCapabilitiesRESTful)"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetCapabilities.Request.Mandatory.Prerequisites"><xsl:value-of select="string($getCapabilitiesRESTful)"/></xsl:element>
 				
 				<xsl:element name="Server.RESTful.GetTile.Mandatory.Prerequisites"><xsl:value-of select="string($getTileRESTful)"/></xsl:element>
