@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ctl:package 
+	xmlns:ctl="http://www.occamlab.com/ctl" 
+	xmlns:gml="http://www.opengis.net/gml" 
+	xmlns:html="http://www.w3.org/1999/xhtml" 	
+	xmlns:ogc="http://www.opengis.net/ogc"
+	xmlns:ows="http://www.opengis.net/ows/1.1" 
+	xmlns:parsers="http://www.occamlab.com/te/parsers"
+	xmlns:saxon="http://saxon.sf.net/" 
+    xmlns:te="http://www.occamlab.com/te"
+	xmlns:tep="http://teamengine.sourceforge.net/parsers" 
+	xmlns:xi="http://www.w3.org/2001/XInclude" 
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xml="http://www.w3.org/XML/1998/namespace"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:wmts="http://www.opengis.net/wmts/1.0"
+	xmlns:ctlFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/ctlFunctions.xml"	
+	xmlns:owsFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/owsFunctions.xml"	
+	xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFunctions.xml"	
+	xmlns:wmtsFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wmtsFunctions.xml"	
+	xmlns:wmtsBootstrap="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/bootstrap.xml"
+>
+
+<ctl:test name="wmts:Server.KVP.GET.HTTP.Mandatory"  type="Mandatory">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  TBD
+	</ctl:assertion>
+	<ctl:comment>Test that a WMTS server observes the rules and conventions governing the use of HTTP GET operations.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.KVP.GET.HTTP.Mandatory</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:message>Server.KVP.GET.HTTP.Mandatory not implemented yet</ctl:message>
+						<ctl:warning/>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.KVP.GET.HTTP.Mandatory not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.KVP.GET.HTTP.Mandatory test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</ctl:code>
+</ctl:test>
+
+<ctl:test name="wmts:Server.KVP.GET.InvalidQueryString" type="Mandatory">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  the request entity is an invalid query string: "request~GetCapabilities!service~!'WMTS'version~'1.0.0'"
+	2.  the response entity is a schema-valid ows:Exception document.
+	3.  the response entity contains an exceptionCode attribute value of "MissingParameterValue".
+	4.  the response entity contains a locator attribute value of "service" or "request".
+	5.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".</ctl:assertion>
+	<ctl:comment>Test that a WMTS server returns a valid exception report and HTTP status code in response to an invalid query string.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.KVP.GET.InvalidQueryString</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:message>Server.KVP.GET.InvalidQueryString not implemented yet</ctl:message>
+						<ctl:warning/>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.KVP.GET.InvalidQueryString not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.KVP.GET.InvalidQueryString test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</ctl:code>
+</ctl:test>
+
+<ctl:test name="wmts:Server.KVP.GET.InvalidService"  type="Mandatory">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+    1.  the request entity service parameter value is "BOGUS".
+	2.  the response entity is a schema-valid ows:Exception document.
+    3.  the response entity contains an exceptionCode attribute value of "InvalidParameterValue".
+    4.  the response entity contains a locator attribute value of "service".
+    5.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".</ctl:assertion>
+	<ctl:comment>Test that a WMTS server returns a valid exception report and HTTP status code in response to an invalid service parameter.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.KVP.GET.InvalidService</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:message>Server.KVP.GET.InvalidService not implemented yet</ctl:message>
+						<ctl:warning/>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.KVP.GET.InvalidService not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.KVP.GET.InvalidService test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</ctl:code>
+</ctl:test>
+
+<ctl:test name="wmts:Server.KVP.GET.InvalidRequest"  type="Mandatory">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  the request entity request parameter value is "GetBOGUS".
+	2.  the response entity is a schema-valid ows:Exception document.
+	3.  the response entity contains an exceptionCode attribute value of "InvalidParameterValue".
+	4.  the response entity contains a locator attribute value of "request".
+	5.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".</ctl:assertion>
+	<ctl:comment>Test that a WMTS server returns a valid exception report and HTTP status code in response to an invalid request parameter.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.KVP.GET.InvalidRequest</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:message>Server.KVP.GET.InvalidRequest not implemented yet</ctl:message>
+						<ctl:warning/>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.KVP.GET.InvalidRequest not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.KVP.GET.InvalidRequest test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</ctl:code>
+</ctl:test>
+
+<ctl:test name="wmts:Server.KVP.POST.HTTP.Mandatory" type="MandatoryIfImplemented">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  TBD
+	</ctl:assertion>
+	<ctl:comment>Test that a WMTS server observes the rules and conventions governing the use of HTTP POST operations.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.KVP.POST.HTTP.Mandatory</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:message>Server.KVP.POST.HTTP.Mandatory not implemented yet</ctl:message>
+						<ctl:warning/>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.KVP.POST.HTTP.Mandatory not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.KVP.POST.HTTP.Mandatory test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</ctl:code>
+</ctl:test>
+
+<ctl:test name="wmts:Server.KVP.POST.InvalidQueryString" type="MandatoryIfImplemented">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  the request entity contains invalid KVP query strings:
+		a.  request~GetCapabilities!
+		b.  service~!'WMTS'!
+		c.  version~'1.0.0'!
+	2.  the response entity is a schema-valid ows:Exception document.
+	3.  the response entity contains an exceptionCode attribute value of "MissingParameterValue".
+	4.  the response entity contains a locator attribute value of "service" or "request".
+	5.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".</ctl:assertion>
+	<ctl:comment>Test that a WMTS server returns a valid exception report and HTTP status code in response to an invalid query string.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.KVP.POST.InvalidQueryString</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:message>Server.KVP.POST.InvalidQueryString not implemented yet</ctl:message>
+						<ctl:warning/>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.KVP.POST.InvalidQueryString not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.KVP.POST.InvalidQueryString test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</ctl:code>
+</ctl:test>
+
+<ctl:test name="wmts:Server.KVP.POST.InvalidService" type="MandatoryIfImplemented">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  the request entity service parameter value is "BOGUS".
+	2.  the response entity is a schema-valid ows:Exception document.
+	3.  the response entity contains an exceptionCode attribute value of "InvalidParameterValue".
+	4.  the response entity contains a locator attribute value of "service".
+	5.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".</ctl:assertion>
+	<ctl:comment>Test that a WMTS server returns a valid exception report and HTTP status code in response to an invalid service parameter.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.KVP.POST.InvalidService</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:message>Server.KVP.POST.InvalidService not implemented yet</ctl:message>
+						<ctl:warning/>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.KVP.POST.InvalidService not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.KVP.POST.InvalidService test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</ctl:code>
+</ctl:test>
+
+<ctl:test name="wmts:Server.KVP.POST.InvalidRequest" type="MandatoryIfImplemented">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  the request entity request parameter value is "GetBOGUS".
+	2.  the response entity is a schema-valid ows:Exception document.
+	3.  the response entity contains an exceptionCode attribute value of "InvalidParameterValue".
+	4.  the response entity contains a locator attribute value of "request".
+	5.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".</ctl:assertion>
+	<ctl:comment>Test that a WMTS server returns a valid exception report and HTTP status code in response to an invalid request parameter.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.KVP.POST.InvalidRequest</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:message>Server.KVP.POST.InvalidRequest not implemented yet</ctl:message>
+						<ctl:warning/>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.KVP.POST.InvalidRequest not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.KVP.POST.InvalidRequest test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</ctl:code>
+</ctl:test>
+
+<ctl:test name="wmts:Server.XML.POST.HTTP.Mandatory" type="MandatoryIfImplemented">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  TBD
+	</ctl:assertion>
+	<ctl:comment>Test that a WMTS server observes the rules and conventions governing the use of HTTP POST operations.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.XML.POST.HTTP.Mandatory</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:message>Server.XML.POST.HTTP.Mandatory not implemented yet</ctl:message>
+						<ctl:warning/>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.XML.POST.HTTP.Mandatory not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.XML.POST.HTTP.Mandatory test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</ctl:code>
+</ctl:test>
+
+<ctl:test name="wmts:Server.XML.POST.InvalidQueryString" type="MandatoryIfImplemented">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  the request entity is an invalid query document with mal-formed XML.
+	2.  the response entity is a schema-valid ows:Exception document.
+	3.  the response entity contains an exceptionCode attribute value of "MissingParameterValue".
+	4.  the response entity contains a locator attribute value of "service" or "request".
+	5.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".</ctl:assertion>
+	<ctl:comment>Test that a WMTS server returns a valid exception report and HTTP status code in response to an invalid query document.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.XML.POST.InvalidQueryString</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:message>Server.XML.POST.InvalidQueryString not implemented yet</ctl:message>
+						<ctl:warning/>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.XML.POST.InvalidQueryString not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.XML.POST.InvalidQueryString test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</ctl:code>
+</ctl:test>
+
+<ctl:test name="wmts:Server.XML.POST.InvalidService" type="MandatoryIfImplemented">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  the request entity XML document service parameter value is "BOGUS".
+	2.  the response entity is a schema-valid ows:Exception document.
+	3.  the response entity contains an exceptionCode attribute value of "InvalidParameterValue".
+	4.  the response entity contains a locator attribute value of "service".
+	5.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".</ctl:assertion>
+	<ctl:comment>Test that a WMTS server returns a valid exception report and HTTP status code in response to an invalid service parameter.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.XML.POST.InvalidService</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:message>Server.XML.POST.InvalidService not implemented yet</ctl:message>
+						<ctl:warning/>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.XML.POST.InvalidService not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.XML.POST.InvalidService test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</ctl:code>
+</ctl:test>
+
+<ctl:test name="wmts:Server.XML.POST.InvalidRequest" type="MandatoryIfImplemented">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  the request entity XML document request parameter value is "GetBOGUS".
+	2.  the response entity is a schema-valid ows:Exception document.
+	3.  the response entity contains an exceptionCode attribute value of "InvalidParameterValue".
+	4.  the response entity contains a locator attribute value of "request".
+	5.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".</ctl:assertion>
+	<ctl:comment>Test that a WMTS server returns a valid exception report and HTTP status code in response to an invalid request parameter.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.XML.POST.InvalidRequest</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:message>Server.XML.POST.InvalidRequest not implemented yet</ctl:message>
+						<ctl:warning/>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.XML.POST.InvalidRequest not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.XML.POST.InvalidRequest test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</ctl:code>
+</ctl:test>
+
+<ctl:test name="wmts:Server.SOAP.POST.HTTP.Mandatory" type="MandatoryIfImplemented">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  TBD
+	</ctl:assertion>
+	<ctl:comment>Test that a WMTS server observes the rules and conventions governing the use of HTTP POST operations.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.SOAP.POST.HTTP.Mandatory</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:message>Server.SOAP.POST.HTTP.Mandatory not implemented yet</ctl:message>
+						<ctl:warning/>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.SOAP.POST.HTTP.Mandatory not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.SOAP.POST.HTTP.Mandatory test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</ctl:code>
+</ctl:test>
+
+<ctl:test name="wmts:Server.SOAP.POST.InvalidQueryString" type="MandatoryIfImplemented">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  the request entity is an invalid query document with mal-formed XML.
+	2.  the response entity is a a SOAP 1.2 response message that contains a schema-valid ows:Exception document in the &lt;soap:Detail&gt; element.
+	3.  the response entity contains an exceptionCode attribute value of "MissingParameterValue".
+	4.  the response entity contains a locator attribute value of "service" or "request".
+	5.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".</ctl:assertion>
+	<ctl:comment>Test that a WMTS server returns a valid exception report and HTTP status code in response to an invalid query document.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.SOAP.POST.InvalidQueryString</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:message>Server.SOAP.POST.InvalidQueryString not implemented yet</ctl:message>
+						<ctl:warning/>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.SOAP.POST.InvalidQueryString not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.SOAP.POST.InvalidQueryString test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</ctl:code>
+</ctl:test>
+
+<ctl:test name="wmts:Server.SOAP.POST.InvalidService" type="MandatoryIfImplemented">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  the request entity XML document service parameter value is "BOGUS".
+	2.  the response entity is a a SOAP 1.2 response message that contains a schema-valid ows:Exception document in the &lt;soap:Detail&gt; element.
+	3.  the response entity contains an exceptionCode attribute value of "InvalidParameterValue".
+	4.  the response entity contains a locator attribute value of "service".
+	5.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".
+
+	</ctl:assertion>
+	<ctl:comment>Test that a WMTS server returns a valid exception report and HTTP status code in response to an invalid service parameter.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.SOAP.POST.InvalidService</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:message>Server.SOAP.POST.InvalidService not implemented yet</ctl:message>
+						<ctl:warning/>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.SOAP.POST.InvalidService not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.SOAP.POST.InvalidService test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</ctl:code>
+</ctl:test>
+
+<ctl:test name="wmts:Server.SOAP.POST.InvalidRequest" type="MandatoryIfImplemented">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  the request entity XML document request parameter value is "GetBOGUS".
+	2.  the response entity is a a SOAP 1.2 response message that contains a schema-valid ows:Exception document in the &lt;soap:Detail&gt; element.
+	3.  the response entity contains an exceptionCode attribute value of "InvalidParameterValue".
+	4.  the response entity contains a locator attribute value of "request".
+	5.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".</ctl:assertion>
+	<ctl:comment>Test that a WMTS server returns a valid exception report and HTTP status code in response to an invalid request parameter.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.SOAP.POST.InvalidRequest</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:message>Server.SOAP.POST.InvalidRequest not implemented yet</ctl:message>
+						<ctl:warning/>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.SOAP.POST.InvalidRequest not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.SOAP.POST.InvalidRequest test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</ctl:code>
+</ctl:test>
+
+<ctl:test name="wmts:Server.RESTful.HTTP.Mandatory" type="MandatoryIfImplemented">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  TBD
+	</ctl:assertion>
+	<ctl:comment>Test that a WMTS server observes the rules and conventions governing the use of HTTP GET operations.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.RESTful.HTTP.Mandatory</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:message>Server.RESTful.HTTP.Mandatory not implemented yet</ctl:message>
+						<ctl:warning/>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.RESTful.HTTP.Mandatory not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.RESTful.HTTP.Mandatory test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</ctl:code>
+</ctl:test>
+
+<ctl:test name="wmts:Server.RESTful.InvalidRequest" type="MandatoryIfImplemented">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  the request invokes a URL that consists of the ServiceMetadataURL advertised in the Service Metadata document, concatenated with "/Bogus".
+	2.  the server returns an HTTP status code of 404 (File not found).</ctl:assertion>
+	<ctl:comment>Test that a WMTS server returns an HTTP status code of 404 (File not found) in response to an invalid request.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.RESTful.InvalidRequest</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:message>Server.RESTful.InvalidRequest not implemented yet</ctl:message>
+						<ctl:warning/>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.RESTful.InvalidRequest not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.RESTful.InvalidRequest test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</ctl:code>
+</ctl:test>
+
+</ctl:package>
