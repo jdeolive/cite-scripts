@@ -30,7 +30,7 @@
 		<ctl:starting-test>wmts:main</ctl:starting-test>
 	</ctl:suite>
 	
-	<ctl:test name="wmts:main">
+	<ctl:test name="wmts:main"  type="Mandatory">
       	<ctl:context>wmts:suite</ctl:context>
 		<ctl:assertion>The IUT satisfies all applicable assertions.</ctl:assertion>
 		<ctl:code>
@@ -102,22 +102,30 @@
 							</xsl:variable>
 							<xsl:choose>
 								<xsl:when test="count($selected/sel/*) gt 0">		
-									<ctl:message>Completed test selecton - selected tests will now be run.</ctl:message>
+									<xsl:variable name="selectedWithSummary">
+										<ctl:call-function name="wmtsFunctions:interfaceSummary">
+											<ctl:with-param name="selected" select="$selected"/>
+										</ctl:call-function>
+									</xsl:variable>
+
 									<ctl:call-function name="ctl:putLogCache">
 										<ctl:with-param name="id">selected</ctl:with-param>
-										<ctl:with-param name="xmlToCache" select="$selected"/>
+										<ctl:with-param name="xmlToCache" select="$selectedWithSummary"/>
 									</ctl:call-function>
+									<ctl:message>Completed test selecton - selected tests will now be run.</ctl:message>
 
 									<!-- <xsl:message>selected <xsl:copy-of select="$selected"/></xsl:message> -->
 									<ctl:call-function name="wmtsFunctions:printSelected">
-										<ctl:with-param name="selected" select="$selected"/>
+										<ctl:with-param name="selected" select="$selectedWithSummary"/>
 									</ctl:call-function>
 
 									<ctl:message>calling wmtsFunctions:invokeSelectedTest in RedoFromCache mode</ctl:message>
-									<ctl:call-function name="wmtsFunctions:invokeSelectedTests">
-										<ctl:with-param name="bootstrap" select="$bootstrap/*"/>
-										<ctl:with-param name="selected" select="$selected"/>
-									</ctl:call-function>
+									<xsl:variable name="testResults">
+										<ctl:call-function name="wmtsFunctions:invokeSelectedTests">
+											<ctl:with-param name="bootstrap" select="$bootstrap/*"/>
+											<ctl:with-param name="selected" select="$selected"/>
+										</ctl:call-function>
+									</xsl:variable>
 
 								</xsl:when>
 								<xsl:otherwise>
@@ -310,23 +318,30 @@
 															</xsl:variable>
 															<xsl:choose>
 																<xsl:when test="count($selected/sel/*) gt 0">
-																
+																	<xsl:variable name="selectedWithSummary">
+																		<ctl:call-function name="wmtsFunctions:interfaceSummary">
+																			<ctl:with-param name="selected" select="$selected"/>
+																		</ctl:call-function>
+																	</xsl:variable>
+																	
 																	<ctl:call-function name="ctl:putLogCache">
 																		<ctl:with-param name="id">selected</ctl:with-param>
-																		<ctl:with-param name="xmlToCache" select="$selected"/>
+																		<ctl:with-param name="xmlToCache" select="$selectedWithSummary"/>
 																	</ctl:call-function>
 		
 																	<ctl:message>Completed test selecton - selected tests will now be run.</ctl:message>
 																	<!-- <xsl:message>selected <xsl:copy-of select="$selected"/></xsl:message> -->
 																	<ctl:call-function name="wmtsFunctions:printSelected">
-																		<ctl:with-param name="selected" select="$selected"/>
+																		<ctl:with-param name="selected" select="$selectedWithSummary"/>
 																	</ctl:call-function>
 		
 																	<ctl:message>calling wmtsFunctions:invokeSelectedTest in Test mode</ctl:message>
-																	<ctl:call-function name="wmtsFunctions:invokeSelectedTests">
-																		<ctl:with-param name="bootstrap" select="$bootstrap/*"/>
-																		<ctl:with-param name="selected" select="$selected"/>
-																	</ctl:call-function>
+																	<xsl:variable name="results">
+																		<ctl:call-function name="wmtsFunctions:invokeSelectedTests">
+																			<ctl:with-param name="bootstrap" select="$bootstrap/*"/>
+																			<ctl:with-param name="selected" select="$selected"/>
+																		</ctl:call-function>
+																	</xsl:variable>
 		
 																</xsl:when>
 																<xsl:otherwise>
