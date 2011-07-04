@@ -20,7 +20,7 @@
 	xmlns:wmtsFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wmtsFunctions.xml"
 >
 
-	<ctl:test name="wmtsBootstrap:main">
+	<ctl:test name="wmtsBootstrap:main" type="Mandatory">
 		<ctl:param name="wmts.capabilities.url"/>
 		<ctl:param name="wmts.capabilities.doc"/>
 		<ctl:param name="isRESTfulURL"/>
@@ -322,7 +322,7 @@
 				<xsl:variable name="Server.KVP.GET.GetCapabilities.Response.SchemaValid" select="true()"/> <!-- would not be here otherwise -->
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Response.AdvertisedFormat.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Response.OnlineResource.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
-				<xsl:element name="Server.KVP.GET.GetCapabilities.Response.GetEncoding.Constraint.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
+				<xsl:element name="Server.KVP.GET.GetCapabilities.Response.Encoding.Constraint.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Response.Layer.Identifiers.Unique.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
 				<xsl:variable name="Server.KVP.GET.GetCapabilities.Response.No.Layers.OtherSource.Prerequisite-2" select="count($wmts.capabilities.doc/wmts:Contents/wmts:Layer) = 0"/>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Response.No.Layers.OtherSource.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET  and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and $Server.KVP.GET.GetCapabilities.Response.No.Layers.OtherSource.Prerequisite-2)"/></xsl:element>
@@ -444,7 +444,7 @@
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Response.SchemaValid.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaReferenced)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Response.AdvertisedFormat.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Response.OnlineResource.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
-				<xsl:element name="Server.KVP.POST.GetCapabilities.Response.GetEncoding.Constraint.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
+				<xsl:element name="Server.KVP.POST.GetCapabilities.Response.Encoding.Constraint.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Response.Layer.Identifiers.Unique.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Response.No.Layers.OtherSource.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST  and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and $Server.KVP.GET.GetCapabilities.Response.No.Layers.OtherSource.Prerequisite-2)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Response.Style.Identifiers.Unique.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
@@ -528,7 +528,7 @@
 				<xsl:element name="Server.XML.POST.GetCapabilities.Response.SchemaValid.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaReferenced)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetCapabilities.Response.AdvertisedFormat.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetCapabilities.Response.OnlineResource.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
-				<xsl:element name="Server.XML.POST.GetCapabilities.Response.GetEncoding.Constraint.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
+				<xsl:element name="Server.XML.POST.GetCapabilities.Response.Encoding.Constraint.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetCapabilities.Response.Layer.Identifiers.Unique.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetCapabilities.Response.No.Layers.OtherSource.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST  and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and $Server.KVP.GET.GetCapabilities.Response.No.Layers.OtherSource.Prerequisite-2)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetCapabilities.Response.Style.Identifiers.Unique.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
@@ -612,7 +612,7 @@
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Response.SchemaValid.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaReferenced)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Response.AdvertisedFormat.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Response.OnlineResource.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
-				<xsl:element name="Server.SOAP.POST.GetCapabilities.Response.GetEncoding.Constraint.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
+				<xsl:element name="Server.SOAP.POST.GetCapabilities.Response.Encoding.Constraint.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Response.Layer.Identifiers.Unique.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Response.No.Layers.OtherSource.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST  and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and $Server.KVP.GET.GetCapabilities.Response.No.Layers.OtherSource.Prerequisite-2)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Response.Style.Identifiers.Unique.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
@@ -714,14 +714,6 @@
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.InfoFormat.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.Pixel.Row.J.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Row.J.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.Pixel.Col.I.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Col.I.Prerequisite-2 = 'true'))"/></xsl:element>
-
-
-			<!-- Client Interface Summary -->
-			
-			
-			<!-- Server Interface Summary -->
-
-
 			</xsl:element>
 		</ctl:code>
 	</ctl:function>
