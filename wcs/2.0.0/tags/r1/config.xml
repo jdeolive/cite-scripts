@@ -3,7 +3,7 @@
 		<name>OGC</name>
 	</organization>
 	<standard>
-		<name>wcs</name>
+		<name>WCS</name>
 	</standard>
 	<version>
 		<name>2.0.0</name>
