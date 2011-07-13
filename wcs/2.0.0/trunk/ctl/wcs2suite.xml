@@ -7,8 +7,8 @@
 		<h1>Web Coverage Service 2.0</h1>
                 	<p>The Web Coverage Service tests scripts are designed to test WCS 2.0
 implementations based on the WCS 2.0 specifications.</p>
-              		<p>A complete list of tests in the test suite is available in the OGC 09-147r1 and OGC 09-148r1 documents, but note that not
-all of the tests are applicable to all servers. Further test suites for both OGC09-110r1 and OGC09-149r1 will come soon</p>
+              		<p>A complete list of tests in the test suite is available in the OGC 09-147r1, OGC 09-148r1 and OGC 09-110r1 documents, but note that not
+all of the tests are applicable to all servers.</p>
                   	<p>Requirements for the offered coverages:</p>
                   		<p>  1. The implementation provides at least two coverages.</p>
                   		<p>  2. The first coverage offering should be RectifiedGridCoverage with at least 2 dimensions, while the second coverage could be any thing.</p>
