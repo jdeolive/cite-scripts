@@ -17,36 +17,34 @@
     		<ctl:param name="url"/>
    		<ctl:assertion>Test EO-WCS soap extension.</ctl:assertion>
     		<ctl:code>
-      			<xsl:variable name="Capabilities">
-       				<ctl:request>
-          				<ctl:url>
-            					<xsl:value-of select="$url"/>
-          				</ctl:url>
-					<ctl:method>post</ctl:method>
-					<ctl:header name="Content-type">text/xml</ctl:header>
-					       <ctl:body>
-						<![CDATA[
-						<?xml version="1.0" encoding="UTF-8"?>
-						<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope"> 
-						    <env:Header/>
-						    <env:Body>
-							<wcs:GetCapabilities  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-							    xmlns:ows='http://www.opengis.net/ows/2.0'
-							    xmlns:wcs='http://www.opengis.net/wcs/2.0'
-							    xsi:schemaLocation='http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd'
-							    service="WCS">
-							</wcs:GetCapabilities>
-						    </env:Body>
-						</env:Envelope>
-						]]>
-					       </ctl:body>
-      						<ctlp:XMLValidatingParser>
-	       						<ctlp:schemas>
-                      						<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+			<xsl:variable name="Capabilities">
+				<ctl:soap-request version="1.2" charset="UTF-8">
+			       		<ctl:url>
+						<xsl:value-of select="$url"/>
+					</ctl:url>
+					<ctl:body>							
+						<wcs:GetCapabilities
+						    xmlns:ows='http://www.opengis.net/ows/2.0'
+						    xmlns:wcs='http://www.opengis.net/wcs/2.0'
+						    xmlns:wcseo="http://www.opengis.net/wcseo/1.0"
+						    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+						    xsi:schemaLocation='http://www.opengis.net/wcs/2.0 wcs/2.0/wcsAll.xsd'
+						    service="WCS">
+						    <ows:AcceptVersions>
+							<ows:Version>2.0.0</ows:Version>
+						    </ows:AcceptVersions>
+						</wcs:GetCapabilities>
+					</ctl:body>
+					<ctlp:SOAPParser return="content">
+           					<ctlp:XMLValidatingParser>
+	        					<ctlp:schemas>
+                        					<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
-         					</ctlp:XMLValidatingParser>
-        			</ctl:request>
-      			</xsl:variable>
+           					</ctlp:XMLValidatingParser>
+           				</ctlp:SOAPParser>
+        			</ctl:soap-request>
+      			</xsl:variable>    		
+
       			<xsl:choose>
         			<xsl:when test="string-length($Capabilities)!=0">
 	  				<ctl:call-test name="wcseo:soap-req1">
@@ -105,7 +103,195 @@
      		<ctl:param name="url"/>   		
     		<ctl:assertion>Req3:A DescribeEOCoverageSet request shall contain exactly one Body element containing exactly one DescribeEOCoverageSet element.</ctl:assertion>
     		<ctl:code>        
-                    <ctl:message>[MESSAGE] TBD.</ctl:message>
+       			<xsl:variable name="DescribeEOCoverageSet">
+				<ctl:soap-request version="1.2" charset="UTF-8">
+			       		<ctl:url>
+						<xsl:value-of select="$url"/>
+					</ctl:url>
+					<ctl:body>
+						
+						<wcseo:DescribeEOCoverageSet
+						    xmlns:wcseo="http://www.opengis.net/wcseo/1.0"
+						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
+						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
+						    service="WCS" version="2.0.0" count="100">
+						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary']/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
+						</wcseo:DescribeEOCoverageSet>
+    					</ctl:body>
+    					
+					<ctlp:SOAPParser return="content">
+           					<ctlp:XMLValidatingParser>
+	        					<ctlp:schemas>
+                        					<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+							</ctlp:schemas>
+             					</ctlp:XMLValidatingParser>
+           				</ctlp:SOAPParser>
+         			</ctl:soap-request>
+        		</xsl:variable>
+    			<xsl:choose>
+  				<xsl:when test="string-length($DescribeEOCoverageSet)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+  				</xsl:when>
+  				<xsl:otherwise>
+        				<xsl:if test="not(empty($DescribeCoverage//ows:ExceptionReport))">
+        			   		<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
+        			   		<ctl:fail/>
+        				</xsl:if> 
+  				</xsl:otherwise>
+      			</xsl:choose>   
+       			<xsl:variable name="DescribeEOCoverageSet">
+				<ctl:soap-request version="1.2" charset="UTF-8">
+			       		<ctl:url>
+						<xsl:value-of select="$url"/>
+					</ctl:url>
+					<ctl:body>
+						
+						<wcseo:DescribeEOCoverageSet
+						    xmlns:wcseo="http://www.opengis.net/wcseo/1.0"
+						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
+						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
+						    service="WCS" version="2.0.0" count="100">
+						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary']/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
+						</wcseo:DescribeEOCoverageSet>
+						<wcseo:DescribeEOCoverageSet
+						    xmlns:wcseo="http://www.opengis.net/wcseo/1.0"
+						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
+						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
+						    service="WCS" version="2.0.0" count="100">
+						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary']/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
+						</wcseo:DescribeEOCoverageSet>						
+    					</ctl:body>
+    					
+					<ctlp:SOAPParser return="content">
+           					<ctlp:XMLValidatingParser>
+	        					<ctlp:schemas>
+                        					<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+							</ctlp:schemas>
+             					</ctlp:XMLValidatingParser>
+           				</ctlp:SOAPParser>
+         			</ctl:soap-request>
+        		</xsl:variable>
+    			<xsl:choose>
+  				<xsl:when test="string-length($DescribeEOCoverageSet)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+  				</xsl:when>
+  				<xsl:otherwise>
+        				<xsl:if test="empty($DescribeCoverage//ows:ExceptionReport)">
+        			   		<ctl:message>[FAILURE] The result should be an ows:ExceptionReport when there are two DescribeEOCoverageSet elements in the body element.</ctl:message>
+        			   		<ctl:fail/>
+        				</xsl:if> 
+  				</xsl:otherwise>
+      			</xsl:choose>  
+        		<xsl:variable name="DescribeEOCoverageSet">
+				<ctl:soap-request version="1.2" charset="UTF-8">
+			       		<ctl:url>
+						<xsl:value-of select="$url"/>
+					</ctl:url>
+					<ctl:body>
+					
+    					</ctl:body>
+    					
+					<ctlp:SOAPParser return="content">
+           					<ctlp:XMLValidatingParser>
+	        					<ctlp:schemas>
+                        					<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+							</ctlp:schemas>
+             					</ctlp:XMLValidatingParser>
+           				</ctlp:SOAPParser>
+         			</ctl:soap-request>
+        		</xsl:variable>
+    			<xsl:choose>
+  				<xsl:when test="string-length($DescribeEOCoverageSet)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+  				</xsl:when>
+  				<xsl:otherwise>
+        				<xsl:if test="empty($DescribeCoverage//ows:ExceptionReport)">
+        			   		<ctl:message>[FAILURE] The result should be an ows:ExceptionReport when the body element is empty.</ctl:message>
+        			   		<ctl:fail/>
+        				</xsl:if> 
+  				</xsl:otherwise>
+      			</xsl:choose>      		
+       			<xsl:variable name="DescribeEOCoverageSet">
+				<ctl:soap-request version="1.2" charset="UTF-8">
+			       		<ctl:url>
+						<xsl:value-of select="$url"/>
+					</ctl:url>
+					<ctl:body>					
+						<wcseo:DescribeEOCoverageSet
+						    xmlns:wcseo="http://www.opengis.net/wcseo/1.0"
+						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
+						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
+						    service="WCS" version="2.0.0" count="100">
+						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary']/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
+						</wcseo:DescribeEOCoverageSet>						
+    					</ctl:body>
+ 					<ctl:body>					
+						<wcseo:DescribeEOCoverageSet
+						    xmlns:wcseo="http://www.opengis.net/wcseo/1.0"
+						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
+						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
+						    service="WCS" version="2.0.0" count="100">
+						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary']/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
+						</wcseo:DescribeEOCoverageSet>						
+    					</ctl:body>   					
+    					
+					<ctlp:SOAPParser return="content">
+           					<ctlp:XMLValidatingParser>
+	        					<ctlp:schemas>
+                        					<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+							</ctlp:schemas>
+             					</ctlp:XMLValidatingParser>
+           				</ctlp:SOAPParser>
+         			</ctl:soap-request>
+        		</xsl:variable>
+    			<xsl:choose>
+  				<xsl:when test="string-length($DescribeEOCoverageSet)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+  				</xsl:when>
+  				<xsl:otherwise>
+        				<xsl:if test="empty($DescribeCoverage//ows:ExceptionReport)">
+        			   		<ctl:message>[FAILURE] The result should be an ows:ExceptionReport when there are two body elements in the request.</ctl:message>
+        			   		<ctl:fail/>
+        				</xsl:if> 
+  				</xsl:otherwise>
+      			</xsl:choose>  
+        			<xsl:variable name="DescribeEOCoverageSet">
+				<ctl:soap-request version="1.2" charset="UTF-8">
+			       		<ctl:url>
+						<xsl:value-of select="$url"/>
+					</ctl:url>
+ 					
+    					
+					<ctlp:SOAPParser return="content">
+           					<ctlp:XMLValidatingParser>
+	        					<ctlp:schemas>
+                        					<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+							</ctlp:schemas>
+             					</ctlp:XMLValidatingParser>
+           				</ctlp:SOAPParser>
+         			</ctl:soap-request>
+        		</xsl:variable>
+    			<xsl:choose>
+  				<xsl:when test="string-length($DescribeEOCoverageSet)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+  				</xsl:when>
+  				<xsl:otherwise>
+        				<xsl:if test="empty($DescribeCoverage//ows:ExceptionReport)">
+        			   		<ctl:message>[FAILURE] The result should be an ows:ExceptionReport when there is no body element in the request.</ctl:message>
+        			   		<ctl:fail/>
+        				</xsl:if> 
+  				</xsl:otherwise>
+      			</xsl:choose>      			
     		</ctl:code>
   	</ctl:test> 
 <!--req4--> 
@@ -114,7 +300,44 @@
      		<ctl:param name="url"/>     		
     		<ctl:assertion>Req4:In the response to a successful DescribeEOCoverageSet request, the SOAP Envelope shall contain exactly one Body element which contains a WCSEO::EOCoverageSet Description as its single element.</ctl:assertion>
     		<ctl:code>        
-                    <ctl:message>[MESSAGE] TBD.</ctl:message>
+       			<xsl:variable name="DescribeEOCoverageSet">
+				<ctl:soap-request version="1.2" charset="UTF-8">
+			       		<ctl:url>
+						<xsl:value-of select="$url"/>
+					</ctl:url>
+					<ctl:body>
+						
+						<wcseo:DescribeEOCoverageSet
+						    xmlns:wcseo="http://www.opengis.net/wcseo/1.0"
+						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
+						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
+						    service="WCS" version="2.0.0" count="100">
+						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary']/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
+						</wcseo:DescribeEOCoverageSet>
+    					</ctl:body>
+    					
+					<ctlp:SOAPParser return="content">
+           					<ctlp:XMLValidatingParser>
+	        					<ctlp:schemas>
+                        					<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+							</ctlp:schemas>
+             					</ctlp:XMLValidatingParser>
+           				</ctlp:SOAPParser>
+         			</ctl:soap-request>
+        		</xsl:variable>
+			<xsl:choose>
+				<xsl:when test="string-length($DescribeEOCoverageSet)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:if test="count($DescribeEOCoverageSet//*[local-name()='body'])=1 and count($DescribeEOCoverageSet//*[local-name()='body']//*[local-name()='EOCoverageSetDescription']=1//)">
+						<ctl:message>[FAILURE] In the response to a successful DescribeEOCoverageSet request, the SOAP Envelope shall contain exactly one Body element which contains a WCSEO::EOCoverageSetDescription as its single element.</ctl:message>
+						<ctl:fail/>
+					</xsl:if>
+				</xsl:otherwise>
+			</xsl:choose>  
     		</ctl:code>
   	</ctl:test> 
 <!--req5--> 
