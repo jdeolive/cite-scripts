@@ -500,7 +500,7 @@
       		<xsl:for-each select="$Capabilities//*[local-name()='CoverageSummary']">
         		<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('[MESSAGE]test ',/*[local-name()='CoverageId'])"/>
         		<xsl:variable name="DescribeCoverage">
-            			<ctl:soap-request version="1.2">
+            			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
                				</ctl:url>
@@ -536,7 +536,7 @@
 			<xsl:choose>
 				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
 					<xsl:variable name="GetCoverage">
-						<ctl:soap-request version="1.2">
+						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$url"/>
 							</ctl:url>
@@ -595,7 +595,7 @@
         		<xsl:choose>
 	  			<xsl:when test="$Capabilities//*[local-name()='OperationsMetadata']/*[local-name()='Operation']//@xlink:href/parent::*/parent::*/parent::*/parent::*//@name='GetCapabilities'">
             				<xsl:variable name="Capabilities">
-              					<ctl:soap-request version="1.2">
+              					<ctl:soap-request version="1.2" charset="UTF-8">
                 					<ctl:url>
                   						<xsl:value-of select=".//@xlink:href"/>
                 					</ctl:url>
@@ -633,7 +633,7 @@
 	  			</xsl:when>
 	  			<xsl:when test="$Capabilities//*[local-name()='OperationsMetadata']/*[local-name()='Operation']//@xlink:href/parent::*/parent::*/parent::*/parent::*//@name='DescribeCoverage'">
             				<xsl:variable name="DescribeCoverage">
-              					<ctl:soap-request version="1.2">
+              					<ctl:soap-request version="1.2" charset="UTF-8">
                 					<ctl:url>
                   						<xsl:value-of select=".//@xlink:href"/>
                 					</ctl:url>
@@ -672,7 +672,7 @@
 						<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
 												
 							<xsl:variable name="GetCoverage">
-								<ctl:soap-request version="1.2">
+								<ctl:soap-request version="1.2" charset="UTF-8">
 									<ctl:url>
 										<xsl:value-of select=".//@xlink:href"/>
 									</ctl:url>

@@ -319,7 +319,7 @@
     		
 	    	<ctl:code>
      			<xsl:variable name="Capabilities">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -353,7 +353,7 @@
   				</xsl:otherwise>
       			</xsl:choose>  
        			<xsl:variable name="DescribeCoverage">
-            			<ctl:soap-request version="1.2">
+            			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
                				</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -389,7 +389,7 @@
 				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
       			
 					<xsl:variable name="GetCoverage">
-						<ctl:soap-request version="1.2">
+						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$url"/>
 							</ctl:url>
@@ -1069,7 +1069,7 @@
 	    	<ctl:assertion>Req10:Test all WCS request types, the requst service parameter has a fixed value of 'WCS' by SOAP.</ctl:assertion>
     		<ctl:code>
      			<xsl:variable name="Capabilities">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -1103,7 +1103,7 @@
   				</xsl:otherwise>
       			</xsl:choose> 
      			<xsl:variable name="Capabilities">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -1138,7 +1138,7 @@
       			</xsl:choose> 
 
      			<xsl:variable name="Capabilities">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -1174,7 +1174,7 @@
 
 
        			<xsl:variable name="DescribeCoverage">
-            			<ctl:soap-request version="1.2">
+            			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
                				</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -1207,7 +1207,7 @@
   				</xsl:otherwise>
       			</xsl:choose>     
        			<xsl:variable name="DescribeCoverage">
-            			<ctl:soap-request version="1.2">
+            			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
                				</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -1240,7 +1240,7 @@
   				</xsl:otherwise>
       			</xsl:choose>     
        			<xsl:variable name="DescribeCoverage">
-            			<ctl:soap-request version="1.2">
+            			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
                				</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -1275,7 +1275,7 @@
  			<xsl:choose>
 				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
 					<xsl:variable name="GetCoverage">
-						<ctl:soap-request version="1.2">
+						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$url"/>
 							</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -1309,7 +1309,7 @@
 					</xsl:choose>  
 
 					<xsl:variable name="GetCoverage">
-						<ctl:soap-request version="1.2">
+						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$url"/>
 							</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -1343,7 +1343,7 @@
 						</xsl:otherwise>
 					</xsl:choose>        			
 					<xsl:variable name="GetCoverage">
-						<ctl:soap-request version="1.2">
+						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$url"/>
 							</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -2020,7 +2020,7 @@
 	    	<ctl:assertion>Req11:For all WCS request types, test the request version parameter has a fixed value of '2.0' by SOAP.</ctl:assertion>
     		<ctl:code>
      			<xsl:variable name="Capabilities">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -2054,7 +2054,7 @@
   				</xsl:otherwise>
       			</xsl:choose> 
      			<xsl:variable name="Capabilities">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -2089,7 +2089,7 @@
       			</xsl:choose> 
 
      			<xsl:variable name="Capabilities">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url>
@@ -2128,7 +2128,7 @@
 
 
        			<xsl:variable name="DescribeCoverage">
-            			<ctl:soap-request version="1.2">
+            			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
                				</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -2161,7 +2161,7 @@
   				</xsl:otherwise>
       			</xsl:choose>     
        			<xsl:variable name="DescribeCoverage">
-            			<ctl:soap-request version="1.2">
+            			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
                				</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -2194,7 +2194,7 @@
   				</xsl:otherwise>
       			</xsl:choose>     
        			<xsl:variable name="DescribeCoverage">
-            			<ctl:soap-request version="1.2">
+            			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
                				</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -2230,7 +2230,7 @@
 				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
      			
 					<xsl:variable name="GetCoverage">
-						<ctl:soap-request version="1.2">
+						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$url"/>
 							</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -2264,7 +2264,7 @@
 					</xsl:choose>  
 
 					<xsl:variable name="GetCoverage">
-						<ctl:soap-request version="1.2">
+						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$url"/>
 							</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -2297,7 +2297,7 @@
 						</xsl:otherwise>
 					</xsl:choose>        			
 					<xsl:variable name="GetCoverage">
-						<ctl:soap-request version="1.2">
+						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$url"/>
 							</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>

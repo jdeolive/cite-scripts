@@ -387,7 +387,7 @@
 	    	<ctl:assertion>Req16:Send a valid SOAP DescribeCoverage request and check that the result is not an exception.</ctl:assertion>
     		<ctl:code>
        			<xsl:variable name="DescribeCoverage">
-            			<ctl:soap-request version="1.2">
+            			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
                				</ctl:url>
@@ -583,7 +583,7 @@
 	    	<ctl:assertion>Req17:Send SOAP DescribeCoverage requests with valid and invalid request structure. Pass test if appropriate valid results or exceptions, resp., are delivered.</ctl:assertion>
     		<ctl:code>
        			<xsl:variable name="DescribeCoverage">
-            			<ctl:soap-request version="1.2">
+            			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
                				</ctl:url>
@@ -618,7 +618,7 @@
       			</xsl:choose>       
   
        			<xsl:variable name="DescribeCoverage">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
                				</ctl:url>
@@ -652,7 +652,7 @@
   				</xsl:otherwise>
       			</xsl:choose>
       			<xsl:variable name="DescribeCoverage">
-            			<ctl:soap-request version="1.2">
+            			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
                				</ctl:url>
@@ -687,7 +687,7 @@
       			</xsl:choose>       
   
        			<xsl:variable name="DescribeCoverage">
-            			<ctl:soap-request version="1.2">
+            			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
                				</ctl:url>
@@ -955,7 +955,7 @@
 	    	<ctl:assertion>Req18:Each coverage identifier in the list submitted in a SOAP DescribeCoverage request shall identify a wcs:OfferedCoverage object available on the server addressed.</ctl:assertion>
     		<ctl:code>
        			<xsl:variable name="DescribeCoverage">
-            			<ctl:soap-request version="1.2">
+            			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
                				</ctl:url>
@@ -993,7 +993,7 @@
       			</xsl:choose>       
   
        			<xsl:variable name="DescribeCoverage">
-            			<ctl:soap-request version="1.2">
+            			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
                				</ctl:url>
@@ -1028,7 +1028,7 @@
       			</xsl:choose>       
  
        			<xsl:variable name="DescribeCoverage">
-            			<ctl:soap-request version="1.2">
+            			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
                				</ctl:url>
@@ -1163,7 +1163,7 @@
       			<xsl:for-each select="$Capabilities//*[local-name()='CoverageSummary']/*[local-name()='CoverageId']">
         			<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('[FAILURE] test ',.)" />
         			<xsl:variable name="DescribeCoverage">
-					<ctl:soap-request version="1.2">
+					<ctl:soap-request version="1.2" charset="UTF-8">
 						<ctl:url>
 							<xsl:value-of select="$url"/>
 						</ctl:url>
@@ -1359,7 +1359,7 @@
 	    	<ctl:assertion>Req20:The response to a successful SOAP DescribeCoverage request with n>0 coverage identifiers shall be a list containing n items.</ctl:assertion>
     		<ctl:code>
        			<xsl:variable name="DescribeCoverage">
-            			<ctl:soap-request version="1.2">
+            			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
                				</ctl:url>
@@ -1396,7 +1396,7 @@
       			</xsl:choose>       
  
        			<xsl:variable name="DescribeCoverage">
-            			<ctl:soap-request version="1.2">
+            			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
                				</ctl:url>
@@ -1597,7 +1597,7 @@
  	    	<ctl:assertion>Req21:Obtain the list of coverage identifiers by sending a valid GetCapabilities request to the server under test. Send SOAP DescribeCoverage requests with a (non-empty) subset of the list and with the complete identifier list. Check responses whether they fulfill the requirement for each coverage description returned.</ctl:assertion>
     		<ctl:code>
         		<xsl:variable name="DescribeCoverage">
-             			<ctl:soap-request version="1.2">
+             			<ctl:soap-request version="1.2" charset="UTF-8">
                 			<ctl:url>
                    				<xsl:value-of select="$url"/>
                 			</ctl:url>
@@ -1637,7 +1637,7 @@
        			</xsl:choose>       
   
         		<xsl:variable name="DescribeCoverage">
-             			<ctl:soap-request version="1.2">
+             			<ctl:soap-request version="1.2" charset="UTF-8">
                 			<ctl:url>
                    				<xsl:value-of select="$url"/>
                 			</ctl:url>
@@ -1773,7 +1773,7 @@
 	    	<ctl:assertion>Req22:If a geometric or temporal object in the domainSet of a coverageDescription specifies an srsName attribute, the value of this attribute shall be identical to the srsName attribute of the boundedBy element of the containing coverageDescription.</ctl:assertion>
     		<ctl:code>
         		<xsl:variable name="DescribeCoverage">
-             			<ctl:soap-request version="1.2">
+             			<ctl:soap-request version="1.2" charset="UTF-8">
                 			<ctl:url>
                    				<xsl:value-of select="$url"/>
                 			</ctl:url>
@@ -1903,7 +1903,7 @@
 	    	<ctl:assertion>Req23:When a WCS server encounters an error while performing a SOAP DescribeCoverage operation it shall return an exception report message chosen as specified in req 23.</ctl:assertion>
     		<ctl:code>
        			<xsl:variable name="DescribeCoverage">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 					<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url>

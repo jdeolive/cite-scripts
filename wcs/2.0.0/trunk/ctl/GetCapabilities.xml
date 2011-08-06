@@ -318,7 +318,7 @@
 	    	<ctl:assertion>Req12:Send GetCapabilities requests with valid and invalid request structure by SOAP. Pass test if appropriate valid results or exceptions, resp., are delivered.</ctl:assertion>
     		<ctl:code>
      			<xsl:variable name="Capabilities">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url>
@@ -355,7 +355,7 @@
       			</xsl:choose>  
  
      			<xsl:variable name="Capabilities">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url>
@@ -392,7 +392,7 @@
       			</xsl:choose> 
 
      			<xsl:variable name="Capabilities">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url>
@@ -520,7 +520,7 @@
 	    	<ctl:assertion>Req13:Send a valid GetCapabilities request to the server under test by SOAP, check the result consists of an XML document of type Capabilities and the appropriate components, as defined in the places referenced.</ctl:assertion>
     		<ctl:code>
      			<xsl:variable name="Capabilities">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url>
@@ -657,7 +657,7 @@
       			<xsl:for-each select="$Capabilities//*[local-name()='CoverageSummary']/*[local-name()='CoverageId']">
         			<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('test',.)" />
 				<xsl:variable name="DescribeCoverage">
-					<ctl:soap-request version="1.2">
+					<ctl:soap-request version="1.2" charset="UTF-8">
 						<ctl:url>
 							<xsl:value-of select="$url"/>
 						</ctl:url>

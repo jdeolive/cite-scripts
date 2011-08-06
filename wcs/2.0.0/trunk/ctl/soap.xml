@@ -19,7 +19,7 @@
 		<ctl:code>
 
 			<xsl:variable name="Capabilities">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url>
@@ -138,7 +138,7 @@
     		<ctl:assertion>Req3:WCS servers and clients implementing this protocol shall adhere to SOAP 1.2 for all WCS operation requests and responses. The SOAP Request-Response message exchange pattern shall be used with the HTTP POST bindingWCS servers and clients implementing this protocol shall adhere to SOAP 1.2 for all WCS operation requests and responses. The SOAP Request-Response message exchange pattern shall be used with the HTTP POST binding</ctl:assertion>
     		<ctl:code>
       			<xsl:variable name="Capabilities">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url>
@@ -175,7 +175,7 @@
   				</xsl:otherwise>
       			</xsl:choose>  
        			<xsl:variable name="DescribeCoverage">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url>
@@ -211,7 +211,7 @@
   				</xsl:otherwise>
       			</xsl:choose>          
 			<xsl:variable name="GetCoverage">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 					<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url>
@@ -258,7 +258,7 @@
     		<ctl:code>
     		
       			<xsl:variable name="Capabilities">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url>
@@ -295,7 +295,7 @@
   				</xsl:otherwise>
       			</xsl:choose>  
        			<xsl:variable name="DescribeCoverage">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url>
@@ -331,7 +331,7 @@
   				</xsl:otherwise>
       			</xsl:choose>          
 			<xsl:variable name="GetCoverage">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 					<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url>
@@ -376,7 +376,7 @@
     		<ctl:assertion>Req5:A GetCoverage SOAP response shall be encoded as SOAP with Attachments as defined in [W3C Note 11], but using SOAP 1.2 rather than SOAP 1.1.</ctl:assertion>
     		<ctl:code>
       			<xsl:variable name="Capabilities">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url>
@@ -413,7 +413,7 @@
   				</xsl:otherwise>
       			</xsl:choose>  
        			<xsl:variable name="DescribeCoverage">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url>
@@ -449,7 +449,7 @@
   				</xsl:otherwise>
       			</xsl:choose>          
 			<xsl:variable name="GetCoverage">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 					<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url>
@@ -494,7 +494,7 @@
     		<ctl:assertion>Req6:In a GetCoverage response, the SOAP Envelope shall contain one Body element which contains the Coverage as its single element.</ctl:assertion>
     		<ctl:code>
 			<xsl:variable name="GetCoverage">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 					<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url>
@@ -540,7 +540,7 @@
 .</ctl:assertion>
     		<ctl:code>
       			<xsl:variable name="Capabilities">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url>
@@ -570,7 +570,7 @@
   				</xsl:otherwise>
       			</xsl:choose>  
        			<xsl:variable name="DescribeCoverage">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url>
@@ -606,7 +606,7 @@
   				</xsl:otherwise>
       			</xsl:choose>          
 			<xsl:variable name="GetCoverage">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
 					<ctl:url>
 						<xsl:value-of select="$url"/>
 					</ctl:url>
@@ -660,7 +660,7 @@
     		<ctl:assertion>Req9:Send requests of all types supported to the server under test. Each request shall include all (mandatory and) optional parameters and shall be valid except for one parameter which shall contain an encoding error described in the exception specification. Test passes if exception is reported according to requirement.</ctl:assertion>
     		<ctl:code>
       			<xsl:variable name="Capabilities">
-				<ctl:soap-request version="1.2">
+				<ctl:soap-request version="1.2" charset="UTF-8">
           				<ctl:url>
             					<xsl:value-of select="$url"/>
           				</ctl:url>
@@ -709,7 +709,7 @@
 	
 
        			<xsl:variable name="DescribeCoverage">
-            			<ctl:soap-request version="1.2">
+            			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
                				</ctl:url>
@@ -757,7 +757,7 @@
 
        
 					<xsl:variable name="GetCoverage">
-						<ctl:soap-request version="1.2">
+						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$url"/>
 							</ctl:url>
