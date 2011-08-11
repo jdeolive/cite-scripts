@@ -610,7 +610,7 @@
 									<ctl:param name="CoverageId"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
 									<ctlp:XMLValidatingParser>
 										<ctlp:schemas>
-											<ctlp:schema type="url">http://schemas.opengis.net/wcs/2.0/wcsGetCoverage.xsd</ctlp:schema>
+											<ctlp:schema type="resource">wcs/2.0/wcsGetCoverage.xsd</ctlp:schema>
 										</ctlp:schemas>
 									</ctlp:XMLValidatingParser>
 								</ctl:request>
@@ -673,7 +673,7 @@
 							<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
 							<ctlp:XMLValidatingParser>
 								<ctlp:schemas>
-									<ctlp:schema type="url">http://schemas.opengis.net/wcs/2.0/wcsDescribeCoverage.xsd</ctlp:schema>
+									<ctlp:schema type="resource">wcs/2.0/wcsDescribeCoverage.xsd</ctlp:schema>
 								</ctlp:schemas>
 							</ctlp:XMLValidatingParser>
 						</ctl:request>
@@ -729,7 +729,7 @@
 							</xsl:template>               
 							<ctlp:XMLValidatingParser>
 								<ctlp:schemas>
-									<ctlp:schema type="url">http://schemas.opengis.net/wcs/2.0/wcsGetCoverage.xsd</ctlp:schema>
+									<ctlp:schema type="resource">wcs/2.0/wcsGetCoverage.xsd</ctlp:schema>
 								</ctlp:schemas>
 							</ctlp:XMLValidatingParser>
 						</ctl:request>
@@ -795,7 +795,7 @@
 									<ctl:param name="CoverageId"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
 									<ctlp:XMLValidatingParser>
 										<ctlp:schemas>
-											<ctlp:schema type="url">http://schemas.opengis.net/wcs/2.0/wcsGetCoverage.xsd</ctlp:schema>
+											<ctlp:schema type="resource">wcs/2.0/wcsGetCoverage.xsd</ctlp:schema>
 										</ctlp:schemas>
 									</ctlp:XMLValidatingParser>
 								</ctl:request>
@@ -832,7 +832,7 @@
 									<ctl:param name="CoverageId">CoverageId_Bogus</ctl:param>   
 									<ctlp:XMLValidatingParser>
 										<ctlp:schemas>
-											<ctlp:schema type="url">http://schemas.opengis.net/wcs/2.0/wcsGetCoverage.xsd</ctlp:schema>
+											<ctlp:schema type="resource">wcs/2.0/wcsGetCoverage.xsd</ctlp:schema>
 										</ctlp:schemas>
 									</ctlp:XMLValidatingParser>
 								</ctl:request>

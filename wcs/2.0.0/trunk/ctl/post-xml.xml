@@ -35,7 +35,7 @@
 								</wcs:GetCapabilities>]]></ctl:body>
            				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
-                        				<ctlp:schema type="url">http://schemas.opengis.net/wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
+                        				<ctlp:schema type="resource">wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
 	        				</ctlp:schemas>
            				</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -140,7 +140,7 @@
 								</wcs:GetCapabilities>]]></ctl:body>
            				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
-                        				<ctlp:schema type="url">http://schemas.opengis.net/wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
+                        				<ctlp:schema type="resource">wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
 	        				</ctlp:schemas>
            				</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -176,7 +176,7 @@
 								</wcs:GetCapabilities>]]></ctl:body>
            				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
-                        				<ctlp:schema type="url">http://schemas.opengis.net/wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
+                        				<ctlp:schema type="resource">wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
 	        				</ctlp:schemas>
            				</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -222,7 +222,7 @@
 
            				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
-                        				<ctlp:schema type="url">http://schemas.opengis.net/wcs/2.0/wcsDescribeCoverage.xsd</ctlp:schema>
+                        				<ctlp:schema type="resource">wcs/2.0/wcsDescribeCoverage.xsd</ctlp:schema>
 	        				</ctlp:schemas>
              				</ctlp:XMLValidatingParser>
 
@@ -260,7 +260,7 @@
 
              				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
-                        				<ctlp:schema type="url">http://schemas.opengis.net/wcs/2.0/wcsDescribeCoverage.xsd</ctlp:schema>
+                        				<ctlp:schema type="resource">wcs/2.0/wcsDescribeCoverage.xsd</ctlp:schema>
 	        				</ctlp:schemas>
              				</ctlp:XMLValidatingParser>
 
@@ -309,7 +309,7 @@
 
 							<ctlp:XMLValidatingParser>
 								<ctlp:schemas>
-									<ctlp:schema type="url">http://schemas.opengis.net/wcs/2.0/wcsGetCoverage.xsd</ctlp:schema>
+									<ctlp:schema type="resource">wcs/2.0/wcsGetCoverage.xsd</ctlp:schema>
 								</ctlp:schemas>
 							</ctlp:XMLValidatingParser>
 
@@ -347,7 +347,7 @@
 
 							<ctlp:XMLValidatingParser>
 								<ctlp:schemas>
-									<ctlp:schema type="url">http://schemas.opengis.net/wcs/2.0/wcsGetCoverage.xsd</ctlp:schema>
+									<ctlp:schema type="resource">wcs/2.0/wcsGetCoverage.xsd</ctlp:schema>
 								</ctlp:schemas>
 							</ctlp:XMLValidatingParser>
 
@@ -400,7 +400,7 @@
 					</ctl:body>
            				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
-                        				<ctlp:schema type="url">http://schemas.opengis.net/wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
+                        				<ctlp:schema type="resource">wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
 	        				</ctlp:schemas>
            				</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -446,7 +446,7 @@
 
              				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
-                        				<ctlp:schema type="url">http://schemas.opengis.net/wcs/2.0/wcsDescribeCoverage.xsd</ctlp:schema>
+                        				<ctlp:schema type="resource">wcs/2.0/wcsDescribeCoverage.xsd</ctlp:schema>
 	        				</ctlp:schemas>
              				</ctlp:XMLValidatingParser>
 
@@ -494,7 +494,7 @@
 
 							<ctlp:XMLValidatingParser>
 								<ctlp:schemas>
-									<ctlp:schema type="url">http://schemas.opengis.net/wcs/2.0/wcsGetCoverage.xsd</ctlp:schema>
+									<ctlp:schema type="resource">wcs/2.0/wcsGetCoverage.xsd</ctlp:schema>
 								</ctlp:schemas>
 							</ctlp:XMLValidatingParser>
 
