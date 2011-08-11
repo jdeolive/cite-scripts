@@ -2,6 +2,22 @@ WCS 2.0 Test Suite Release Notes
 
 Changes included in latest revision:
 
+=== Changes included in R3 ===
+2011-08-11 summary (kstegemoller)
+- added SOAP Tests
+- uploaded local schemas for test (not yet final)
+- updated structure of the test
+- added GetCapabilities (KVP) test
+- added DescribeCoverage (KVP) test
+- added DescribeEOCoverageSet (KVP) test
+- added test suite for RequestBase
+- added test suite for GetCoverage
+- added test suites for GetCapabilities
+- added tests for extensions
+- added test for describecoverage
+- added tests for the data model and the service model
+- added test for core
+
 === Changes included in R0 ===
 2011-05-10 (jyu):
 - Added the GetKVP(OGC09-147r1) test suite
