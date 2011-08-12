@@ -37,7 +37,7 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.HTTP.Mandatory not implemented yet</ctl:message>
+						<ctl:message>Server.KVP.GET.HTTP.Mandatory not implemented yet - detailed requirements not determined yet</ctl:message>
 						<ctl:warning/>
 					</xsl:when>
 					<xsl:otherwise>
@@ -57,6 +57,9 @@
 <ctl:test name="wmts:Server.KVP.GET.InvalidQueryString" type="Mandatory">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="exceptionReportSchemaType">string('url')</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is an invalid query string: "request~GetCapabilities!service~!'WMTS'version~'1.0.0'"
@@ -69,10 +72,70 @@
 	<ctl:code>
 		<xsl:choose>
 			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:variable name="invalidQuery">request~GetCapabilities!service~!'WMTS'version~'1.0.0</xsl:variable>
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.InvalidQueryString not implemented yet</ctl:message>
-						<ctl:warning/>
+						<xsl:variable name="invalidQueryString">
+							<xsl:choose>
+								<xsl:when test="ends-with($capabilitiesURL,'?')">
+									<xsl:value-of select="concat($capabilitiesURL, $invalidQuery)"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="concat($capabilitiesURL,'?',$invalidQuery)"/>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:variable>
+						<ctl:message select="concat('Query String: ', $invalidQueryString)"/>
+						<xsl:variable name="request1">
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$invalidQueryString"/>
+								</ctl:url>
+								<ctl:method>get</ctl:method>
+								<parsers:XMLValidatingParser>
+									<parsers:schemas>
+										<parsers:schema type="url">http://www.w3.org/2001/xml.xsd</parsers:schema>
+										<parsers:schema>
+											<xsl:attribute name="type"><xsl:value-of select="$exceptionReportSchemaType" /></xsl:attribute>
+											<xsl:value-of select="$exceptionReportSchemaPath" />
+										</parsers:schema>
+									</parsers:schemas>
+								</parsers:XMLValidatingParser>
+							</ctl:request>
+						</xsl:variable>
+						<xsl:choose>
+							<xsl:when test="not($request1/*)">
+								<ctl:message>FAILURE: Missing or invalid response entity; should have been an ows Exception Report.</ctl:message>
+								<ctl:fail/>
+							</xsl:when>
+							<xsl:otherwise>
+								<ctl:message><xsl:copy-of select="$request1"/></ctl:message>
+								<ctl:call-function name="ctl:putLogCache">
+									<ctl:with-param name="id">exceptionReport</ctl:with-param>
+									<ctl:with-param name="xmlToCache"><xsl:copy-of select="$request1"/></ctl:with-param> 
+								</ctl:call-function>
+								<xsl:variable name="isValid1">
+									<ctl:call-function name="owsFunctions:checkExceptionReport">
+										<ctl:with-param name="exceptionReport" select="$request1" />
+										<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+										<ctl:with-param name="locatorToCheck" select="string('service')" />
+									</ctl:call-function>
+								</xsl:variable>
+								<xsl:variable name="isValid2">
+									<ctl:call-function name="owsFunctions:checkExceptionReport">
+										<ctl:with-param name="exceptionReport" select="$request1" />
+										<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+										<ctl:with-param name="locatorToCheck" select="string('request')" />
+									</ctl:call-function>
+								</xsl:variable>
+								<xsl:if test="not(xsd:boolean($isValid1) or xsd:boolean($isValid2))">
+									<ctl:message>FAILURE: The returned exception report was expected to contain an exceptionCode of "MissingParameterValue" and a locator value of "service" or "request".</ctl:message>
+									<ctl:message select="concat('Returned exception code was: &quot;', owsFunctions:exceptionCode($request1), '&quot;')"/>
+									<ctl:message select="concat('Returned locator was: &quot;', owsFunctions:exceptionCodeLocator($request1), '&quot;')"/>			
+									<ctl:fail/>
+								</xsl:if>							
+							</xsl:otherwise>
+						</xsl:choose>				
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.InvalidQueryString not tested.</ctl:message>
@@ -91,6 +154,9 @@
 <ctl:test name="wmts:Server.KVP.GET.InvalidService"  type="Mandatory">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="exceptionReportSchemaType">string('url')</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
     1.  the request entity service parameter value is "BOGUS".
@@ -105,8 +171,62 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.InvalidService not implemented yet</ctl:message>
-						<ctl:warning/>
+						<xsl:variable name="serviceURL">
+							<xsl:choose>
+								<xsl:when test="ends-with($capabilitiesURL,'?')">
+									<xsl:value-of select="substring-before($capabilitiesURL,'?')"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="$capabilitiesURL"/>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:variable>
+						<ctl:message select="concat('Sending invalid service parameter: BOGUS to ', $serviceURL )"/>
+						<xsl:variable name="response">
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:method>get</ctl:method>
+								<ctl:param name="service">BOGUS</ctl:param>
+								<ctl:param name="request">GetCapabilities</ctl:param>
+								<parsers:XMLValidatingParser>
+									<parsers:schemas>
+										<parsers:schema type="url">http://www.w3.org/2001/xml.xsd</parsers:schema>
+										<parsers:schema>
+											<xsl:attribute name="type"><xsl:value-of select="$exceptionReportSchemaType" /></xsl:attribute>
+											<xsl:value-of select="$exceptionReportSchemaPath" />
+										</parsers:schema>
+									</parsers:schemas>
+								</parsers:XMLValidatingParser>
+							</ctl:request>
+						</xsl:variable>		
+						<xsl:choose>
+							<xsl:when test="not($response/*)">
+								<ctl:message>FAILURE: Missing or invalid response entity; should have been an ows Exception Report..</ctl:message>
+								<ctl:fail/>
+							</xsl:when>
+							<xsl:otherwise>
+								<ctl:message><xsl:copy-of select="$response"/></ctl:message>
+								<ctl:call-function name="ctl:putLogCache">
+									<ctl:with-param name="id">exceptionReport</ctl:with-param>
+									<ctl:with-param name="xmlToCache"><xsl:copy-of select="$response"/></ctl:with-param> 
+								</ctl:call-function>
+								<xsl:variable name="isValid">
+									<ctl:call-function name="owsFunctions:checkExceptionReport">
+										<ctl:with-param name="exceptionReport" select="$response" />
+										<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+										<ctl:with-param name="locatorToCheck" select="string('service')" />
+									</ctl:call-function>
+								</xsl:variable>
+								<xsl:if test="not(xsd:boolean($isValid))">
+									<ctl:message>FAILURE: The returned exception report was expected to contain an exceptionCode of "InvalidParameterValue" and a locator value of "service".</ctl:message>
+									<ctl:message select="concat('Returned exception code was: &quot;', owsFunctions:exceptionCode($response), '&quot;')"/>
+									<ctl:message select="concat('Returned locator was: &quot;', owsFunctions:exceptionCodeLocator($response), '&quot;')"/>			
+									<ctl:fail/>
+								</xsl:if>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.InvalidService not tested.</ctl:message>
@@ -125,6 +245,9 @@
 <ctl:test name="wmts:Server.KVP.GET.InvalidRequest"  type="Mandatory">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="exceptionReportSchemaType">string('url')</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity request parameter value is "GetBOGUS".
@@ -139,8 +262,62 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.InvalidRequest not implemented yet</ctl:message>
-						<ctl:warning/>
+						<xsl:variable name="serviceURL">
+							<xsl:choose>
+								<xsl:when test="ends-with($capabilitiesURL,'?')">
+									<xsl:value-of select="substring-before($capabilitiesURL,'?')"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="$capabilitiesURL"/>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:variable>
+						<ctl:message select="concat('Sending invalid request parameter: GetBOGUS to ', $serviceURL )"/>
+						<xsl:variable name="response">
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:method>get</ctl:method>
+								<ctl:param name="service">WMTS</ctl:param>
+								<ctl:param name="request">GetBOGUS</ctl:param>
+								<parsers:XMLValidatingParser>
+									<parsers:schemas>
+										<parsers:schema type="url">http://www.w3.org/2001/xml.xsd</parsers:schema>
+										<parsers:schema>
+											<xsl:attribute name="type"><xsl:value-of select="$exceptionReportSchemaType" /></xsl:attribute>
+											<xsl:value-of select="$exceptionReportSchemaPath" />
+										</parsers:schema>
+									</parsers:schemas>
+								</parsers:XMLValidatingParser>
+							</ctl:request>
+						</xsl:variable>		
+						<xsl:choose>
+							<xsl:when test="not($response/*)">
+								<ctl:message>FAILURE: Missing or invalid response entity; should have been an ows Exception Report..</ctl:message>
+								<ctl:fail/>
+							</xsl:when>
+							<xsl:otherwise>
+								<ctl:message><xsl:copy-of select="$response"/></ctl:message>
+								<ctl:call-function name="ctl:putLogCache">
+									<ctl:with-param name="id">exceptionReport</ctl:with-param>
+									<ctl:with-param name="xmlToCache"><xsl:copy-of select="$response"/></ctl:with-param> 
+								</ctl:call-function>
+								<xsl:variable name="isValid">
+									<ctl:call-function name="owsFunctions:checkExceptionReport">
+										<ctl:with-param name="exceptionReport" select="$response" />
+										<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+										<ctl:with-param name="locatorToCheck" select="string('service')" />
+									</ctl:call-function>
+								</xsl:variable>
+								<xsl:if test="not(xsd:boolean($isValid))">
+									<ctl:message>FAILURE: The returned exception report was expected to contain an exceptionCode of "InvalidParameterValue" and a locator value of "service".</ctl:message>
+									<ctl:message select="concat('Returned exception code was: &quot;', owsFunctions:exceptionCode($response), '&quot;')"/>
+									<ctl:message select="concat('Returned locator was: &quot;', owsFunctions:exceptionCodeLocator($response), '&quot;')"/>			
+									<ctl:fail/>
+								</xsl:if>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.InvalidRequest not tested.</ctl:message>
