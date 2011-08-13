@@ -26,6 +26,174 @@
 	</ctl:code>
 </ctl:function>
 
+    <!-- From SOS OWS.xml (modified) - Validates an ExceptionReport and checks for specific exceptionCode and locator values-->
+    <ctl:function name="owsFunctions:checkExceptionReport">
+        <ctl:param name="exceptionReport">The exception report to check</ctl:param>
+        <ctl:param name="exceptionCodeToCheck">The exceptionCode to check</ctl:param>
+        <ctl:param name="locatorToCheck">The locator to check (a * can be provided to indicate that any locator value is allowed)</ctl:param>
+        <ctl:return>True/false depending on whether or not the exception report is valid</ctl:return>
+        <ctl:description>Validates an ExceptionReport and checks for specific exceptionCode and locator values</ctl:description>
+        <ctl:code>
+			<xsl:variable name="exceptionElement" select="$exceptionReport//ows:ExceptionReport/ows:Exception" />
+			<xsl:variable name="exceptionCodeValue" select="$exceptionElement/@exceptionCode" />
+			<xsl:variable name="locatorValue" select="$exceptionElement/@locator" />
+            <xsl:choose>
+                <xsl:when test="$locatorToCheck='*'">
+                    <xsl:value-of select="($exceptionCodeToCheck=string($exceptionCodeValue))" />
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="($exceptionCodeToCheck=string($exceptionCodeValue)) and (contains(lower-case(string($locatorToCheck)), lower-case($locatorValue)))" />
+                </xsl:otherwise>
+            </xsl:choose>
+        </ctl:code>
+    </ctl:function>	
 
+	<ctl:function name="owsFunctions:exceptionElement">
+		<ctl:param name="exceptionResponse">The exception repsonse</ctl:param>
+		<ctl:code>
+			<xsl:copy-of select="$exceptionResponse//ows:ExceptionReport/ows:Exception" />
+		</ctl:code>
+	</ctl:function>
+	
+	<ctl:function name="owsFunctions:exceptionCode">
+		<ctl:param name="exceptionResponse">The exception repsonse</ctl:param>
+		<ctl:code>
+			<xsl:variable name="exceptionElement" select="owsFunctions:exceptionElement($exceptionResponse)"/>
+			<xsl:value-of select="$exceptionElement/@exceptionCode" />
+		</ctl:code>
+	</ctl:function>
 
+	<ctl:function name="owsFunctions:exceptionCodeLocator">
+		<ctl:param name="exceptionResponse">The exception repsonse</ctl:param>
+		<ctl:code>
+			<xsl:variable name="exceptionElement" select="owsFunctions:exceptionElement($exceptionResponse)"/>
+			<xsl:value-of select="$exceptionElement/@locator" />
+		</ctl:code>
+	</ctl:function>
+
+	<ctl:function name="owsFunctions:provokeKVPGetException">
+		<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+		<ctl:param name="invalidQuery">KVP Get query string to provoke an exception</ctl:param>
+		<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
+		<ctl:param name="exceptionCodes">Exception code, or codes separated by spaces, e.g.  MissingParameterValue InvalidParameterValue</ctl:param>
+		<ctl:param name="locators">Locator code or codes, separated by spaces, e.g. service request</ctl:param>
+        <ctl:return>true/false depending on whether or not the provoked exception contains the specified exception code(s) and locator(s)</ctl:return>
+		<ctl:description>Provokes an ows:ExceptionReport by issuing an invalid KVP Get query to a WMTS server.  The exceptionCodes and locators parameters must contain the same number of codes.</ctl:description>
+		<ctl:code>
+			<xsl:variable name="invalidQueryString">
+				<xsl:choose>
+					<xsl:when test="ends-with($capabilitiesURL,'?')">
+						<xsl:value-of select="concat($capabilitiesURL, $invalidQuery)"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="concat($capabilitiesURL,'?',$invalidQuery)"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+			<ctl:message select="concat('Invalid Query String: ', $invalidQueryString)"/>		
+			<xsl:variable name="testResult">
+				<xsl:choose>
+					<xsl:when test="count(exceptionCodes) = count(locators)">
+						<xsl:variable name="response">
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$invalidQueryString"/>
+								</ctl:url>
+								<ctl:method>get</ctl:method>
+								<parsers:HTTPParser/>
+							</ctl:request>
+						</xsl:variable>
+						<ctl:message>Response content count: <xsl:copy-of select="count($response/response/content/*)"/></ctl:message>
+						<xsl:choose>
+							<xsl:when test="not($response/response/contents/*)">
+								<ctl:message>FAILURE: Missing or invalid response entity; should have been an ows:ExceptionReport.</ctl:message>
+								<xsl:text>false</xsl:text>
+							</xsl:when>
+							<xsl:otherwise>
+								<ctl:message>Validating ows:ExceptionReport against its XML Schema owsExceptionReport.xsd</ctl:message>
+								<ctl:call-function name="ctl:startStopwatch">
+									<ctl:with-param name="watchName">exception.validation</ctl:with-param>
+								</ctl:call-function>
+								<xsl:variable name="exceptionReport" select="$response/response/content/*"/>
+								<xsl:variable name="results">
+									<ctl:call-function name="ctlFunctions:XMLschemaValidate">
+										<ctl:with-param name="doc"><xsl:copy-of select="$exceptionReport"/></ctl:with-param>
+										<ctl:with-param name="schemaPath" select="$exceptionReportSchemaPath"/>
+									</ctl:call-function>
+								</xsl:variable>
+								<xsl:variable name="exception.validation.elapsed" select="ctl:elapsedTime('exception.validation')"/>
+								<xsl:choose>
+									<xsl:when test="count($results/*) &gt; 0">
+										<ctl:message>Exception report failed schema validation; elapsedTime: [<xsl:value-of select="$exception.validation.elapsed"/>] milliseconds</ctl:message>
+										<ctl:message>results: <xsl:copy-of select="$results"/></ctl:message>
+										<xsl:text>false</xsl:text>
+									</xsl:when>
+									<xsl:otherwise>
+										<ctl:message>exception.validation.elapsed [<xsl:value-of select="$exception.validation.elapsed"/>] milliseconds</ctl:message>
+										<ctl:message>Exception report is XML Schema valid, continuing...</ctl:message>
+										<xsl:variable name="exceptionCodeList" select="tokenize($exceptionCodes, ' ')"/>
+										<xsl:variable name="locatorList" select="tokenize($locators, ' ')"/>
+										<xsl:variable name="exceptionReportResults">
+											<xsl:for-each select="1 to count(locatorList)">
+												<xsl:variable name="exceptionCode" select="$exceptionCodeList[position()]"/>
+												<xsl:variable name="locator" select="$locatorList[position()]"/>
+												<xsl:variable name="isValid">
+													<ctl:call-function name="owsFunctions:checkExceptionReport">
+														<ctl:with-param name="exceptionReport" select="$exceptionReport" />
+														<ctl:with-param name="exceptionCodeToCheck" select="$exceptionCode" />
+														<ctl:with-param name="locatorToCheck" select="$locator" />
+													</ctl:call-function>
+												</xsl:variable>
+												<xsl:value-of select="concat($isValid,'|')"/>
+											</xsl:for-each>
+										</xsl:variable>
+										<xsl:variable name="exceptionCodeReturned" select="owsFunctions:exceptionCode($exceptionReport)"/>
+										<xsl:variable name="locatorReturned" select="owsFunctions:exceptionCodeLocator($exceptionReport)"/>
+										<xsl:choose>
+											<xsl:when test="not(contains($exceptionReportResults, 'true'))">
+												<xsl:variable name="errorMessage">
+													<xsl:text>FAILURE: The returned exception report was expected to contain an exceptionCode of "</xsl:text>
+													<xsl:for-each select="1 to count(locatorList)">
+														<xsl:variable name="exceptionCode" select="$exceptionCodeList[position()]"/>
+														<xsl:variable name="locator" select="$locatorList[position()]"/>
+														<xsl:value-of select="concat($exceptionCode, '&quot; and a locator of &quot;', $locator)"/>
+														<xsl:if test="position() lt last()">
+															<xsl:text> or an exception Code of </xsl:text>
+														</xsl:if>
+													</xsl:for-each>
+												</xsl:variable>
+												<ctl:message><xsl:value-of select="$errorMessage"/></ctl:message>
+												<ctl:message select="concat('Returned exception code was: &quot;', $exceptionCodeReturned, '&quot;')"/>
+												<ctl:message select="concat('Returned locator was: &quot;', $locatorReturned, '&quot;')"/>		
+												<xsl:text>false</xsl:text>
+											</xsl:when>
+											<xsl:otherwise>
+												<ctl:message><xsl:value-of select="concat('Returned exception code ', $exceptionCodeReturned, ' and locator ', $locatorReturned, ' values valid, continuing ...')"/></ctl:message>
+												<xsl:variable name="httpStatusCode" select="$response/response/status/@code"/>
+												<xsl:choose>
+													<xsl:when test="$httpStatusCode = 400">
+														<ctl:message>HTTP status code was 400; test passes.</ctl:message>
+														<xsl:text>true</xsl:text>
+													</xsl:when>
+													<xsl:otherwise>
+														<ctl:message><xsl:value-of select="concat('Invalid HTTP status code: ', $httpStatusCode)"/></ctl:message>
+														<xsl:text>false</xsl:text>
+													</xsl:otherwise>
+												</xsl:choose>
+											</xsl:otherwise>
+										</xsl:choose>
+									</xsl:otherwise>
+								</xsl:choose>	
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message><xsl:value-of select="concat('Count of exceptionCodes (', count(exceptionCodes), ') does not match count of locators (', count(locators), '), test fails')"/></ctl:message>
+						<xsl:text>false</xsl:text>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+			<xsl:value-of select="$testResult"/>
+		</ctl:code>
+	</ctl:function>
 </ctl:package>
