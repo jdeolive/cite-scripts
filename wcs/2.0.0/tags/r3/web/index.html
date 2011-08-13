@@ -31,9 +31,9 @@
 <h2>What is tested</h2>
 <p>The WCS with index-subsetting for GirdCoverage is tested.</p>
 <ul>
-      <li>GetCapabilities (KVP, Post)</li>
-      <li>DescribeCoverage (KVP, Post)</li>
-      <li>GetCoverage (KVP, Post) on GML coverage</li>
+      <li>GetCapabilities (KVP, Post, SOAP)</li>
+      <li>DescribeCoverage (KVP, Post, SOAP)</li>
+      <li>GetCoverage (KVP, Post, SOAP) on GML coverage, based on OGC 09-110r3 req24 and req25</li>
 </ul>
 <p>Further optional extensions are only tested when the
 GetCapabilities response indicates that the extensions are supported.</p>
@@ -45,10 +45,7 @@ GetCapabilities response indicates that the extensions are supported.</p>
   <li>Format extensions other than GML Coverage</li>
   <li>Other not mentioned requirements</li>
 </ul>
-<h2>TBD</h2>
-<ul>
-  <li>SOAP extension</li>
-</ul>
+
 <h2>Test data</h2>
   <p>Sample coverages can be found at <a href="http://schemas.opengis.net/wcs/2.0/examples">http://schemas.opengis.net/wcs/2.0/examples</a>.</p>
 <h2>Schemas</h2>

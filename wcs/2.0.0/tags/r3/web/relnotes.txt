@@ -7,14 +7,11 @@ Changes included in latest revision:
 - added SOAP Tests
 - uploaded local schemas for test (not yet final)
 - updated structure of the test
-- added GetCapabilities (KVP) test
-- added DescribeCoverage (KVP) test
-- added DescribeEOCoverageSet (KVP) test
+- added GetCapabilities test
+- added DescribeCoverage test
 - added test suite for RequestBase
-- added test suite for GetCoverage
-- added test suites for GetCapabilities
+- added test suite for GetCoverage (only tests on req24 and 25)
 - added tests for extensions
-- added test for describecoverage
 - added tests for the data model and the service model
 - added test for core
 
