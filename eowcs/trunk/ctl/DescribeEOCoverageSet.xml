@@ -769,8 +769,8 @@
           				<ctl:param name="VERSION">2.0.0</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
-             				<ctl:param name="subset">Long,urn:ogc:def:crs:OGC:2:84(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
-             				<ctl:param name="subset">Lat,urn:ogc:def:crs:OGC:2:84(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[2])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[2])"/>)</ctl:param>              			
+             				<ctl:param name="subset">Long,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
+             				<ctl:param name="subset">Lat,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[2])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[2])"/>)</ctl:param>              			
              				<ctl:param name="containment">contains</ctl:param>
              				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
@@ -1048,8 +1048,8 @@
           				<ctl:param name="VERSION">2.0.0</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
-             				<ctl:param name="subset">Long,urn:ogc:def:crs:OGC:2:84(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
-             				<ctl:param name="subset">Lat,urn:ogc:def:crs:OGC:2:84(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[2])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[2])"/>)</ctl:param>              			
+             				<ctl:param name="subset">Long,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
+             				<ctl:param name="subset">Lat,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[2])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[2])"/>)</ctl:param>              			
              				<ctl:param name="subset">phenomenonTime,http://www.opengis.net/def/trs/ISO-8601/0/Gregorian+UTC("<xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='TimePeriod']/*[local-name()='beginPosition']"/>")</ctl:param>              			             				
              				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
@@ -1110,8 +1110,8 @@
           				<ctl:param name="VERSION">2.0.0</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
-          				<ctl:param name="subset">Long,urn:ogc:def:crs:OGC:2:84(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[2])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[2])"/>)</ctl:param>              			
-          				<ctl:param name="subset">Long,urn:ogc:def:crs:OGC:2:84(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[2])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[2])"/>)</ctl:param>              			
+          				<ctl:param name="subset">Long,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[2])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[2])"/>)</ctl:param>              			
+          				<ctl:param name="subset">Long,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[2])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[2])"/>)</ctl:param>              			
             				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
                         				<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
@@ -1334,8 +1334,8 @@
           				<ctl:param name="VERSION">2.0.0</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
-             				<ctl:param name="subset">Long,urn:ogc:def:crs:OGC:2:84(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
-             				<ctl:param name="subset">Lat,urn:ogc:def:crs:OGC:2:84(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[2])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[2])"/>)</ctl:param>              			
+             				<ctl:param name="subset">Long,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
+             				<ctl:param name="subset">Lat,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[2])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[2])"/>)</ctl:param>              			
              				<ctl:param name="subset">phenomenonTime,http://www.opengis.net/def/trs/ISO-8601/0/Gregorian+UTC("<xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='TimePeriod']/*[local-name()='beginPosition']"/>")</ctl:param>              			             				
              				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
@@ -1393,9 +1393,118 @@
 	<ctl:test name="wcseo:soap-req51">
 	    	<ctl:param name="Capabilities"/>
 	    	<ctl:param name="url"/>
-	    	<ctl:assertion>req51:</ctl:assertion>
+	    	<ctl:assertion>req51:A DescribeEOCoverageSet request shall use WGS84 [4] as spatial and ISO 8601 [2] as temporal CRS for the coordinates in trim requests.</ctl:assertion>
     		<ctl:code>
-	        	<ctl:message>[MESSAGE] TBD.</ctl:message> 
+			<xsl:variable name="DescribeEOCoverageSet">
+				<ctl:soap-request version="1.2" charset="UTF-8">
+			       		<ctl:url>
+						<xsl:value-of select="$url"/>
+					</ctl:url>
+					<ctl:body>
+						
+						<wcseo:DescribeEOCoverageSet
+						    xmlns:wcseo="http://www.opengis.net/wcseo/1.0"
+						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
+						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
+						    service="WCS" version="2.0.0" count="100">
+						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
+						
+						    <wcs:DimensionTrim>
+							<wcs:Dimension>Long</wcs:Dimension>
+							<wcs:TrimLow>http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>)</wcs:TrimLow>
+							<wcs:TrimHigh>http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</wcs:TrimHigh>
+						    </wcs:DimensionTrim>
+						    <wcs:DimensionTrim>
+							<wcs:Dimension>Lat</wcs:Dimension>
+							<wcs:TrimLow>http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[2])"/>)</wcs:TrimLow>
+							<wcs:TrimHigh>http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[2])"/>)</wcs:TrimHigh>
+						    </wcs:DimensionTrim>
+						    <wcs:DimensionTrim>
+							<wcs:Dimension>phenomenonTime</wcs:Dimension>
+							<wcs:TrimLow>http://www.opengis.net/def/trs/ISO-8601/0/Gregorian+UTC("<xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='TimePeriod']/*[local-name()='beginPosition']"/>")</wcs:TrimLow>
+							<wcs:TrimHigh>http://www.opengis.net/def/trs/ISO-8601/0/Gregorian+UTC("<xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='TimePeriod']/*[local-name()='endPosition']"/>")</wcs:TrimHigh>
+						    </wcs:DimensionTrim>
+						</wcseo:DescribeEOCoverageSet>
+    					</ctl:body>
+    					
+					<ctlp:SOAPParser return="content">
+           					<ctlp:XMLValidatingParser>
+	        					<ctlp:schemas>
+                        					<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+							</ctlp:schemas>
+             					</ctlp:XMLValidatingParser>
+           				</ctlp:SOAPParser>
+         			</ctl:soap-request>
+        		</xsl:variable>    		
+
+ 			<xsl:choose>
+  				<xsl:when test="string-length($DescribeEOCoverageSet)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+  				</xsl:when>
+  				<xsl:otherwise>
+        				<xsl:if test="not(empty($DescribeEOCoverageSet//*[local-name()='ExceptionReport']))">
+           					<ctl:message>[FAILURE] Send a valid EOCoverageSetDescription request, and the result should not contain an ows:ExceptionReport.</ctl:message>
+           					<ctl:fail/>
+        				</xsl:if> 
+  				</xsl:otherwise>
+			</xsl:choose>
+			<xsl:variable name="DescribeEOCoverageSet">
+				<ctl:soap-request version="1.2" charset="UTF-8">
+			       		<ctl:url>
+						<xsl:value-of select="$url"/>
+					</ctl:url>
+					<ctl:body>
+						
+						<wcseo:DescribeEOCoverageSet
+						    xmlns:wcseo="http://www.opengis.net/wcseo/1.0"
+						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
+						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
+						    service="WCS" version="2.0.0" count="100">
+						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
+						
+						    <wcs:DimensionTrim>
+							<wcs:Dimension>Long</wcs:Dimension>
+							<wcs:TrimLow>http://www.opengis.net/def/crs/EPSG/0/4324(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>)</wcs:TrimLow>
+							<wcs:TrimHigh>http://www.opengis.net/def/crs/EPSG/0/4324(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</wcs:TrimHigh>
+						    </wcs:DimensionTrim>
+						    <wcs:DimensionTrim>
+							<wcs:Dimension>Lat</wcs:Dimension>
+							<wcs:TrimLow>http://www.opengis.net/def/crs/EPSG/0/4324(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[2])"/>)</wcs:TrimLow>
+							<wcs:TrimHigh>http://www.opengis.net/def/crs/EPSG/0/4324(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[2])"/>)</wcs:TrimHigh>
+						    </wcs:DimensionTrim>
+						    <wcs:DimensionTrim>
+							<wcs:Dimension>phenomenonTime</wcs:Dimension>
+							<wcs:TrimLow>http://www.opengis.net/def/trs/USNO/0/GPS("<xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='TimePeriod']/*[local-name()='beginPosition']"/>")</wcs:TrimLow>
+							<wcs:TrimHigh>http://www.opengis.net/def/trs/USNO/0/GPS("<xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='TimePeriod']/*[local-name()='endPosition']"/>")</wcs:TrimHigh>
+						    </wcs:DimensionTrim>
+						</wcseo:DescribeEOCoverageSet>
+    					</ctl:body>
+    					
+					<ctlp:SOAPParser return="content">
+           					<ctlp:XMLValidatingParser>
+	        					<ctlp:schemas>
+                        					<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+							</ctlp:schemas>
+             					</ctlp:XMLValidatingParser>
+           				</ctlp:SOAPParser>
+         			</ctl:soap-request>
+        		</xsl:variable>    		
+
+ 			<xsl:choose>
+  				<xsl:when test="string-length($DescribeEOCoverageSet)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+  				</xsl:when>
+  				<xsl:otherwise>
+        				<xsl:if test="empty($DescribeEOCoverageSet//*[local-name()='ExceptionReport'])">
+           					<ctl:message>[FAILURE] Send a EOCoverageSetDescription request which contains other CRS in the trim dimensions, and the result should contain an ows:ExceptionReport.</ctl:message>
+           					<ctl:fail/>
+        				</xsl:if> 
+  				</xsl:otherwise>
+			</xsl:choose>			
 	    	</ctl:code>
 	 </ctl:test> 
   
@@ -2261,8 +2370,8 @@
           				<ctl:param name="VERSION">2.0.0</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
-                      			<ctl:param name="subset">Long,urn:ogc:def:crs:OGC:2:84(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
-	              			<ctl:param name="subset">Lat,urn:ogc:def:crs:OGC:2:84(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[2])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[2])"/>)</ctl:param>              			
+                      			<ctl:param name="subset">Long,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
+	              			<ctl:param name="subset">Lat,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[2])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[2])"/>)</ctl:param>              			
         				<ctl:param name="Sections">CoverageDescription</ctl:param>
             				<ctl:param name="containment">CONTAINS</ctl:param>             				
              				<ctlp:XMLValidatingParser>
@@ -2523,8 +2632,8 @@
           				<ctl:param name="VERSION">2.0.0</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
-             				<ctl:param name="subset">Long,urn:ogc:def:crs:OGC:2:84(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
-             				<ctl:param name="subset">Lat,urn:ogc:def:crs:OGC:2:84(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[2])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[2])"/>)</ctl:param>              			
+             				<ctl:param name="subset">Long,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
+             				<ctl:param name="subset">Lat,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[2])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[2])"/>)</ctl:param>              			
              				<ctl:param name="subset">phenomenonTime,http://www.opengis.net/def/trs/ISO-8601/0/Gregorian+UTC("<xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='TimePeriod']/*[local-name()='beginPosition']"/>","<xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='TimePeriod']/*[local-name()='endPosition']"/>")</ctl:param>              			             				
              				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
@@ -2718,8 +2827,8 @@
           				<ctl:param name="VERSION">2.0.0</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>             				
-             				<ctl:param name="subset">Long,urn:ogc:def:crs:OGC:2:84(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
-             				<ctl:param name="subset">Lat,urn:ogc:def:crs:OGC:2:84(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[2])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[2])"/>)</ctl:param>              			
+             				<ctl:param name="subset">Long,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
+             				<ctl:param name="subset">Lat,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[2])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[2])"/>)</ctl:param>              			
              				<ctl:param name="subset">phenomenonTime,http://www.opengis.net/def/trs/ISO-8601/0/Gregorian+UTC("<xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='TimePeriod']/*[local-name()='beginPosition']"/>","<xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='TimePeriod']/*[local-name()='endPosition']"/>")</ctl:param>              			             				
              				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
@@ -2750,8 +2859,8 @@
           				<ctl:param name="VERSION">2.0.0</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>             				
-             				<ctl:param name="subset">Long,urn:ogc:def:crs:OGC:2:84(*,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
-             				<ctl:param name="subset">Lat,urn:ogc:def:crs:OGC:2:84(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[2])"/>,*)</ctl:param>              			
+             				<ctl:param name="subset">Long,http://www.opengis.net/def/crs/EPSG/0/4326(*,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
+             				<ctl:param name="subset">Lat,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[2])"/>,*)</ctl:param>              			
              				<ctl:param name="subset">phenomenonTime,http://www.opengis.net/def/trs/ISO-8601/0/Gregorian+UTC(*,*)</ctl:param>              			             				
              				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
