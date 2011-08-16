@@ -93,7 +93,7 @@
            				<ctl:param name="Sections">DatasetSeriesSummary,CoverageSummary</ctl:param>             				
       						<ctlp:XMLValidatingParser>
 	       						<ctlp:schemas>
-                      						<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                      						<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
          					</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -104,7 +104,7 @@
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//*[local-name()='Capabilities'))">
+        				<xsl:if test="empty($Capabilities//*[local-name()='Capabilities'])">
            					<ctl:message>[FAILURE] Send a valid GetCapabilities request, and the result should contain an Capabilities element.</ctl:message>
            					<ctl:fail/>
         				</xsl:if> 
@@ -142,7 +142,7 @@
 					<ctlp:SOAPParser return="content">
            					<ctlp:XMLValidatingParser>
 	        					<ctlp:schemas>
-                        					<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                        					<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
            					</ctlp:XMLValidatingParser>
            				</ctlp:SOAPParser>
@@ -154,7 +154,7 @@
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//*[local-name()='Capabilities'))">
+        				<xsl:if test="empty($Capabilities//*[local-name()='Capabilities'])">
            					<ctl:message>[FAILURE] Send a valid GetCapabilities request, and the result should contain an Capabilities element.</ctl:message>
            					<ctl:fail/>
         				</xsl:if> 
@@ -166,9 +166,9 @@
 	<ctl:test name="wcseo:req30">
 	    	<ctl:param name="Capabilities"/>
 	    	<ctl:param name="url"/>
-	    	<ctl:assertion>Req30:A WCS service implementing this extension shall include the following URI in a Profile element in the ServiceIdentification in a GetCapabilities response:http://www.opengis.net/spec/WCS_profile_earth-observation/1.0/conf/eowcs.</ctl:assertion>
+	    	<ctl:assertion>Req30:A WCS service implementing this extension shall include the following URI in a Profile element in the ServiceIdentification in a GetCapabilities response:http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs.</ctl:assertion>
     		<ctl:code>
-        		<xsl:if test="not(contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_profile_earth-observation/1.0/conf/eowcs') )">
+        		<xsl:if test="not(contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs') )">
 	        		<ctl:fail/>
         		</xsl:if>
 	    	</ctl:code>
@@ -186,7 +186,7 @@
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//*[local-name()='Capabilities'))">
+        				<xsl:if test="not(local-name($Capabilities/.)='Capabilities')">
            					<ctl:message>[FAILURE] Send a valid GetCapabilities request, and the result should contain an Capabilities element.</ctl:message>
            					<ctl:fail/>
         				</xsl:if> 
@@ -194,7 +194,6 @@
 			</xsl:choose>
 	    	</ctl:code>
   	</ctl:test> 
-
   
  	<ctl:test name="wcseo:req32">
    		<ctl:param name="url"/>
@@ -204,11 +203,13 @@
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp')">
 				<ctl:call-test name="wcseo:get-kvp-req32">
 					<ctl:with-param name="url" select="$url"/>      
+                    <ctl:with-param name="Capabilities" select="$Capabilities"/>      
 				</ctl:call-test>            									
 			</xsl:if>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap')">
 				<ctl:call-test name="wcseo:soap-req32">
 					<ctl:with-param name="url" select="$url"/>      					
+                    <ctl:with-param name="Capabilities" select="$Capabilities"/>      
 				</ctl:call-test>             
 			</xsl:if>  
     		</ctl:code>
@@ -219,7 +220,7 @@
 	    	<ctl:assertion>Req32:In the response to a successful GetCapabilities request containing a WCSEO::DatasetSeriesSummary section, each Dataset Series identifier listed shall refer to a Dataset Series offered by the server.</ctl:assertion>
     		<ctl:code>
   			<xsl:choose>
-  				<xsl:when test="empty($Capabilities//*[local-name()='Contents')/*[local-name()='DatasetSeriesSummary')">
+  				<xsl:when test="empty($Capabilities//*[local-name()='Contents']/*[local-name()='DatasetSeriesSummary'])">
 					<ctl:message>[MESSAGE] the GetCapabilities response does not contain a WCSEO::DatasetSeriesSummary section.</ctl:message>
   				</xsl:when>
   				<xsl:otherwise>
@@ -237,7 +238,7 @@
 								<ctl:param name="EOID"><xsl:value-of select="."/></ctl:param>             				
 								<ctlp:XMLValidatingParser>
 									<ctlp:schemas>
-										<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+										<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 									</ctlp:schemas>
 								</ctlp:XMLValidatingParser>
 							</ctl:request>
@@ -267,7 +268,7 @@
 	    	<ctl:assertion>Req32:In the response to a successful GetCapabilities request containing a WCSEO::DatasetSeriesSummary section, each Dataset Series identifier listed shall refer to a Dataset Series offered by the server.</ctl:assertion>
     		<ctl:code>
   			<xsl:choose>
-  				<xsl:when test="empty($Capabilities//*[local-name()='Contents')/*[local-name()='DatasetSeriesSummary')">
+  				<xsl:when test="empty($Capabilities//*[local-name()='Contents']/*[local-name()='DatasetSeriesSummary'])">
 					<ctl:message>[MESSAGE] the GetCapabilities response does not contain a WCSEO::DatasetSeriesSummary section.</ctl:message>
   				</xsl:when>
   				<xsl:otherwise>
@@ -293,7 +294,7 @@
 								<ctlp:SOAPParser return="content">
 									<ctlp:XMLValidatingParser>
 										<ctlp:schemas>
-											<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+											<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 										</ctlp:schemas>
 									</ctlp:XMLValidatingParser>
 								</ctlp:SOAPParser>
@@ -348,11 +349,13 @@
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp')">
 				<ctl:call-test name="wcseo:get-kvp-req34">
 					<ctl:with-param name="url" select="$url"/>      
+                    <ctl:with-param name="Capabilities" select="$Capabilities"/>      
 				</ctl:call-test>            									
 			</xsl:if>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap')">
 				<ctl:call-test name="wcseo:soap-req34">
 					<ctl:with-param name="url" select="$url"/>      					
+                    <ctl:with-param name="Capabilities" select="$Capabilities"/>      
 				</ctl:call-test>             
 			</xsl:if>  
     		</ctl:code>
@@ -381,7 +384,7 @@
 								<ctl:param name="CoverageId"><xsl:value-of select="."/></ctl:param>             				
 								<ctlp:XMLValidatingParser>
 									<ctlp:schemas>
-										<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+										<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 									</ctlp:schemas>
 								</ctlp:XMLValidatingParser>
 							</ctl:request>
@@ -434,7 +437,7 @@
 								<ctlp:SOAPParser return="content">
 									<ctlp:XMLValidatingParser>
 										<ctlp:schemas>
-											<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+											<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 										</ctlp:schemas>
 									</ctlp:XMLValidatingParser>
 								</ctlp:SOAPParser>
@@ -493,7 +496,7 @@
            				<ctl:param name="Sections">CoverageSummary</ctl:param>             				
       						<ctlp:XMLValidatingParser>
 	       						<ctlp:schemas>
-                      						<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                      						<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
          					</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -504,7 +507,7 @@
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//*[local-name()='CoverageSummary'))">
+        				<xsl:if test="empty($Capabilities//*[local-name()='CoverageSummary'])">
            					<ctl:message>[FAILURE] The result should contain an CoverageSummary.</ctl:message>
            					<ctl:fail/>
         				</xsl:if> 
@@ -522,7 +525,7 @@
            				<ctl:param name="Sections">Contents</ctl:param>             				
       						<ctlp:XMLValidatingParser>
 	       						<ctlp:schemas>
-                      						<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                      						<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
          					</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -533,7 +536,7 @@
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//*[local-name()='CoverageSummary'))">
+        				<xsl:if test="empty($Capabilities//*[local-name()='CoverageSummary'])">
            					<ctl:message>[FAILURE] The result should contain an CoverageSummary.</ctl:message>
            					<ctl:fail/>
         				</xsl:if> 
@@ -551,7 +554,7 @@
            				<ctl:param name="Sections">All</ctl:param>             				
       						<ctlp:XMLValidatingParser>
 	       						<ctlp:schemas>
-                      						<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                      						<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
          					</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -562,7 +565,7 @@
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//*[local-name()='CoverageSummary'))">
+        				<xsl:if test="empty($Capabilities//*[local-name()='CoverageSummary'])">
            					<ctl:message>[FAILURE] The result should contain an CoverageSummary.</ctl:message>
            					<ctl:fail/>
         				</xsl:if> 
@@ -599,7 +602,7 @@
 					<ctlp:SOAPParser return="content">
            					<ctlp:XMLValidatingParser>
 	        					<ctlp:schemas>
-                        					<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                        					<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
            					</ctlp:XMLValidatingParser>
            				</ctlp:SOAPParser>
@@ -611,7 +614,7 @@
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//*[local-name()='CoverageSummary'))">
+        				<xsl:if test="empty($Capabilities//*[local-name()='CoverageSummary'])">
            					<ctl:message>[FAILURE] The result should contain an CoverageSummary.</ctl:message>
            					<ctl:fail/>
         				</xsl:if> 
@@ -641,7 +644,7 @@
 					<ctlp:SOAPParser return="content">
            					<ctlp:XMLValidatingParser>
 	        					<ctlp:schemas>
-                        					<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                        					<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
            					</ctlp:XMLValidatingParser>
            				</ctlp:SOAPParser>
@@ -653,7 +656,7 @@
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//*[local-name()='CoverageSummary'))">
+        				<xsl:if test="empty($Capabilities//*[local-name()='CoverageSummary'])">
            					<ctl:message>[FAILURE] The result should contain an CoverageSummary.</ctl:message>
            					<ctl:fail/>
         				</xsl:if> 
@@ -683,7 +686,7 @@
 					<ctlp:SOAPParser return="content">
            					<ctlp:XMLValidatingParser>
 	        					<ctlp:schemas>
-                        					<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                        					<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
            					</ctlp:XMLValidatingParser>
            				</ctlp:SOAPParser>
@@ -695,7 +698,7 @@
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//*[local-name()='CoverageSummary'))">
+        				<xsl:if test="empty($Capabilities//*[local-name()='CoverageSummary'])">
            					<ctl:message>[FAILURE] The result should contain an CoverageSummary.</ctl:message>
            					<ctl:fail/>
         				</xsl:if> 
@@ -738,7 +741,7 @@
            				<ctl:param name="Sections">DatasetSeriesSummary</ctl:param>             				
       						<ctlp:XMLValidatingParser>
 	       						<ctlp:schemas>
-                      						<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                      						<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
          					</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -749,7 +752,7 @@
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//*[local-name()='DatasetSeriesSummary'))">
+        				<xsl:if test="empty($Capabilities//*[local-name()='DatasetSeriesSummary'])">
            					<ctl:message>[FAILURE] The result should contain an DatasetSeriesSummary.</ctl:message>
            					<ctl:fail/>
         				</xsl:if> 
@@ -767,7 +770,7 @@
            				<ctl:param name="Sections">Contents</ctl:param>             				
       						<ctlp:XMLValidatingParser>
 	       						<ctlp:schemas>
-                      						<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                      						<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
          					</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -778,7 +781,7 @@
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//*[local-name()='DatasetSeriesSummary'))">
+        				<xsl:if test="empty($Capabilities//*[local-name()='DatasetSeriesSummary'])">
            					<ctl:message>[FAILURE] The result should contain an DatasetSeriesSummary.</ctl:message>
            					<ctl:fail/>
         				</xsl:if> 
@@ -796,7 +799,7 @@
            				<ctl:param name="Sections">All</ctl:param>             				
       						<ctlp:XMLValidatingParser>
 	       						<ctlp:schemas>
-                      						<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                      						<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
          					</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -807,7 +810,7 @@
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//*[local-name()='DatasetSeriesSummary'))">
+        				<xsl:if test="empty($Capabilities//*[local-name()='DatasetSeriesSummary'])">
            					<ctl:message>[FAILURE] The result should contain an DatasetSeriesSummary.</ctl:message>
            					<ctl:fail/>
         				</xsl:if> 
@@ -844,7 +847,7 @@
 					<ctlp:SOAPParser return="content">
            					<ctlp:XMLValidatingParser>
 	        					<ctlp:schemas>
-                        					<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                        					<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
            					</ctlp:XMLValidatingParser>
            				</ctlp:SOAPParser>
@@ -857,7 +860,7 @@
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//*[local-name()='DatasetSeriesSummary'))">
+        				<xsl:if test="empty($Capabilities//*[local-name()='DatasetSeriesSummary'])">
            					<ctl:message>[FAILURE] The result should contain an DatasetSeriesSummary.</ctl:message>
            					<ctl:fail/>
         				</xsl:if> 
@@ -887,7 +890,7 @@
 					<ctlp:SOAPParser return="content">
            					<ctlp:XMLValidatingParser>
 	        					<ctlp:schemas>
-                        					<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                        					<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
            					</ctlp:XMLValidatingParser>
            				</ctlp:SOAPParser>
@@ -900,7 +903,7 @@
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//*[local-name()='DatasetSeriesSummary'))">
+        				<xsl:if test="empty($Capabilities//*[local-name()='DatasetSeriesSummary'])">
            					<ctl:message>[FAILURE] The result should contain an DatasetSeriesSummary.</ctl:message>
            					<ctl:fail/>
         				</xsl:if> 
@@ -930,7 +933,7 @@
 					<ctlp:SOAPParser return="content">
            					<ctlp:XMLValidatingParser>
 	        					<ctlp:schemas>
-                        					<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                        					<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
            					</ctlp:XMLValidatingParser>
            				</ctlp:SOAPParser>
@@ -942,7 +945,7 @@
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//*[local-name()='DatasetSeriesSummary'))">
+        				<xsl:if test="empty($Capabilities//*[local-name()='DatasetSeriesSummary'])">
            					<ctl:message>[FAILURE] The result should contain an DatasetSeriesSummary.</ctl:message>
            					<ctl:fail/>
         				</xsl:if> 

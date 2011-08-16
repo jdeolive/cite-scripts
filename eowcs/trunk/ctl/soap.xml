@@ -38,7 +38,7 @@
 					<ctlp:SOAPParser return="content">
            					<ctlp:XMLValidatingParser>
 	        					<ctlp:schemas>
-                        					<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                        					<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
            					</ctlp:XMLValidatingParser>
            				</ctlp:SOAPParser>
@@ -78,7 +78,7 @@
     
 	<ctl:test name="wcseo:soap-req1">
     		<ctl:param name="Capabilities"/>
-    		<ctl:assertion>Req1:Implementations of this Earth Observation Application Profile which support the ap_eo_soap conformance class shall support the WCS 2.0 protocol extension SOAP.</ctl:assertion>
+    		<ctl:assertion>Req1:Implementations of this Earth Observation Application Profile which support the eowcs_soap conformance class shall support the WCS 2.0 protocol extension SOAP.</ctl:assertion>
     		<ctl:code>        
         		<xsl:if test="not(contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_protocol-binding_soap/1.0/conf/soap') )">
 	        		<ctl:fail/>
@@ -89,7 +89,7 @@
 <!--req2--> 
 	<ctl:test name="wcseo:soap-req2">
     		<ctl:param name="Capabilities"/>
-    		<ctl:assertion>Req2:Implementations of this Earth Observation Application Profile which support the ap_eo_soap conformance class shall include the following URI in a Profile element in the ServiceIdentification in a GetCapabilities response:http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap.</ctl:assertion>
+    		<ctl:assertion>Req2:Implementations of this Earth Observation Application Profile which support the eowcs_soap conformance class shall include the following URI in a Profile element in the ServiceIdentification in a GetCapabilities response:http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap.</ctl:assertion>
     		<ctl:code>        
         		<xsl:if test="not(contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap') )">
 	        		<ctl:fail/>
@@ -123,7 +123,7 @@
 					<ctlp:SOAPParser return="content">
            					<ctlp:XMLValidatingParser>
 	        					<ctlp:schemas>
-                        					<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+                        					<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 							</ctlp:schemas>
              					</ctlp:XMLValidatingParser>
            				</ctlp:SOAPParser>
@@ -169,7 +169,7 @@
 					<ctlp:SOAPParser return="content">
            					<ctlp:XMLValidatingParser>
 	        					<ctlp:schemas>
-                        					<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+                        					<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 							</ctlp:schemas>
              					</ctlp:XMLValidatingParser>
            				</ctlp:SOAPParser>
@@ -199,7 +199,7 @@
 					<ctlp:SOAPParser return="content">
            					<ctlp:XMLValidatingParser>
 	        					<ctlp:schemas>
-                        					<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+                        					<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 							</ctlp:schemas>
              					</ctlp:XMLValidatingParser>
            				</ctlp:SOAPParser>
@@ -246,7 +246,7 @@
 					<ctlp:SOAPParser return="content">
            					<ctlp:XMLValidatingParser>
 	        					<ctlp:schemas>
-                        					<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+                        					<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 							</ctlp:schemas>
              					</ctlp:XMLValidatingParser>
            				</ctlp:SOAPParser>
@@ -274,7 +274,7 @@
 					<ctlp:SOAPParser return="content">
            					<ctlp:XMLValidatingParser>
 	        					<ctlp:schemas>
-                        					<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+                        					<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 							</ctlp:schemas>
              					</ctlp:XMLValidatingParser>
            				</ctlp:SOAPParser>
@@ -320,7 +320,7 @@
 					<ctlp:SOAPParser return="content">
            					<ctlp:XMLValidatingParser>
 	        					<ctlp:schemas>
-                        					<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+                        					<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 							</ctlp:schemas>
              					</ctlp:XMLValidatingParser>
            				</ctlp:SOAPParser>

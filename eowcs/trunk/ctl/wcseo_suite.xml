@@ -33,8 +33,8 @@ selected below.</p>
                   <p>Enter a tes entry URL below. A typical GetCapabilities request will take this form:</p>
                   <pre>
     http://eoxserver.org/demo_stable/ows
-    http://hma.eox.at/wcseo-test/ows
-    http://hma.eox.at/wcs-test
+    http://ows.eox.at/cci/ows
+    http://ows.eox.at/ofc/ows
 </pre>
                   <br/>
     <xhtml:p>Enter the URL of the wcseo that you want to validate:</xhtml:p>
