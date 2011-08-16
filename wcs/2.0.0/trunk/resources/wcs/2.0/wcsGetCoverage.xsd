@@ -17,7 +17,7 @@
     <!-- ============================================================== -->
     <!-- includes and imports                                           -->
     <!-- ============================================================== -->
-    <import namespace="http://www.opengis.net/gmlcov/1.0" schemaLocation="http://schemas.opengis.net/gmlcov/1.0/gmlcovAll.xsd"/>
+    <import namespace="http://www.opengis.net/gmlcov/1.0" schemaLocation="../../gmlcov/1.0/gmlcovAll.xsd"/>
     <include schemaLocation="wcsCommon.xsd"/>
 
     <!-- ============================================================== -->

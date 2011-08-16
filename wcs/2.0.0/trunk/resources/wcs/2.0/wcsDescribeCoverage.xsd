@@ -8,7 +8,7 @@
     <annotation>
         <appinfo>wcsDescribeCoverage.xsd</appinfo>
         <appinfo>
-            <GMLProfileSchema>http://schemas.opengis.net/gmlcov/1.0/gmlcovAll.xsd</GMLProfileSchema>
+            <GMLProfileSchema>../../gmlcov/1.0/gmlcovAll.xsd</GMLProfileSchema>
         </appinfo>
         <documentation>This XML Schema Document defines the DescribeCoverage operation request and response XML elements and types, used by the OGC Web Coverage Service (WCS).
             Last updated: 2010-nov-05
@@ -21,7 +21,7 @@
     <!-- includes and imports                                           -->
     <!-- ============================================================== -->
     <import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
-    <import namespace="http://www.opengis.net/gmlcov/1.0" schemaLocation="http://schemas.opengis.net/gmlcov/1.0/gmlcovAll.xsd"/>
+    <import namespace="http://www.opengis.net/gmlcov/1.0" schemaLocation="../../gmlcov/1.0/gmlcovAll.xsd"/>
     <include schemaLocation="wcsCommon.xsd"/>
 
     <!-- ============================================================== -->
