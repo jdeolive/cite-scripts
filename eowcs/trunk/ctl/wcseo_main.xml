@@ -37,7 +37,7 @@
       			<xsl:choose>
         			<xsl:when test="string-length($Capabilities)!=0">
 					<xsl:choose>
-						<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/wcseo/1.0/conf/ap-eo_get-kvp') or contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/wcseo/1.0/conf/ap-eo_soap')">
+						<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp') or contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap')">
 							<ctl:message>[MESSAGE] Test the extensions when they are available</ctl:message>
 							<ctl:call-test name="wcseo:wcs-extensions">
 								<ctl:with-param name="url" select="$url"/>     

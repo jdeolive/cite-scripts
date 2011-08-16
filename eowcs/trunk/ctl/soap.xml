@@ -89,9 +89,9 @@
 <!--req2--> 
 	<ctl:test name="wcseo:soap-req2">
     		<ctl:param name="Capabilities"/>
-    		<ctl:assertion>Req2:Implementations of this Earth Observation Application Profile which support the ap_eo_soap conformance class shall include the following URI in a Profile element in the ServiceIdentification in a GetCapabilities response:http://www.opengis.net/wcseo/1.0/conf/ap-eo_soap.</ctl:assertion>
+    		<ctl:assertion>Req2:Implementations of this Earth Observation Application Profile which support the ap_eo_soap conformance class shall include the following URI in a Profile element in the ServiceIdentification in a GetCapabilities response:http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap.</ctl:assertion>
     		<ctl:code>        
-        		<xsl:if test="not(contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/wcseo/1.0/conf/ap-eo_soap') )">
+        		<xsl:if test="not(contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap') )">
 	        		<ctl:fail/>
         		</xsl:if>
     		</ctl:code>

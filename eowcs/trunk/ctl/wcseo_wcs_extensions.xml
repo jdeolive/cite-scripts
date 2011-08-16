@@ -78,17 +78,17 @@
 	<ctl:test name="wcseo:req66">
 		<ctl:param name="Capabilities"/>
 		<ctl:param name="url"/>
-    		<ctl:assertion>Req66:Implementations of this Earth Observation Application Profile shall support at least one of the conformance classes ap-eo_get-kvp or ap-eo_soap.</ctl:assertion>
+    		<ctl:assertion>Req66:Implementations of this Earth Observation Application Profile shall support at least one of the conformance classes eowcs_get-kvp or eowcs_soap.</ctl:assertion>
     		<ctl:code>
-			<xsl:if test="not(contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/ap-eo_get-kvp') or contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/ap-eo_soap'))">
+			<xsl:if test="not(contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp') or contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap'))">
 				<ctl:fail/>
 			</xsl:if>
-			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/ap-eo_get-kvp')">
+			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp')">
 				<ctl:call-test name="wcseo:get-kvp">
 					<ctl:with-param name="url" select="$url"/>      
 				</ctl:call-test>            									
 			</xsl:if>
-			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/ap-eo_soap')">
+			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap')">
 				<ctl:call-test name="wcseo:soap">
 					<ctl:with-param name="url" select="$url"/>      					
 				</ctl:call-test>             
