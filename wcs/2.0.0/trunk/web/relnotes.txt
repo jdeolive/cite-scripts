@@ -2,6 +2,13 @@ WCS 2.0 Test Suite Release Notes
 
 Changes included in latest revision:
 
+
+=== Changes included in R4 ===
+2011-08-17 summary (jyu)
+- added the missing DescribeCoverage parameter in the call-template
+- added xsds for gmlcov and updated corresponding wcs xsds
+- fixed contents in index.html and relnotes.txt
+
 === Changes included in R3 ===
 2011-08-11 summary (jyu,kstegemoller)
 - added SOAP Tests
