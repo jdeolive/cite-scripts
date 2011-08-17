@@ -18,6 +18,13 @@
 	xmlns:ctlFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/ctlFunctions.xml"	
 >
 
+	<ctl:function name="ctlFunctions:getImageFormat">
+		<ctl:param name="image.uri"/>
+		<ctl:description>Returns the format of an image that is one of the image types in the ImageIO class, or null.</ctl:description>
+		<ctl:java class="com.occamlab.te.parsers.ImageParser" 
+                  method="getImageType"/>
+	</ctl:function>
+
 	<ctl:function name="ctlFunctions:getImageWidth">
 		<ctl:param name="image.uri"/>
 		<ctl:description>Returns the width of the first image in image.uri in pixels.</ctl:description>
@@ -83,7 +90,7 @@
         </ctl:code>
     </ctl:function>
 
-	<!-- from SOS functions.xml -->	
+	<!-- from SOS functions.xml, with param order change -->	
 	<ctl:function name="ctlFunctions:schemaPath">
         <ctl:param name="schemaRoot">The location of the schemas</ctl:param>
 		<ctl:param name="encoding">The name of the service or encoding to be used</ctl:param>
@@ -91,6 +98,15 @@
 		<ctl:param name="filename">Filename of schema file</ctl:param>	
 		<ctl:code>			
 			<xsl:value-of select="concat($schemaRoot, $encoding, '/', $version, '/', $filename)"/>
+		</ctl:code>
+	</ctl:function>
+
+ <!-- from SOS functions.xml -->
+ 	<ctl:function name="ctlFunctions:exceptionReportSchemaPath">
+        <ctl:param name="schemaRoot">The location of the schemas</ctl:param>
+		<ctl:param name="owsVersion">The numeric version of the schema</ctl:param>
+		<ctl:code>			
+			<xsl:value-of select="ctlFunctions:schemaPath($schemaRoot, 'ows', $owsVersion, 'owsExceptionReport.xsd')"/>
 		</ctl:code>
 	</ctl:function>
 
