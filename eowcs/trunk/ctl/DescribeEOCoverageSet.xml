@@ -94,11 +94,13 @@
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp')">
 				<ctl:call-test name="wcseo:get-kvp-req46">
 					<ctl:with-param name="url" select="$url"/>      
+					<ctl:with-param name="Capabilities" select="$Capabilities"/>  					
 				</ctl:call-test>            									
 			</xsl:if>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap')">
 				<ctl:call-test name="wcseo:soap-req46">
-					<ctl:with-param name="url" select="$url"/>      					
+					<ctl:with-param name="url" select="$url"/> 
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>             
 			</xsl:if>  
     		</ctl:code>
@@ -222,12 +224,14 @@
     		<ctl:code>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp')">
 				<ctl:call-test name="wcseo:get-kvp-req47">
-					<ctl:with-param name="url" select="$url"/>      
+					<ctl:with-param name="url" select="$url"/>   
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>            									
 			</xsl:if>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap')">
 				<ctl:call-test name="wcseo:soap-req47">
-					<ctl:with-param name="url" select="$url"/>      					
+					<ctl:with-param name="url" select="$url"/>  
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>             
 			</xsl:if>  
     		</ctl:code>
@@ -532,12 +536,14 @@
     		<ctl:code>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp')">
 				<ctl:call-test name="wcseo:get-kvp-req48">
-					<ctl:with-param name="url" select="$url"/>      
+					<ctl:with-param name="url" select="$url"/>   
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>            									
 			</xsl:if>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap')">
 				<ctl:call-test name="wcseo:soap-req48">
-					<ctl:with-param name="url" select="$url"/>      					
+					<ctl:with-param name="url" select="$url"/>  
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>             
 			</xsl:if>  
     		</ctl:code>
@@ -743,12 +749,14 @@
     		<ctl:code>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp')">
 				<ctl:call-test name="wcseo:get-kvp-req49">
-					<ctl:with-param name="url" select="$url"/>      
+					<ctl:with-param name="url" select="$url"/>    
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>            									
 			</xsl:if>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap')">
 				<ctl:call-test name="wcseo:soap-req49">
-					<ctl:with-param name="url" select="$url"/>      					
+					<ctl:with-param name="url" select="$url"/>   
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>             
 			</xsl:if>  
     		</ctl:code>
@@ -1022,12 +1030,14 @@
     		<ctl:code>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp')">
 				<ctl:call-test name="wcseo:get-kvp-req50">
-					<ctl:with-param name="url" select="$url"/>      
+					<ctl:with-param name="url" select="$url"/>
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>            									
 			</xsl:if>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap')">
 				<ctl:call-test name="wcseo:soap-req50">
-					<ctl:with-param name="url" select="$url"/>      					
+					<ctl:with-param name="url" select="$url"/>  
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>             
 			</xsl:if>  
     		</ctl:code>
@@ -1310,11 +1320,13 @@
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp')">
 				<ctl:call-test name="wcseo:get-kvp-req51">
 					<ctl:with-param name="url" select="$url"/>      
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>            									
 			</xsl:if>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap')">
 				<ctl:call-test name="wcseo:soap-req51">
-					<ctl:with-param name="url" select="$url"/>      					
+					<ctl:with-param name="url" select="$url"/>  
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>             
 			</xsl:if>  
     		</ctl:code>
@@ -1515,12 +1527,14 @@
     		<ctl:code>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp')">
 				<ctl:call-test name="wcseo:get-kvp-req52">
-					<ctl:with-param name="url" select="$url"/>      
+					<ctl:with-param name="url" select="$url"/>  
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>            									
 			</xsl:if>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap')">
 				<ctl:call-test name="wcseo:soap-req52">
-					<ctl:with-param name="url" select="$url"/>      					
+					<ctl:with-param name="url" select="$url"/>     
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>             
 			</xsl:if>  
     		</ctl:code>
@@ -1614,12 +1628,14 @@
     		<ctl:code>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp')">
 				<ctl:call-test name="wcseo:get-kvp-req53">
-					<ctl:with-param name="url" select="$url"/>      
+					<ctl:with-param name="url" select="$url"/>  
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>            									
 			</xsl:if>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap')">
 				<ctl:call-test name="wcseo:soap-req53">
-					<ctl:with-param name="url" select="$url"/>      					
+					<ctl:with-param name="url" select="$url"/>  
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>             
 			</xsl:if>  
     		</ctl:code>
@@ -1735,12 +1751,14 @@
     		<ctl:code>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp')">
 				<ctl:call-test name="wcseo:get-kvp-req54">
-					<ctl:with-param name="url" select="$url"/>      
+					<ctl:with-param name="url" select="$url"/>  
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>            									
 			</xsl:if>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap')">
 				<ctl:call-test name="wcseo:soap-req54">
-					<ctl:with-param name="url" select="$url"/>      					
+					<ctl:with-param name="url" select="$url"/>  
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>             
 			</xsl:if>  
     		</ctl:code>
@@ -1979,12 +1997,14 @@
     		<ctl:code>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp')">
 				<ctl:call-test name="wcseo:get-kvp-req55">
-					<ctl:with-param name="url" select="$url"/>      
+					<ctl:with-param name="url" select="$url"/>  
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>            									
 			</xsl:if>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap')">
 				<ctl:call-test name="wcseo:soap-req55">
-					<ctl:with-param name="url" select="$url"/>      					
+					<ctl:with-param name="url" select="$url"/>  
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>             
 			</xsl:if>  
     		</ctl:code>
@@ -2222,12 +2242,14 @@
     		<ctl:code>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp')">
 				<ctl:call-test name="wcseo:get-kvp-req56">
-					<ctl:with-param name="url" select="$url"/>      
+					<ctl:with-param name="url" select="$url"/> 
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>            									
 			</xsl:if>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap')">
 				<ctl:call-test name="wcseo:soap-req56">
-					<ctl:with-param name="url" select="$url"/>      					
+					<ctl:with-param name="url" select="$url"/>      
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>             
 			</xsl:if>  
     		</ctl:code>
@@ -2345,12 +2367,14 @@
     		<ctl:code>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp')">
 				<ctl:call-test name="wcseo:get-kvp-req57">
-					<ctl:with-param name="url" select="$url"/>      
+					<ctl:with-param name="url" select="$url"/>  
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>            									
 			</xsl:if>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap')">
 				<ctl:call-test name="wcseo:soap-req57">
-					<ctl:with-param name="url" select="$url"/>      					
+					<ctl:with-param name="url" select="$url"/>  
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>             
 			</xsl:if>  
     		</ctl:code>
@@ -2482,12 +2506,14 @@
     		<ctl:code>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp')">
 				<ctl:call-test name="wcseo:get-kvp-req58">
-					<ctl:with-param name="url" select="$url"/>      
+					<ctl:with-param name="url" select="$url"/>   
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>            									
 			</xsl:if>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap')">
 				<ctl:call-test name="wcseo:soap-req58">
-					<ctl:with-param name="url" select="$url"/>      					
+					<ctl:with-param name="url" select="$url"/>     
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>             
 			</xsl:if>  
     		</ctl:code>
@@ -2606,12 +2632,14 @@
     		<ctl:code>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp')">
 				<ctl:call-test name="wcseo:get-kvp-req59">
-					<ctl:with-param name="url" select="$url"/>      
+					<ctl:with-param name="url" select="$url"/>  
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>            									
 			</xsl:if>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap')">
 				<ctl:call-test name="wcseo:soap-req59">
-					<ctl:with-param name="url" select="$url"/>      					
+					<ctl:with-param name="url" select="$url"/>   
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>             
 			</xsl:if>  
     		</ctl:code>
@@ -2801,12 +2829,14 @@
     		<ctl:code>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp')">
 				<ctl:call-test name="wcseo:get-kvp-req60">
-					<ctl:with-param name="url" select="$url"/>      
+					<ctl:with-param name="url" select="$url"/>     
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>            									
 			</xsl:if>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap')">
 				<ctl:call-test name="wcseo:soap-req60">
-					<ctl:with-param name="url" select="$url"/>      					
+					<ctl:with-param name="url" select="$url"/>  
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>             
 			</xsl:if>  
     		</ctl:code>
@@ -3015,12 +3045,14 @@
     		<ctl:code>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp')">
 				<ctl:call-test name="wcseo:get-kvp-req61">
-					<ctl:with-param name="url" select="$url"/>      
+					<ctl:with-param name="url" select="$url"/> 
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>            									
 			</xsl:if>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap')">
 				<ctl:call-test name="wcseo:soap-req61">
-					<ctl:with-param name="url" select="$url"/>      					
+					<ctl:with-param name="url" select="$url"/>      
+					<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 				</ctl:call-test>             
 			</xsl:if>  
     		</ctl:code>
