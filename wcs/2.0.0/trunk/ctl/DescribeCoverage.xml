@@ -1850,7 +1850,7 @@
 						<ctl:fail/>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:if test="not(not(empty($DescribeCoverage//*[local-name()='ExceptionReport'])) and $DescribeCoverage//*[local-name()='ExceptionReport']//@@*[local-name()='ExceptionCode']='NoSuchCoverage') ">
+						<xsl:if test="not(not(empty($DescribeCoverage//*[local-name()='ExceptionReport'])) and $DescribeCoverage//*[local-name()='ExceptionReport']//@*[local-name()='ExceptionCode']='NoSuchCoverage') ">
 					    		<ctl:fail/>
 					    	</xsl:if>
 					</xsl:otherwise>
@@ -1890,7 +1890,7 @@
 					<ctl:fail/>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:if test="not(not(empty($DescribeCoverage//*[local-name()='ExceptionReport'])) and $DescribeCoverage//*[local-name()='ExceptionReport']//@@*[local-name()='ExceptionCode']='NoSuchCoverage') ">
+					<xsl:if test="not(not(empty($DescribeCoverage//*[local-name()='ExceptionReport'])) and $DescribeCoverage//*[local-name()='ExceptionReport']//@*[local-name()='ExceptionCode']='NoSuchCoverage') ">
 					    	<ctl:fail/>
 					</xsl:if>
 				</xsl:otherwise>
@@ -1930,7 +1930,7 @@
 						<ctl:fail/>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:if test="not(not(empty($DescribeCoverage//*[local-name()='ExceptionReport'])) and $DescribeCoverage//*[local-name()='ExceptionReport']//@@*[local-name()='ExceptionCode']='NoSuchCoverage') ">
+						<xsl:if test="not(not(empty($DescribeCoverage//*[local-name()='ExceptionReport'])) and $DescribeCoverage//*[local-name()='ExceptionReport']//@*[local-name()='ExceptionCode']='NoSuchCoverage') ">
 					    		<ctl:fail/>
 					    	</xsl:if>
 					</xsl:otherwise>
