@@ -966,7 +966,7 @@
     								xsi:schemaLocation='http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd'
     								service="WCS" version="2.0.0">
     									<xsl:for-each select="$Capabilities//*[local-name()='CoverageSummary']/*[local-name()='CoverageId']">
-										<wcs:CoverageId>]]><xsl:value-of select="."/></wcs:CoverageId>
+										<wcs:CoverageId><xsl:value-of select="."/></wcs:CoverageId>
     									</xsl:for-each>
     								</wcs:DescribeCoverage>
     					</ctl:body>
