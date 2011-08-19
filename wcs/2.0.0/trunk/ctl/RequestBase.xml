@@ -328,10 +328,7 @@
 								<wcs:GetCapabilities  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 											xmlns:ows="http://www.opengis.net/ows/1.1"
 											xmlns:wcs="http://www.opengis.net/wcs/2.0"
-											service="WCS" version="2.0.0">
-									<ows:AcceptVersions>
-										<ows:Version>2.0.0</ows:Version>
-									</ows:AcceptVersions>
+											service="WCS" version="2.0.0">		
 								</wcs:GetCapabilities>
 					</ctl:body>
 					<ctlp:SOAPParser return="content">								
