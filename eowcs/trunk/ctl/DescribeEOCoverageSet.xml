@@ -148,8 +148,7 @@
           				<ctl:param name="service">WCS</ctl:param>
           				<ctl:param name="VERSION">2.0.0</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
-           				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>             				
-             				<ctlp:XMLValidatingParser>
+           				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
                         				<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 	        				</ctlp:schemas>
