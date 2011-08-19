@@ -38,11 +38,13 @@
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp')">
 				<ctl:call-test name="wcseo:get-kvp-req38">
 					<ctl:with-param name="url" select="$url"/>      
+					<ctl:with-param name="Capabilities" select="$Capabilities"/>      
 				</ctl:call-test>            									
 			</xsl:if>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap')">
 				<ctl:call-test name="wcseo:soap-req38">
 					<ctl:with-param name="url" select="$url"/>      					
+					<ctl:with-param name="Capabilities" select="$Capabilities"/>      
 				</ctl:call-test>             
 			</xsl:if>  
     		</ctl:code>
@@ -54,7 +56,7 @@
 	    	<ctl:assertion>Req38:In the response to a successful DescribeCoverage request on an EO Coverage, one WCSEO::EOMetadata element shall be present containing the EO Metadata component of the coverage addressed.</ctl:assertion>
     		<ctl:code>
   			<xsl:choose>
-  				<xsl:when test="empty($Capabilities//*[local-name()='Contents')/*[loc*[local-name()='Contents'])/*[local-name()='CoverageSummary'])">
+  				<xsl:when test="empty($Capabilities//*[local-name()='Contents']/*[local-name()='CoverageSummary'])">
 					<ctl:message>[MESSAGE] the GetCapabilities response does not contain a CoverageSummary section.</ctl:message>
   				</xsl:when>
   				<xsl:otherwise>
@@ -101,7 +103,7 @@
 	    	<ctl:assertion>Req38:In the response to a successful DescribeCoverage request on an EO Coverage, one WCSEO::EOMetadata element shall be present containing the EO Metadata component of the coverage addressed.</ctl:assertion>
     		<ctl:code>
   			<xsl:choose>
-  				<xsl:when test="empty($Capabilities//*[local-name()='Contents')/*[loc*[local-name()='Contents'])/*[local-name()='CoverageSummary'])">
+  				<xsl:when test="empty($Capabilities//*[local-name()='Contents']/*[local-name()='CoverageSummary'])">
 					<ctl:message>[MESSAGE] the GetCapabilities response does not contain a CoverageSummary section.</ctl:message>
   				</xsl:when>
   				<xsl:otherwise>
@@ -158,11 +160,13 @@
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_get-kvp')">
 				<ctl:call-test name="wcseo:get-kvp-req39">
 					<ctl:with-param name="url" select="$url"/>      
+					<ctl:with-param name="Capabilities" select="$Capabilities"/>
 				</ctl:call-test>            									
 			</xsl:if>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_application-profile_earth-observation/1.0/conf/eowcs_soap')">
 				<ctl:call-test name="wcseo:soap-req39">
 					<ctl:with-param name="url" select="$url"/>      					
+					<ctl:with-param name="Capabilities" select="$Capabilities"/>
 				</ctl:call-test>             
 			</xsl:if>  
     		</ctl:code>
@@ -187,7 +191,7 @@
 							<ctl:param name="service">WCS</ctl:param>
 							<ctl:param name="VERSION">2.0.0</ctl:param>
 							<ctl:param name="request">DescribeCoverage</ctl:param>
-							<ctl:param name="CoverageId"><xsl:value-of select="string-join($Capabilities//*[local-name()='Contents']/*[local-name()='CoverageSummary']/*[local-name()='CoverageId'], ', ')"/></ctl:param>             				
+							<ctl:param name="CoverageId"><xsl:value-of select="string-join($Capabilities//*[local-name()='Contents']/*[local-name()='CoverageSummary']/*[local-name()='CoverageId'], ',')"/></ctl:param>             				
 							<ctlp:XMLValidatingParser>
 								<ctlp:schemas>
 									<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>

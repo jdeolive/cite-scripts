@@ -133,7 +133,7 @@
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="not(empty($DescribeEOCoverageSet//*[local-name()='ExceptionReport'))">
+        				<xsl:if test="not(empty($DescribeEOCoverageSet//*[local-name()='ExceptionReport']))">
            					<ctl:message>[FAILURE] Send a valid EOCoverageSetDescription request, and the result should not contain an ows:ExceptionReport.</ctl:message>
            					<ctl:fail/>
         				</xsl:if> 
@@ -148,7 +148,6 @@
           				<ctl:param name="service">WCS</ctl:param>
           				<ctl:param name="VERSION">2.0.0</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
-          				<ctl:param name="request">DescribeCoverage</ctl:param>          				
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>             				
              				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
@@ -164,7 +163,7 @@
   				</xsl:when>
   				<xsl:otherwise>
   					<xsl:if test="empty($DescribeEOCoverageSet//*[local-name()='ExceptionReport'])">
-  						<ctl:message>[FAILURE] Send a invalid EOCoverageSetDescription request, and the result should contain an ows:ExceptionReport.</ctl:message>
+  						<ctl:message>[FAILURE] Send an invalid EOCoverageSetDescription request, and the result should contain an ows:ExceptionReport.</ctl:message>
   						<ctl:fail/>
   					</xsl:if> 
   				</xsl:otherwise>
@@ -208,7 +207,7 @@
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="not(empty($DescribeEOCoverageSet//*[local-name()='ExceptionReport'))">
+        				<xsl:if test="not(empty($DescribeEOCoverageSet//*[local-name()='ExceptionReport'])">
            					<ctl:message>[FAILURE] Send a valid EOCoverageSetDescription request, and the result should not contain an ows:ExceptionReport.</ctl:message>
            					<ctl:fail/>
         				</xsl:if> 
@@ -555,7 +554,7 @@
 	    	<ctl:assertion>req48:The eoId parameter value in a DescribeEOCoverageSet request shall be equal to the identifier of a Dataset, a Stitched Mosaic, or a Dataset Series offered by the server addressed.</ctl:assertion>
     		<ctl:code>
   			<xsl:choose>
-  				<xsl:when test="empty($Capabilities//*[local-name()='Contents')/*[local-name()='DatasetSeriesSummary')">
+  				<xsl:when test="empty($Capabilities//*[local-name()='Contents']/*[local-name()='DatasetSeriesSummary'])">
 					<ctl:message>[MESSAGE] the GetCapabilities response does not contain a WCSEO::DatasetSeriesSummary section.</ctl:message>
   				</xsl:when>
   				<xsl:otherwise>
@@ -595,7 +594,7 @@
   				</xsl:otherwise>
 			</xsl:choose> 
   			<xsl:choose>
-  				<xsl:when test="empty($Capabilities//*[local-name()='Contents')/*[local-name()='CoverageSummary')">
+  				<xsl:when test="empty($Capabilities//*[local-name()='Contents']/*[local-name()='CoverageSummary'])">
 					<ctl:message>[MESSAGE] the GetCapabilities response does not contain a CoverageSummary.</ctl:message>
   				</xsl:when>
   				<xsl:otherwise>
@@ -642,7 +641,7 @@
 	    	<ctl:assertion>req48:The eoId parameter value in a DescribeEOCoverageSet request shall be equal to the identifier of a Dataset, a Stitched Mosaic, or a Dataset Series offered by the server addressed.</ctl:assertion>
     		<ctl:code>
   			<xsl:choose>
-  				<xsl:when test="empty($Capabilities//*[local-name()='Contents')/*[local-name()='DatasetSeriesSummary')">
+  				<xsl:when test="empty($Capabilities//*[local-name()='Contents']/*[local-name()='DatasetSeriesSummary'])">
 					<ctl:message>[MESSAGE] the GetCapabilities response does not contain a WCSEO::DatasetSeriesSummary section.</ctl:message>
   				</xsl:when>
   				<xsl:otherwise>
@@ -691,7 +690,7 @@
   				</xsl:otherwise>
 			</xsl:choose> 
   			<xsl:choose>
-  				<xsl:when test="empty($Capabilities//*[local-name()='Contents')/*[local-name()='CoverageSummary')">
+  				<xsl:when test="empty($Capabilities//*[local-name()='Contents']/*[local-name()='CoverageSummary'])">
 					<ctl:message>[MESSAGE] the GetCapabilities response does not contain a CoverageSummary.</ctl:message>
   				</xsl:when>
   				<xsl:otherwise>
@@ -1646,7 +1645,7 @@
 	    	<ctl:assertion>req53:Each WCS::CoverageDescription listed in the response to a successful DescribeEOCoverageSet request shall contain one WCSEO::EOMetadata element containing the EO Metadata component of the EO Coverage to be described.</ctl:assertion>
     		<ctl:code>
   			<xsl:choose>
-  				<xsl:when test="empty($Capabilities//*[local-name()='Contents')/*[local-name()='CoverageSummary')">
+  				<xsl:when test="empty($Capabilities//*[local-name()='Contents']/*[local-name()='CoverageSummary'])">
 					<ctl:message>[MESSAGE] the GetCapabilities response does not contain a CoverageSummary.</ctl:message>
   				</xsl:when>
   				<xsl:otherwise>
@@ -1693,7 +1692,7 @@
 	    	<ctl:assertion>req53:Each WCS::CoverageDescription listed in the response to a successful DescribeEOCoverageSet request shall contain one WCSEO::EOMetadata element containing the EO Metadata component of the EO Coverage to be described.</ctl:assertion>
     		<ctl:code>
   			<xsl:choose>
-  				<xsl:when test="empty($Capabilities//*[local-name()='Contents')/*[local-name()='CoverageSummary')">
+  				<xsl:when test="empty($Capabilities//*[local-name()='Contents']/*[local-name()='CoverageSummary'])">
 					<ctl:message>[MESSAGE] the GetCapabilities response does not contain a CoverageSummary.</ctl:message>
   				</xsl:when>
   				<xsl:otherwise>
@@ -2260,7 +2259,7 @@
 	    	<ctl:assertion>req56:In the response to a successful DescribeEOCoverageSet request containing a wcs:CoverageDescription section, each EO coverage referred to by one of the objects identified in the eoId request parameter shall appear at most once.</ctl:assertion>
     		<ctl:code>
   			<xsl:choose>
-  				<xsl:when test="empty($Capabilities//*[local-name()='Contents')/*[local-name()='CoverageSummary')">
+  				<xsl:when test="empty($Capabilities//*[local-name()='Contents']/*[local-name()='CoverageSummary'])">
 					<ctl:message>[MESSAGE] the GetCapabilities response does not contain a CoverageSummary.</ctl:message>
   				</xsl:when>
   				<xsl:otherwise>
@@ -2308,7 +2307,7 @@
 	    	<ctl:assertion>req56:In the response to a successful DescribeEOCoverageSet request containing a wcs:CoverageDescription section, each EO coverage referred to by one of the objects identified in the eoId request parameter shall appear at most once.</ctl:assertion>
     		<ctl:code>
   			<xsl:choose>
-  				<xsl:when test="empty($Capabilities//*[local-name()='Contents')/*[local-name()='CoverageSummary')">
+  				<xsl:when test="empty($Capabilities//*[local-name()='Contents']/*[local-name()='CoverageSummary'])">
 					<ctl:message>[MESSAGE] the GetCapabilities response does not contain a CoverageSummary.</ctl:message>
   				</xsl:when>
   				<xsl:otherwise>
