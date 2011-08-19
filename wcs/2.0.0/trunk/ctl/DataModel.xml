@@ -51,7 +51,7 @@
         		<ctl:fail/>
       		</xsl:if>
       		<xsl:for-each select="$Capabilities//*[local-name()='CoverageSummary']">
-        		<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('[MESSAGE]test ',/*[local-name()='CoverageId'])"/>
+        		<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('[MESSAGE]test ',./*[local-name()='CoverageId'])"/>
         		<xsl:variable name="DescribeCoverage">
             			<ctl:request>
                				<ctl:url>
@@ -498,7 +498,7 @@
         		<ctl:fail/>
       		</xsl:if>
       		<xsl:for-each select="$Capabilities//*[local-name()='CoverageSummary']">
-        		<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('[MESSAGE]test ',/*[local-name()='CoverageId'])"/>
+        		<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('[MESSAGE]test ',./*[local-name()='CoverageId'])"/>
         		<xsl:variable name="DescribeCoverage">
             			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
