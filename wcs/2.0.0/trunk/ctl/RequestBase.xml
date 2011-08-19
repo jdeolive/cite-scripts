@@ -434,41 +434,7 @@
     		<ctl:param name="url"/>
     		<ctl:assertion>Req10:Test all WCS request types, the requst service parameter has a fixed value of 'WCS' by PostXML.</ctl:assertion>
     		<ctl:code>
-     			<xsl:variable name="Capabilities">
-				<ctl:request>
-			       		<ctl:url>
-						<xsl:value-of select="$url"/>
-					</ctl:url>
-					<ctl:method>post</ctl:method>
-					<ctl:header name="Content-type">text/xml</ctl:header>
-					<ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-								<wcs:GetCapabilities  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-											xmlns:ows="http://www.opengis.net/ows/1.1"
-											xmlns:wcs="http://www.opengis.net/wcs/2.0"
-											service="WCS" version="2.0.0">
-									<ows:AcceptVersions>
-										<ows:Version>2.0.0</ows:Version>
-									</ows:AcceptVersions>
-								</wcs:GetCapabilities>]]></ctl:body>
-           				<ctlp:XMLValidatingParser>
-	        				<ctlp:schemas>
-                        				<ctlp:schema type="resource">wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
-	        				</ctlp:schemas>
-           				</ctlp:XMLValidatingParser>
-        			</ctl:request>
-      			</xsl:variable>
-      			<xsl:choose>
-  				<xsl:when test="string-length($Capabilities)=0">
-					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
-					<ctl:fail/>
-  				</xsl:when>
-  				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//wcs:Capabilities)">
-        			   		<ctl:message>[FAILURE] The result should contain a wcs:Capabilities.</ctl:message>
-        			   		<ctl:fail/>
-        				</xsl:if>
-  				</xsl:otherwise>
-      			</xsl:choose> 
+ 
      			<xsl:variable name="Capabilities">
 				<ctl:request>
 			       		<ctl:url>
@@ -540,44 +506,43 @@
         				</xsl:if>
   				</xsl:otherwise>
       			</xsl:choose> 
-
-
-       			<xsl:variable name="DescribeCoverage">
-            			<ctl:request>
-               				<ctl:url>
-                  				<xsl:value-of select="$url"/>
-               				</ctl:url>
-               				<ctl:method>post</ctl:method>
-               				<ctl:header name="Content-type">application/x-www-form-urlencoded</ctl:header>
-	      				<ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-							<wcs:DescribeCoverage  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-    								xmlns:wcs='http://www.opengis.net/wcs/2.0'
-    								xmlns:gml='http://www.opengis.net/gml/3.2'
-    								xsi:schemaLocation='http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd'
-    								service="WCS" version="2.0.0">
-    								<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:DescribeCoverage>]]>
-    					</ctl:body>
-
+    			<xsl:variable name="Capabilities">
+				<ctl:request>
+			       		<ctl:url>
+						<xsl:value-of select="$url"/>
+					</ctl:url>
+					<ctl:method>post</ctl:method>
+					<ctl:header name="Content-type">text/xml</ctl:header>
+					<ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+								<wcs:GetCapabilities  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+											xmlns:ows="http://www.opengis.net/ows/1.1"
+											xmlns:wcs="http://www.opengis.net/wcs/2.0"
+											service="WCS" version="2.0.0">
+									<ows:AcceptVersions>
+										<ows:Version>2.0.0</ows:Version>
+									</ows:AcceptVersions>
+								</wcs:GetCapabilities>]]></ctl:body>
            				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
-                        				<ctlp:schema type="resource">wcs/2.0/wcsDescribeCoverage.xsd</ctlp:schema>
+                        				<ctlp:schema type="resource">wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
 	        				</ctlp:schemas>
-             				</ctlp:XMLValidatingParser>
-
-         			</ctl:request>
-        		</xsl:variable>
-    			<xsl:choose>
-  				<xsl:when test="string-length($DescribeCoverage)=0">
+           				</ctlp:XMLValidatingParser>
+        			</ctl:request>
+      			</xsl:variable>
+      			<xsl:choose>
+  				<xsl:when test="string-length($Capabilities)=0">
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="not(empty($DescribeCoverage//ows:ExceptionReport))">
-        			   		<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
+        				<xsl:if test="empty($Capabilities//wcs:Capabilities)">
+        			   		<ctl:message>[FAILURE] The result should contain a wcs:Capabilities.</ctl:message>
         			   		<ctl:fail/>
-        				</xsl:if> 
+        				</xsl:if>
   				</xsl:otherwise>
-      			</xsl:choose>     
+      			</xsl:choose> 
+
+   
        			<xsl:variable name="DescribeCoverage">
             			<ctl:request>
                				<ctl:url>
@@ -650,6 +615,42 @@
         				</xsl:if> 
   				</xsl:otherwise>
       			</xsl:choose>     
+        			<xsl:variable name="DescribeCoverage">
+            			<ctl:request>
+               				<ctl:url>
+                  				<xsl:value-of select="$url"/>
+               				</ctl:url>
+               				<ctl:method>post</ctl:method>
+               				<ctl:header name="Content-type">application/x-www-form-urlencoded</ctl:header>
+	      				<ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+							<wcs:DescribeCoverage  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    								xmlns:wcs='http://www.opengis.net/wcs/2.0'
+    								xmlns:gml='http://www.opengis.net/gml/3.2'
+    								xsi:schemaLocation='http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd'
+    								service="WCS" version="2.0.0">
+    								<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:DescribeCoverage>]]>
+    					</ctl:body>
+
+           				<ctlp:XMLValidatingParser>
+	        				<ctlp:schemas>
+                        				<ctlp:schema type="resource">wcs/2.0/wcsDescribeCoverage.xsd</ctlp:schema>
+	        				</ctlp:schemas>
+             				</ctlp:XMLValidatingParser>
+
+         			</ctl:request>
+        		</xsl:variable>
+    			<xsl:choose>
+  				<xsl:when test="string-length($DescribeCoverage)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+  				</xsl:when>
+  				<xsl:otherwise>
+        				<xsl:if test="not(empty($DescribeCoverage//ows:ExceptionReport))">
+        			   		<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
+        			   		<ctl:fail/>
+        				</xsl:if> 
+  				</xsl:otherwise>
+      			</xsl:choose>       			
  			<xsl:choose>
 				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
 					<xsl:variable name="GetCoverage">
@@ -774,34 +775,7 @@
     		<ctl:param name="url"/>
     		<ctl:assertion>Req10:Test all WCS request types, the requst service parameter has a fixed value of 'WCS' by GetKVP.</ctl:assertion>
     		<ctl:code>
-     			<xsl:variable name="Capabilities">
-				<ctl:request>
-          				<ctl:url>
-            					<xsl:value-of select="$url"/>
-          				</ctl:url>
-          				<ctl:method>get</ctl:method>
-          				<ctl:param name="SERVICE">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
-          				<ctl:param name="REQUEST">GetCapabilities</ctl:param>
-           				<ctlp:XMLValidatingParser>
-	        				<ctlp:schemas>
-                        				<ctlp:schema type="resource">wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
-	        				</ctlp:schemas>
-           				</ctlp:XMLValidatingParser>
-        			</ctl:request>
-      			</xsl:variable>
-      			<xsl:choose>
-  				<xsl:when test="string-length($Capabilities)=0">
-					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
-					<ctl:fail/>
-  				</xsl:when>
-  				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//wcs:Capabilities)">
-        			   		<ctl:message>[FAILURE] The result should contain a wcs:Capabilities.</ctl:message>
-        			   		<ctl:fail/>
-        				</xsl:if>
-  				</xsl:otherwise>
-      			</xsl:choose> 
+
      			<xsl:variable name="Capabilities">
 				<ctl:request>
           				<ctl:url>
@@ -859,39 +833,36 @@
         				</xsl:if>
   				</xsl:otherwise>
       			</xsl:choose> 
-
-
-       			<xsl:variable name="DescribeCoverage">
-            			<ctl:request>
-               				<ctl:url>
-                  				<xsl:value-of select="$url"/>
-               				</ctl:url>
-               				<ctl:method>get</ctl:method>
-           				<ctl:param name="service">WCS</ctl:param>
-           				<ctl:param name="VERSION">2.0.0</ctl:param>           
-           				<ctl:param name="request">DescribeCoverage</ctl:param>  
-            				<ctl:param name="CoverageId"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>             				
- 
+     			<xsl:variable name="Capabilities">
+				<ctl:request>
+          				<ctl:url>
+            					<xsl:value-of select="$url"/>
+          				</ctl:url>
+          				<ctl:method>get</ctl:method>
+          				<ctl:param name="SERVICE">WCS</ctl:param>
+          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="REQUEST">GetCapabilities</ctl:param>
            				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
-                        				<ctlp:schema type="resource">wcs/2.0/wcsDescribeCoverage.xsd</ctlp:schema>
+                        				<ctlp:schema type="resource">wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
 	        				</ctlp:schemas>
-             				</ctlp:XMLValidatingParser>
-
-         			</ctl:request>
-        		</xsl:variable>
-    			<xsl:choose>
-  				<xsl:when test="string-length($DescribeCoverage)=0">
+           				</ctlp:XMLValidatingParser>
+        			</ctl:request>
+      			</xsl:variable>
+      			<xsl:choose>
+  				<xsl:when test="string-length($Capabilities)=0">
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="not(empty($DescribeCoverage//ows:ExceptionReport))">
-        			   		<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
+        				<xsl:if test="empty($Capabilities//wcs:Capabilities)">
+        			   		<ctl:message>[FAILURE] The result should contain a wcs:Capabilities.</ctl:message>
         			   		<ctl:fail/>
-        				</xsl:if> 
+        				</xsl:if>
   				</xsl:otherwise>
-      			</xsl:choose>     
+      			</xsl:choose> 
+
+ 
        			<xsl:variable name="DescribeCoverage">
             			<ctl:request>
                				<ctl:url>
@@ -955,7 +926,38 @@
         			   		<ctl:fail/>
         				</xsl:if> 
   				</xsl:otherwise>
-      			</xsl:choose>     
+      			</xsl:choose>  
+        			<xsl:variable name="DescribeCoverage">
+            			<ctl:request>
+               				<ctl:url>
+                  				<xsl:value-of select="$url"/>
+               				</ctl:url>
+               				<ctl:method>get</ctl:method>
+           				<ctl:param name="service">WCS</ctl:param>
+           				<ctl:param name="VERSION">2.0.0</ctl:param>           
+           				<ctl:param name="request">DescribeCoverage</ctl:param>  
+            				<ctl:param name="CoverageId"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>             				
+ 
+           				<ctlp:XMLValidatingParser>
+	        				<ctlp:schemas>
+                        				<ctlp:schema type="resource">wcs/2.0/wcsDescribeCoverage.xsd</ctlp:schema>
+	        				</ctlp:schemas>
+             				</ctlp:XMLValidatingParser>
+
+         			</ctl:request>
+        		</xsl:variable>
+    			<xsl:choose>
+  				<xsl:when test="string-length($DescribeCoverage)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+  				</xsl:when>
+  				<xsl:otherwise>
+        				<xsl:if test="not(empty($DescribeCoverage//ows:ExceptionReport))">
+        			   		<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
+        			   		<ctl:fail/>
+        				</xsl:if> 
+  				</xsl:otherwise>
+      			</xsl:choose>         			
  			<xsl:choose>
 				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
 
@@ -1068,40 +1070,7 @@
 	    	<ctl:param name="url"/>
 	    	<ctl:assertion>Req10:Test all WCS request types, the requst service parameter has a fixed value of 'WCS' by SOAP.</ctl:assertion>
     		<ctl:code>
-     			<xsl:variable name="Capabilities">
-				<ctl:soap-request version="1.2" charset="UTF-8">
-			       		<ctl:url>
-						<xsl:value-of select="$url"/>
-					</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-								<wcs:GetCapabilities  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-											xmlns:ows="http://www.opengis.net/ows/1.1"
-											xmlns:wcs="http://www.opengis.net/wcs/2.0"
-											service="WCS" version="2.0.0">
-									<ows:AcceptVersions>
-										<ows:Version>2.0.0</ows:Version>
-									</ows:AcceptVersions>
-								</wcs:GetCapabilities>]]></ctl:body>
-					<ctlp:SOAPParser return="content">					
-						<ctlp:XMLValidatingParser>
-							<ctlp:schemas>
-								<ctlp:schema type="resource">wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
-							</ctlp:schemas>
-						</ctlp:XMLValidatingParser>
-					</ctlp:SOAPParser> 
-        			</ctl:soap-request>
-      			</xsl:variable>
-      			<xsl:choose>
-  				<xsl:when test="string-length($Capabilities)=0">
-					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
-					<ctl:fail/>
-  				</xsl:when>
-  				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//wcs:Capabilities)">
-        			   		<ctl:message>[FAILURE] The result should contain a wcs:Capabilities.</ctl:message>
-        			   		<ctl:fail/>
-        				</xsl:if>
-  				</xsl:otherwise>
-      			</xsl:choose> 
+
      			<xsl:variable name="Capabilities">
 				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
@@ -1172,40 +1141,41 @@
   				</xsl:otherwise>
       			</xsl:choose> 
 
-
-       			<xsl:variable name="DescribeCoverage">
-            			<ctl:soap-request version="1.2" charset="UTF-8">
-               				<ctl:url>
-                  				<xsl:value-of select="$url"/>
-               				</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-							<wcs:DescribeCoverage  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-    								xmlns:wcs='http://www.opengis.net/wcs/2.0'
-    								xmlns:gml='http://www.opengis.net/gml/3.2'
-    								xsi:schemaLocation='http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd'
-    								service="WCS" version="2.0.0">
-    								<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:DescribeCoverage>]]>
-    					</ctl:body>
-					<ctlp:SOAPParser return="content">
+     			<xsl:variable name="Capabilities">
+				<ctl:soap-request version="1.2" charset="UTF-8">
+			       		<ctl:url>
+						<xsl:value-of select="$url"/>
+					</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+								<wcs:GetCapabilities  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+											xmlns:ows="http://www.opengis.net/ows/1.1"
+											xmlns:wcs="http://www.opengis.net/wcs/2.0"
+											service="WCS" version="2.0.0">
+									<ows:AcceptVersions>
+										<ows:Version>2.0.0</ows:Version>
+									</ows:AcceptVersions>
+								</wcs:GetCapabilities>]]></ctl:body>
+					<ctlp:SOAPParser return="content">					
 						<ctlp:XMLValidatingParser>
 							<ctlp:schemas>
-								<ctlp:schema type="resource">wcs/2.0/wcsDescribeCoverage.xsd</ctlp:schema>
+								<ctlp:schema type="resource">wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
 							</ctlp:schemas>
 						</ctlp:XMLValidatingParser>
-					</ctlp:SOAPParser>
-         			</ctl:soap-request>
-        		</xsl:variable>
-    			<xsl:choose>
-  				<xsl:when test="string-length($DescribeCoverage)=0">
+					</ctlp:SOAPParser> 
+        			</ctl:soap-request>
+      			</xsl:variable>
+      			<xsl:choose>
+  				<xsl:when test="string-length($Capabilities)=0">
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="not(empty($DescribeCoverage//ows:ExceptionReport))">
-        			   		<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
+        				<xsl:if test="empty($Capabilities//wcs:Capabilities)">
+        			   		<ctl:message>[FAILURE] The result should contain a wcs:Capabilities.</ctl:message>
         			   		<ctl:fail/>
-        				</xsl:if> 
+        				</xsl:if>
   				</xsl:otherwise>
-      			</xsl:choose>     
+      			</xsl:choose> 
+
        			<xsl:variable name="DescribeCoverage">
             			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
@@ -1272,6 +1242,39 @@
         				</xsl:if> 
   				</xsl:otherwise>
       			</xsl:choose>     
+       			<xsl:variable name="DescribeCoverage">
+            			<ctl:soap-request version="1.2" charset="UTF-8">
+               				<ctl:url>
+                  				<xsl:value-of select="$url"/>
+               				</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+							<wcs:DescribeCoverage  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    								xmlns:wcs='http://www.opengis.net/wcs/2.0'
+    								xmlns:gml='http://www.opengis.net/gml/3.2'
+    								xsi:schemaLocation='http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd'
+    								service="WCS" version="2.0.0">
+    								<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:DescribeCoverage>]]>
+    					</ctl:body>
+					<ctlp:SOAPParser return="content">
+						<ctlp:XMLValidatingParser>
+							<ctlp:schemas>
+								<ctlp:schema type="resource">wcs/2.0/wcsDescribeCoverage.xsd</ctlp:schema>
+							</ctlp:schemas>
+						</ctlp:XMLValidatingParser>
+					</ctlp:SOAPParser>
+         			</ctl:soap-request>
+        		</xsl:variable>
+    			<xsl:choose>
+  				<xsl:when test="string-length($DescribeCoverage)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+  				</xsl:when>
+  				<xsl:otherwise>
+        				<xsl:if test="not(empty($DescribeCoverage//ows:ExceptionReport))">
+        			   		<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
+        			   		<ctl:fail/>
+        				</xsl:if> 
+  				</xsl:otherwise>
+      			</xsl:choose>           			
  			<xsl:choose>
 				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
 					<xsl:variable name="GetCoverage">
@@ -1386,43 +1389,9 @@
   
 	<ctl:test name="wcs2:post-xml-core-req11">
     		<ctl:param name="url"/>
-    		<ctl:assertion>Req11:For all WCS request types, test the request version parameter has a fixed value of '2.0' by PostXML.</ctl:assertion>
+    		<ctl:assertion>Req11:For all WCS request types, test the request version parameter has a fixed value of '2.0.0' by PostXML.</ctl:assertion>
     		<ctl:code>
-     			<xsl:variable name="Capabilities">
-				<ctl:request>
-			       		<ctl:url>
-						<xsl:value-of select="$url"/>
-					</ctl:url>
-					<ctl:method>post</ctl:method>
-					<ctl:header name="Content-type">text/xml</ctl:header>
-					<ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-								<wcs:GetCapabilities  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-											xmlns:ows="http://www.opengis.net/ows/1.1"
-											xmlns:wcs="http://www.opengis.net/wcs/2.0"
-											service="WCS" version="2.0.0">
-									<ows:AcceptVersions>
-										<ows:Version>2.0.0</ows:Version>
-									</ows:AcceptVersions>
-								</wcs:GetCapabilities>]]></ctl:body>
-           				<ctlp:XMLValidatingParser>
-	        				<ctlp:schemas>
-                        				<ctlp:schema type="resource">wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
-	        				</ctlp:schemas>
-           				</ctlp:XMLValidatingParser>
-        			</ctl:request>
-      			</xsl:variable>
-      			<xsl:choose>
-  				<xsl:when test="string-length($Capabilities)=0">
-					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
-					<ctl:fail/>
-  				</xsl:when>
-  				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//wcs:Capabilities)">
-        			   		<ctl:message>[FAILURE] The result should contain a wcs:Capabilities.</ctl:message>
-        			   		<ctl:fail/>
-        				</xsl:if>
-  				</xsl:otherwise>
-      			</xsl:choose> 
+
      			<xsl:variable name="Capabilities">
 				<ctl:request>
 			       		<ctl:url>
@@ -1495,43 +1464,43 @@
   				</xsl:otherwise>
       			</xsl:choose> 
 
-
-       			<xsl:variable name="DescribeCoverage">
-            			<ctl:request>
-               				<ctl:url>
-                  				<xsl:value-of select="$url"/>
-               				</ctl:url>
-               				<ctl:method>post</ctl:method>
-               				<ctl:header name="Content-type">application/x-www-form-urlencoded</ctl:header>
-	      				<ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-							<wcs:DescribeCoverage  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-    								xmlns:wcs='http://www.opengis.net/wcs/2.0'
-    								xmlns:gml='http://www.opengis.net/gml/3.2'
-    								xsi:schemaLocation='http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd'
-    								service="WCS" version="2.0.0">
-    								<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:DescribeCoverage>]]>
-    					</ctl:body>
-
+     			<xsl:variable name="Capabilities">
+				<ctl:request>
+			       		<ctl:url>
+						<xsl:value-of select="$url"/>
+					</ctl:url>
+					<ctl:method>post</ctl:method>
+					<ctl:header name="Content-type">text/xml</ctl:header>
+					<ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+								<wcs:GetCapabilities  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+											xmlns:ows="http://www.opengis.net/ows/1.1"
+											xmlns:wcs="http://www.opengis.net/wcs/2.0"
+											service="WCS" version="2.0.0">
+									<ows:AcceptVersions>
+										<ows:Version>2.0.0</ows:Version>
+									</ows:AcceptVersions>
+								</wcs:GetCapabilities>]]></ctl:body>
            				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
-                        				<ctlp:schema type="resource">wcs/2.0/wcsDescribeCoverage.xsd</ctlp:schema>
+                        				<ctlp:schema type="resource">wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
 	        				</ctlp:schemas>
-             				</ctlp:XMLValidatingParser>
-
-         			</ctl:request>
-        		</xsl:variable>
-    			<xsl:choose>
-  				<xsl:when test="string-length($DescribeCoverage)=0">
+           				</ctlp:XMLValidatingParser>
+        			</ctl:request>
+      			</xsl:variable>
+      			<xsl:choose>
+  				<xsl:when test="string-length($Capabilities)=0">
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="not(empty($DescribeCoverage//ows:ExceptionReport))">
-        			   		<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
+        				<xsl:if test="empty($Capabilities//wcs:Capabilities)">
+        			   		<ctl:message>[FAILURE] The result should contain a wcs:Capabilities.</ctl:message>
         			   		<ctl:fail/>
-        				</xsl:if> 
+        				</xsl:if>
   				</xsl:otherwise>
-      			</xsl:choose>     
+      			</xsl:choose> 
+      			
+
        			<xsl:variable name="DescribeCoverage">
             			<ctl:request>
                				<ctl:url>
@@ -1603,7 +1572,44 @@
         			   		<ctl:fail/>
         				</xsl:if> 
   				</xsl:otherwise>
+      			</xsl:choose>    
+       			<xsl:variable name="DescribeCoverage">
+            			<ctl:request>
+               				<ctl:url>
+                  				<xsl:value-of select="$url"/>
+               				</ctl:url>
+               				<ctl:method>post</ctl:method>
+               				<ctl:header name="Content-type">application/x-www-form-urlencoded</ctl:header>
+	      				<ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+							<wcs:DescribeCoverage  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    								xmlns:wcs='http://www.opengis.net/wcs/2.0'
+    								xmlns:gml='http://www.opengis.net/gml/3.2'
+    								xsi:schemaLocation='http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd'
+    								service="WCS" version="2.0.0">
+    								<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:DescribeCoverage>]]>
+    					</ctl:body>
+
+           				<ctlp:XMLValidatingParser>
+	        				<ctlp:schemas>
+                        				<ctlp:schema type="resource">wcs/2.0/wcsDescribeCoverage.xsd</ctlp:schema>
+	        				</ctlp:schemas>
+             				</ctlp:XMLValidatingParser>
+
+         			</ctl:request>
+        		</xsl:variable>
+    			<xsl:choose>
+  				<xsl:when test="string-length($DescribeCoverage)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+  				</xsl:when>
+  				<xsl:otherwise>
+        				<xsl:if test="not(empty($DescribeCoverage//ows:ExceptionReport))">
+        			   		<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
+        			   		<ctl:fail/>
+        				</xsl:if> 
+  				</xsl:otherwise>
       			</xsl:choose>     
+      			
  			<xsl:choose>
 				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
      			
@@ -1726,36 +1732,9 @@
  
 	<ctl:test name="wcs2:get-kvp-core-req11">
     		<ctl:param name="url"/>
-    		<ctl:assertion>Req11:For all WCS request types, test the request version parameter has a fixed value of '2.0' by GetKVP.</ctl:assertion>
+    		<ctl:assertion>Req11:For all WCS request types, test the request version parameter has a fixed value of '2.0.0' by GetKVP.</ctl:assertion>
     		<ctl:code>
-     			<xsl:variable name="Capabilities">
-				<ctl:request>
-          				<ctl:url>
-            					<xsl:value-of select="$url"/>
-          				</ctl:url>
-          				<ctl:method>get</ctl:method>
-          				<ctl:param name="SERVICE">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
-          				<ctl:param name="REQUEST">GetCapabilities</ctl:param>
-           				<ctlp:XMLValidatingParser>
-	        				<ctlp:schemas>
-                        				<ctlp:schema type="resource">wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
-	        				</ctlp:schemas>
-           				</ctlp:XMLValidatingParser>
-        			</ctl:request>
-      			</xsl:variable>
-      			<xsl:choose>
-  				<xsl:when test="string-length($Capabilities)=0">
-					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
-					<ctl:fail/>
-  				</xsl:when>
-  				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//wcs:Capabilities)">
-        			   		<ctl:message>[FAILURE] The result should contain a wcs:Capabilities.</ctl:message>
-        			   		<ctl:fail/>
-        				</xsl:if>
-  				</xsl:otherwise>
-      			</xsl:choose> 
+
      			<xsl:variable name="Capabilities">
 				<ctl:request>
           				<ctl:url>
@@ -1813,39 +1792,36 @@
         				</xsl:if>
   				</xsl:otherwise>
       			</xsl:choose> 
-
-
-       			<xsl:variable name="DescribeCoverage">
-            			<ctl:request>
-               				<ctl:url>
-                  				<xsl:value-of select="$url"/>
-               				</ctl:url>
-               				<ctl:method>get</ctl:method>
-           				<ctl:param name="service">WCS</ctl:param>
-           				<ctl:param name="VERSION">2.0.0</ctl:param>           
-           				<ctl:param name="request">DescribeCoverage</ctl:param>  
-            				<ctl:param name="CoverageId"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>             				
- 
+     			<xsl:variable name="Capabilities">
+				<ctl:request>
+          				<ctl:url>
+            					<xsl:value-of select="$url"/>
+          				</ctl:url>
+          				<ctl:method>get</ctl:method>
+          				<ctl:param name="SERVICE">WCS</ctl:param>
+          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="REQUEST">GetCapabilities</ctl:param>
            				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
-                        				<ctlp:schema type="resource">wcs/2.0/wcsDescribeCoverage.xsd</ctlp:schema>
+                        				<ctlp:schema type="resource">wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
 	        				</ctlp:schemas>
-             				</ctlp:XMLValidatingParser>
-
-         			</ctl:request>
-        		</xsl:variable>
-    			<xsl:choose>
-  				<xsl:when test="string-length($DescribeCoverage)=0">
+           				</ctlp:XMLValidatingParser>
+        			</ctl:request>
+      			</xsl:variable>
+      			<xsl:choose>
+  				<xsl:when test="string-length($Capabilities)=0">
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="not(empty($DescribeCoverage//ows:ExceptionReport))">
-        			   		<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
+        				<xsl:if test="empty($Capabilities//wcs:Capabilities)">
+        			   		<ctl:message>[FAILURE] The result should contain a wcs:Capabilities.</ctl:message>
         			   		<ctl:fail/>
-        				</xsl:if> 
+        				</xsl:if>
   				</xsl:otherwise>
-      			</xsl:choose>     
+      			</xsl:choose> 
+
+  
        			<xsl:variable name="DescribeCoverage">
             			<ctl:request>
                				<ctl:url>
@@ -1909,7 +1885,38 @@
         			   		<ctl:fail/>
         				</xsl:if> 
   				</xsl:otherwise>
-      			</xsl:choose>     
+      			</xsl:choose>    
+       			<xsl:variable name="DescribeCoverage">
+            			<ctl:request>
+               				<ctl:url>
+                  				<xsl:value-of select="$url"/>
+               				</ctl:url>
+               				<ctl:method>get</ctl:method>
+           				<ctl:param name="service">WCS</ctl:param>
+           				<ctl:param name="VERSION">2.0.0</ctl:param>           
+           				<ctl:param name="request">DescribeCoverage</ctl:param>  
+            				<ctl:param name="CoverageId"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>             				
+ 
+           				<ctlp:XMLValidatingParser>
+	        				<ctlp:schemas>
+                        				<ctlp:schema type="resource">wcs/2.0/wcsDescribeCoverage.xsd</ctlp:schema>
+	        				</ctlp:schemas>
+             				</ctlp:XMLValidatingParser>
+
+         			</ctl:request>
+        		</xsl:variable>
+    			<xsl:choose>
+  				<xsl:when test="string-length($DescribeCoverage)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+  				</xsl:when>
+  				<xsl:otherwise>
+        				<xsl:if test="not(empty($DescribeCoverage//ows:ExceptionReport))">
+        			   		<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
+        			   		<ctl:fail/>
+        				</xsl:if> 
+  				</xsl:otherwise>
+      			</xsl:choose>         			
  			<xsl:choose>
 				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
 
@@ -2017,42 +2024,9 @@
 	<ctl:test name="wcs2:soap-core-req11">
 	    	<ctl:param name="Capabilities"/>
 	    	<ctl:param name="url"/>
-	    	<ctl:assertion>Req11:For all WCS request types, test the request version parameter has a fixed value of '2.0' by SOAP.</ctl:assertion>
+	    	<ctl:assertion>Req11:For all WCS request types, test the request version parameter has a fixed value of '2.0.0' by SOAP.</ctl:assertion>
     		<ctl:code>
-     			<xsl:variable name="Capabilities">
-				<ctl:soap-request version="1.2" charset="UTF-8">
-			       		<ctl:url>
-						<xsl:value-of select="$url"/>
-					</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-								<wcs:GetCapabilities  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-											xmlns:ows="http://www.opengis.net/ows/1.1"
-											xmlns:wcs="http://www.opengis.net/wcs/2.0"
-											service="WCS" version="2.0.0">
-									<ows:AcceptVersions>
-										<ows:Version>2.0.0</ows:Version>
-									</ows:AcceptVersions>
-								</wcs:GetCapabilities>]]></ctl:body>
-					<ctlp:SOAPParser return="content">			
-						<ctlp:XMLValidatingParser>
-							<ctlp:schemas>
-								<ctlp:schema type="resource">wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
-							</ctlp:schemas>
-						</ctlp:XMLValidatingParser>
-					</ctlp:SOAPParser>		
-        			</ctl:soap-request>
-      			</xsl:variable>
-      			<xsl:choose>
-  				<xsl:when test="string-length($Capabilities)=0">
-					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
-					<ctl:fail/>
-  				</xsl:when>
-  				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//wcs:Capabilities)">
-        			   		<ctl:message>[FAILURE] The result should contain a wcs:Capabilities.</ctl:message>
-        			   		<ctl:fail/>
-        				</xsl:if>
-  				</xsl:otherwise>
-      			</xsl:choose> 
+
      			<xsl:variable name="Capabilities">
 				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
@@ -2126,40 +2100,42 @@
   				</xsl:otherwise>
       			</xsl:choose> 
 
-
-       			<xsl:variable name="DescribeCoverage">
-            			<ctl:soap-request version="1.2" charset="UTF-8">
-               				<ctl:url>
-                  				<xsl:value-of select="$url"/>
-               				</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-							<wcs:DescribeCoverage  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-    								xmlns:wcs='http://www.opengis.net/wcs/2.0'
-    								xmlns:gml='http://www.opengis.net/gml/3.2'
-    								xsi:schemaLocation='http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd'
-    								service="WCS" version="2.0.0">
-    								<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:DescribeCoverage>]]>
-    					</ctl:body>
-					<ctlp:SOAPParser return="content">
+     			<xsl:variable name="Capabilities">
+				<ctl:soap-request version="1.2" charset="UTF-8">
+			       		<ctl:url>
+						<xsl:value-of select="$url"/>
+					</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+								<wcs:GetCapabilities  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+											xmlns:ows="http://www.opengis.net/ows/1.1"
+											xmlns:wcs="http://www.opengis.net/wcs/2.0"
+											service="WCS" version="2.0.0">
+									<ows:AcceptVersions>
+										<ows:Version>2.0.0</ows:Version>
+									</ows:AcceptVersions>
+								</wcs:GetCapabilities>]]></ctl:body>
+					<ctlp:SOAPParser return="content">			
 						<ctlp:XMLValidatingParser>
 							<ctlp:schemas>
-								<ctlp:schema type="resource">wcs/2.0/wcsDescribeCoverage.xsd</ctlp:schema>
+								<ctlp:schema type="resource">wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
 							</ctlp:schemas>
 						</ctlp:XMLValidatingParser>
-					</ctlp:SOAPParser>
-         			</ctl:soap-request>
-        		</xsl:variable>
-    			<xsl:choose>
-  				<xsl:when test="string-length($DescribeCoverage)=0">
+					</ctlp:SOAPParser>		
+        			</ctl:soap-request>
+      			</xsl:variable>
+      			<xsl:choose>
+  				<xsl:when test="string-length($Capabilities)=0">
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="not(empty($DescribeCoverage//ows:ExceptionReport))">
-        			   		<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
+        				<xsl:if test="empty($Capabilities//wcs:Capabilities)">
+        			   		<ctl:message>[FAILURE] The result should contain a wcs:Capabilities.</ctl:message>
         			   		<ctl:fail/>
-        				</xsl:if> 
+        				</xsl:if>
   				</xsl:otherwise>
-      			</xsl:choose>     
+      			</xsl:choose> 
+      			
+
        			<xsl:variable name="DescribeCoverage">
             			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
@@ -2226,6 +2202,40 @@
         				</xsl:if> 
   				</xsl:otherwise>
       			</xsl:choose>     
+      			
+       			<xsl:variable name="DescribeCoverage">
+            			<ctl:soap-request version="1.2" charset="UTF-8">
+               				<ctl:url>
+                  				<xsl:value-of select="$url"/>
+               				</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+							<wcs:DescribeCoverage  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    								xmlns:wcs='http://www.opengis.net/wcs/2.0'
+    								xmlns:gml='http://www.opengis.net/gml/3.2'
+    								xsi:schemaLocation='http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd'
+    								service="WCS" version="2.0.0">
+    								<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:DescribeCoverage>]]>
+    					</ctl:body>
+					<ctlp:SOAPParser return="content">
+						<ctlp:XMLValidatingParser>
+							<ctlp:schemas>
+								<ctlp:schema type="resource">wcs/2.0/wcsDescribeCoverage.xsd</ctlp:schema>
+							</ctlp:schemas>
+						</ctlp:XMLValidatingParser>
+					</ctlp:SOAPParser>
+         			</ctl:soap-request>
+        		</xsl:variable>
+    			<xsl:choose>
+  				<xsl:when test="string-length($DescribeCoverage)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+  				</xsl:when>
+  				<xsl:otherwise>
+        				<xsl:if test="not(empty($DescribeCoverage//ows:ExceptionReport))">
+        			   		<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
+        			   		<ctl:fail/>
+        				</xsl:if> 
+  				</xsl:otherwise>
+      			</xsl:choose>           			
  			<xsl:choose>
 				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
      			
