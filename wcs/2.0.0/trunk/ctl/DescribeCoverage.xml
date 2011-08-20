@@ -1510,7 +1510,7 @@
  					<ctl:fail/>
    				</xsl:when>
    				<xsl:otherwise>
-					<xsl:if test="not(count(index-of($DescribeCoverage//*[local-name()='CoverageDescriptions']/*[local-name()='CoverageDescription']/*[local-name()='CoverageId'],$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']))=1 and count(index-of(//*[local-name()='CoverageDescriptions']/*[local-name()='CoverageDescription']//*[local-name()='CoverageId'],$Capabilities//*[local-name()='CoverageSummary'][last()]/wcs:CoverageId))=1)">
+					<xsl:if test="not(count(index-of($DescribeCoverage//*[local-name()='CoverageDescriptions']/*[local-name()='CoverageDescription']/*[local-name()='CoverageId'],$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']))=1 and count(index-of($DescribeCoverage//*[local-name()='CoverageDescriptions']/*[local-name()='CoverageDescription']//*[local-name()='CoverageId'],$Capabilities//*[local-name()='CoverageSummary'][last()]/*[local-name()='CoverageId']))=1)">
 					  	<ctl:message>[FAILURE] The identifiers should identify correct coverages.</ctl:message>
 					  	<ctl:fail/>
 					</xsl:if>
@@ -1587,7 +1587,7 @@
  					<ctl:fail/>
    				</xsl:when>
    				<xsl:otherwise>
-					<xsl:if test="not(count(index-of($DescribeCoverage//*[local-name()='CoverageDescriptions']/*[local-name()='CoverageDescription']/*[local-name()='CoverageId'],$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']))=1 and count(index-of(//*[local-name()='CoverageDescriptions']/*[local-name()='CoverageDescription']//*[local-name()='CoverageId'],$Capabilities//*[local-name()='CoverageSummary'][last()]/wcs:CoverageId))=1)">
+					<xsl:if test="not(count(index-of($DescribeCoverage//*[local-name()='CoverageDescriptions']/*[local-name()='CoverageDescription']/*[local-name()='CoverageId'],$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']))=1 and count(index-of($DescribeCoverage//*[local-name()='CoverageDescriptions']/*[local-name()='CoverageDescription']//*[local-name()='CoverageId'],$Capabilities//*[local-name()='CoverageSummary'][last()]/*[local-name()='CoverageId']))=1)">
 					  	<ctl:message>[FAILURE] The identifiers should identify correct coverages.</ctl:message>
 					  	<ctl:fail/>
 					</xsl:if>
@@ -1669,7 +1669,7 @@
  					<ctl:fail/>
    				</xsl:when>
    				<xsl:otherwise>
-					<xsl:if test="not(count(index-of($DescribeCoverage//*[local-name()='CoverageDescriptions']/*[local-name()='CoverageDescription']/*[local-name()='CoverageId'],$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']))=1 and count(index-of(//*[local-name()='CoverageDescriptions']/*[local-name()='CoverageDescription']//*[local-name()='CoverageId'],$Capabilities//*[local-name()='CoverageSummary'][last()]/wcs:CoverageId))=1)">
+					<xsl:if test="not(count(index-of($DescribeCoverage//*[local-name()='CoverageDescriptions']/*[local-name()='CoverageDescription']/*[local-name()='CoverageId'],$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']))=1 and count(index-of($DescribeCoverage//*[local-name()='CoverageDescriptions']/*[local-name()='CoverageDescription']//*[local-name()='CoverageId'],$Capabilities//*[local-name()='CoverageSummary'][last()]/*[local-name()='CoverageId']))=1)">
 					  	<ctl:message>[FAILURE] The identifiers should identify correct coverages.</ctl:message>
 					  	<ctl:fail/>
 					</xsl:if>

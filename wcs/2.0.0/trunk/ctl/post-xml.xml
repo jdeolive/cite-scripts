@@ -93,7 +93,7 @@
 			<xsl:choose>
 	  			<xsl:when test="count(distinct-values($Capabilities//*[local-name()='Operation']//*[local-name()='Post']/@xlink:href))=1">
             				<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat(distinct-values($Capabilities//*[local-name()='Operation']//*[local-name()='Post']/@xlink:href),' is the only URL for HTTP POST requests')" />
-            				<xsl:if test="not(count(index-of(//*[local-name()='OperationsMetadata']/*[local-name()='Constraint'][@name='PostEncoding']//*[local-name()='Value'], 'XML'))=1)">
+            				<xsl:if test="not(count(index-of($Capabilities//*[local-name()='OperationsMetadata']/*[local-name()='Constraint'][@name='PostEncoding']//*[local-name()='Value'], 'XML'))=1)">
 	    					<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" >[FAILURE] ows:Constraint element for XML POST is not included in the OperationsMetadata element</ctl:message>
 	    					<ctl:fail/>
 	    				</xsl:if>
