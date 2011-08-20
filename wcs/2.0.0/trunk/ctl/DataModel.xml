@@ -102,7 +102,7 @@
 									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 									xsi:schemaLocation="http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd"
 									service="WCS" version="2.0.0">
-									<wcs:CoverageId>]]><xsl:value-of select="./*[local-name()='CoverageId"/><![CDATA[</wcs:CoverageId></wcs:GetCoverage>]]>
+									<wcs:CoverageId>]]><xsl:value-of select="./*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:GetCoverage>]]>
 							</ctl:body>
 
 							<ctlp:XMLValidatingParser>
@@ -546,7 +546,7 @@
 									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 									xsi:schemaLocation="http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd"
 									service="WCS" version="2.0.0">
-									<wcs:CoverageId>]]><xsl:value-of select="./*[local-name()='CoverageId"/><![CDATA[</wcs:CoverageId></wcs:GetCoverage>]]>
+									<wcs:CoverageId>]]><xsl:value-of select="./*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:GetCoverage>]]>
 							</ctl:body>
 							<ctlp:SOAPParser return="content">
 								<ctlp:XMLValidatingParser>

@@ -1076,7 +1076,7 @@
 				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
-					</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+					</ctl:url><ctl:body>
 								<wcs:GetCapabilities  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 											xmlns:ows="http://www.opengis.net/ows/1.1"
 											xmlns:wcs="http://www.opengis.net/wcs/2.0"
@@ -1084,7 +1084,7 @@
 									<ows:AcceptVersions>
 										<ows:Version>2.0.0</ows:Version>
 									</ows:AcceptVersions>
-								</wcs:GetCapabilities>]]></ctl:body>
+								</wcs:GetCapabilities></ctl:body>
 					<ctlp:SOAPParser return="content">								
 						<ctlp:XMLValidatingParser>
 							<ctlp:schemas>
@@ -1111,7 +1111,7 @@
 				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
-					</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+					</ctl:url><ctl:body>
 								<wcs:GetCapabilities  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 											xmlns:ows="http://www.opengis.net/ows/1.1"
 											xmlns:wcs="http://www.opengis.net/wcs/2.0"
@@ -1119,7 +1119,7 @@
 									<ows:AcceptVersions>
 										<ows:Version>2.0.0</ows:Version>
 									</ows:AcceptVersions>
-								</wcs:GetCapabilities>]]></ctl:body>
+								</wcs:GetCapabilities></ctl:body>
 					<ctlp:SOAPParser return="content">			
 						<ctlp:XMLValidatingParser>
 							<ctlp:schemas>
@@ -1146,7 +1146,7 @@
 				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
-					</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+					</ctl:url><ctl:body>
 								<wcs:GetCapabilities  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 											xmlns:ows="http://www.opengis.net/ows/1.1"
 											xmlns:wcs="http://www.opengis.net/wcs/2.0"
@@ -1154,7 +1154,7 @@
 									<ows:AcceptVersions>
 										<ows:Version>2.0.0</ows:Version>
 									</ows:AcceptVersions>
-								</wcs:GetCapabilities>]]></ctl:body>
+								</wcs:GetCapabilities></ctl:body>
 					<ctlp:SOAPParser return="content">					
 						<ctlp:XMLValidatingParser>
 							<ctlp:schemas>
@@ -1181,13 +1181,13 @@
             			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
-               				</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+               				</ctl:url><ctl:body>
 							<wcs:DescribeCoverage  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
     								xmlns:wcs='http://www.opengis.net/wcs/2.0'
     								xmlns:gml='http://www.opengis.net/gml/3.2'
     								xsi:schemaLocation='http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd'
     								service="wcS" version="2.0.0">
-    								<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:DescribeCoverage>]]>
+    								<wcs:CoverageId><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/></wcs:CoverageId></wcs:DescribeCoverage>
     					</ctl:body>
 					<ctlp:SOAPParser return="content">
 						<ctlp:XMLValidatingParser>
@@ -1214,13 +1214,13 @@
             			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
-               				</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+               				</ctl:url><ctl:body>
 							<wcs:DescribeCoverage  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
     								xmlns:wcs='http://www.opengis.net/wcs/2.0'
     								xmlns:gml='http://www.opengis.net/gml/3.2'
     								xsi:schemaLocation='http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd'
     								service="WFS" version="2.0.0">
-    								<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:DescribeCoverage>]]>
+    								<wcs:CoverageId><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/></wcs:CoverageId></wcs:DescribeCoverage>
     					</ctl:body>
 					<ctlp:SOAPParser return="content">
 						<ctlp:XMLValidatingParser>
@@ -1247,13 +1247,13 @@
             			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
-               				</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+               				</ctl:url><ctl:body>
 							<wcs:DescribeCoverage  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
     								xmlns:wcs='http://www.opengis.net/wcs/2.0'
     								xmlns:gml='http://www.opengis.net/gml/3.2'
     								xsi:schemaLocation='http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd'
     								service="WCS" version="2.0.0">
-    								<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:DescribeCoverage>]]>
+    								<wcs:CoverageId><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/></wcs:CoverageId></wcs:DescribeCoverage>
     					</ctl:body>
 					<ctlp:SOAPParser return="content">
 						<ctlp:XMLValidatingParser>
@@ -1282,13 +1282,13 @@
 						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$url"/>
-							</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+							</ctl:url><ctl:body>
 								<wcs:GetCoverage xmlns:wcs="http://www.opengis.net/wcs/2.0"
 									xmlns:gml="http://www.opengis.net/gml/3.2"
 									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 									xsi:schemaLocation="http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd"
 									service="WCS" version="2.0.0">
-									<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:GetCoverage>]]>
+									<wcs:CoverageId><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/></wcs:CoverageId></wcs:GetCoverage>
 							</ctl:body>
 							<ctlp:SOAPParser return="content">
 								<ctlp:XMLValidatingParser>
@@ -1316,13 +1316,13 @@
 						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$url"/>
-							</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+							</ctl:url><ctl:body>
 								<wcs:GetCoverage xmlns:wcs="http://www.opengis.net/wcs/2.0"
 									xmlns:gml="http://www.opengis.net/gml/3.2"
 									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 									xsi:schemaLocation="http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd"
 									service="WCs" version="2.0.0">
-									<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:GetCoverage>]]>
+									<wcs:CoverageId><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/></wcs:CoverageId></wcs:GetCoverage>
 							</ctl:body>
 							
 							<ctlp:SOAPParser return="content">
@@ -1350,13 +1350,13 @@
 						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$url"/>
-							</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+							</ctl:url><ctl:body>
 								<wcs:GetCoverage xmlns:wcs="http://www.opengis.net/wcs/2.0"
 									xmlns:gml="http://www.opengis.net/gml/3.2"
 									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 									xsi:schemaLocation="http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd"
 									service="WSC" version="2.0.0">
-									<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:GetCoverage>]]>
+									<wcs:CoverageId><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/></wcs:CoverageId></wcs:GetCoverage>
 							</ctl:body>
 							<ctlp:SOAPParser return="content">
 								<ctlp:XMLValidatingParser>
@@ -2032,7 +2032,7 @@
 				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
-					</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+					</ctl:url><ctl:body>
 								<wcs:GetCapabilities  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 											xmlns:ows="http://www.opengis.net/ows/1.1"
 											xmlns:wcs="http://www.opengis.net/wcs/2.0"
@@ -2040,7 +2040,7 @@
 									<ows:AcceptVersions>
 										<ows:Version>2.0.0</ows:Version>
 									</ows:AcceptVersions>
-								</wcs:GetCapabilities>]]></ctl:body>
+								</wcs:GetCapabilities></ctl:body>
 					<ctlp:SOAPParser return="content">						
 						<ctlp:XMLValidatingParser>
 							<ctlp:schemas>
@@ -2070,7 +2070,7 @@
 					</ctl:url>
 					<ctl:method>post</ctl:method>
 					<ctl:header name="Content-type">text/xml</ctl:header>
-					<ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+					<ctl:body>
 								<wcs:GetCapabilities  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 											xmlns:ows="http://www.opengis.net/ows/1.1"
 											xmlns:wcs="http://www.opengis.net/wcs/2.0"
@@ -2078,7 +2078,7 @@
 									<ows:AcceptVersions>
 										<ows:Version>2.0.0</ows:Version>
 									</ows:AcceptVersions>
-								</wcs:GetCapabilities>]]></ctl:body>
+								</wcs:GetCapabilities></ctl:body>
 					<ctlp:SOAPParser return="content">			
 						<ctlp:XMLValidatingParser>
 							<ctlp:schemas>
@@ -2105,7 +2105,7 @@
 				<ctl:soap-request version="1.2" charset="UTF-8">
 			       		<ctl:url>
 						<xsl:value-of select="$url"/>
-					</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+					</ctl:url><ctl:body>
 								<wcs:GetCapabilities  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 											xmlns:ows="http://www.opengis.net/ows/1.1"
 											xmlns:wcs="http://www.opengis.net/wcs/2.0"
@@ -2113,7 +2113,7 @@
 									<ows:AcceptVersions>
 										<ows:Version>2.0.0</ows:Version>
 									</ows:AcceptVersions>
-								</wcs:GetCapabilities>]]></ctl:body>
+								</wcs:GetCapabilities></ctl:body>
 					<ctlp:SOAPParser return="content">			
 						<ctlp:XMLValidatingParser>
 							<ctlp:schemas>
@@ -2141,13 +2141,13 @@
             			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
-               				</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+               				</ctl:url><ctl:body>
 							<wcs:DescribeCoverage  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
     								xmlns:wcs='http://www.opengis.net/wcs/2.0'
     								xmlns:gml='http://www.opengis.net/gml/3.2'
     								xsi:schemaLocation='http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd'
     								service="WCS" version="1.9">
-    								<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:DescribeCoverage>]]>
+    								<wcs:CoverageId><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/></wcs:CoverageId></wcs:DescribeCoverage>
     					</ctl:body>
 					<ctlp:SOAPParser return="content">
 						<ctlp:XMLValidatingParser>
@@ -2174,13 +2174,13 @@
             			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
-               				</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+               				</ctl:url><ctl:body>
 							<wcs:DescribeCoverage  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
     								xmlns:wcs='http://www.opengis.net/wcs/2.0'
     								xmlns:gml='http://www.opengis.net/gml/3.2'
     								xsi:schemaLocation='http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd'
     								service="WCS" version="2">
-    								<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:DescribeCoverage>]]>
+    								<wcs:CoverageId><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/></wcs:CoverageId></wcs:DescribeCoverage>
     					</ctl:body>
 					<ctlp:SOAPParser return="content">
 						<ctlp:XMLValidatingParser>
@@ -2208,13 +2208,13 @@
             			<ctl:soap-request version="1.2" charset="UTF-8">
                				<ctl:url>
                   				<xsl:value-of select="$url"/>
-               				</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+               				</ctl:url><ctl:body>
 							<wcs:DescribeCoverage  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
     								xmlns:wcs='http://www.opengis.net/wcs/2.0'
     								xmlns:gml='http://www.opengis.net/gml/3.2'
     								xsi:schemaLocation='http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd'
     								service="WCS" version="2.0.0">
-    								<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:DescribeCoverage>]]>
+    								<wcs:CoverageId><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/></wcs:CoverageId></wcs:DescribeCoverage>
     					</ctl:body>
 					<ctlp:SOAPParser return="content">
 						<ctlp:XMLValidatingParser>
@@ -2244,13 +2244,13 @@
 						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$url"/>
-							</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+							</ctl:url><ctl:body>
 								<wcs:GetCoverage xmlns:wcs="http://www.opengis.net/wcs/2.0"
 									xmlns:gml="http://www.opengis.net/gml/3.2"
 									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 									xsi:schemaLocation="http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd"
 									service="WCS" version="2.0.0">
-									<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:GetCoverage>]]>
+									<wcs:CoverageId><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/></wcs:CoverageId></wcs:GetCoverage>
 							</ctl:body>
 							<ctlp:SOAPParser return="content">
 								<ctlp:XMLValidatingParser>
@@ -2278,13 +2278,13 @@
 						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$url"/>
-							</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+							</ctl:url><ctl:body>
 								<wcs:GetCoverage xmlns:wcs="http://www.opengis.net/wcs/2.0"
 									xmlns:gml="http://www.opengis.net/gml/3.2"
 									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 									xsi:schemaLocation="http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd"
 									service="WCS" version="0">
-									<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:GetCoverage>]]>
+									<wcs:CoverageId><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/></wcs:CoverageId></wcs:GetCoverage>
 							</ctl:body>
 							<ctlp:SOAPParser return="content">
 								<ctlp:XMLValidatingParser>
@@ -2311,13 +2311,13 @@
 						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$url"/>
-							</ctl:url><ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+							</ctl:url><ctl:body>
 								<wcs:GetCoverage xmlns:wcs="http://www.opengis.net/wcs/2.0"
 									xmlns:gml="http://www.opengis.net/gml/3.2"
 									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 									xsi:schemaLocation="http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd"
 									service="WSC" version="a">
-									<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:GetCoverage>]]>
+									<wcs:CoverageId><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/></wcs:CoverageId></wcs:GetCoverage>
 							</ctl:body>
 							<ctlp:SOAPParser return="content">
 								<ctlp:XMLValidatingParser>
