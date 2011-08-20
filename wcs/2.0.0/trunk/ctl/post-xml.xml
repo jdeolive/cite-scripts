@@ -92,14 +92,14 @@
     		<ctl:code>
 			<xsl:choose>
 	  			<xsl:when test="count(distinct-values($Capabilities//*[local-name()='Operation']//*[local-name()='Post']/@xlink:href))=1">
-            				<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat(distinct-values($Capabilities//*[local-name()='Operation']//*[local-name()='Post']/@xlink:href),'is the only URL for HTTP POST requests')" />
-            				<xsl:if test="not(count(index-of(//*[local-name()='OperationsMetadata']//*[local-name()='Constraint'][@name='PostEncoding']//*[local-name()='Value'], 'XML'))=1)">
+            				<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat(distinct-values($Capabilities//*[local-name()='Operation']//*[local-name()='Post']/@xlink:href),' is the only URL for HTTP POST requests')" />
+            				<xsl:if test="not(count(index-of(//*[local-name()='OperationsMetadata']/*[local-name()='Constraint'][@name='PostEncoding']//*[local-name()='Value'], 'XML'))=1)">
 	    					<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" >[FAILURE] ows:Constraint element for XML POST is not included in the OperationsMetadata element</ctl:message>
 	    					<ctl:fail/>
 	    				</xsl:if>
 	 			</xsl:when>
 	  			<xsl:when test="count(distinct-values($Capabilities//*[local-name()='Operation']//*[local-name()='Post']/@xlink:href))>1">
-            				<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat(distinct-values($Capabilities//*[local-name()='Operation']//*[local-name()='Post']/@xlink:href),'are the URLs for HTTP POST requests')" />
+            				<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat(distinct-values($Capabilities//*[local-name()='Operation']//*[local-name()='Post']/@xlink:href),' are the URLs for HTTP POST requests')" />
 	     				<xsl:for-each select="$Capabilities//*[local-name()='Operation']">
 	        				<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('test','./@name')"/>
 	        				<xsl:if test="not(count(index-of(./*[local-name()='Constraint'][@name='PostEncoding']//*[local-name()='Value'], 'XML'))>=1)">
