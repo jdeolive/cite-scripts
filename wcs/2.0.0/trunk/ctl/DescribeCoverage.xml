@@ -1611,7 +1611,7 @@
                 			<ctl:url>
                    				<xsl:value-of select="$url"/>
                 			</ctl:url>
-                			<ctl:body>>
+                			<ctl:body>
  							<wcs:DescribeCoverage  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
      								xmlns:wcs='http://www.opengis.net/wcs/2.0'
      								xmlns:gml='http://www.opengis.net/gml/3.2'
