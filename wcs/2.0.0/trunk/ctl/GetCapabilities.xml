@@ -73,7 +73,7 @@
     		<ctl:code>
        			<xsl:choose>
   				<xsl:when test="empty($Capabilities//*[local-name()='CoverageSummary']/*[local-name()='CoverageId'])">
-        				<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('wcs:CoverageSummary/wcs:CoverageId','does not exsist')" />
+        				<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('[FAILURE] wcs:CoverageSummary/wcs:CoverageId','does not exsist')" />
         				<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>

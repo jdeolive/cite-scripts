@@ -70,6 +70,7 @@
     		<ctl:assertion>Req1:Send a GetCapabilities request to server under test, verify that the response contains a Profile element with said URI.</ctl:assertion>
     		<ctl:code>        
         		<xsl:if test="not(contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_protocol-binding_get-kvp/1.0') )">
+	        		<ctl:message>[FAILURE] Send a GetCapabilities request to server under test, verify that the response contains a Profile element with http://www.opengis.net/spec/WCS_protocol-binding_get-kvp/1.0.</ctl:message>
 	        		<ctl:fail/>
         		</xsl:if>
     		</ctl:code>

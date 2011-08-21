@@ -1239,7 +1239,8 @@
   				</xsl:when>
   				<xsl:otherwise>
 					<xsl:if test="not(count($Capabilities//*[local-name()='CoverageSummary']/*[local-name()='CoverageId'])=count($DescribeCoverage//*[local-name()='CoverageDescriptions']/*[local-name()='CoverageDescription']))">
-					  <ctl:fail/>
+					  	<ctl:message>[FAILURE] The response to a successful PostXML DescribeCoverage request with n>0 coverage identifiers shall be a list containing n items.</ctl:message>
+					  	<ctl:fail/>
 					</xsl:if>
   				</xsl:otherwise>
       			</xsl:choose>       
@@ -1275,7 +1276,8 @@
   				</xsl:when>
   				<xsl:otherwise>
 					<xsl:if test="not(count($DescribeCoverage//*[local-name()='CoverageDescriptions']/*[local-name()='CoverageDescription'])=2)">
-					  <ctl:fail/>
+					  	<ctl:message>[FAILURE] The response to a successful PostXML DescribeCoverage request with n>0 coverage identifiers shall be a list containing n items.</ctl:message>
+					  	<ctl:fail/>
 					</xsl:if>
   				</xsl:otherwise>
       			</xsl:choose>        
@@ -1315,7 +1317,8 @@
   				</xsl:when>
   				<xsl:otherwise>
 					<xsl:if test="not(count($Capabilities//*[local-name()='CoverageSummary']/*[local-name()='CoverageId'])=count($DescribeCoverage//*[local-name()='CoverageDescriptions']/*[local-name()='CoverageDescription']))">
-					  <ctl:fail/>
+					  	<ctl:message>[FAILURE] The response to a successful PostXML DescribeCoverage request with n>0 coverage identifiers shall be a list containing n items.</ctl:message>
+					  	<ctl:fail/>
 					</xsl:if>
   				</xsl:otherwise>
       			</xsl:choose> 	
@@ -1347,7 +1350,8 @@
   				</xsl:when>
   				<xsl:otherwise>
 					<xsl:if test="not(count($DescribeCoverage//*[local-name()='CoverageDescriptions']/*[local-name()='CoverageDescription'])=2)">
-					  <ctl:fail/>
+					  	<ctl:message>[FAILURE] The response to a successful PostXML DescribeCoverage request with n>0 coverage identifiers shall be a list containing n items.</ctl:message>
+					  	<ctl:fail/>
 					</xsl:if>
   				</xsl:otherwise>
       			</xsl:choose>       			
@@ -1390,7 +1394,8 @@
   				</xsl:when>
   				<xsl:otherwise>
 					<xsl:if test="not(count($Capabilities//*[local-name()='CoverageSummary']/*[local-name()='CoverageId'])=count($DescribeCoverage//*[local-name()='CoverageDescriptions']/*[local-name()='CoverageDescription']))">
-					  <ctl:fail/>
+					  	<ctl:message>[FAILURE] The response to a successful PostXML DescribeCoverage request with n>0 coverage identifiers shall be a list containing n items.</ctl:message>
+					  	<ctl:fail/>
 					</xsl:if>
   				</xsl:otherwise>
       			</xsl:choose>       
@@ -1424,7 +1429,8 @@
   				</xsl:when>
   				<xsl:otherwise>
 					<xsl:if test="not(count($DescribeCoverage//*[local-name()='CoverageDescriptions']/*[local-name()='CoverageDescription'])=2)">
-					  <ctl:fail/>
+					  	<ctl:message>[FAILURE] The response to a successful PostXML DescribeCoverage request with n>0 coverage identifiers shall be a list containing n items.</ctl:message>
+					  	<ctl:fail/>
 					</xsl:if>
   				</xsl:otherwise>
       			</xsl:choose>
@@ -1717,9 +1723,10 @@
    				</xsl:when>
    				<xsl:otherwise>
 					<xsl:for-each select="$DescribeCoverage//*[local-name()='CoverageDescriptions']/*[local-name()='CoverageDescription']">
-						<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('[FAILURE] test ',//wcs:CoverageId)" />
+						<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('[FAILURE] test ' ,//wcs:CoverageId)" />
 						<xsl:if test="count(//*[local-name()='boundedBy']//@srsName)=1 and count(//*[local-name()='domainSet']//@srsName)=1">
 							<xsl:if test="not(//*[local-name()='boundedBy']//@srsName=//*[local-name()='domainSet']//@srsName)">
+								<ctl:message>[FAILURE] If a geometric or temporal object in the domainSet of a coverageDescription specifies an srsName attribute, the value of this attribute shall be identical to the srsName attribute of the boundedBy element of the containing coverageDescription.</ctl:message>
 								<ctl:fail/>
 							</xsl:if>
 						</xsl:if>
@@ -1762,9 +1769,10 @@
    				</xsl:when>
    				<xsl:otherwise>
 					<xsl:for-each select="$DescribeCoverage//*[local-name()='CoverageDescriptions']/*[local-name()='CoverageDescription']">
-						<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('[FAILURE] test ',//wcs:CoverageId)" />
+						<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('[FAILURE] test ' ,//wcs:CoverageId)" />
 						<xsl:if test="count(//*[local-name()='boundedBy']//@srsName)=1 and count(//*[local-name()='domainSet']//@srsName)=1">
 							<xsl:if test="not(//*[local-name()='boundedBy']//@srsName=//*[local-name()='domainSet']//@srsName)">
+								<ctl:message>[FAILURE] If a geometric or temporal object in the domainSet of a coverageDescription specifies an srsName attribute, the value of this attribute shall be identical to the srsName attribute of the boundedBy element of the containing coverageDescription.</ctl:message>
 								<ctl:fail/>
 							</xsl:if>
 						</xsl:if>
@@ -1810,9 +1818,10 @@
    				</xsl:when>
    				<xsl:otherwise>
 					<xsl:for-each select="$DescribeCoverage//*[local-name()='CoverageDescriptions']/*[local-name()='CoverageDescription']">
-						<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('[FAILURE] test ',//wcs:CoverageId)" />
+						<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('[FAILURE] test ' ,//wcs:CoverageId)" />
 						<xsl:if test="count(//*[local-name()='boundedBy']//@srsName)=1 and count(//*[local-name()='domainSet']//@srsName)=1">
 							<xsl:if test="not(//*[local-name()='boundedBy']//@srsName=//*[local-name()='domainSet']//@srsName)">
+								<ctl:message>[FAILURE] If a geometric or temporal object in the domainSet of a coverageDescription specifies an srsName attribute, the value of this attribute shall be identical to the srsName attribute of the boundedBy element of the containing coverageDescription.</ctl:message>
 								<ctl:fail/>
 							</xsl:if>
 						</xsl:if>
