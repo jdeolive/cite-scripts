@@ -26,12 +26,15 @@
 <ctl:test name="wmts:Server.KVP.GET.GetTile.Mandatory" type="Mandatory">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetTile request with the mandatory request parameter with a value of GetTile;
 	2.  the request entity is a valid KVP GET GetTile request with the mandatory service parameter with a value of WMTS;
 	3.  the request entity is a valid KVP GET GetTile request with the mandatory Version parameter with a value of 1.0.0;
-	4.  the request entity is a valid KVP GET GetTile request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document;
+	4.  the request entity is a valid KVP GET GetTile request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value for layers with no sample dimensions, or with sample dimensions with a default dimension from the Service Metadata document;
 	5.  the request entity is a valid KVP GET GetTile request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document;
 	6.  the request entity is a valid KVP GET GetTile request with the mandatory Format parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document;
 	7.  the request entity is a valid KVP GET GetTile request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document;
@@ -48,8 +51,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetTile.Mandatory not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Mandatory">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetTile.Mandatory not tested.</ctl:message>
@@ -67,7 +74,10 @@
 
 <ctl:test name="wmts:Server.KVP.GET.GetTile.Optional" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
-	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>	
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetTile request with the mandatory request parameter with a value of GetTile;
@@ -92,8 +102,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetTile.Optional not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Optional">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetTile.Optional not tested.</ctl:message>
@@ -112,12 +126,16 @@
 <ctl:test name="wmts:Server.KVP.GET.GetTile.Missing" type="Mandatory">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetTile request with the mandatory request parameter with a value of GetTile;
 	2.  the request entity is a valid KVP GET GetTile request with the mandatory service parameter with a value of WMTS;
 	3.  the request entity is a valid KVP GET GetTile request with the mandatory Version parameter with a value of 1.0.0;
-	4.  the request entity is a valid KVP GET GetTile request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document, except when tested as missing;
+	4.  the request entity is a valid KVP GET GetTile request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document for layers with no sample dimensions, or with sample dimensions with a default dimension from the Service Metadata document; except when tested as missing;
 	5.  the request entity is a valid KVP GET GetTile request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
 	6.  the request entity is a valid KVP GET GetTile request with the mandatory Format parameter parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
 	7.  the request entity is a valid KVP GET GetTile request with the mandatory TileMatrixSet parameterwith a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
@@ -137,8 +155,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetTile.Missing not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Missing">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetTile.Missing not tested.</ctl:message>
@@ -157,6 +180,10 @@
 <ctl:test name="wmts:Server.KVP.GET.GetTile.Invalid.Layer" type="Mandatory">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetTile request with the mandatory request parameter with a value of GetTile;
@@ -182,8 +209,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetTile.Invalid.Layer not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Invalid.Layer">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetTile.Invalid.Layer not tested.</ctl:message>
@@ -202,6 +234,10 @@
 <ctl:test name="wmts:Server.KVP.GET.GetTile.Invalid.TileMatrixSet" type="Mandatory">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetTile request with the mandatory request parameter with a value of GetTile;
@@ -227,8 +263,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetTile.Invalid.TileMatrixSet not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Invalid.TileMatrixSet">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetTile.Invalid.TileMatrixSet not tested.</ctl:message>
@@ -247,6 +288,10 @@
 <ctl:test name="wmts:Server.KVP.GET.GetTile.Invalid.TileMatrix" type="Mandatory">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetTile request with the mandatory request parameter with a value of GetTile;
@@ -270,8 +315,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetTile.Invalid.TileMatrix not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Invalid.TileMatrix">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetTile.Invalid.TileMatrix not tested.</ctl:message>
@@ -290,6 +340,10 @@
 <ctl:test name="wmts:Server.KVP.GET.GetTile.Invalid.Tile.Row.No.TileMatrixSetLimits" type="Mandatory">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetTile request with the mandatory request parameter with a value of GetTile;
@@ -313,8 +367,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetTile.Invalid.Tile.Row.No.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Invalid.Tile.Row.No.TileMatrixSetLimits">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetTile.Invalid.Tile.Row.No.TileMatrixSetLimits not tested.</ctl:message>
@@ -333,6 +392,10 @@
 <ctl:test name="wmts:Server.KVP.GET.GetTile.Invalid.Tile.Col.No.TileMatrixSetLimits" type="Mandatory">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetTile request with the mandatory request parameter with a value of GetTile;
@@ -356,8 +419,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetTile.Invalid.Tile.Col.No.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Invalid.Tile.Col.No.TileMatrixSetLimits">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetTile.Invalid.Tile.Col.No.TileMatrixSetLimits not tested.</ctl:message>
@@ -376,6 +444,10 @@
 <ctl:test name="wmts:Server.KVP.GET.GetTile.Invalid.Tile.Row.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetTile request with the mandatory request parameter with a value of GetTile;
@@ -399,8 +471,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetTile.Invalid.Tile.Row.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Invalid.Tile.Row.TileMatrixSetLimits">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetTile.Invalid.Tile.Row.TileMatrixSetLimits not tested.</ctl:message>
@@ -419,6 +496,10 @@
 <ctl:test name="wmts:Server.KVP.GET.GetTile.Invalid.Tile.Col.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetTile request with the mandatory request parameter with a value of GetTile;
@@ -442,8 +523,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetTile.Invalid.Tile.Col.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Invalid.Tile.Col.TileMatrixSetLimits">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetTile.Invalid.Tile.Col.TileMatrixSetLimits not tested.</ctl:message>
@@ -462,6 +548,10 @@
 <ctl:test name="wmts:Server.KVP.GET.GetTile.Invalid.Tile.Style" type="Mandatory">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetTile request with the mandatory request parameter with a value of GetTile;
@@ -487,8 +577,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetTile.Invalid.Tile.Style not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Invalid.Tile.Style">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetTile.Invalid.Tile.Style not tested.</ctl:message>
@@ -504,9 +599,68 @@
 	</ctl:code>
 </ctl:test>
 
+<ctl:test name="wmts:Server.KVP.GET.GetTile.Missing.Optional" type="MandatoryIfImplemented">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  the request entity is a valid KVP GET GetTile request with the mandatory request parameter with a value of GetTile;
+	2.  the request entity is a valid KVP GET GetTile request with the mandatory service parameter with a value of WMTS;
+	3.  the request entity is a valid KVP GET GetTile request with the mandatory Version parameter with a value of 1.0.0;
+	4.  the request entity is a valid KVP GET GetTile request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document;
+	5.  the request entity is a valid KVP GET GetTile request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document;
+	6.  the request entity is a valid KVP GET GetTile request with the mandatory Format parameter parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document
+	7.  the request entity is a valid KVP GET GetTile request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document
+	8.  the request entity is a valid KVP GET GetTile request with the mandatory TileMatrix parameter with a TileMatrix identifier value equal to a &lt;TileMatrixSet&gt;&lt;TileMatrix&gt;&lt;owsIdentifier&gt; value for the specified TileMatrixSet from the Service Metadata document;
+	9.  the request entity is a valid KVP GET GetTile request with the mandatory TileRow parameter with a TileRow index value from zero to the value of &lt;MatrixHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	10.  the request entity is a valid KVP GET GetTile request with the mandatory TileCol parameter with a TileCol index value from zero to the value of &lt;MatrixWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	11.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileRow index value within the TileMatrixLimits MinTileRow and MaxTileRow values.
+	12.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileCol index value within the TileMatrixLimits MinTileCol and MaxTileCol values.
+	13.  the request entity is a valid KVP GET GetTile request without an optional sample dimensions parameter for a sample dimension without a default value that is specified in the &lt;Contents&gt;&lt;Layer&gt;&lt;Dimension&gt;&lt;ows:Identifier&gt; in the Service Metadata document for the specified layer.
+	14.  the response entity is a schema-valid ows:Exception document.
+	16.  the response entity contains an exceptionCode attribute value of "MissingParameterValue".
+	17.  the response entity contains a locator attribute value of the name of the sample dimension.
+	18.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".</ctl:assertion>
+	<ctl:comment>Verify that when a GetTile request for a tile from a layer with a sample dimension with no default sample dimension value is missing a request parameter for the sample dimension name, that the server throws an exception.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.KVP.GET.GetTile.Missing.Optional</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Missing.Optional">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.KVP.GET.GetTile.Missing.Optional not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.KVP.GET.GetTile.Missing.Optional test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>	
+	</ctl:code>	
+</ctl:test>
+
 <ctl:test name="wmts:Server.KVP.GET.GetTile.Invalid.SampleDimension.Name" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetTile request with the mandatory request parameter with a value of GetTile;
@@ -525,7 +679,7 @@
 	14.  the request entity is a valid KVP GET GetTile request with an optional sample dimensions parameter with any value.
 	15.  the response entity is a schema-valid ows:Exception document.
 	16.  the response entity contains an exceptionCode attribute value of "InvalidParameterValue".
-	17.  the response entity contains a locator attribute value of "SampleDimension".
+	17.  the response entity contains a locator attribute value of the name of the sample dimension.
 	18.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".</ctl:assertion>
 	<ctl:comment>Verify that when a GetTile request contains the name not defined as a sample dimension, then the server throws an exception. </ctl:comment>
 	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.KVP.GET.GetTile.Invalid.SampleDimension.Name</ctl:link>
@@ -534,8 +688,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetTile.Invalid.SampleDimension.Name not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Invalid.SampleDimension.Name">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetTile.Invalid.SampleDimension.Name not tested.</ctl:message>
@@ -554,6 +713,10 @@
 <ctl:test name="wmts:Server.KVP.GET.GetTile.Invalid.SampleDimension.Value" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetTile request with the mandatory request parameter with a value of GetTile;
@@ -581,8 +744,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetTile.Invalid.SampleDimension.Value not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Invalid.SampleDimension.Value">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetTile.Invalid.SampleDimension.Value not tested.</ctl:message>
@@ -601,6 +769,9 @@
 <ctl:test name="wmts:Server.KVP.GET.GetTile.Default.SampleDimension" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetTile request with the mandatory request parameter with a value of GetTile;
@@ -625,8 +796,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetTile.Default.SampleDimension not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Default.SampleDimension">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetTile.Default.SampleDimension not tested.</ctl:message>
@@ -645,6 +820,9 @@
 <ctl:test name="wmts:Server.KVP.GET.GetTile.Current.SampleDimension" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetTile request with the mandatory request parameter with a value of GetTile;
@@ -669,8 +847,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetTile.Current.SampleDimension not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Current.SampleDimension">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetTile.Current.SampleDimension not tested.</ctl:message>
@@ -689,6 +871,9 @@
 <ctl:test name="wmts:Server.KVP.GET.GetTile.Valid.Tile.Format" type="Mandatory">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetTile request with the mandatory request parameter with a value of GetTile;
@@ -713,8 +898,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetTile.Valid.Tile.Format not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Valid.Tile.Format">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetTile.Valid.Tile.Format not tested.</ctl:message>
@@ -733,6 +922,10 @@
 <ctl:test name="wmts:Server.KVP.GET.GetTile.Invalid.Tile.Format" type="Mandatory">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetTile request with the mandatory request parameter with a value of GetTile;
@@ -760,8 +953,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetTile.Invalid.Tile.Format not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Invalid.Tile.Format">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetTile.Invalid.Tile.Format not tested.</ctl:message>
@@ -780,6 +978,9 @@
 <ctl:test name="wmts:Server.KVP.GET.GetTile.Valid.Tile.Size" type="Mandatory">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetTile request with the mandatory request parameter with a value of GetTile;
@@ -804,8 +1005,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetTile.Valid.Tile.Size not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Valid.Tile.Size">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetTile.Valid.Tile.Size not tested.</ctl:message>
@@ -824,6 +1029,9 @@
 <ctl:test name="wmts:Server.KVP.GET.GetTile.Valid.Tile.Transparency" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetTile request with the mandatory request parameter with a value of GetTile;
@@ -849,8 +1057,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetTile.Valid.Tile.Transparency not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Valid.Tile.Transparency">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetTile.Valid.Tile.Transparency not tested.</ctl:message>
@@ -869,12 +1081,15 @@
 <ctl:test name="wmts:Server.KVP.POST.GetTile.Mandatory" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetTile request with the mandatory request parameter with a value of GetTile;
 	2.  the request entity is a valid KVP POST GetTile request with the mandatory service parameter with a value of WMTS;
 	3.  the request entity is a valid KVP POST GetTile request with the mandatory Version parameter with a value of 1.0.0;
-	4.  the request entity is a valid KVP POST GetTile request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document;
+	4.  the request entity is a valid KVP POST GetTile request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value for layers with no sample dimensions, or with sample dimensions with a default dimension from the Service Metadata document;
 	5.  the request entity is a valid KVP POST GetTile request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document;
 	6.  the request entity is a valid KVP POST GetTile request with the mandatory Format parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document;
 	7.  the request entity is a valid KVP POST GetTile request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document;
@@ -891,8 +1106,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetTile.Mandatory not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Mandatory">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetTile.Mandatory not tested.</ctl:message>
@@ -911,6 +1130,9 @@
 <ctl:test name="wmts:Server.KVP.POST.GetTile.Optional" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -935,8 +1157,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetTile.Optional not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Optional">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetTile.Optional not tested.</ctl:message>
@@ -955,12 +1181,16 @@
 <ctl:test name="wmts:Server.KVP.POST.GetTile.Missing" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetTile request with the mandatory request parameter with a value of GetTile;
 	2.  the request entity is a valid KVP POST GetTile request with the mandatory service parameter with a value of WMTS;
 	3.  the request entity is a valid KVP POST GetTile request with the mandatory Version parameter with a value of 1.0.0;
-	4.  the request entity is a valid KVP POST GetTile request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document, except when tested as missing;
+	4.  the request entity is a valid KVP POST GetTile request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document for layers with no sample dimensions, or with sample dimensions with a default dimension from the Service Metadata document, except when tested as missing;
 	5.  the request entity is a valid KVP POST GetTile request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
 	6.  the request entity is a valid KVP POST GetTile request with the mandatory Format parameter parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
 	7.  the request entity is a valid KVP POST GetTile request with the mandatory TileMatrixSet parameterwith a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
@@ -980,8 +1210,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetTile.Missing not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Missing">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetTile.Missing not tested.</ctl:message>
@@ -1000,6 +1235,10 @@
 <ctl:test name="wmts:Server.KVP.POST.GetTile.Invalid.Layer" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
     1.  the request entity is a valid KVP POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -1025,8 +1264,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetTile.Invalid.Layer not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Invalid.Layer">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetTile.Invalid.Layer not tested.</ctl:message>
@@ -1045,6 +1289,10 @@
 <ctl:test name="wmts:Server.KVP.POST.GetTile.Invalid.TileMatrixSet" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -1070,8 +1318,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetTile.Invalid.TileMatrixSet not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Invalid.TileMatrixSet">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetTile.Invalid.TileMatrixSet not tested.</ctl:message>
@@ -1090,6 +1343,10 @@
 <ctl:test name="wmts:Server.KVP.POST.GetTile.Invalid.TileMatrix" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -1113,8 +1370,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetTile.Invalid.TileMatrix not implemented yet</ctl:message>
-						<ctl:warning/>
+							<ctl:call-function name="wmtsFunctions:KVP.GetTile.Invalid.TileMatrix">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetTile.Invalid.TileMatrix not tested.</ctl:message>
@@ -1133,6 +1395,10 @@
 <ctl:test name="wmts:Server.KVP.POST.GetTile.Invalid.Tile.Row.No.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -1156,8 +1422,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetTile.Invalid.Tile.Row.No.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Invalid.Tile.Row.No.TileMatrixSetLimits">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetTile.Invalid.Tile.Row.No.TileMatrixSetLimits not tested.</ctl:message>
@@ -1176,6 +1447,10 @@
 <ctl:test name="wmts:Server.KVP.POST.GetTile.Invalid.Tile.Col.No.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -1199,8 +1474,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetTile.Invalid.Tile.Col.No.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Invalid.Tile.Col.No.TileMatrixSetLimits">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetTile.Invalid.Tile.Col.No.TileMatrixSetLimits not tested.</ctl:message>
@@ -1219,6 +1499,10 @@
 <ctl:test name="wmts:Server.KVP.POST.GetTile.Invalid.Tile.Row.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -1242,8 +1526,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetTile.Invalid.Tile.Row.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Invalid.Tile.Row.TileMatrixSetLimits">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetTile.Invalid.Tile.Row.TileMatrixSetLimits not tested.</ctl:message>
@@ -1262,6 +1551,10 @@
 <ctl:test name="wmts:Server.KVP.POST.GetTile.Invalid.Tile.Col.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -1285,8 +1578,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetTile.Invalid.Tile.Col.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Invalid.Tile.Col.TileMatrixSetLimits">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetTile.Invalid.Tile.Col.TileMatrixSetLimits not tested.</ctl:message>
@@ -1305,6 +1603,10 @@
 <ctl:test name="wmts:Server.KVP.POST.GetTile.Invalid.Tile.Style" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -1330,8 +1632,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetTile.Invalid.Tile.Style not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Invalid.Tile.Style">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetTile.Invalid.Tile.Style not tested.</ctl:message>
@@ -1347,9 +1654,68 @@
 	</ctl:code>
 </ctl:test>
 
+<ctl:test name="wmts:Server.KVP.POST.GetTile.Missing.Optional" type="MandatoryIfImplemented">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  the request entity is a valid KVP POST GetTile request with the mandatory request parameter with a value of GetTile;
+	2.  the request entity is a valid KVP POST GetTile request with the mandatory service parameter with a value of WMTS;
+	3.  the request entity is a valid KVP POST GetTile request with the mandatory Version parameter with a value of 1.0.0;
+	4.  the request entity is a valid KVP POST GetTile request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document;
+	5.  the request entity is a valid KVP POST GetTile request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document;
+	6.  the request entity is a valid KVP POST GetTile request with the mandatory Format parameter parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document
+	7.  the request entity is a valid KVP POST GetTile request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document
+	8.  the request entity is a valid KVP POST GetTile request with the mandatory TileMatrix parameter with a TileMatrix identifier value equal to a &lt;TileMatrixSet&gt;&lt;TileMatrix&gt;&lt;owsIdentifier&gt; value for the specified TileMatrixSet from the Service Metadata document;
+	9.  the request entity is a valid KVP POST GetTile request with the mandatory TileRow parameter with a TileRow index value from zero to the value of &lt;MatrixHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	10.  the request entity is a valid KVP POST GetTile request with the mandatory TileCol parameter with a TileCol index value from zero to the value of &lt;MatrixWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	11.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileRow index value within the TileMatrixLimits MinTileRow and MaxTileRow values.
+	12.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileCol index value within the TileMatrixLimits MinTileCol and MaxTileCol values.
+	13.  the request entity is a valid KVP GET GetTile request without an optional sample dimensions parameter for a sample dimension without a default value that is specified in the &lt;Contents&gt;&lt;Layer&gt;&lt;Dimension&gt;&lt;ows:Identifier&gt; in the Service Metadata document for the specified layer.
+	14.  the response entity is a schema-valid ows:Exception document.
+	16.  the response entity contains an exceptionCode attribute value of "MissingParameterValue".
+	17.  the response entity contains a locator attribute value of the name of the sample dimension.
+	18.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".</ctl:assertion>
+	<ctl:comment>Verify that when a GetTile request for a tile from a layer with a sample dimension with no default sample dimension value is missing a request parameter for the sample dimension name, that the server throws an exception.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.KVP.GET.GetTile.Missing.Optional</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Missing.Optional">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.KVP.POST.GetTile.Missing.Optional not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.KVP.POST.GetTile.Missing.Optional test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>	
+	</ctl:code>	
+</ctl:test>
+
 <ctl:test name="wmts:Server.KVP.POST.GetTile.Invalid.SampleDimension.Name" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -1377,8 +1743,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetTile.Invalid.SampleDimension.Name not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Invalid.SampleDimension.Name">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetTile.Invalid.SampleDimension.Name not tested.</ctl:message>
@@ -1397,6 +1768,10 @@
 <ctl:test name="wmts:Server.KVP.POST.GetTile.Invalid.SampleDimension.Value" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -1424,8 +1799,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetTile.Invalid.SampleDimension.Value not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Invalid.SampleDimension.Value">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetTile.Invalid.SampleDimension.Value not tested.</ctl:message>
@@ -1444,6 +1824,9 @@
 <ctl:test name="wmts:Server.KVP.POST.GetTile.Default.SampleDimension" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -1468,8 +1851,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetTile.Default.SampleDimension not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Default.SampleDimension">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetTile.Default.SampleDimension not tested.</ctl:message>
@@ -1488,6 +1875,9 @@
 <ctl:test name="wmts:Server.KVP.POST.GetTile.Current.SampleDimension" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>	
 	1.  the request entity is a valid KVP POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -1512,8 +1902,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetTile.Current.SampleDimension not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Current.SampleDimension">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetTile.Current.SampleDimension not tested.</ctl:message>
@@ -1532,6 +1926,9 @@
 <ctl:test name="wmts:Server.KVP.POST.GetTile.Valid.Tile.Format" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
     1.  the request entity is a valid KVP POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -1556,8 +1953,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetTile.Valid.Tile.Format not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Valid.Tile.Format">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetTile.Valid.Tile.Format not tested.</ctl:message>
@@ -1576,6 +1977,10 @@
 <ctl:test name="wmts:Server.KVP.POST.GetTile.Invalid.Tile.Format" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -1603,8 +2008,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetTile.Invalid.Tile.Format not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Invalid.Tile.Format">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetTile.Invalid.Tile.Format not tested.</ctl:message>
@@ -1623,6 +2033,9 @@
 <ctl:test name="wmts:Server.KVP.POST.GetTile.Valid.Tile.Size" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -1647,8 +2060,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetTile.Valid.Tile.Size not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Valid.Tile.Size">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetTile.Valid.Tile.Size not tested.</ctl:message>
@@ -1667,6 +2084,9 @@
 <ctl:test name="wmts:Server.KVP.POST.GetTile.Valid.Tile.Transparency" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
     1.  the request entity is a valid KVP POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -1692,8 +2112,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetTile.Valid.Tile.Transparency not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetTile.Valid.Tile.Transparency">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetTile.Valid.Tile.Transparency not tested.</ctl:message>
@@ -1712,12 +2136,15 @@
 <ctl:test name="wmts:Server.XML.POST.GetTile.Mandatory" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetTile request with the mandatory request parameter with a value of GetTile;
 	2.  the request entity is a valid XML POST GetTile request with the mandatory service parameter with a value of WMTS;
 	3.  the request entity is a valid XML POST GetTile request with the mandatory Version parameter with a value of 1.0.0;
-	4.  the request entity is a valid XML POST GetTile request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&lt;&lt;ows:Identifier&lt; value from the Service Metadata document;
+	4.  the request entity is a valid XML POST GetTile request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&lt;&lt;ows:Identifier&lt; value for layers with no sample dimensions, or with sample dimensions with a default dimension from the Service Metadata document;
 	5.  the request entity is a valid XML POST GetTile request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&lt;&lt;Style&lt;&lt;owsIdentifier&lt; value for the specified Layer from the Service Metadata document;
 	6.  the request entity is a valid XML POST GetTile request with the mandatory Format parameter with a MIME type format value equal to a &lt;Layer&lt;&lt;Format&lt; value for the specified Layer from the Service Metadata document;
 	7.  the request entity is a valid XML POST GetTile request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&lt;&lt;TileMatrixSetLink&lt;&lt;TileMatrixSet&lt; value for the specified Layer from the Service Metadata document;
@@ -1734,8 +2161,11 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetTile.Mandatory not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetTile.Mandatory">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetTile.Mandatory not tested.</ctl:message>
@@ -1754,6 +2184,9 @@
 <ctl:test name="wmts:Server.XML.POST.GetTile.Optional" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -1778,8 +2211,11 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetTile.Optional not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetTile.Optional">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetTile.Optional not tested.</ctl:message>
@@ -1798,12 +2234,16 @@
 <ctl:test name="wmts:Server.XML.POST.GetTile.Missing" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetTile request with the mandatory request parameter with a value of GetTile;
 	2.  the request entity is a valid XML POST GetTile request with the mandatory service parameter with a value of WMTS;
 	3.  the request entity is a valid XML POST GetTile request with the mandatory Version parameter with a value of 1.0.0;
-	4.  the request entity is a valid XML POST GetTile request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document, except when tested as missing;
+	4.  the request entity is a valid XML POST GetTile request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document for layers with no sample dimensions, or with sample dimensions with a default dimension from the Service Metadata document, except when tested as missing;
 	5.  the request entity is a valid XML POST GetTile request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
 	6.  the request entity is a valid XML POST GetTile request with the mandatory Format parameter parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
 	7.  the request entity is a valid XML POST GetTile request with the mandatory TileMatrixSet parameterwith a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
@@ -1823,8 +2263,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetTile.Missing not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetTile.Missing">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetTile.Missing not tested.</ctl:message>
@@ -1843,6 +2287,10 @@
 <ctl:test name="wmts:Server.XML.POST.GetTile.Invalid.Layer" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -1868,8 +2316,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetTile.Invalid.Layer not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetTile.Invalid.Layer">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetTile.Invalid.Layer not tested.</ctl:message>
@@ -1888,6 +2340,10 @@
 <ctl:test name="wmts:Server.XML.POST.GetTile.Invalid.TileMatrixSet" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -1913,8 +2369,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetTile.Invalid.TileMatrixSet not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetTile.Invalid.TileMatrixSet">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetTile.Invalid.TileMatrixSet not tested.</ctl:message>
@@ -1933,6 +2393,10 @@
 <ctl:test name="wmts:Server.XML.POST.GetTile.Invalid.TileMatrix" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -1956,8 +2420,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetTile.Invalid.TileMatrix not implemented yet</ctl:message>
-						<ctl:warning/>
+							<ctl:call-function name="wmtsFunctions:XML.GetTile.Invalid.TileMatrix">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetTile.Invalid.TileMatrix not tested.</ctl:message>
@@ -1976,6 +2444,10 @@
 <ctl:test name="wmts:Server.XML.POST.GetTile.Invalid.Tile.Row.No.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
     1.  the request entity is a valid XML POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -1999,8 +2471,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetTile.Invalid.Tile.Row.No.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetTile.Invalid.Tile.Row.No.TileMatrixSetLimits">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetTile.Invalid.Tile.Row.No.TileMatrixSetLimits not tested.</ctl:message>
@@ -2019,6 +2495,10 @@
 <ctl:test name="wmts:Server.XML.POST.GetTile.Invalid.Tile.Col.No.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -2042,8 +2522,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetTile.Invalid.Tile.Col.No.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetTile.Invalid.Tile.Col.No.TileMatrixSetLimits">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetTile.Invalid.Tile.Col.No.TileMatrixSetLimits not tested.</ctl:message>
@@ -2062,6 +2546,10 @@
 <ctl:test name="wmts:Server.XML.POST.GetTile.Invalid.Tile.Row.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -2085,8 +2573,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetTile.Invalid.Tile.Row.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetTile.Invalid.Tile.Row.TileMatrixSetLimits">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetTile.Invalid.Tile.Row.TileMatrixSetLimits not tested.</ctl:message>
@@ -2105,6 +2597,10 @@
 <ctl:test name="wmts:Server.XML.POST.GetTile.Invalid.Tile.Col.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -2128,8 +2624,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetTile.Invalid.Tile.Col.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetTile.Invalid.Tile.Col.TileMatrixSetLimits">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetTile.Invalid.Tile.Col.TileMatrixSetLimits not tested.</ctl:message>
@@ -2148,6 +2648,10 @@
 <ctl:test name="wmts:Server.XML.POST.GetTile.Invalid.Tile.Style" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -2173,8 +2677,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetTile.Invalid.Tile.Style not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetTile.Invalid.Tile.Style">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetTile.Invalid.Tile.Style not tested.</ctl:message>
@@ -2190,9 +2698,67 @@
 	</ctl:code>
 </ctl:test>
 
+<ctl:test name="wmts:Server.XML.POST.GetTile.Missing.Optional" type="MandatoryIfImplemented">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  the request entity is a valid KVP POST GetTile request with the mandatory request parameter with a value of GetTile;
+	2.  the request entity is a valid KVP POST GetTile request with the mandatory service parameter with a value of WMTS;
+	3.  the request entity is a valid KVP POST GetTile request with the mandatory Version parameter with a value of 1.0.0;
+	4.  the request entity is a valid KVP POST GetTile request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document;
+	5.  the request entity is a valid KVP POST GetTile request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document;
+	6.  the request entity is a valid KVP POST GetTile request with the mandatory Format parameter parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document
+	7.  the request entity is a valid KVP POST GetTile request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document
+	8.  the request entity is a valid KVP POST GetTile request with the mandatory TileMatrix parameter with a TileMatrix identifier value equal to a &lt;TileMatrixSet&gt;&lt;TileMatrix&gt;&lt;owsIdentifier&gt; value for the specified TileMatrixSet from the Service Metadata document;
+	9.  the request entity is a valid KVP POST GetTile request with the mandatory TileRow parameter with a TileRow index value from zero to the value of &lt;MatrixHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	10.  the request entity is a valid KVP POST GetTile request with the mandatory TileCol parameter with a TileCol index value from zero to the value of &lt;MatrixWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	11.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileRow index value within the TileMatrixLimits MinTileRow and MaxTileRow values.
+	12.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileCol index value within the TileMatrixLimits MinTileCol and MaxTileCol values.
+	13.  the request entity is a valid KVP GET GetTile request without an optional sample dimensions parameter for a sample dimension without a default value that is specified in the &lt;Contents&gt;&lt;Layer&gt;&lt;Dimension&gt;&lt;ows:Identifier&gt; in the Service Metadata document for the specified layer.
+	14.  the response entity is a schema-valid ows:Exception document.
+	16.  the response entity contains an exceptionCode attribute value of "MissingParameterValue".
+	17.  the response entity contains a locator attribute value of the name of the sample dimension.
+	18.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".</ctl:assertion>
+	<ctl:comment>Verify that when a GetTile request for a tile from a layer with a sample dimension with no default sample dimension value is missing a request parameter for the sample dimension name, that the server throws an exception.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.KVP.GET.GetTile.Missing.Optional</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:call-function name="wmtsFunctions:XML.GetTile.Missing.Optional">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.XML.POST.GetTile.Missing.Optional not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.XML.POST.GetTile.Missing.Optional test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>	
+	</ctl:code>	
+</ctl:test>
+
 <ctl:test name="wmts:Server.XML.POST.GetTile.Invalid.SampleDimension.Name" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -2220,8 +2786,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetTile.Invalid.SampleDimension.Name not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetTile.Invalid.SampleDimension.Name">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetTile.Invalid.SampleDimension.Name not tested.</ctl:message>
@@ -2240,6 +2810,10 @@
 <ctl:test name="wmts:Server.XML.POST.GetTile.Invalid.SampleDimension.Value" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -2267,8 +2841,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetTile.Invalid.SampleDimension.Value not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetTile.Invalid.SampleDimension.Value">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetTile.Invalid.SampleDimension.Value not tested.</ctl:message>
@@ -2287,6 +2865,9 @@
 <ctl:test name="wmts:Server.XML.POST.GetTile.Default.SampleDimension" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
     1.  the request entity is a valid XML POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -2311,8 +2892,11 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetTile.Default.SampleDimension not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetTile.Default.SampleDimension">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetTile.Default.SampleDimension not tested.</ctl:message>
@@ -2331,6 +2915,9 @@
 <ctl:test name="wmts:Server.XML.POST.GetTile.Current.SampleDimension" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -2355,8 +2942,11 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetTile.Current.SampleDimension not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetTile.Current.SampleDimension">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetTile.Current.SampleDimension not tested.</ctl:message>
@@ -2375,6 +2965,9 @@
 <ctl:test name="wmts:Server.XML.POST.GetTile.Valid.Tile.Format" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -2399,8 +2992,11 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetTile.Valid.Tile.Format not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetTile.Valid.Tile.Format">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetTile.Valid.Tile.Format not tested.</ctl:message>
@@ -2419,6 +3015,10 @@
 <ctl:test name="wmts:Server.XML.POST.GetTile.Invalid.Tile.Format" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -2446,8 +3046,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetTile.Invalid.Tile.Format not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetTile.Invalid.Tile.Format">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetTile.Invalid.Tile.Format not tested.</ctl:message>
@@ -2466,6 +3070,9 @@
 <ctl:test name="wmts:Server.XML.POST.GetTile.Valid.Tile.Size" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -2490,8 +3097,11 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetTile.Valid.Tile.Size not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetTile.Valid.Tile.Size">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetTile.Valid.Tile.Size not tested.</ctl:message>
@@ -2510,6 +3120,9 @@
 <ctl:test name="wmts:Server.XML.POST.GetTile.Valid.Tile.Transparency" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetTile request with the mandatory request parameter with a value of GetTile;
@@ -2535,8 +3148,11 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetTile.Valid.Tile.Transparency not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetTile.Valid.Tile.Transparency">
+							<ctl:with-param name="tileURL" select="$tileURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetTile.Valid.Tile.Transparency not tested.</ctl:message>
@@ -2560,7 +3176,7 @@
 	1.  the request entity is a valid SOAP POST GetTile request with the mandatory request parameter with a value of GetTile;
 	2.  the request entity is a valid SOAP POST GetTile request with the mandatory service parameter with a value of WMTS;
 	3. the request entity is a valid SOAP POST GetTile request with the mandatory Version parameter with a value of 1.0.0;
-	4.  the request entity is a valid SOAP POST GetTile request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document;
+	4.  the request entity is a valid SOAP POST GetTile request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value for layers with no sample dimensions, or with sample dimensions with a default dimension from the Service Metadata document;
 	5.  the request entity is a valid SOAP POST GetTile request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document;
 	6.  the request entity is a valid SOAP POST GetTile request with the mandatory Format parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document;
 	7.  the request entity is a valid SOAP POST GetTile request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document;
@@ -2646,7 +3262,7 @@
 	1.  the request entity is a valid SOAP POST GetTile request with the mandatory request parameter with a value of GetTile;
 	2.  the request entity is a valid SOAP POST GetTile request with the mandatory service parameter with a value of WMTS;
 	3.  the request entity is a valid SOAP POST GetTile request with the mandatory Version parameter with a value of 1.0.0;
-	4.  the request entity is a valid SOAP POST GetTile request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document, except when tested as missing;
+	4.  the request entity is a valid SOAP POST GetTile request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document for layers with no sample dimensions, or with sample dimensions with a default dimension from the Service Metadata document; except when tested as missing;
 	5.  the request entity is a valid SOAP POST GetTile request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
 	6.  the request entity is a valid SOAP POST GetTile request with the mandatory Format parameter parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
 	7.  the request entity is a valid SOAP POST GetTile request with the mandatory TileMatrixSet parameterwith a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
@@ -3401,7 +4017,7 @@
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
-	1.  the request entity is a valid RESTful GetTile request URL with the mandatory Layer identifier value provided in the ResourceURL template;
+	1.  the request entity is a valid RESTful GetTile request URL with the mandatory Layer identifier value provided in the ResourceURL template for layers with no sample dimensions, or with sample dimensions with a default dimension;
 	2.  the request entity is a valid RESTful GetTile request URL with the mandatory Style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document substituted in place of the "style" URL template variable;
 	3.  the request entity is a valid RESTful GetTile request URL with the mandatory Format MIME type format value provided in the ResourceURL template;
 	4.  the request entity is a valid RESTful GetTile request URL with the mandatory TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document substituted in place of the "TileMatrixSet" URL template variable;
@@ -3482,7 +4098,7 @@
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
-	1.  the request entity is a valid RESTful GetTile request URL with the mandatory Layer identifier value provided in the ResourceURL template;
+	1.  the request entity is a valid RESTful GetTile request URL with the mandatory Layer identifier value provided in the ResourceURL template for layers with no sample dimensions, or with sample dimensions with a default dimension from the Service Metadata document;
 	2.  the request entity is a valid RESTful GetTile request URL with the mandatory Style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document substituted in place of the "style" URL template variable, except when tested as missing;
 	3.  the request entity is a valid RESTful GetTile request URL with the mandatory Format MIME type format value provided in the ResourceURL template, except when tested as missing;
 	4.  the request entity is a valid RESTful GetTile request URL with the mandatory TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document substituted in place of the "TileMatrixSet" URL template variable, except when tested as missing;
