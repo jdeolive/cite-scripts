@@ -18,12 +18,15 @@
 	xmlns:wmtsBootstrap="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/bootstrap.xml"	
 	xmlns:owsFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/owsFunctions.xml"
 	xmlns:wmtsFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wmtsFunctions.xml"
+	xmlns:ctlFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/ctlFunctions.xml"
+	xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFunctions.xml"	
 >
 
 	<ctl:test name="wmtsBootstrap:main" type="Mandatory">
 		<ctl:param name="wmts.capabilities.url"/>
 		<ctl:param name="wmts.capabilities.doc"/>
 		<ctl:param name="isRESTfulURL"/>
+		
       	<ctl:context>wmts:main</ctl:context>
 		<ctl:assertion>The WMTS capabilities document passes bootstrap evaluation that consistent capability sets are available for test.</ctl:assertion>
 		<ctl:link>wmts-1.0.0-dev/WMTS%201.0%20ATS.html#bootstrap</ctl:link>
@@ -59,7 +62,7 @@
 			<xsl:choose>
 				<xsl:when test="$sameDCP4GetCapabilitiesGetTile and $sameDCP4GetCapabilitiesGetTile != '' ">
 					<ctl:message>Same DCP ( <xsl:value-of select="$sameDCP4GetCapabilitiesGetTile"/> ) found for GetCapabilities and GetTile operations.</ctl:message>
-					<xsl:if test="boolean($isRESTfulURL)">
+					<xsl:if test="$isRESTfulURL = 'true' ">
 						<xsl:variable name="serviceMetadataURL" select="$wmts.capabilities.doc/wmts:ServiceMetadataURL/@xlink:href"/>
 						<xsl:choose>
 							<xsl:when test="$serviceMetadataURL = $wmts.capabilities.url">
@@ -111,7 +114,12 @@
 
 	<ctl:function name="wmtsBootstrap:bootstrap">
 		<ctl:param name="wmts.capabilities.doc"/>
-		<ctl:description>WMTS v1.0 Bootstrap to check test prerequisites to determine what can be tested from contents of capabilities document.  Returns a document fragment. There are two types of prerequisites; those for whether operations are offered for an HTTP interface, and those specific to a particular test or set of tests, independent of HTTP interface.  Variables for the latter are set during server section tests for KVP.GET, and reused for the other server interfaces. </ctl:description>
+		<ctl:param name="wmtsSchemaPath"/>
+		<ctl:param name="wmtsSchemaType"/>
+		<ctl:param name="wmtsNamespace">http://www.opengis.net/wmts/1.0</ctl:param>
+		<ctl:param name="owsNamespace">http://www.opengis.net/ows/1.1</ctl:param>
+		
+		<ctl:description>WMTS v1.0 Bootstrap to cache global variables such as wmtsSchemaPath and to check test prerequisites to determine what can be tested from contents of capabilities document.  Returns a document fragment. There are two types of prerequisites; those for whether operations are offered for an HTTP interface, and those specific to a particular test or set of tests, independent of HTTP interface.  Variables for the latter are set during server section tests for KVP.GET, and reused for the other server interfaces. </ctl:description>
 		<ctl:code>
 		<!--
 			<xsl:message>DOC <xsl:copy-of select="$wmts.capabilities.doc"/></xsl:message>		
@@ -132,11 +140,45 @@
 			<xsl:variable name="serviceMetadataURL" select="$wmts.capabilities.doc/wmts:ServiceMetadataURL/@xlink:href"/>
 			<xsl:variable name="getCapabilitiesRESTful" select="boolean($serviceMetadataURL)"/>
 			<xsl:variable name="getTileRESTful" select="every $lay in $wmts.capabilities.doc/wmts:Contents/wmts:Layer satisfies some $ru in $lay/wmts:ResourceURL satisfies $ru/@resourceType = 'tile'"/>
-			<xsl:variable name="getFeatureInfoRESTful" select="every $lay in $wmts.capabilities.doc/wmts:Contents/wmts:Layer[wmts:InfoFormat] satisfies some $ru in $lay/wmts:ResourceURL satisfies $ru/@resourceType = 'FeatureInfo'"/>
-			
-			<!-- bs element will be passed as parameter in WMTS ets so that its children may be examined to simply determine prerequisites.. -->
+			<xsl:variable name="getFeatureInfoOp" select="count($wmts.capabilities.doc/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']) > 0"/>
+			<!-- <xsl:message>getFeatureInfoOp:  <xsl:value-of select="$getFeatureInfoOp"/></xsl:message> -->
+			<xsl:variable name="layerWithInfoFormat" select="count($wmts.capabilities.doc/wmts:Contents/wmts:Layer[wmts:InfoFormat]) > 0"/>
+			<!-- <xsl:message>layerWithInfoFormat: <xsl:value-of select="$layerWithInfoFormat"/></xsl:message> -->
+			<xsl:variable name="gfiResourceURLs" select="every $lay in $wmts.capabilities.doc/wmts:Contents/wmts:Layer[wmts:InfoFormat] satisfies some $ru in $lay/wmts:ResourceURL satisfies $ru/@resourceType = 'FeatureInfo' "/>
+			<!-- <xsl:message>gfiResourceURLs: <xsl:value-of select="$gfiResourceURLs"/></xsl:message> -->
+			<xsl:variable name="getFeatureInfoRESTful" select="$getFeatureInfoOp and $layerWithInfoFormat and $gfiResourceURLs"/>
+			<!-- <xsl:message>getFeatureInfoRESTful: <xsl:value-of select="$getFeatureInfoRESTful"/></xsl:message> -->
+
+			<xsl:variable name="wmtsVersion" select="$wmts.capabilities.doc/@version"/>
+			<xsl:variable name="updateSequence" select="$wmts.capabilities.doc/@updateSequence"/>
+			<xsl:variable name="acceptFormats">
+				<xsl:for-each select="$wmts.capabilities.doc/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:Parameter[@name='AcceptFormats']/ows:AllowedValues/ows:Value">
+					<xsl:value-of select="."/>
+					<xsl:if test="position() != last()">
+						<xsl:text>,</xsl:text>
+					</xsl:if>
+				</xsl:for-each>
+			</xsl:variable>
+			<xsl:variable name="ogc.schema.root" select="'http://schemas.opengis.net/'"/>
+			<xsl:variable name="ows.version" select="'1.1.0'"/>
+			<xsl:variable name="exceptionReportSchemaPath" select="ctlFunctions:exceptionReportSchemaPath($ogc.schema.root, $ows.version)"/>
+
+			<!-- bs element will be passed as parameter in WMTS ets so that its children may be examined to easily determine prerequisites.. -->
 			
 			<xsl:element name="bs">
+				<!-- test environment -->
+				
+				<xsl:element name="wmtsSchemaPath"><xsl:value-of select="$wmtsSchemaPath"/></xsl:element>
+				<xsl:element name="wmtsSchemaType"><xsl:value-of select="$wmtsSchemaType"/> </xsl:element> 
+				<xsl:element name="wmtsVersion"><xsl:value-of select="$wmtsVersion"/></xsl:element>
+				<xsl:element name="updateSequence"><xsl:value-of select="$updateSequence"/></xsl:element>
+				<xsl:element name="acceptFormats"><xsl:value-of select="$acceptFormats"/></xsl:element>
+				<xsl:element name="exceptionReportSchemaPath"><xsl:value-of select="$exceptionReportSchemaPath"/></xsl:element>
+				<xsl:element name="wmtsNamespace"><xsl:value-of select="$wmtsNamespace"/></xsl:element>
+				<xsl:element name="owsNamespace"><xsl:value-of select="$owsNamespace"/></xsl:element>
+				
+				<!-- Operations by DCP -->
+				
 				<xsl:element name="getCapabilitiesKVPGET"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="getTileKVPGET"><xsl:value-of select="string($getTileKVPGET)"/></xsl:element>
 				<xsl:element name="getFeatureInfoKVPGET"><xsl:value-of select="string($getFeatureInfoKVPGET)"/></xsl:element>
@@ -155,6 +197,7 @@
 				
 				<!-- Client KVP GET-->
 				
+
 				<xsl:element name="Client.KVP.GET.GetCapabilities.Mandatory.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Client.KVP.GET.GetCapabilities.AcceptVersions.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Client.KVP.GET.GetCapabilities.Sections.All.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
@@ -162,10 +205,13 @@
 				<xsl:element name="Client.KVP.GET.GetCapabilities.Sections.ServiceProvider.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Client.KVP.GET.GetCapabilities.Sections.OperationsMetadata.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Client.KVP.GET.GetCapabilities.Sections.Contents.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
-				<xsl:element name="Client.KVP.GET.GetCapabilities.Sections.Themes.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
+				<xsl:variable name="hasThemes" select="exists($wmts.capabilities.doc/wmts:Themes/wmts:Theme)"/>
+				<xsl:element name="Client.KVP.GET.GetCapabilities.Sections.Themes.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $hasThemes)"/></xsl:element>
 				<xsl:element name="Client.KVP.GET.GetCapabilities.Sections.Multiple.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Client.KVP.GET.GetCapabilities.UpdateSequence.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Client.KVP.GET.GetCapabilities.AcceptFormats.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
+				
+				<!-- UNCOMMENT ME FOR DEVELOPMENT / PRODUCTION
 				
 				<xsl:variable name="Client.KVP.GET.GetTile.Mandatory.Prerequisite-2"><xsl:value-of select="$wmts.capabilities.doc/wmts:Contents/wmts:Layer[count(wmts:TileMatrixSetLink) = 1][wmts:TileMatrixSetLink/wmts:TileMatrixSet = $wmts.capabilities.doc/wmts:Contents/wmts:TileMatrixSet[count(wmts:TileMatrix) > 1]/ows:Identifier]"/></xsl:variable>				
 				<xsl:element name="Client.KVP.GET.GetTile.Mandatory.Prerequisites"><xsl:value-of select="string($getTileKVPGET and $Client.KVP.GET.GetTile.Mandatory.Prerequisite-2)"/></xsl:element>
@@ -181,9 +227,11 @@
 				<xsl:element name="Client.KVP.GET.GetFeatureInfo.Mandatory.Prerequisites"><xsl:value-of select="string($getFeatureInfoKVPGET and $Client.KVP.GET.GetFeatureInfo.Mandatory.Prerequisite-2)"/></xsl:element>
 				<xsl:variable name="Client.KVP.GET.GetFeatureInfo.Optional.Prerequisite-2" select="count($wmts.capabilities.doc/wmts:Contents/wmts:Layer[count(wmts:InfoFormat) > 0 and count(wmts:Dimension) > 2])  > 0"/>
 				<xsl:element name="Client.KVP.GET.GetFeatureInfo.Optional.Prerequisites"><xsl:value-of select="string($getFeatureInfoKVPGET and $Client.KVP.GET.GetFeatureInfo.Optional.Prerequisite-2)"/></xsl:element>
+-->
 
 				<!-- Client KVP POST-->
-				
+				<!-- UNCOMMENT ME FOR DEVELOPMENT / PRODUCTION
+
 				<xsl:element name="Client.KVP.POST.GetCapabilities.Mandatory.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST)"/></xsl:element>
 				<xsl:element name="Client.KVP.POST.GetCapabilities.AcceptVersions.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST)"/></xsl:element>
 				<xsl:element name="Client.KVP.POST.GetCapabilities.Sections.All.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST)"/></xsl:element>
@@ -209,9 +257,10 @@
 				<xsl:element name="Client.KVP.POST.GetFeatureInfo.Mandatory.Prerequisites"><xsl:value-of select="string($getFeatureInfoKVPPOST and $Client.KVP.POST.GetFeatureInfo.Mandatory.Prerequisite-2)"/></xsl:element>
 				<xsl:variable name="Client.KVP.POST.GetFeatureInfo.Optional.Prerequisite-2" select="$Client.KVP.GET.GetFeatureInfo.Optional.Prerequisite-2"/>
 				<xsl:element name="Client.KVP.POST.GetFeatureInfo.Optional.Prerequisites"><xsl:value-of select="string($getFeatureInfoKVPPOST and $Client.KVP.POST.GetFeatureInfo.Optional.Prerequisite-2)"/></xsl:element>
-
+-->
 				<!-- Client XML POST-->
-				
+				<!-- UNCOMMENT ME FOR DEVELOPMENT / PRODUCTION
+
 				<xsl:element name="Client.XML.POST.GetCapabilities.Mandatory.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
 				<xsl:element name="Client.XML.POST.GetCapabilities.AcceptVersions.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
 				<xsl:element name="Client.XML.POST.GetCapabilities.Sections.All.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
@@ -236,10 +285,11 @@
 				<xsl:variable name="Client.XML.POST.GetFeatureInfo.Mandatory.Prerequisite-2" select="$Client.KVP.GET.GetFeatureInfo.Mandatory.Prerequisite-2"/>
 				<xsl:element name="Client.XML.POST.GetFeatureInfo.Mandatory.Prerequisites"><xsl:value-of select="string($getFeatureInfoXMLPOST and $Client.XML.POST.GetFeatureInfo.Mandatory.Prerequisite-2)"/></xsl:element>
 				<xsl:variable name="Client.XML.POST.GetFeatureInfo.Optional.Prerequisite-2" select="$Client.KVP.GET.GetFeatureInfo.Optional.Prerequisite-2"/>
-				<xsl:element name="Client.XML.POST.GetFeatureInfo.Optional.Prerequisites"><xsl:value-of select="string($getFeatureInfoXMLPOST and $Client.XML.POST.GetFeatureInfo.Optional.Prerequisite-2)"/></xsl:element>				<!-- Client KVP POST-->
-				
+				<xsl:element name="Client.XML.POST.GetFeatureInfo.Optional.Prerequisites"><xsl:value-of select="string($getFeatureInfoXMLPOST and $Client.XML.POST.GetFeatureInfo.Optional.Prerequisite-2)"/></xsl:element>				
+				-->
 				<!-- Client SOAP POST-->
-				
+				<!-- UNCOMMENT ME FOR DEVELOPMENT / PRODUCTION
+
 				<xsl:element name="Client.SOAP.POST.GetCapabilities.Mandatory.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
 				<xsl:element name="Client.SOAP.POST.GetCapabilities.AcceptVersions.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
 				<xsl:element name="Client.SOAP.POST.GetCapabilities.Sections.All.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
@@ -265,8 +315,9 @@
 				<xsl:element name="Client.SOAP.POST.GetFeatureInfo.Mandatory.Prerequisites"><xsl:value-of select="string($getFeatureInfoSOAPPOST and $Client.SOAP.POST.GetFeatureInfo.Mandatory.Prerequisite-2)"/></xsl:element>
 				<xsl:variable name="Client.SOAP.POST.GetFeatureInfo.Optional.Prerequisite-2" select="$Client.KVP.GET.GetFeatureInfo.Optional.Prerequisite-2"/>
 				<xsl:element name="Client.SOAP.POST.GetFeatureInfo.Optional.Prerequisites"><xsl:value-of select="string($getFeatureInfoSOAPPOST and $Client.SOAP.POST.GetFeatureInfo.Optional.Prerequisite-2)"/></xsl:element>
-
+-->
 				<!-- Client RESTful-->
+<!-- UNCOMMENT ME FOR DEVELOPMENT / PRODUCTION
 
 				<xsl:element name="Client.RESTful.GetCapabilities.Mandatory.Prerequisites"><xsl:value-of select="string($getCapabilitiesRESTful)"/></xsl:element>
 				<xsl:variable name="Client.RESTful.GetTile.Mandatory.Prerequisite-2" select="$Client.KVP.GET.GetTile.Mandatory.Prerequisite-2"/>
@@ -283,14 +334,16 @@
 				<xsl:element name="Client.RESTful.GetFeatureInfo.Mandatory.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and $Client.RESTful.GetFeatureInfo.Mandatory.Prerequisite-2)"/></xsl:element>
 				<xsl:variable name="Client.RESTful.GetFeatureInfo.Optional.Prerequisite-2" select="$Client.KVP.GET.GetFeatureInfo.Optional.Prerequisite-2"/>
 				<xsl:element name="Client.RESTful.GetFeatureInfo.Optional.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and $Client.RESTful.GetFeatureInfo.Optional.Prerequisite-2)"/></xsl:element>
-			
+			-->
 				<!-- Server KVP GET-->
 	
+	<!-- UNCOMMENT ME FOR DEVELOPMENT / PRODUCTION -->
+
 				<xsl:element name="Server.KVP.GET.HTTP.Mandatory.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.InvalidQueryString.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.InvalidService.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.InvalidRequest.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
-				
+
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Request.Mandatory.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Request.NoService.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Request.InvalidService.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
@@ -305,21 +358,25 @@
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Request.Sections.OperationsMetadata.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Request.Sections.Contents.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Request.Sections.Themes.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
-				<xsl:element name="Server.KVP.GET.GetCapabilities.Request.Sections.Multiple.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
+				<xsl:element name="Server.KVP.GET.GetCapabilities.Request.Sections.Multiple.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $hasThemes)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Request.Sections.Invalid.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Request.Sections.Missing.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:variable name="Server.KVP.GET.GetCapabilities.Request.UpdateSequence.Prerequisite-2" select="not(not($wmts.capabilities.doc/@updateSequence) or $wmts.capabilities.doc/@updateSequence = '')"/>
+
+
 				<!--<xsl:message>Server.KVP.GET.GetCapabilities.Request.UpdateSequence.Prerequisite-2 <xsl:value-of select="$Server.KVP.GET.GetCapabilities.Request.UpdateSequence.Prerequisite-2"/></xsl:message> -->
+								
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Request.UpdateSequence.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $Server.KVP.GET.GetCapabilities.Request.UpdateSequence.Prerequisite-2)"/></xsl:element>
-				<xsl:variable name="Server.KVP.GET.GetCapabilities.Request.AcceptFormats.Prerequisite-2" select="boolean(count($wmts.capabilities.doc/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:Parameter[@name='AcceptFormats']/ows:AllowedValues/ows:Value) > 1) and boolean(some $af in $wmts.capabilities.doc/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:Parameter[@name='AcceptFormats']/ows:AllowedValues/ows:Value satisfies $af != 'application/xml')
-"/>
+				<xsl:variable name="Server.KVP.GET.GetCapabilities.Request.AcceptFormats.Prerequisite-2" select="boolean(count($wmts.capabilities.doc/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:Parameter[@name='AcceptFormats']/ows:AllowedValues/ows:Value) > 1) and boolean(some $af in $wmts.capabilities.doc/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:Parameter[@name='AcceptFormats']/ows:AllowedValues/ows:Value satisfies $af != 'application/xml')"/>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Request.AcceptFormats.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $Server.KVP.GET.GetCapabilities.Request.AcceptFormats.Prerequisite-2)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Response.XML.Well.Formed.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
-				<xsl:variable name="Server.KVP.GET.GetCapabilities.Response.XML.Well.Formed" select="true()"/> <!-- would not be here otherwise -->
+				<xsl:variable name="Server.KVP.GET.GetCapabilities.Response.XML.Well.Formed" select="true()"/>	   
+				
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Response.SchemaReferenced.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $Server.KVP.GET.GetCapabilities.Response.XML.Well.Formed)"/></xsl:element>
 				<xsl:variable name="Server.KVP.GET.GetCapabilities.Response.SchemaReferenced" select="wmtsFunctions:isNormativeSchema($wmts.capabilities.doc/@xsi:schemaLocation)"/>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Response.SchemaValid.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $Server.KVP.GET.GetCapabilities.Response.SchemaReferenced)"/></xsl:element>
-				<xsl:variable name="Server.KVP.GET.GetCapabilities.Response.SchemaValid" select="true()"/> <!-- would not be here otherwise -->
+				<xsl:variable name="Server.KVP.GET.GetCapabilities.Response.SchemaValid" select="true()"/>   
+				
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Response.AdvertisedFormat.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Response.OnlineResource.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Response.Encoding.Constraint.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
@@ -328,8 +385,8 @@
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Response.No.Layers.OtherSource.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET  and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and $Server.KVP.GET.GetCapabilities.Response.No.Layers.OtherSource.Prerequisite-2)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Response.Style.Identifiers.Unique.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Response.Layer.LegendURL.Correct.Resource.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
-				<xsl:variable name="Server.KVP.GET.GetCapabilities.Response.Layer.LegendURL.Correct.Resource" select="wmtsFunctions:allLayerLegendURLCorrectResource($wmts.capabilities.doc)"/>
-				<!-- <xsl:message>Server.KVP.GET.GetCapabilities.Response.Layer.LegendURL.Correct.Resource <xsl:value-of select="$Server.KVP.GET.GetCapabilities.Response.Layer.LegendURL.Correct.Resource"/></xsl:message> -->
+				<xsl:variable name="Server.KVP.GET.GetCapabilities.Response.Layer.LegendURL.Correct.Resource" select="wmtsFunctions:allLayerLegendURLCorrectResource($wmts.capabilities.doc)"/>	
+ 
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Response.Layer.LegendURL.Correct.Format.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and ($Server.KVP.GET.GetCapabilities.Response.Layer.LegendURL.Correct.Resource = 'true'))"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Response.Layer.LegendURL.Correct.Size.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and ($Server.KVP.GET.GetCapabilities.Response.Layer.LegendURL.Correct.Resource = 'true'))"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Response.Dimension.Identifiers.Unique.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
@@ -342,10 +399,13 @@
 				<xsl:variable name="Server.KVP.GET.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisite-2" select="boolean($wmts.capabilities.doc/wmts:Themes/wmts:Theme/wmts:LayerRef)"/>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and ($Server.KVP.GET.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisite-2 = 'true'))"/></xsl:element>
 
-				<xsl:element name="Server.KVP.GET.GetTile.Mandatory.Prerequisites"><xsl:value-of select="string($getTileKVPGET)"/></xsl:element>
+
+<!-- UNCOMMENT ME FOR DEVELOPMENT / PRODUCTION -->
+				<xsl:variable name="Server.KVP.GET.GetTile.Mandatory.Prerequisite-2" select="boolean($wmts.capabilities.doc/wmts:Contents/wmts:Layer[not(wmts:Dimension) or (every $d in wmts:Dimension satisfies $d/wmts:Default)])"/>
+				<xsl:element name="Server.KVP.GET.GetTile.Mandatory.Prerequisites"><xsl:value-of select="string($getTileKVPGET and ($Server.KVP.GET.GetTile.Mandatory.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:variable name="Server.KVP.GET.GetTile.Optional.Prerequisite-2" select="boolean($wmts.capabilities.doc/wmts:Contents/wmts:Layer[count(wmts:Dimension) > 2])"/>
 				<xsl:element name="Server.KVP.GET.GetTile.Optional.Prerequisites"><xsl:value-of select="string($getTileKVPGET and ($Server.KVP.GET.GetTile.Optional.Prerequisite-2 = 'true'))"/></xsl:element>
-				<xsl:element name="Server.KVP.GET.GetTile.Missing.Prerequisites"><xsl:value-of select="string($getTileKVPGET)"/></xsl:element>
+				<xsl:element name="Server.KVP.GET.GetTile.Missing.Prerequisites"><xsl:value-of select="string($getTileKVPGET and ($Server.KVP.GET.GetTile.Mandatory.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:variable name="Server.KVP.GET.GetTile.Invalid.Layer.Prerequisite-2" select="boolean($wmts.capabilities.doc/wmts:Contents[wmts:Layer])"/>
 				<xsl:element name="Server.KVP.GET.GetTile.Invalid.Layer.Prerequisites"><xsl:value-of select="string($getTileKVPGET and ($Server.KVP.GET.GetTile.Invalid.Layer.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:variable name="Server.KVP.GET.GetTile.Invalid.TileMatrixSet.Prerequisite-2" select="boolean($wmts.capabilities.doc/wmts:Contents/wmts:TileMatrixSet)"/>
@@ -361,6 +421,10 @@
 				<xsl:variable name="Server.KVP.GET.GetTile.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2" select="$Server.KVP.GET.GetTile.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-2"/>
 				<xsl:element name="Server.KVP.GET.GetTile.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getTileKVPGET and ($Server.KVP.GET.GetTile.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2))"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetTile.Invalid.Tile.Style.Prerequisites"><xsl:value-of select="string($getTileKVPGET)"/></xsl:element>
+				
+				<xsl:variable name="Server.KVP.GET.GetTile.Missing.Optional.Prerequisite-2" select="boolean($wmts.capabilities.doc/wmts:Contents/wmts:Layer[wmts:Dimension[not(wmts:Default)]])"/>
+				<xsl:element name="Server.KVP.GET.GetTile.Missing.Optional.Prerequisites"><xsl:value-of select="string($getTileKVPGET and ($Server.KVP.GET.GetTile.Missing.Optional.Prerequisite-2 = 'true'))"/></xsl:element>
+				
 				<xsl:variable name="Server.KVP.GET.GetTile.Invalid.SampleDimension.Name.Prerequisite-2" select="boolean($wmts.capabilities.doc/wmts:Contents/wmts:Layer[wmts:Dimension])"/>
 				<xsl:element name="Server.KVP.GET.GetTile.Invalid.SampleDimension.Name.Prerequisites"><xsl:value-of select="string($getTileKVPGET and ($Server.KVP.GET.GetTile.Invalid.SampleDimension.Name.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:variable name="Server.KVP.GET.GetTile.Invalid.SampleDimension.Value.Prerequisite-2" select="$Server.KVP.GET.GetTile.Invalid.SampleDimension.Name.Prerequisite-2"/>
@@ -374,7 +438,11 @@
 				<xsl:element name="Server.KVP.GET.GetTile.Valid.Tile.Size.Prerequisites"><xsl:value-of select="string($getTileKVPGET)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetTile.Valid.Tile.Transparency.Prerequisites"><xsl:value-of select="string($getTileKVPGET)"/></xsl:element>
 
-				<xsl:variable name="Server.KVP.GET.GetFeatureInfo.Mandatory.Prerequisite-2" select="boolean($wmts.capabilities.doc/wmts:Contents/wmts:Layer[wmts:InfoFormat])"/>
+
+<!-- UNCOMMENT ME FOR DEVELOPMENT / PRODUCTION -->
+
+				<xsl:variable name="Server.KVP.GET.GetFeatureInfo.Mandatory.Prerequisite-2" select="boolean($wmts.capabilities.doc/wmts:Contents/wmts:Layer[wmts:InfoFormat][not(wmts:Dimension) or (every $d in wmts:Dimension satisfies $d/wmts:Default)])"/>
+				<ctl:message select="concat('Server.KVP.GET.GetFeatureInfo.Mandatory.Prerequisite-2 ', $Server.KVP.GET.GetFeatureInfo.Mandatory.Prerequisite-2)"/>
 				<xsl:element name="Server.KVP.GET.GetFeatureInfo.Mandatory.Prerequisites"><xsl:value-of select="string($getFeatureInfoKVPGET and ($Server.KVP.GET.GetFeatureInfo.Mandatory.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:variable name="Server.KVP.GET.GetFeatureInfo.Optional.Prerequisite-2" select="boolean($wmts.capabilities.doc/wmts:Contents/wmts:Layer[wmts:InfoFormat and count(wmts:Dimension) > 2])"/>"/>
 				<xsl:element name="Server.KVP.GET.GetFeatureInfo.Optional.Prerequisites"><xsl:value-of select="string($getFeatureInfoKVPGET and ($Server.KVP.GET.GetFeatureInfo.Optional.Prerequisite-2 = 'true'))"/></xsl:element>
@@ -396,6 +464,10 @@
 				<xsl:element name="Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getFeatureInfoKVPGET and ($Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:variable name="Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Style.Prerequisite-2" select="$Server.KVP.GET.GetFeatureInfo.Mandatory.Prerequisite-2"/>
 				<xsl:element name="Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Style.Prerequisites"><xsl:value-of select="string($getFeatureInfoKVPGET and ($Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Style.Prerequisite-2 = 'true'))"/></xsl:element>
+
+				<xsl:variable name="Server.KVP.GET.GetFeatureInfo.Missing.Optional.Prerequisite-2" select="boolean($wmts.capabilities.doc/wmts:Contents/wmts:Layer[wmts:InfoFormat and wmts:Dimension[not(wmts:Default)]])"/>
+				<xsl:element name="Server.KVP.GET.GetFeatureInfo.Missing.Optional.Prerequisites"><xsl:value-of select="string($getFeatureInfoKVPGET and ($Server.KVP.GET.GetFeatureInfo.Missing.Optional.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:variable name="Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-2" select="boolean($wmts.capabilities.doc/wmts:Contents/wmts:Layer[wmts:InfoFormat and wmts:Dimension])"/>
 				<xsl:element name="Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisites"><xsl:value-of select="string($getFeatureInfoKVPGET and ($Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:variable name="Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisite-2" select="$Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-2"/>
@@ -415,13 +487,15 @@
 				<xsl:variable name="Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Col.I.Prerequisite-2" select="$Server.KVP.GET.GetFeatureInfo.Mandatory.Prerequisite-2"/>
 				<xsl:element name="Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Col.I.Prerequisites"><xsl:value-of select="string($getFeatureInfoKVPGET and ($Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Col.I.Prerequisite-2 = 'true'))"/></xsl:element>
 
+			
 				<!-- Server KVP POST-->
+<!-- UNCOMMENT ME FOR DEVELOPMENT / PRODUCTION 
 
 				<xsl:element name="Server.KVP.POST.HTTP.Mandatory.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.InvalidQueryString.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.InvalidService.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.InvalidRequest.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST)"/></xsl:element>
-				
+		
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Request.Mandatory.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Request.NoService.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Request.InvalidService.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST)"/></xsl:element>
@@ -434,7 +508,7 @@
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Request.Sections.OperationsMetadata.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Request.Sections.Contents.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Request.Sections.Themes.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST)"/></xsl:element>
-				<xsl:element name="Server.KVP.POST.GetCapabilities.Request.Sections.Multiple.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST)"/></xsl:element>
+				<xsl:element name="Server.KVP.POST.GetCapabilities.Request.Sections.Multiple.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST and $hasThemes)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Request.Sections.Invalid.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Request.Sections.Missing.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Request.UpdateSequence.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST and $Server.KVP.GET.GetCapabilities.Request.UpdateSequence.Prerequisite-2)"/></xsl:element>
@@ -459,9 +533,12 @@
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and ($Server.KVP.GET.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and ($Server.KVP.GET.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisite-2 = 'true'))"/></xsl:element>
 
-				<xsl:element name="Server.KVP.POST.GetTile.Mandatory.Prerequisites"><xsl:value-of select="string($getTileKVPPOST)"/></xsl:element>
+-->
+<!-- UNCOMMENT ME FOR DEVELOPMENT/ PRODUCTION 
+
+				<xsl:element name="Server.KVP.POST.GetTile.Mandatory.Prerequisites"><xsl:value-of select="string($getTileKVPPOST and ($Server.KVP.GET.GetTile.Mandatory.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetTile.Optional.Prerequisites"><xsl:value-of select="string($getTileKVPPOST and ($Server.KVP.GET.GetTile.Optional.Prerequisite-2 = 'true'))"/></xsl:element>
-				<xsl:element name="Server.KVP.POST.GetTile.Missing.Prerequisites"><xsl:value-of select="string($getTileKVPPOST)"/></xsl:element>
+				<xsl:element name="Server.KVP.POST.GetTile.Missing.Prerequisites"><xsl:value-of select="string($getTileKVPPOST and ($Server.KVP.GET.GetTile.Mandatory.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetTile.Invalid.Layer.Prerequisites"><xsl:value-of select="string($getTileKVPPOST and ($Server.KVP.GET.GetTile.Invalid.Layer.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetTile.Invalid.TileMatrixSet.Prerequisites"><xsl:value-of select="string($getTileKVPPOST and ($Server.KVP.GET.GetTile.Invalid.TileMatrixSet.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetTile.Invalid.TileMatrix.Prerequisites"><xsl:value-of select="string($getTileKVPPOST and ($Server.KVP.GET.GetTile.Invalid.TileMatrix.Prerequisite-2 = 'true'))"/></xsl:element>
@@ -470,6 +547,9 @@
 				<xsl:element name="Server.KVP.POST.GetTile.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getTileKVPPOST and ($Server.KVP.GET.GetTile.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetTile.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getTileKVPPOST and ($Server.KVP.GET.GetTile.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2))"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetTile.Invalid.Tile.Style.Prerequisites"><xsl:value-of select="string($getTileKVPPOST)"/></xsl:element>
+
+				<xsl:element name="Server.KVP.POST.GetTile.Missing.Optional.Prerequisites"><xsl:value-of select="string($getTileKVPPOST and ($Server.KVP.GET.GetTile.Missing.Optional.Prerequisite-2 = 'true'))"/></xsl:element>		
+
 				<xsl:element name="Server.KVP.POST.GetTile.Invalid.SampleDimension.Name.Prerequisites"><xsl:value-of select="string($getTileKVPPOST and ($Server.KVP.GET.GetTile.Invalid.SampleDimension.Name.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetTile.Invalid.SampleDimension.Value.Prerequisites"><xsl:value-of select="string($getTileKVPPOST and ($Server.KVP.GET.GetTile.Invalid.SampleDimension.Value.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetTile.Default.SampleDimension.Prerequisites"><xsl:value-of select="string($getTileKVPPOST and ($Server.KVP.GET.GetTile.Default.SampleDimension.Prerequisite-2 = 'true'))"/></xsl:element>
@@ -490,6 +570,9 @@
 				<xsl:element name="Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getFeatureInfoKVPPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getFeatureInfoKVPPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Style.Prerequisites"><xsl:value-of select="string($getFeatureInfoKVPPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Style.Prerequisite-2 = 'true'))"/></xsl:element>
+
+				<xsl:element name="Server.KVP.POST.GetFeatureInfo.Missing.Optional.Prerequisites"><xsl:value-of select="string($getFeatureInfoKVPPOST and ($Server.KVP.GET.GetFeatureInfo.Missing.Optional.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.KVP.POST.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisites"><xsl:value-of select="string($getFeatureInfoKVPPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisites"><xsl:value-of select="string($getFeatureInfoKVPPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetFeatureInfo.Default.SampleDimension.Prerequisites"><xsl:value-of select="string($getFeatureInfoKVPPOST and ($Server.KVP.GET.GetFeatureInfo.Default.SampleDimension.Prerequisite-2 = 'true'))"/></xsl:element>
@@ -500,8 +583,10 @@
 				<xsl:element name="Server.KVP.POST.GetFeatureInfo.Invalid.Pixel.Row.J.Prerequisites"><xsl:value-of select="string($getFeatureInfoKVPPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Row.J.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetFeatureInfo.Invalid.Pixel.Col.I.Prerequisites"><xsl:value-of select="string($getFeatureInfoKVPPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Col.I.Prerequisite-2 = 'true'))"/></xsl:element>
 
+-->
+
 				<!-- Server XML POST-->
-				
+				<!-- UNCOMMENT ME FOR DEVELOPMENT -->
 				<xsl:element name="Server.XML.POST.HTTP.Mandatory.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.InvalidQueryString.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.InvalidService.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
@@ -518,7 +603,7 @@
 				<xsl:element name="Server.XML.POST.GetCapabilities.Request.Sections.OperationsMetadata.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetCapabilities.Request.Sections.Contents.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetCapabilities.Request.Sections.Themes.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
-				<xsl:element name="Server.XML.POST.GetCapabilities.Request.Sections.Multiple.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
+				<xsl:element name="Server.XML.POST.GetCapabilities.Request.Sections.Multiple.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST and $hasThemes)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetCapabilities.Request.Sections.Invalid.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetCapabilities.Request.Sections.Missing.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetCapabilities.Request.UpdateSequence.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST and $Server.KVP.GET.GetCapabilities.Request.UpdateSequence.Prerequisite-2)"/></xsl:element>
@@ -543,9 +628,9 @@
 				<xsl:element name="Server.XML.POST.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and ($Server.KVP.GET.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and ($Server.KVP.GET.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisite-2 = 'true'))"/></xsl:element>
 
-				<xsl:element name="Server.XML.POST.GetTile.Mandatory.Prerequisites"><xsl:value-of select="string($getTileXMLPOST)"/></xsl:element>
+				<xsl:element name="Server.XML.POST.GetTile.Mandatory.Prerequisites"><xsl:value-of select="string($getTileXMLPOST and ($Server.KVP.GET.GetTile.Mandatory.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetTile.Optional.Prerequisites"><xsl:value-of select="string($getTileXMLPOST and ($Server.KVP.GET.GetTile.Optional.Prerequisite-2 = 'true'))"/></xsl:element>
-				<xsl:element name="Server.XML.POST.GetTile.Missing.Prerequisites"><xsl:value-of select="string($getTileXMLPOST)"/></xsl:element>
+				<xsl:element name="Server.XML.POST.GetTile.Missing.Prerequisites"><xsl:value-of select="string($getTileXMLPOST and ($Server.KVP.GET.GetTile.Mandatory.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetTile.Invalid.Layer.Prerequisites"><xsl:value-of select="string($getTileXMLPOST and ($Server.KVP.GET.GetTile.Invalid.Layer.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetTile.Invalid.TileMatrixSet.Prerequisites"><xsl:value-of select="string($getTileXMLPOST and ($Server.KVP.GET.GetTile.Invalid.TileMatrixSet.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetTile.Invalid.TileMatrix.Prerequisites"><xsl:value-of select="string($getTileXMLPOST and ($Server.KVP.GET.GetTile.Invalid.TileMatrix.Prerequisite-2 = 'true'))"/></xsl:element>
@@ -554,6 +639,9 @@
 				<xsl:element name="Server.XML.POST.GetTile.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getTileXMLPOST and ($Server.KVP.GET.GetTile.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetTile.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getTileXMLPOST and ($Server.KVP.GET.GetTile.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2))"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetTile.Invalid.Tile.Style.Prerequisites"><xsl:value-of select="string($getTileXMLPOST)"/></xsl:element>
+
+				<xsl:element name="Server.XML.POST.GetTile.Missing.Optional.Prerequisites"><xsl:value-of select="string($getTileXMLPOST and ($Server.KVP.GET.GetTile.Missing.Optional.Prerequisite-2 = 'true'))"/></xsl:element>		
+
 				<xsl:element name="Server.XML.POST.GetTile.Invalid.SampleDimension.Name.Prerequisites"><xsl:value-of select="string($getTileXMLPOST and ($Server.KVP.GET.GetTile.Invalid.SampleDimension.Name.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetTile.Invalid.SampleDimension.Value.Prerequisites"><xsl:value-of select="string($getTileXMLPOST and ($Server.KVP.GET.GetTile.Invalid.SampleDimension.Value.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetTile.Default.SampleDimension.Prerequisites"><xsl:value-of select="string($getTileXMLPOST and ($Server.KVP.GET.GetTile.Default.SampleDimension.Prerequisite-2 = 'true'))"/></xsl:element>
@@ -574,6 +662,9 @@
 				<xsl:element name="Server.XML.POST.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getFeatureInfoXMLPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getFeatureInfoXMLPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetFeatureInfo.Invalid.Tile.Style.Prerequisites"><xsl:value-of select="string($getFeatureInfoXMLPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Style.Prerequisite-2 = 'true'))"/></xsl:element>
+
+				<xsl:element name="Server.XML.POST.GetFeatureInfo.Missing.Optional.Prerequisites"><xsl:value-of select="string($getFeatureInfoXMLPOST and ($Server.KVP.GET.GetFeatureInfo.Missing.Optional.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.XML.POST.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisites"><xsl:value-of select="string($getFeatureInfoXMLPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisites"><xsl:value-of select="string($getFeatureInfoXMLPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetFeatureInfo.Default.SampleDimension.Prerequisites"><xsl:value-of select="string($getFeatureInfoXMLPOST and ($Server.KVP.GET.GetFeatureInfo.Default.SampleDimension.Prerequisite-2 = 'true'))"/></xsl:element>
@@ -583,9 +674,10 @@
 				<xsl:element name="Server.XML.POST.GetFeatureInfo.Invalid.InfoFormat.Prerequisites"><xsl:value-of select="string($getFeatureInfoXMLPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.InfoFormat.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetFeatureInfo.Invalid.Pixel.Row.J.Prerequisites"><xsl:value-of select="string($getFeatureInfoXMLPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Row.J.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetFeatureInfo.Invalid.Pixel.Col.I.Prerequisites"><xsl:value-of select="string($getFeatureInfoXMLPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Col.I.Prerequisite-2 = 'true'))"/></xsl:element>
-
+				
+-->
 				<!-- Server SOAP POST-->
-
+<!-- UNCOMMENT ME FOR DEVELOPMENT
 				<xsl:element name="Server.SOAP.POST.HTTP.Mandatory.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.InvalidQueryString.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.InvalidService.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
@@ -602,7 +694,7 @@
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.Sections.OperationsMetadata.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.Sections.Contents.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.Sections.Themes.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
-				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.Sections.Multiple.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
+				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.Sections.Multiple.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST and $hasThemes)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.Sections.Invalid.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.Sections.Missing.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.UpdateSequence.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST and $Server.KVP.GET.GetCapabilities.Request.UpdateSequence.Prerequisite-2)"/></xsl:element>
@@ -627,9 +719,9 @@
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and ($Server.KVP.GET.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and ($Server.KVP.GET.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisite-2 = 'true'))"/></xsl:element>
 
-				<xsl:element name="Server.SOAP.POST.GetTile.Mandatory.Prerequisites"><xsl:value-of select="string($getTileSOAPPOST)"/></xsl:element>
+				<xsl:element name="Server.SOAP.POST.GetTile.Mandatory.Prerequisites"><xsl:value-of select="string($getTileSOAPPOST and ($Server.KVP.GET.GetTile.Mandatory.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetTile.Optional.Prerequisites"><xsl:value-of select="string($getTileSOAPPOST and ($Server.KVP.GET.GetTile.Optional.Prerequisite-2 = 'true'))"/></xsl:element>
-				<xsl:element name="Server.SOAP.POST.GetTile.Missing.Prerequisites"><xsl:value-of select="string($getTileSOAPPOST)"/></xsl:element>
+				<xsl:element name="Server.SOAP.POST.GetTile.Missing.Prerequisites"><xsl:value-of select="string($getTileSOAPPOST and ($Server.KVP.GET.GetTile.Mandatory.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetTile.Invalid.Layer.Prerequisites"><xsl:value-of select="string($getTileSOAPPOST and ($Server.KVP.GET.GetTile.Invalid.Layer.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetTile.Invalid.TileMatrixSet.Prerequisites"><xsl:value-of select="string($getTileSOAPPOST and ($Server.KVP.GET.GetTile.Invalid.TileMatrixSet.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetTile.Invalid.TileMatrix.Prerequisites"><xsl:value-of select="string($getTileSOAPPOST and ($Server.KVP.GET.GetTile.Invalid.TileMatrix.Prerequisite-2 = 'true'))"/></xsl:element>
@@ -638,6 +730,9 @@
 				<xsl:element name="Server.SOAP.POST.GetTile.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getTileSOAPPOST and ($Server.KVP.GET.GetTile.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetTile.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getTileSOAPPOST and ($Server.KVP.GET.GetTile.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2))"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetTile.Invalid.Tile.Style.Prerequisites"><xsl:value-of select="string($getTileSOAPPOST)"/></xsl:element>
+
+				<xsl:element name="Server.SOAP.POST.GetTile.Missing.Optional.Prerequisites"><xsl:value-of select="string($getTileSOAPPOST and ($Server.KVP.GET.GetTile.Missing.Optional.Prerequisite-2 = 'true'))"/></xsl:element></xsl:element>		
+
 				<xsl:element name="Server.SOAP.POST.GetTile.Invalid.SampleDimension.Name.Prerequisites"><xsl:value-of select="string($getTileSOAPPOST and ($Server.KVP.GET.GetTile.Invalid.SampleDimension.Name.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetTile.Invalid.SampleDimension.Value.Prerequisites"><xsl:value-of select="string($getTileSOAPPOST and ($Server.KVP.GET.GetTile.Invalid.SampleDimension.Value.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetTile.Default.SampleDimension.Prerequisites"><xsl:value-of select="string($getTileSOAPPOST and ($Server.KVP.GET.GetTile.Default.SampleDimension.Prerequisite-2 = 'true'))"/></xsl:element>
@@ -658,6 +753,9 @@
 				<xsl:element name="Server.SOAP.POST.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getFeatureInfoSOAPPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getFeatureInfoSOAPPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetFeatureInfo.Invalid.Tile.Style.Prerequisites"><xsl:value-of select="string($getFeatureInfoSOAPPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Style.Prerequisite-2 = 'true'))"/></xsl:element>
+
+				<xsl:element name="Server.SOAP.POST.GetFeatureInfo.Missing.Optional.Prerequisites"><xsl:value-of select="string($getFeatureInfoSOAPPOST and ($Server.KVP.GET.GetFeatureInfo.Missing.Optional.Prerequisite-2 = 'true'))"/></xsl:element></xsl:element>
+
 				<xsl:element name="Server.SOAP.POST.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisites"><xsl:value-of select="string($getFeatureInfoSOAPPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisites"><xsl:value-of select="string($getFeatureInfoSOAPPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetFeatureInfo.Default.SampleDimension.Prerequisites"><xsl:value-of select="string($getFeatureInfoSOAPPOST and ($Server.KVP.GET.GetFeatureInfo.Default.SampleDimension.Prerequisite-2 = 'true'))"/></xsl:element>
@@ -667,16 +765,16 @@
 				<xsl:element name="Server.SOAP.POST.GetFeatureInfo.Invalid.InfoFormat.Prerequisites"><xsl:value-of select="string($getFeatureInfoSOAPPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.InfoFormat.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetFeatureInfo.Invalid.Pixel.Row.J.Prerequisites"><xsl:value-of select="string($getFeatureInfoSOAPPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Row.J.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetFeatureInfo.Invalid.Pixel.Col.I.Prerequisites"><xsl:value-of select="string($getFeatureInfoSOAPPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Col.I.Prerequisite-2 = 'true'))"/></xsl:element>
-
+-->
 				<!-- Server RESTful-->
-				
+				<!-- UNCOMMENT ME FOR DEVELOPMENT
 				<xsl:element name="Server.RESTful.HTTP.Mandatory.Prerequisites"><xsl:value-of select="string($getCapabilitiesRESTful)"/></xsl:element>
 
 				<xsl:element name="Server.RESTful.GetCapabilities.Request.Mandatory.Prerequisites"><xsl:value-of select="string($getCapabilitiesRESTful)"/></xsl:element>
 				
-				<xsl:element name="Server.RESTful.GetTile.Mandatory.Prerequisites"><xsl:value-of select="string($getTileRESTful)"/></xsl:element>
+				<xsl:element name="Server.RESTful.GetTile.Mandatory.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Mandatory.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.RESTful.GetTile.Optional.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Optional.Prerequisite-2 = 'true'))"/></xsl:element>
-				<xsl:element name="Server.RESTful.GetTile.Missing.Prerequisites"><xsl:value-of select="string($getTileRESTful)"/></xsl:element>
+				<xsl:element name="Server.RESTful.GetTile.Missing.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Mandatory.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.RESTful.GetTile.Invalid.Layer.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Invalid.Layer.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.RESTful.GetTile.Invalid.TileMatrixSet.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Invalid.TileMatrixSet.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.RESTful.GetTile.Invalid.TileMatrix.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Invalid.TileMatrix.Prerequisite-2 = 'true'))"/></xsl:element>
@@ -685,6 +783,9 @@
 				<xsl:element name="Server.RESTful.GetTile.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.RESTful.GetTile.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2))"/></xsl:element>
 				<xsl:element name="Server.RESTful.GetTile.Invalid.Tile.Style.Prerequisites"><xsl:value-of select="string($getTileRESTful)"/></xsl:element>
+
+				<xsl:element name="Server.RESTful.GetTile.Missing.Optional.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Missing.Optional.Prerequisite-2 = 'true'))"/></xsl:element></xsl:element>		
+
 				<xsl:element name="Server.RESTful.GetTile.Invalid.SampleDimension.Name.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Invalid.SampleDimension.Name.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.RESTful.GetTile.Invalid.SampleDimension.Value.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Invalid.SampleDimension.Value.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.RESTful.GetTile.Default.SampleDimension.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Default.SampleDimension.Prerequisite-2 = 'true'))"/></xsl:element>
@@ -705,6 +806,9 @@
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.Tile.Style.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Style.Prerequisite-2 = 'true'))"/></xsl:element>
+
+				<xsl:element name="Server.RESTful.GetFeatureInfo.Missing.Optional.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Missing.Optional.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Default.SampleDimension.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Default.SampleDimension.Prerequisite-2 = 'true'))"/></xsl:element>
@@ -714,6 +818,9 @@
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.InfoFormat.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.Pixel.Row.J.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Row.J.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.Pixel.Col.I.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Col.I.Prerequisite-2 = 'true'))"/></xsl:element>
+-->
+
+	
 			</xsl:element>
 		</ctl:code>
 	</ctl:function>
