@@ -26,12 +26,15 @@
 <ctl:test name="wmts:Server.KVP.GET.GetFeatureInfo.Mandatory" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
 	2.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory service parameter with a value of WMTS;
 	3.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Version parameter with a value of 1.0.0;
-	4.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document for a layer with &lt;InfoFormat&gt; elements;
+	4.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document for a layer with &lt;InfoFormat&gt; elements and with no sample dimensions, or with sample dimensions with a default dimension from the Service Metadata document;
 	5.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document;
 	6.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Format parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document;
 	7.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document;
@@ -51,8 +54,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetFeatureInfo.Mandatory not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Mandatory">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetFeatureInfo.Mandatory not tested.</ctl:message>
@@ -71,6 +78,9 @@
 <ctl:test name="wmts:Server.KVP.GET.GetFeatureInfo.Optional" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -98,8 +108,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetFeatureInfo.Optional not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Optional">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetFeatureInfo.Optional not tested.</ctl:message>
@@ -118,12 +132,16 @@
 <ctl:test name="wmts:Server.KVP.GET.GetFeatureInfo.Missing" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
 	2.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory service parameter with a value of WMTS;
 	3.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Version parameter with a value of 1.0.0;
-	4.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document for a layer with &lt;InfoFormat&gt; elements, except when tested as missing;
+	4.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document for a layer with &lt;InfoFormat&gt; elements and with no sample dimensions, or with sample dimensions with a default dimension from the Service Metadata document, except when tested as missing;
 	5.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
 	6.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Format parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
 	7.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
@@ -146,8 +164,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetFeatureInfo.Missing not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Missing">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetFeatureInfo.Missing not tested.</ctl:message>
@@ -166,6 +189,10 @@
 <ctl:test name="wmts:Server.KVP.GET.GetFeatureInfo.Invalid.Layer" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -196,8 +223,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.Layer not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.Layer">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.Layer not tested.</ctl:message>
@@ -216,6 +248,10 @@
 <ctl:test name="wmts:Server.KVP.GET.GetFeatureInfo.Invalid.TileMatrixSet" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -242,8 +278,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.TileMatrixSet not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.TileMatrixSet">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.TileMatrixSet not tested.</ctl:message>
@@ -262,6 +303,10 @@
 <ctl:test name="wmts:Server.KVP.GET.GetFeatureInfo.Invalid.TileMatrix" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -288,8 +333,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.TileMatrix not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.TileMatrix">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.TileMatrix not tested.</ctl:message>
@@ -308,6 +358,10 @@
 <ctl:test name="wmts:Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -334,8 +388,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits not tested.</ctl:message>
@@ -354,6 +413,10 @@
 <ctl:test name="wmts:Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -380,8 +443,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits not tested.</ctl:message>
@@ -400,6 +468,10 @@
 <ctl:test name="wmts:Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -426,8 +498,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits not tested.</ctl:message>
@@ -446,6 +523,10 @@
 <ctl:test name="wmts:Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -472,8 +553,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits not tested.</ctl:message>
@@ -492,6 +578,10 @@
 <ctl:test name="wmts:Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Style" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -520,8 +610,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Style not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.Tile.Style">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Style not tested.</ctl:message>
@@ -537,9 +632,70 @@
 	</ctl:code>
 </ctl:test>
 
+<ctl:test name="wmts:Server.KVP.GET.GetFeatureInfo.Missing.Optional" type="MandatoryIfImplemented">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
+	2.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory service parameter with a value of WMTS;
+	3.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Version parameter with a value of 1.0.0;
+	4.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document;
+	5.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document;
+	6.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Format parameter parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document
+	7.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document
+	8.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileMatrix parameter with a TileMatrix identifier value equal to a &lt;TileMatrixSet&gt;&lt;TileMatrix&gt;&lt;owsIdentifier&gt; value for the specified TileMatrixSet from the Service Metadata document;
+	9.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileRow parameter with a TileRow index value from zero to the value of &lt;MatrixHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	10.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileCol parameter with a TileCol index value from zero to the value of &lt;MatrixWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	11.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileRow index value within the TileMatrixLimits MinTileRow and MaxTileRow values.
+	12.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileCol index value within the TileMatrixLimits MinTileCol and MaxTileCol values.
+	13.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory J parameter with a row index value from zero to the value of &lt;TileHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	14. the request entity is a valid KVP GET GetFeatureInfo request with the mandatory I parameter with a column index value from zero to the value of &lt;TileWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	15. the request entity is a valid KVP GET GetFeatureInfo request without an optional sample dimensions parameter for a sample dimension without a default value that is specified in the &lt;Contents&gt;&lt;Layer&gt;&lt;Dimension&gt;&lt;ows:Identifier&gt; in the Service Metadata document for the specified layer.
+	16.  the response entity is a schema-valid ows:Exception document.
+	17.  the response entity contains an exceptionCode attribute value of "MissingParameterValue".
+	18.  the response entity contains a locator attribute value of the name of the sample dimension.
+	19.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".</ctl:assertion>
+	<ctl:comment>Verify that when a GetFeatureInfo request for a tile from a layer with a sample dimension with no default sample dimension value is missing a request parameter for the sample dimension name, that the server throws an exception.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.KVP.GET.GetFeatureInfo.Missing.Optional</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Missing.Optional">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.KVP.GET.GetFeatureInfo.Missing.Optional not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.KVP.GET.GetFeatureInfo.Missing.Optional test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>	
+	</ctl:code>	
+</ctl:test>
+
 <ctl:test name="wmts:Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Name" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -570,8 +726,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Name not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.SampleDimension.Name">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Name not tested.</ctl:message>
@@ -590,6 +751,10 @@
 <ctl:test name="wmts:Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Value" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -620,8 +785,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Value not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.SampleDimension.Value">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Value not tested.</ctl:message>
@@ -640,6 +810,9 @@
 <ctl:test name="wmts:Server.KVP.GET.GetFeatureInfo.Default.SampleDimension" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -660,15 +833,19 @@
 	16.  the request entity is a valid KVP GET GetFeatureInfo request with an optional sample dimensions parameter with a name specified in the Service Metadata document;
 the request entity is a valid KVP GET GetFeatureInfo request with an optional sample dimensions parameter with a value of "default".
 	17.  the server returns FeatureInfo from a Layer with a sample dimension with a default value in response to the KVP GET GetFeatureInfo request.</ctl:assertion>
-	<ctl:comment>Test that a WMTS server can return tiles in response to valid KVP GET GetFeatureInfo requests with optional sample dimensions parameter with the "default" values specified in the Service Metadata document.</ctl:comment>
+	<ctl:comment>Test that a WMTS server can return FeatureInfo for pixels in tiles in response to valid KVP GET GetFeatureInfo requests with optional sample dimensions parameter with the "default" values specified in the Service Metadata document.</ctl:comment>
 	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.KVP.GET.GetFeatureInfo.Default.SampleDimension</ctl:link>
 	<ctl:code>
 		<xsl:choose>
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetFeatureInfo.Default.SampleDimension not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Default.SampleDimension">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetFeatureInfo.Default.SampleDimension not tested.</ctl:message>
@@ -687,6 +864,9 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.GET.GetFeatureInfo.Current.SampleDimension" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -707,15 +887,19 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 	16.  the request entity is a valid KVP GET GetFeatureInfo request with an optional sample dimensions parameter with a name specified in the Service Metadata document;
 	17.  the request entity is a valid KVP GET GetFeatureInfo request with an optional sample dimensions parameter with a value of "current".
 	18.  the server returns FeatureInfo from a Layer with a sample dimension with a current value in response to the KVP GET GetFeatureInfo request.</ctl:assertion>
-	<ctl:comment>Test that a WMTS server can return tiles in response to valid KVP GET GetFeatureInfo requests with optional sample dimensions parameter with the "current" values specified in the Service Metadata document.</ctl:comment>
+	<ctl:comment>Test that a WMTS server can return FeatureInfo for pixels in tiles in response to valid KVP GET GetFeatureInfo requests with optional sample dimensions parameter with the "current" values specified in the Service Metadata document.</ctl:comment>
 	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.KVP.GET.GetFeatureInfo.Current.SampleDimension</ctl:link>
 	<ctl:code>
 		<xsl:choose>
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetFeatureInfo.Current.SampleDimension not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Current.SampleDimension">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetFeatureInfo.Current.SampleDimension not tested.</ctl:message>
@@ -734,6 +918,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.GET.GetFeatureInfo.NonQueryable.Layer" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -741,20 +929,19 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 	3.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Version parameter with a value of 1.0.0;
 	4.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Layer parameter wwith a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document for a layer with no &lt;InfoFormat&gt; elements;
 	5.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document;
-	6.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Format parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document;
-	7.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document;
-	8.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileMatrix parameter with a TileMatrix identifier value equal to a &lt;TileMatrixSet&gt;&lt;TileMatrix&gt;&lt;owsIdentifier&gt; value for the specified TileMatrixSet from the Service Metadata document;
-	9.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileRow parameter with a TileRow index value from zero to the value of &lt;MatrixHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
-	10.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileCol parameter with a TileCol index value from zero to the value of &lt;MatrixWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
-	11.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileRow index value within the TileMatrixLimits MinTileRow and MaxTileRow values.
-	12.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileCol index value within the TileMatrixLimits MinTileCol and MaxTileCol values.
-	13.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory J parameter with a row index value from zero to the value of &lt;TileHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
-	14.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory I parameter with a column index value from zero to the value of &lt;TileWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
-	15.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory infoFormat parameter with any value;
-	16.  the response entity is a schema-valid ows:Exception document.
-	17.  the response entity contains an exceptionCode attribute value of "OperationNotSupported".
-	18.  the response entity contains a locator attribute value of "GetFeatureInfo".
-	19.  the HTTP status code value is set to 501, corresponding to the message "Not Implemented".</ctl:assertion>
+	6.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document;
+	7.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileMatrix parameter with a TileMatrix identifier value equal to a &lt;TileMatrixSet&gt;&lt;TileMatrix&gt;&lt;owsIdentifier&gt; value for the specified TileMatrixSet from the Service Metadata document;
+	8.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileRow parameter with a TileRow index value from zero to the value of &lt;MatrixHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	9.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileCol parameter with a TileCol index value from zero to the value of &lt;MatrixWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	10.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileRow index value within the TileMatrixLimits MinTileRow and MaxTileRow values.
+	11.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileCol index value within the TileMatrixLimits MinTileCol and MaxTileCol values.
+	12.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory J parameter with a row index value from zero to the value of &lt;TileHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	13.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory I parameter with a column index value from zero to the value of &lt;TileWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	14.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory infoFormat parameter with any value;
+	15.  the response entity is a schema-valid ows:Exception document.
+	16.  the response entity contains an exceptionCode attribute value of "OperationNotSupported".
+	17.  the response entity contains a locator attribute value of "GetFeatureInfo".
+	18.  the HTTP status code value is set to 501, corresponding to the message "Not Implemented".</ctl:assertion>
 	<ctl:comment>Verify that when a GetFeatureInfo request is made for a non-queryable layer, then the server throws an exception. </ctl:comment>
 	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.KVP.GET.GetFeatureInfo.NonQueryable.Layer</ctl:link>
 	<ctl:code>
@@ -762,8 +949,13 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetFeatureInfo.NonQueryable.Layer not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.NonQueryable.Layer">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetFeatureInfo.NonQueryable.Layer not tested.</ctl:message>
@@ -782,6 +974,9 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.GET.GetFeatureInfo.Valid.InfoFormat" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -807,8 +1002,12 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetFeatureInfo.Valid.InfoFormat not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Valid.InfoFormat">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetFeatureInfo.Valid.InfoFormat not tested.</ctl:message>
@@ -827,6 +1026,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.GET.GetFeatureInfo.Invalid.InfoFormat" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -845,9 +1048,9 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 	14.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory I parameter with a column index value from zero to the value of &lt;TileWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document;	
 	15.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory infoFormat parameter with an InfoFormat value that is not one of the &lt;InfoFormat&gt;s for the specified Layer from the Service Metadata document;
 	16.  the response entity is a schema-valid ows:Exception document.
-	17.  the response entity contains an exceptionCode attribute value of "OperationNotSupported".
-	18.  the response entity contains a locator attribute value of "GetFeatureInfo".
-	19.  the HTTP status code value is set to 501, corresponding to the message "Not Implemented".</ctl:assertion>
+	17.  the response entity contains an exceptionCode attribute value of "InvalidParameterValue".
+	18.  the response entity contains a locator attribute value of the InfoFormat.
+	19.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".</ctl:assertion>
 	<ctl:comment>Verify that when a GetFeature request contains an InfoFormat incorrect value, then the server throws an exception. </ctl:comment>
 	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.KVP.GET.GetFeatureInfo.Invalid.InfoFormat</ctl:link>
 	<ctl:code>
@@ -855,8 +1058,13 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.InfoFormat not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.InfoFormat">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.InfoFormat not tested.</ctl:message>
@@ -875,6 +1083,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Row.J" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -903,8 +1115,13 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Row.J not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.Pixel.Row.J">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Row.J not tested.</ctl:message>
@@ -923,6 +1140,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Col.I" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -951,8 +1172,13 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Col.I not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.Pixel.Col.I">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Col.I not tested.</ctl:message>
@@ -971,12 +1197,15 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.POST.GetFeatureInfo.Mandatory" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
 	2.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory service parameter with a value of WMTS;
 	3.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory Version parameter with a value of 1.0.0;
-	4.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document for a layer with &lt;InfoFormat&gt; elements;
+	4.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document for a layer with &lt;InfoFormat&gt; elements and with no sample dimensions, or with sample dimensions with a default dimension;
 	5.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document;
 	6.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory Format parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document;
 	7.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document;
@@ -996,8 +1225,12 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetFeatureInfo.Mandatory not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Mandatory">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetFeatureInfo.Mandatory not tested.</ctl:message>
@@ -1016,6 +1249,9 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.POST.GetFeatureInfo.Optional" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -1043,8 +1279,12 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetFeatureInfo.Optional not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Optional">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetFeatureInfo.Optional not tested.</ctl:message>
@@ -1063,12 +1303,16 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.POST.GetFeatureInfo.Missing" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
 	2.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory service parameter with a value of WMTS;
 	3.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory Version parameter with a value of 1.0.0;
-	4.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document for a layer with &lt;InfoFormat&gt; elements, except when tested as missing;
+	4.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document for a layer with &lt;InfoFormat&gt; elements and with no sample dimensions, or with sample dimensions with a default dimension, except when tested as missing;
 	5.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
 	6.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory Format parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
 	7.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
@@ -1091,8 +1335,13 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetFeatureInfo.Missing not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Missing">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetFeatureInfo.Missing not tested.</ctl:message>
@@ -1111,6 +1360,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.POST.GetFeatureInfo.Invalid.Layer" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -1139,8 +1392,13 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.Layer not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.Layer">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.Layer not tested.</ctl:message>
@@ -1159,6 +1417,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.POST.GetFeatureInfo.Invalid.TileMatrixSet" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -1185,8 +1447,13 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.TileMatrixSet not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.TileMatrixSet">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.TileMatrixSet not tested.</ctl:message>
@@ -1205,6 +1472,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.POST.GetFeatureInfo.Invalid.TileMatrix" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -1231,8 +1502,13 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.TileMatrix not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.TileMatrix">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.TileMatrix not tested.</ctl:message>
@@ -1251,6 +1527,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -1277,8 +1557,13 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits not tested.</ctl:message>
@@ -1297,6 +1582,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -1323,8 +1612,13 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits not tested.</ctl:message>
@@ -1343,6 +1637,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -1369,8 +1667,13 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits not tested.</ctl:message>
@@ -1389,6 +1692,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -1415,6 +1722,13 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits not implemented yet</ctl:message>
 						<ctl:warning/>
 					</xsl:when>
@@ -1435,6 +1749,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Style" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -1463,8 +1781,13 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Style not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.Tile.Style">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.Tile.Style not tested.</ctl:message>
@@ -1480,9 +1803,70 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 	</ctl:code>
 </ctl:test>
 
+<ctl:test name="wmts:Server.KVP.POST.GetFeatureInfo.Missing.Optional" type="MandatoryIfImplemented">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
+	2.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory service parameter with a value of WMTS;
+	3.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Version parameter with a value of 1.0.0;
+	4.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document;
+	5.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document;
+	6.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Format parameter parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document
+	7.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document
+	8.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileMatrix parameter with a TileMatrix identifier value equal to a &lt;TileMatrixSet&gt;&lt;TileMatrix&gt;&lt;owsIdentifier&gt; value for the specified TileMatrixSet from the Service Metadata document;
+	9.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileRow parameter with a TileRow index value from zero to the value of &lt;MatrixHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	10.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileCol parameter with a TileCol index value from zero to the value of &lt;MatrixWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	11.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileRow index value within the TileMatrixLimits MinTileRow and MaxTileRow values.
+	12.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileCol index value within the TileMatrixLimits MinTileCol and MaxTileCol values.
+	13.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory J parameter with a row index value from zero to the value of &lt;TileHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	14. the request entity is a valid KVP GET GetFeatureInfo request with the mandatory I parameter with a column index value from zero to the value of &lt;TileWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	15. the request entity is a valid KVP GET GetFeatureInfo request without an optional sample dimensions parameter for a sample dimension without a default value that is specified in the &lt;Contents&gt;&lt;Layer&gt;&lt;Dimension&gt;&lt;ows:Identifier&gt; in the Service Metadata document for the specified layer.
+	16.  the response entity is a schema-valid ows:Exception document.
+	17.  the response entity contains an exceptionCode attribute value of "MissingParameterValue".
+	18.  the response entity contains a locator attribute value of the name of the sample dimension.
+	19.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".</ctl:assertion>
+	<ctl:comment>Verify that when a GetFeatureInfo request for a tile from a layer with a sample dimension with no default sample dimension value is missing a request parameter for the sample dimension name, that the server throws an exception.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.KVP.GET.GetFeatureInfo.Missing.Optional</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Missing.Optional">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.KVP.GET.GetFeatureInfo.Missing.Optional not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.KVP.GET.GetFeatureInfo.Missing.Optional test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>	
+	</ctl:code>	
+</ctl:test>
+
 <ctl:test name="wmts:Server.KVP.POST.GetFeatureInfo.Invalid.SampleDimension.Name" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -1513,8 +1897,13 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.SampleDimension.Name not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.SampleDimension.Name">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.SampleDimension.Name not tested.</ctl:message>
@@ -1533,6 +1922,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.POST.GetFeatureInfo.Invalid.SampleDimension.Value" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -1563,8 +1956,13 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.SampleDimension.Value not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.SampleDimension.Value">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.SampleDimension.Value not tested.</ctl:message>
@@ -1583,6 +1981,9 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.POST.GetFeatureInfo.Default.SampleDimension" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -1610,8 +2011,13 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetFeatureInfo.Default.SampleDimension not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Default.SampleDimension">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetFeatureInfo.Default.SampleDimension not tested.</ctl:message>
@@ -1630,6 +2036,9 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.POST.GetFeatureInfo.Current.SampleDimension" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -1657,8 +2066,12 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetFeatureInfo.Current.SampleDimension not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Current.SampleDimension">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetFeatureInfo.Current.SampleDimension not tested.</ctl:message>
@@ -1677,6 +2090,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.POST.GetFeatureInfo.NonQueryable.Layer" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -1705,8 +2122,13 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetFeatureInfo.NonQueryable.Layer not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.NonQueryable.Layer">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetFeatureInfo.NonQueryable.Layer not tested.</ctl:message>
@@ -1725,6 +2147,9 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.POST.GetFeatureInfo.Valid.InfoFormat" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -1750,8 +2175,12 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetFeatureInfo.Valid.InfoFormat not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Valid.InfoFormat">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetFeatureInfo.Valid.InfoFormat not tested.</ctl:message>
@@ -1770,6 +2199,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.POST.GetFeatureInfo.Invalid.InfoFormat" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -1798,8 +2231,13 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.InfoFormat not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.InfoFormat">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.InfoFormat not tested.</ctl:message>
@@ -1818,6 +2256,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.POST.GetFeatureInfo.Invalid.Pixel.Row.J" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -1846,8 +2288,13 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.Pixel.Row.J not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.Pixel.Row.J">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.Pixel.Row.J not tested.</ctl:message>
@@ -1866,6 +2313,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.KVP.POST.GetFeatureInfo.Invalid.Pixel.Col.I" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid KVP POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -1894,8 +2345,13 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.Pixel.Col.I not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:KVP.GetFeatureInfo.Invalid.Pixel.Col.I">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.KVP.POST.GetFeatureInfo.Invalid.Pixel.Col.I not tested.</ctl:message>
@@ -1914,12 +2370,15 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.XML.POST.GetFeatureInfo.Mandatory" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
 	2.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory service parameter with a value of WMTS;
 	3.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory Version parameter with a value of 1.0.0;
-	4.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document for a layer with &lt;InfoFormat&gt; elements;
+	4.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document for a layer with &lt;InfoFormat&gt; elements and with no sample dimensions, or with sample dimensions with a default dimension;
 	5.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document;
 	6.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory Format parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document;
 	7.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document;
@@ -1939,8 +2398,11 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetFeatureInfo.Mandatory not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetFeatureInfo.Mandatory">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetFeatureInfo.Mandatory not tested.</ctl:message>
@@ -1959,6 +2421,9 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.XML.POST.GetFeatureInfo.Optional" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -1986,8 +2451,11 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetFeatureInfo.Optional not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetFeatureInfo.Optional">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetFeatureInfo.Optional not tested.</ctl:message>
@@ -2006,12 +2474,16 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.XML.POST.GetFeatureInfo.Missing" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
 	2.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory service parameter with a value of WMTS;
 	3.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory Version parameter with a value of 1.0.0;
-	4.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document for a layer with &lt;InfoFormat&gt; elements, except when tested as missing;
+	4.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document for a layer with &lt;InfoFormat&gt; elements and with no sample dimensions, or with sample dimensions with a default dimension, except when tested as missing;
 	5.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
 	6.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory Format parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
 	7.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
@@ -2034,8 +2506,12 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetFeatureInfo.Missing not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetFeatureInfo.Missing">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetFeatureInfo.Missing not tested.</ctl:message>
@@ -2054,6 +2530,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.XML.POST.GetFeatureInfo.Invalid.Layer" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -2082,8 +2562,12 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.Layer not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetFeatureInfo.Invalid.Layer">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.Layer not tested.</ctl:message>
@@ -2102,6 +2586,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.XML.POST.GetFeatureInfo.Invalid.TileMatrixSet" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -2128,8 +2616,12 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.TileMatrixSet not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetFeatureInfo.Invalid.TileMatrixSet">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.TileMatrixSet not tested.</ctl:message>
@@ -2148,6 +2640,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.XML.POST.GetFeatureInfo.Invalid.TileMatrix" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -2174,8 +2670,12 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.TileMatrix not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetFeatureInfo.Invalid.TileMatrix">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.TileMatrix not tested.</ctl:message>
@@ -2194,6 +2694,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.XML.POST.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -2220,8 +2724,12 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits not tested.</ctl:message>
@@ -2240,6 +2748,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.XML.POST.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -2266,8 +2778,12 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits not tested.</ctl:message>
@@ -2286,6 +2802,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.XML.POST.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -2312,8 +2832,12 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits not tested.</ctl:message>
@@ -2332,6 +2856,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.XML.POST.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -2358,8 +2886,12 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits not tested.</ctl:message>
@@ -2378,6 +2910,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.XML.POST.GetFeatureInfo.Invalid.Tile.Style" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -2406,8 +2942,12 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.Tile.Style not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetFeatureInfo.Invalid.Tile.Style">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.Tile.Style not tested.</ctl:message>
@@ -2423,9 +2963,69 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 	</ctl:code>
 </ctl:test>
 
+<ctl:test name="wmts:Server.XML.POST.GetFeatureInfo.Missing.Optional" type="MandatoryIfImplemented">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
+	2.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory service parameter with a value of WMTS;
+	3.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Version parameter with a value of 1.0.0;
+	4.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document;
+	5.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document;
+	6.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Format parameter parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document
+	7.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document
+	8.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileMatrix parameter with a TileMatrix identifier value equal to a &lt;TileMatrixSet&gt;&lt;TileMatrix&gt;&lt;owsIdentifier&gt; value for the specified TileMatrixSet from the Service Metadata document;
+	9.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileRow parameter with a TileRow index value from zero to the value of &lt;MatrixHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	10.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileCol parameter with a TileCol index value from zero to the value of &lt;MatrixWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	11.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileRow index value within the TileMatrixLimits MinTileRow and MaxTileRow values.
+	12.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileCol index value within the TileMatrixLimits MinTileCol and MaxTileCol values.
+	13.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory J parameter with a row index value from zero to the value of &lt;TileHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	14. the request entity is a valid KVP GET GetFeatureInfo request with the mandatory I parameter with a column index value from zero to the value of &lt;TileWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	15. the request entity is a valid KVP GET GetFeatureInfo request without an optional sample dimensions parameter for a sample dimension without a default value that is specified in the &lt;Contents&gt;&lt;Layer&gt;&lt;Dimension&gt;&lt;ows:Identifier&gt; in the Service Metadata document for the specified layer.
+	16.  the response entity is a schema-valid ows:Exception document.
+	17.  the response entity contains an exceptionCode attribute value of "MissingParameterValue".
+	18.  the response entity contains a locator attribute value of the name of the sample dimension.
+	19.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".</ctl:assertion>
+	<ctl:comment>Verify that when a GetFeatureInfo request for a tile from a layer with a sample dimension with no default sample dimension value is missing a request parameter for the sample dimension name, that the server throws an exception.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.KVP.GET.GetFeatureInfo.Missing.Optional</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<ctl:call-function name="wmtsFunctions:XML.GetFeatureInfo.Missing.Optional">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.KVP.GET.GetFeatureInfo.Missing.Optional not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.KVP.GET.GetFeatureInfo.Missing.Optional test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>	
+	</ctl:code>	
+</ctl:test>
+
 <ctl:test name="wmts:Server.XML.POST.GetFeatureInfo.Invalid.SampleDimension.Name" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -2456,8 +3056,12 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.SampleDimension.Name not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetFeatureInfo.Invalid.SampleDimension.Name">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.SampleDimension.Name not tested.</ctl:message>
@@ -2476,6 +3080,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.XML.POST.GetFeatureInfo.Invalid.SampleDimension.Value" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -2506,8 +3114,12 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.SampleDimension.Value not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetFeatureInfo.Invalid.SampleDimension.Value">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.SampleDimension.Value not tested.</ctl:message>
@@ -2526,6 +3138,9 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.XML.POST.GetFeatureInfo.Default.SampleDimension" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
     1.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -2553,8 +3168,11 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetFeatureInfo.Default.SampleDimension not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetFeatureInfo.Default.SampleDimension">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetFeatureInfo.Default.SampleDimension not tested.</ctl:message>
@@ -2573,6 +3191,9 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.XML.POST.GetFeatureInfo.Current.SampleDimension" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -2600,8 +3221,11 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetFeatureInfo.Current.SampleDimension not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetFeatureInfo.Current.SampleDimension">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetFeatureInfo.Current.SampleDimension not tested.</ctl:message>
@@ -2620,6 +3244,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.XML.POST.GetFeatureInfo.NonQueryable.Layer" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -2648,8 +3276,12 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetFeatureInfo.NonQueryable.Layer not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetFeatureInfo.NonQueryable.Layer">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetFeatureInfo.NonQueryable.Layer not tested.</ctl:message>
@@ -2668,6 +3300,9 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.XML.POST.GetFeatureInfo.Valid.InfoFormat" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -2693,8 +3328,11 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetFeatureInfo.Valid.InfoFormat not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetFeatureInfo.Valid.InfoFormat">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetFeatureInfo.Valid.InfoFormat not tested.</ctl:message>
@@ -2713,6 +3351,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.XML.POST.GetFeatureInfo.Invalid.InfoFormat" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -2741,8 +3383,12 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.InfoFormat not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetFeatureInfo.Invalid.InfoFormat">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.InfoFormat not tested.</ctl:message>
@@ -2761,6 +3407,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.XML.POST.GetFeatureInfo.Invalid.Pixel.Row.J" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -2789,8 +3439,12 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.Pixel.Row.J not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetFeatureInfo.Invalid.Pixel.Row.J">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.Pixel.Row.J not tested.</ctl:message>
@@ -2809,6 +3463,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.XML.POST.GetFeatureInfo.Invalid.Pixel.Col.I" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid XML POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
@@ -2837,8 +3495,12 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.Pixel.Col.I not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:XML.GetFeatureInfo.Invalid.Pixel.Col.I">
+							<ctl:with-param name="featureInfoURL" select="$featureInfoURL"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetFeatureInfo.Invalid.Pixel.Col.I not tested.</ctl:message>
@@ -2862,7 +3524,7 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
     1.  the request entity is a valid SOAP POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
     2.  the request entity is a valid SOAP POST GetFeatureInfo request with the mandatory service parameter with a value of WMTS;
     3.  the request entity is a valid SOAP POST GetFeatureInfo request with the mandatory Version parameter with a value of 1.0.0;
-    4.  the request entity is a valid SOAP POST GetFeatureInfo request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document for a layer with &lt;InfoFormat&gt; elements;
+    4.  the request entity is a valid SOAP POST GetFeatureInfo request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document for a layer with &lt;InfoFormat&gt; elements and with no sample dimensions, or with sample dimensions with a default dimension;
     5.  the request entity is a valid SOAP POST GetFeatureInfo request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document;
     6.  the request entity is a valid SOAP POST GetFeatureInfo request with the mandatory Format parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document;
     7.  the request entity is a valid SOAP POST GetFeatureInfo request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document;
@@ -2954,7 +3616,7 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 	1.  the request entity is a valid SOAP POST GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
 	2.  the request entity is a valid SOAP POST GetFeatureInfo request with the mandatory service parameter with a value of WMTS;
 	3.  the request entity is a valid SOAP POST GetFeatureInfo request with the mandatory Version parameter with a value of 1.0.0;
-	4.  the request entity is a valid SOAP POST GetFeatureInfo request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document for a layer with &lt;InfoFormat&gt; elements, except when tested as missing;
+	4.  the request entity is a valid SOAP POST GetFeatureInfo request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document for a layer with &lt;InfoFormat&gt; elements and with no sample dimensions, or with sample dimensions with a default dimension, except when tested as missing;
 	5.  the request entity is a valid SOAP POST GetFeatureInfo request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
 	6.  the request entity is a valid SOAP POST GetFeatureInfo request with the mandatory Format parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
 	7.  the request entity is a valid SOAP POST GetFeatureInfo request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document, except when tested as missing;
@@ -3364,6 +4026,211 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			</xsl:otherwise>
 		</xsl:choose>
 	</ctl:code>
+</ctl:test>
+
+<ctl:test name="wmts:Server.SOAP.POST.GetFeatureInfo.Missing.Optional" type="MandatoryIfImplemented">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
+	2.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory service parameter with a value of WMTS;
+	3.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Version parameter with a value of 1.0.0;
+	4.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document;
+	5.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document;
+	6.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Format parameter parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document
+	7.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document
+	8.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileMatrix parameter with a TileMatrix identifier value equal to a &lt;TileMatrixSet&gt;&lt;TileMatrix&gt;&lt;owsIdentifier&gt; value for the specified TileMatrixSet from the Service Metadata document;
+	9.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileRow parameter with a TileRow index value from zero to the value of &lt;MatrixHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	10.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileCol parameter with a TileCol index value from zero to the value of &lt;MatrixWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	11.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileRow index value within the TileMatrixLimits MinTileRow and MaxTileRow values.
+	12.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileCol index value within the TileMatrixLimits MinTileCol and MaxTileCol values.
+	13.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory J parameter with a row index value from zero to the value of &lt;TileHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	14. the request entity is a valid KVP GET GetFeatureInfo request with the mandatory I parameter with a column index value from zero to the value of &lt;TileWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	15. the request entity is a valid KVP GET GetFeatureInfo request without an optional sample dimensions parameter for a sample dimension without a default value that is specified in the &lt;Contents&gt;&lt;Layer&gt;&lt;Dimension&gt;&lt;ows:Identifier&gt; in the Service Metadata document for the specified layer.
+	16.  the response entity is a schema-valid ows:Exception document.
+	17.  the response entity contains an exceptionCode attribute value of "MissingParameterValue".
+	18.  the response entity contains a locator attribute value of the name of the sample dimension.
+	19.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".</ctl:assertion>
+	<ctl:comment>Verify that when a GetFeatureInfo request for a tile from a layer with a sample dimension with no default sample dimension value is missing a request parameter for the sample dimension name, that the server throws an exception.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.KVP.GET.GetFeatureInfo.Missing.Optional</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<xsl:variable name="serviceURL" select="owsFunctions:getServiceURL($featureInfoURL)"/> 
+						<ctl:message select="concat('Issuing GetFeatureInfo requests to ', $serviceURL, ' for the following:')"/>
+						<xsl:variable name="layerPos" select="(count($wmts.capabilities.doc/wmts:Contents/wmts:Layer[wmts:InfoFormat][wmts:Dimension[not(wmts:Default)]]) + 1) idiv 2 "/>
+						<xsl:variable name="results">
+							<xsl:for-each select="$wmts.capabilities.doc/wmts:Contents/wmts:Layer[wmts:InfoFormat][wmts:Dimension[not(wmts:Default)]][$layerPos]">
+								<xsl:variable name="layer" select="."/>
+								<xsl:variable name="layerId" select="$layer/ows:Identifier"/>
+								<xsl:variable name="stylePos" select="(count($layer/wmts:Style) +1) idiv 2"/>
+								<!-- <ctl:message select="concat('layer ', $layerId, ' stylePos ', $stylePos)"/> -->
+								<xsl:for-each select="$layer/wmts:Style[$stylePos]">
+									<xsl:variable name="style" select="."/> 
+									<xsl:variable name="styleId" select="$style/ows:Identifier"/>
+									<xsl:variable name="formatPos" select="(count($layer/wmts:Format) + 1) idiv 2"/>
+									<!-- <ctl:message select="concat('style ', $styleId, ' formatPos ', $formatPos)"/> -->
+									<xsl:for-each select="$layer/wmts:InfoFormat[$formatPos]">
+										<xsl:variable name="infoFormat" select="."/>
+										<xsl:variable name="tmslPos" select="(count($layer/wmts:TileMatrixSetLink) + 1) idiv 2"/>
+										<!-- <ctl:message select="concat('infoFormat ', $infoFormat, ' tmslPos ', $tmslPos)"/> -->
+										<xsl:for-each select="$layer/wmts:TileMatrixSetLink[$tmslPos]">
+											<xsl:variable name="tileMatrixSetId" select="wmts:TileMatrixSet"/>
+											<xsl:variable name="tileMatrixSetLimits" select="wmts:TileMatrixSetLimits"/>
+											<xsl:variable name="setLimits" select="count($tileMatrixSetLimits/*) gt 0"/>
+											<!-- <ctl:message select="concat('tileMatrixSet ', $tileMatrixSetId, ' has limits ', $setLimits)"/> -->
+											<xsl:variable name="tileMatrixSet" select="$wmts.capabilities.doc/wmts:Contents/wmts:TileMatrixSet[ows:Identifier = $tileMatrixSetId]"/>
+											<xsl:variable name="tmsPos" select="(count($tileMatrixSet/wmts:TileMatrix)  + 1) idiv 2"/>
+											<xsl:for-each select="$tileMatrixSet/wmts:TileMatrix[$tmsPos]">
+												<xsl:variable name="tileMatrix" select="."/>
+												<xsl:variable name="tileMatrixId" select="$tileMatrix/ows:Identifier"/>
+												<xsl:variable name="tileWidth" select="$tileMatrix/wmts:TileWidth"/>
+												<xsl:variable name="tileHeight" select="$tileMatrix/wmts:TileHeight"/>
+												<!-- <ctl:message select="concat('tileMatrix ', $tileMatrixId)"/> -->
+												<xsl:variable name="tileMatrixLimits" select="$tileMatrixSetLimits/wmts:TileMatrixLimits[wmts:TileMatrix = $tileMatrixId]"/>
+												<xsl:variable name="matrixLimits" select="count($tileMatrixLimits/*) gt 0"/>
+												<xsl:variable name="minTileRow">
+													<xsl:choose>
+														<xsl:when test="$matrixLimits">
+															<xsl:value-of select="$tileMatrixLimits/wmts:MinTileRow"/>
+														</xsl:when>
+														<xsl:otherwise>
+															<xsl:value-of select="abs(0)"/>
+														</xsl:otherwise>
+													</xsl:choose>
+												</xsl:variable>
+												<xsl:variable name="maxTileRow">
+													<xsl:choose>
+														<xsl:when test="$matrixLimits">
+															<xsl:value-of select="$tileMatrixLimits/wmts:MaxTileRow"/>
+														</xsl:when>
+														<xsl:otherwise>
+															<xsl:value-of select="$tileMatrix/wmts:MatrixHeight - 1"/>
+														</xsl:otherwise>
+													</xsl:choose>											
+												</xsl:variable>
+												<xsl:variable name="midTileRow" select="($minTileRow + $maxTileRow) idiv 2"/>
+												<xsl:variable name="minTileCol">
+													<xsl:choose>
+														<xsl:when test="$matrixLimits">
+															<xsl:value-of select="$tileMatrixLimits/wmts:MinTileCol"/>
+														</xsl:when>
+														<xsl:otherwise>
+															<xsl:value-of select="abs(0)"/>
+														</xsl:otherwise>
+													</xsl:choose>											
+												</xsl:variable>
+												<xsl:variable name="maxTileCol">
+													<xsl:choose>
+														<xsl:when test="$matrixLimits">
+															<xsl:value-of select="$tileMatrixLimits/wmts:MaxTileCol"/>
+														</xsl:when>
+														<xsl:otherwise>
+															<xsl:value-of select="$tileMatrix/wmts:MatrixWidth - 1"/>
+														</xsl:otherwise>
+													</xsl:choose>											
+												</xsl:variable>
+												<xsl:variable name="midTileCol" select="($minTileCol + $maxTileCol) idiv 2"/>
+												<xsl:variable name="minTileJ">0</xsl:variable>
+												<xsl:variable name="maxTileJ" select="$tileHeight -1"/>
+												<xsl:variable name="midTileJ" select="($minTileJ + $maxTileJ) idiv 2"/>
+												<xsl:variable name="minTileI">0</xsl:variable>
+												<xsl:variable name="maxTileI" select="$tileWidth -1"/>
+												<xsl:variable name="midTileI" select="($minTileI + $maxTileI) idiv 2"/>
+												<xsl:variable name="row" select="$midTileRow"/>
+												<xsl:variable name="col" select="$midTileCol"/>
+												<xsl:variable name="j" select="$midTileJ"/>
+												<xsl:variable name="i" select="$midTileI"/>													
+												<xsl:variable name="dimensionsWithNoDefault" select="string-join($layer/wmts:Dimension[not(wmts:Default)]/ows:Identifier, ',')"/>
+												<ctl:message select="concat('layer ', $layerId, ' style ', $styleId, ' infoFormat ', $infoFormat, ' tileMatrixSet ', $tileMatrixSetId, ' has limits ', boolean($tileMatrixSetLimits), ' tileMatrix ', $tileMatrixId, ' row ', $row, ' col ', $col, ' j ', $j, ' i ', $i, ' missing parameters for dimensions with no default: ', $dimensionsWithNoDefault)"/>											
+												<xsl:variable name="response">
+													<ctl:request>
+														<ctl:url>
+															<xsl:value-of select="$serviceURL"/>
+														</ctl:url>
+														<ctl:method>get</ctl:method>
+														<ctl:param name="service">WMTS</ctl:param>
+														<ctl:param name="request">GetFeatureInfo</ctl:param>
+														<ctl:param name="version"><xsl:value-of select="$wmtsVersion"/></ctl:param> 	
+														<ctl:param name="layer"><xsl:value-of select="$layerId"/></ctl:param>
+														<ctl:param name="style"><xsl:value-of select="$styleId"/></ctl:param>
+														<ctl:param name="infoFormat"><xsl:value-of select="$infoFormat"/></ctl:param>
+														<ctl:param name="TileMatrixSet"><xsl:value-of select="$tileMatrixSetId"/></ctl:param>
+														<ctl:param name="TileMatrix"><xsl:value-of select="$tileMatrixId"/></ctl:param>
+														<ctl:param name="TileRow"><xsl:value-of select="$row"/></ctl:param>
+														<ctl:param name="TileCol"><xsl:value-of select="$col"/></ctl:param>
+														<ctl:param name="J"><xsl:value-of select="$j"/></ctl:param>
+														<ctl:param name="I"><xsl:value-of select="$i"/></ctl:param>
+														<parsers:HTTPParser>
+															<parsers:parse>
+																<parsers:XSLTransformationParser resource="rewriteNonException.xsl"/> 
+															</parsers:parse>
+														</parsers:HTTPParser>
+													</ctl:request>
+												</xsl:variable>		
+												<xsl:choose>
+													<xsl:when test="not($response/response/content/*)">
+														<ctl:message>FAILURE: Missing or invalid response entity contents; should have been an ows:ExceptionReport.</ctl:message>
+														<xsl:variable name="code" select="$response/response/status/@code"/>
+														<xsl:if test="$code != '' ">
+															<ctl:message select="concat('HTTP status code ', $code)"/>
+														</xsl:if>
+														<xsl:text>false|</xsl:text>
+													</xsl:when>
+													<xsl:otherwise>
+														<xsl:variable name="dimWithNoDefaultList" select="tokenize($dimensionsWithNoDefault, ',')"/>
+														<xsl:variable name="exceptionCodes">
+															<xsl:for-each select="$dimWithNoDefaultList">
+																<xsl:text>MissingParameterValue</xsl:text>
+																<xsl:if test="not(position() = last())">
+																	<xsl:text>,</xsl:text>
+																</xsl:if>
+															</xsl:for-each>
+														</xsl:variable>
+														<ctl:call-function name="owsFunctions:validateExceptionReport">
+															<ctl:with-param name="httpParserExceptionReport" select="$response"/>
+															<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+															<ctl:with-param name="exceptionCodes" select="$exceptionCodes"/>
+															<ctl:with-param name="locators" select="$dimensionsWithNoDefault"/>
+														</ctl:call-function>
+													</xsl:otherwise>
+												</xsl:choose>
+											</xsl:for-each>
+										</xsl:for-each>
+											</xsl:for-each>
+										</xsl:for-each>
+									</xsl:for-each>
+						</xsl:variable>	
+						<xsl:choose>
+							<xsl:when test="contains($results, 'false')">
+								<ctl:message>Test failed. Server.KVP.GET.GetFeatureInfo.Missing.Optional</ctl:message>
+								<ctl:fail/>
+							</xsl:when>
+							<xsl:otherwise>
+								<ctl:message>Test passed:  Server.KVP.GET.GetFeatureInfo.Missing.Optional</ctl:message>
+								<ctl:pass/>
+							</xsl:otherwise>
+						</xsl:choose>					
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.KVP.GET.GetFeatureInfo.Missing.Optional not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.KVP.GET.GetFeatureInfo.Missing.Optional test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>	
+	</ctl:code>	
 </ctl:test>
 
 <ctl:test name="wmts:Server.SOAP.POST.GetFeatureInfo.Invalid.SampleDimension.Name" type="MandatoryIfImplemented">
@@ -3802,7 +4669,7 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
-	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template;
+	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template for a layer with no sample dimensions, or with sample dimensions with a default dimension;
 	2.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document substituted in place of the "style" URL template variable;
 	3.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Format MIME type format value provided in the ResourceURL template;
 	4.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document substituted in place of the "TileMatrixSet" URL template variable;
@@ -3888,7 +4755,7 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
-	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template;
+	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template for a layer with no sample dimensions, or with sample dimensions with a default dimension;
 	2.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document substituted in place of the "style" URL template variable, except when tested as missing;
 	3.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Format MIME type format value provided in the ResourceURL template, except when tested as missing;
 	4.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document substituted in place of the "TileMatrixSet" URL template variable, except when tested as missing;
@@ -4251,6 +5118,211 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			</xsl:otherwise>
 		</xsl:choose>
 	</ctl:code>
+</ctl:test>
+
+<ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Missing.Optional" type="MandatoryIfImplemented">
+	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
+	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
+	<ctl:context>wmts:main</ctl:context>
+	<ctl:assertion>
+	1.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory request parameter with a value of GetFeatureInfo;
+	2.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory service parameter with a value of WMTS;
+	3.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Version parameter with a value of 1.0.0;
+	4.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document;
+	5.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document;
+	6.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory Format parameter parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document
+	7.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document
+	8.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileMatrix parameter with a TileMatrix identifier value equal to a &lt;TileMatrixSet&gt;&lt;TileMatrix&gt;&lt;owsIdentifier&gt; value for the specified TileMatrixSet from the Service Metadata document;
+	9.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileRow parameter with a TileRow index value from zero to the value of &lt;MatrixHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	10.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory TileCol parameter with a TileCol index value from zero to the value of &lt;MatrixWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	11.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileRow index value within the TileMatrixLimits MinTileRow and MaxTileRow values.
+	12.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileCol index value within the TileMatrixLimits MinTileCol and MaxTileCol values.
+	13.  the request entity is a valid KVP GET GetFeatureInfo request with the mandatory J parameter with a row index value from zero to the value of &lt;TileHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	14. the request entity is a valid KVP GET GetFeatureInfo request with the mandatory I parameter with a column index value from zero to the value of &lt;TileWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	15. the request entity is a valid KVP GET GetFeatureInfo request without an optional sample dimensions parameter for a sample dimension without a default value that is specified in the &lt;Contents&gt;&lt;Layer&gt;&lt;Dimension&gt;&lt;ows:Identifier&gt; in the Service Metadata document for the specified layer.
+	16.  the response entity is a schema-valid ows:Exception document.
+	17.  the response entity contains an exceptionCode attribute value of "MissingParameterValue".
+	18.  the response entity contains a locator attribute value of the name of the sample dimension.
+	19.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".</ctl:assertion>
+	<ctl:comment>Verify that when a GetFeatureInfo request for a tile from a layer with a sample dimension with no default sample dimension value is missing a request parameter for the sample dimension name, that the server throws an exception.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.KVP.GET.GetFeatureInfo.Missing.Optional</ctl:link>
+	<ctl:code>
+		<xsl:choose>
+			<xsl:when test="$metPrerequisites = 'true' ">
+				<xsl:choose>
+					<xsl:when test="$selected = 'true' ">
+						<xsl:variable name="serviceURL" select="owsFunctions:getServiceURL($featureInfoURL)"/> 
+						<ctl:message select="concat('Issuing GetFeatureInfo requests to ', $serviceURL, ' for the following:')"/>
+						<xsl:variable name="layerPos" select="(count($wmts.capabilities.doc/wmts:Contents/wmts:Layer[wmts:InfoFormat][wmts:Dimension[not(wmts:Default)]]) + 1) idiv 2 "/>
+						<xsl:variable name="results">
+							<xsl:for-each select="$wmts.capabilities.doc/wmts:Contents/wmts:Layer[wmts:InfoFormat][wmts:Dimension[not(wmts:Default)]][$layerPos]">
+								<xsl:variable name="layer" select="."/>
+								<xsl:variable name="layerId" select="$layer/ows:Identifier"/>
+								<xsl:variable name="stylePos" select="(count($layer/wmts:Style) +1) idiv 2"/>
+								<!-- <ctl:message select="concat('layer ', $layerId, ' stylePos ', $stylePos)"/> -->
+								<xsl:for-each select="$layer/wmts:Style[$stylePos]">
+									<xsl:variable name="style" select="."/> 
+									<xsl:variable name="styleId" select="$style/ows:Identifier"/>
+									<xsl:variable name="formatPos" select="(count($layer/wmts:Format) + 1) idiv 2"/>
+									<!-- <ctl:message select="concat('style ', $styleId, ' formatPos ', $formatPos)"/> -->
+									<xsl:for-each select="$layer/wmts:InfoFormat[$formatPos]">
+										<xsl:variable name="infoFormat" select="."/>
+										<xsl:variable name="tmslPos" select="(count($layer/wmts:TileMatrixSetLink) + 1) idiv 2"/>
+										<!-- <ctl:message select="concat('infoFormat ', $infoFormat, ' tmslPos ', $tmslPos)"/> -->
+										<xsl:for-each select="$layer/wmts:TileMatrixSetLink[$tmslPos]">
+											<xsl:variable name="tileMatrixSetId" select="wmts:TileMatrixSet"/>
+											<xsl:variable name="tileMatrixSetLimits" select="wmts:TileMatrixSetLimits"/>
+											<xsl:variable name="setLimits" select="count($tileMatrixSetLimits/*) gt 0"/>
+											<!-- <ctl:message select="concat('tileMatrixSet ', $tileMatrixSetId, ' has limits ', $setLimits)"/> -->
+											<xsl:variable name="tileMatrixSet" select="$wmts.capabilities.doc/wmts:Contents/wmts:TileMatrixSet[ows:Identifier = $tileMatrixSetId]"/>
+											<xsl:variable name="tmsPos" select="(count($tileMatrixSet/wmts:TileMatrix)  + 1) idiv 2"/>
+											<xsl:for-each select="$tileMatrixSet/wmts:TileMatrix[$tmsPos]">
+												<xsl:variable name="tileMatrix" select="."/>
+												<xsl:variable name="tileMatrixId" select="$tileMatrix/ows:Identifier"/>
+												<xsl:variable name="tileWidth" select="$tileMatrix/wmts:TileWidth"/>
+												<xsl:variable name="tileHeight" select="$tileMatrix/wmts:TileHeight"/>
+												<!-- <ctl:message select="concat('tileMatrix ', $tileMatrixId)"/> -->
+												<xsl:variable name="tileMatrixLimits" select="$tileMatrixSetLimits/wmts:TileMatrixLimits[wmts:TileMatrix = $tileMatrixId]"/>
+												<xsl:variable name="matrixLimits" select="count($tileMatrixLimits/*) gt 0"/>
+												<xsl:variable name="minTileRow">
+													<xsl:choose>
+														<xsl:when test="$matrixLimits">
+															<xsl:value-of select="$tileMatrixLimits/wmts:MinTileRow"/>
+														</xsl:when>
+														<xsl:otherwise>
+															<xsl:value-of select="abs(0)"/>
+														</xsl:otherwise>
+													</xsl:choose>
+												</xsl:variable>
+												<xsl:variable name="maxTileRow">
+													<xsl:choose>
+														<xsl:when test="$matrixLimits">
+															<xsl:value-of select="$tileMatrixLimits/wmts:MaxTileRow"/>
+														</xsl:when>
+														<xsl:otherwise>
+															<xsl:value-of select="$tileMatrix/wmts:MatrixHeight - 1"/>
+														</xsl:otherwise>
+													</xsl:choose>											
+												</xsl:variable>
+												<xsl:variable name="midTileRow" select="($minTileRow + $maxTileRow) idiv 2"/>
+												<xsl:variable name="minTileCol">
+													<xsl:choose>
+														<xsl:when test="$matrixLimits">
+															<xsl:value-of select="$tileMatrixLimits/wmts:MinTileCol"/>
+														</xsl:when>
+														<xsl:otherwise>
+															<xsl:value-of select="abs(0)"/>
+														</xsl:otherwise>
+													</xsl:choose>											
+												</xsl:variable>
+												<xsl:variable name="maxTileCol">
+													<xsl:choose>
+														<xsl:when test="$matrixLimits">
+															<xsl:value-of select="$tileMatrixLimits/wmts:MaxTileCol"/>
+														</xsl:when>
+														<xsl:otherwise>
+															<xsl:value-of select="$tileMatrix/wmts:MatrixWidth - 1"/>
+														</xsl:otherwise>
+													</xsl:choose>											
+												</xsl:variable>
+												<xsl:variable name="midTileCol" select="($minTileCol + $maxTileCol) idiv 2"/>
+												<xsl:variable name="minTileJ">0</xsl:variable>
+												<xsl:variable name="maxTileJ" select="$tileHeight -1"/>
+												<xsl:variable name="midTileJ" select="($minTileJ + $maxTileJ) idiv 2"/>
+												<xsl:variable name="minTileI">0</xsl:variable>
+												<xsl:variable name="maxTileI" select="$tileWidth -1"/>
+												<xsl:variable name="midTileI" select="($minTileI + $maxTileI) idiv 2"/>
+												<xsl:variable name="row" select="$midTileRow"/>
+												<xsl:variable name="col" select="$midTileCol"/>
+												<xsl:variable name="j" select="$midTileJ"/>
+												<xsl:variable name="i" select="$midTileI"/>													
+												<xsl:variable name="dimensionsWithNoDefault" select="string-join($layer/wmts:Dimension[not(wmts:Default)]/ows:Identifier, ',')"/>
+												<ctl:message select="concat('layer ', $layerId, ' style ', $styleId, ' infoFormat ', $infoFormat, ' tileMatrixSet ', $tileMatrixSetId, ' has limits ', boolean($tileMatrixSetLimits), ' tileMatrix ', $tileMatrixId, ' row ', $row, ' col ', $col, ' j ', $j, ' i ', $i, ' missing parameters for dimensions with no default: ', $dimensionsWithNoDefault)"/>											
+												<xsl:variable name="response">
+													<ctl:request>
+														<ctl:url>
+															<xsl:value-of select="$serviceURL"/>
+														</ctl:url>
+														<ctl:method>get</ctl:method>
+														<ctl:param name="service">WMTS</ctl:param>
+														<ctl:param name="request">GetFeatureInfo</ctl:param>
+														<ctl:param name="version"><xsl:value-of select="$wmtsVersion"/></ctl:param> 	
+														<ctl:param name="layer"><xsl:value-of select="$layerId"/></ctl:param>
+														<ctl:param name="style"><xsl:value-of select="$styleId"/></ctl:param>
+														<ctl:param name="infoFormat"><xsl:value-of select="$infoFormat"/></ctl:param>
+														<ctl:param name="TileMatrixSet"><xsl:value-of select="$tileMatrixSetId"/></ctl:param>
+														<ctl:param name="TileMatrix"><xsl:value-of select="$tileMatrixId"/></ctl:param>
+														<ctl:param name="TileRow"><xsl:value-of select="$row"/></ctl:param>
+														<ctl:param name="TileCol"><xsl:value-of select="$col"/></ctl:param>
+														<ctl:param name="J"><xsl:value-of select="$j"/></ctl:param>
+														<ctl:param name="I"><xsl:value-of select="$i"/></ctl:param>
+														<parsers:HTTPParser>
+															<parsers:parse>
+																<parsers:XSLTransformationParser resource="rewriteNonException.xsl"/> 
+															</parsers:parse>
+														</parsers:HTTPParser>
+													</ctl:request>
+												</xsl:variable>		
+												<xsl:choose>
+													<xsl:when test="not($response/response/content/*)">
+														<ctl:message>FAILURE: Missing or invalid response entity contents; should have been an ows:ExceptionReport.</ctl:message>
+														<xsl:variable name="code" select="$response/response/status/@code"/>
+														<xsl:if test="$code != '' ">
+															<ctl:message select="concat('HTTP status code ', $code)"/>
+														</xsl:if>
+														<xsl:text>false|</xsl:text>
+													</xsl:when>
+													<xsl:otherwise>
+														<xsl:variable name="dimWithNoDefaultList" select="tokenize($dimensionsWithNoDefault, ',')"/>
+														<xsl:variable name="exceptionCodes">
+															<xsl:for-each select="$dimWithNoDefaultList">
+																<xsl:text>MissingParameterValue</xsl:text>
+																<xsl:if test="not(position() = last())">
+																	<xsl:text>,</xsl:text>
+																</xsl:if>
+															</xsl:for-each>
+														</xsl:variable>
+														<ctl:call-function name="owsFunctions:validateExceptionReport">
+															<ctl:with-param name="httpParserExceptionReport" select="$response"/>
+															<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+															<ctl:with-param name="exceptionCodes" select="$exceptionCodes"/>
+															<ctl:with-param name="locators" select="$dimensionsWithNoDefault"/>
+														</ctl:call-function>
+													</xsl:otherwise>
+												</xsl:choose>
+											</xsl:for-each>
+										</xsl:for-each>
+											</xsl:for-each>
+										</xsl:for-each>
+									</xsl:for-each>
+						</xsl:variable>	
+						<xsl:choose>
+							<xsl:when test="contains($results, 'false')">
+								<ctl:message>Test failed. Server.KVP.GET.GetFeatureInfo.Missing.Optional</ctl:message>
+								<ctl:fail/>
+							</xsl:when>
+							<xsl:otherwise>
+								<ctl:message>Test passed:  Server.KVP.GET.GetFeatureInfo.Missing.Optional</ctl:message>
+								<ctl:pass/>
+							</xsl:otherwise>
+						</xsl:choose>					
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>Server.KVP.GET.GetFeatureInfo.Missing.Optional not tested.</ctl:message>
+						<ctl:notTested/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<ctl:message>Server.KVP.GET.GetFeatureInfo.Missing.Optional test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:skipped/>
+			</xsl:otherwise>
+		</xsl:choose>	
+	</ctl:code>	
 </ctl:test>
 
 <ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name" type="MandatoryIfImplemented">
