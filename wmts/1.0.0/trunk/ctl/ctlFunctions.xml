@@ -144,6 +144,7 @@
 		<ctl:return>Actually only returns the first validation error, with a line number of -1, or nothing if no errors.</ctl:return>
 		<ctl:description>Invokes the XML Schema validating parser on the specified doc using the specified schema.</ctl:description>
 		<ctl:code>
+			<!-- <xsl:message>XMLschemaValidate doc <xsl:copy-of select="$doc"/></xsl:message> -->
 			<xsl:variable name="instruction">
 				<parsers:schemas>
 					<xsl:choose>
