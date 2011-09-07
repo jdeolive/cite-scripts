@@ -85,8 +85,8 @@
 								<ctl:with-param name="invalidQuery" select="$invalidQuery"/>
 								<ctl:with-param name="method">get</ctl:with-param>
 								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
-								<ctl:with-param name="exceptionCodes">MissingParameterValue MissingParameterValue</ctl:with-param>
-								<ctl:with-param name="locators">service request</ctl:with-param>
+								<ctl:with-param name="exceptionCodes">MissingParameterValue,MissingParameterValue</ctl:with-param>
+								<ctl:with-param name="locators">service,request</ctl:with-param>
 							</ctl:call-function>
 						</xsl:variable>
 						<xsl:choose>
@@ -283,8 +283,8 @@
 								<ctl:with-param name="invalidQuery" select="$invalidQuery"/>
 								<ctl:with-param name="method">post</ctl:with-param>
 								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
-								<ctl:with-param name="exceptionCodes">MissingParameterValue MissingParameterValue</ctl:with-param>
-								<ctl:with-param name="locators">service request</ctl:with-param>
+								<ctl:with-param name="exceptionCodes">MissingParameterValue,MissingParameterValue</ctl:with-param>
+								<ctl:with-param name="locators">service,request</ctl:with-param>
 							</ctl:call-function>
 						</xsl:variable>
 						<xsl:choose>
@@ -426,7 +426,7 @@
 	1.  The request entity is for a non-existent service
 	2.  The HTTP status code value is set to 404, corresponding to the message "Not Found"
 	</ctl:assertion>
-	<ctl:comment>Test that a WMTS server observes the rules and conventions governing the use of HTTP POST operations.</ctl:comment>
+	<ctl:comment>Test that a WMTS server observes the rules and conventions governing the use of HTTP XML POST operations.</ctl:comment>
 	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.XML.POST.HTTP.Mandatory</ctl:link>
 	<ctl:code>
 		<xsl:choose>
@@ -477,8 +477,8 @@
 									<wmts:GetCapabilit1es serv1ce ="WMTS" />
 								</ctl:with-param>
 								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
-								<ctl:with-param name="exceptionCodes">MissingParameterValue MissingParameterValue</ctl:with-param>
-								<ctl:with-param name="locators">service request</ctl:with-param>
+								<ctl:with-param name="exceptionCodes">MissingParameterValue,MissingParameterValue</ctl:with-param>
+								<ctl:with-param name="locators">service,request</ctl:with-param>
 							</ctl:call-function>
 						</xsl:variable>
 						<xsl:choose>
@@ -530,8 +530,8 @@
 									<wmts:GetCapabilities service ="BOGUS" />
 								</ctl:with-param>
 								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
-								<ctl:with-param name="exceptionCodes">MissingParameterValue MissingParameterValue</ctl:with-param>
-								<ctl:with-param name="locators">service request</ctl:with-param>
+								<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
+								<ctl:with-param name="locators">service</ctl:with-param>
 							</ctl:call-function>
 						</xsl:variable>
 						<xsl:choose>
@@ -583,8 +583,8 @@
 									<wmts:GetBogus service ="WMTS" />
 								</ctl:with-param>
 								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
-								<ctl:with-param name="exceptionCodes">MissingParameterValue MissingParameterValue</ctl:with-param>
-								<ctl:with-param name="locators">service request</ctl:with-param>
+								<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
+								<ctl:with-param name="locators">request</ctl:with-param>
 							</ctl:call-function>
 						</xsl:variable>
 						<xsl:choose>
@@ -613,19 +613,23 @@
 <ctl:test name="wmts:Server.SOAP.POST.HTTP.Mandatory" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
-	1.  TBD
+	A.  TBD: First Draft:   HTTP status code 404
+	1.  The request entity is for a non-existent service
+	2.  The HTTP status code value is set to 404, corresponding to the message "Not Found"
 	</ctl:assertion>
-	<ctl:comment>Test that a WMTS server observes the rules and conventions governing the use of HTTP POST operations.</ctl:comment>
+	<ctl:comment>Test that a WMTS server observes the rules and conventions governing the use of HTTP SOAP POST operations.</ctl:comment>
 	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.SOAP.POST.HTTP.Mandatory</ctl:link>
 	<ctl:code>
 		<xsl:choose>
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.HTTP.Mandatory not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wwwFunctions:provokeNotFoundSOAPPOST">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.HTTP.Mandatory not tested.</ctl:message>
@@ -644,10 +648,12 @@
 <ctl:test name="wmts:Server.SOAP.POST.InvalidQueryString" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is an invalid query document with mal-formed XML.
-	2.  the response entity is a a SOAP 1.2 response message that contains a schema-valid ows:Exception document in the &lt;soap:Detail&gt; element.
+	2.  the response entity is a SOAP 1.2 response message that contains a schema-valid ows:Exception document in the &lt;soap:Detail&gt; element.
 	3.  the response entity contains an exceptionCode attribute value of "MissingParameterValue".
 	4.  the response entity contains a locator attribute value of "service" or "request".
 	5.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".</ctl:assertion>
@@ -658,8 +664,25 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.InvalidQueryString not implemented yet</ctl:message>
-						<ctl:warning/>
+						<xsl:variable name="testResult">
+							<ctl:call-function name="owsFunctions:provokeSOAPException">
+								<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+								<ctl:with-param name="invalidBody">
+									<wmts:GetCapabilit1es serv1ce ="WMTS" xmlns="http://www.opengis.net/ows/1.1" />
+								</ctl:with-param>
+								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+								<ctl:with-param name="exceptionCodes">MissingParameterValue,MissingParameterValue</ctl:with-param>
+								<ctl:with-param name="locators">service,request</ctl:with-param>
+							</ctl:call-function>
+						</xsl:variable>
+						<xsl:choose>
+							<xsl:when test="$testResult = 'true' ">
+								<ctl:pass/>
+							</xsl:when>
+							<xsl:otherwise>
+								<ctl:fail/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.InvalidQueryString not tested.</ctl:message>
@@ -678,6 +701,8 @@
 <ctl:test name="wmts:Server.SOAP.POST.InvalidService" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity XML document service parameter value is "BOGUS".
@@ -685,7 +710,6 @@
 	3.  the response entity contains an exceptionCode attribute value of "InvalidParameterValue".
 	4.  the response entity contains a locator attribute value of "service".
 	5.  the HTTP status code value is set to 400, corresponding to the message "Bad Request".
-
 	</ctl:assertion>
 	<ctl:comment>Test that a WMTS server returns a valid exception report and HTTP status code in response to an invalid service parameter.</ctl:comment>
 	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.SOAP.POST.InvalidService</ctl:link>
@@ -694,8 +718,25 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.InvalidService not implemented yet</ctl:message>
-						<ctl:warning/>
+						<xsl:variable name="testResult">
+							<ctl:call-function name="owsFunctions:provokeSOAPException">
+								<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+								<ctl:with-param name="invalidBody">
+									<wmts:GetCapabilities service ="BOGUS" xmlns="http://www.opengis.net/ows/1.1" />
+								</ctl:with-param>
+								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+								<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
+								<ctl:with-param name="locators">service</ctl:with-param>
+							</ctl:call-function>
+						</xsl:variable>
+						<xsl:choose>
+							<xsl:when test="$testResult = 'true' ">
+								<ctl:pass/>
+							</xsl:when>
+							<xsl:otherwise>
+								<ctl:fail/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.InvalidService not tested.</ctl:message>
@@ -714,6 +755,8 @@
 <ctl:test name="wmts:Server.SOAP.POST.InvalidRequest" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity XML document request parameter value is "GetBOGUS".
@@ -728,8 +771,25 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.InvalidRequest not implemented yet</ctl:message>
-						<ctl:warning/>
+						<xsl:variable name="testResult">
+							<ctl:call-function name="owsFunctions:provokeSOAPException">
+								<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+								<ctl:with-param name="invalidBody">
+									<wmts:GetBogus service ="WMTS" xmlns="http://www.opengis.net/ows/1.1" />
+								</ctl:with-param>
+								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+								<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
+								<ctl:with-param name="locators">request</ctl:with-param>
+							</ctl:call-function>
+						</xsl:variable>
+						<xsl:choose>
+							<xsl:when test="$testResult = 'true' ">
+								<ctl:pass/>
+							</xsl:when>
+							<xsl:otherwise>
+								<ctl:fail/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.InvalidRequest not tested.</ctl:message>
