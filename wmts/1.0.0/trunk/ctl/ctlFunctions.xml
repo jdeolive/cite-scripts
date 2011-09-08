@@ -17,6 +17,11 @@
 	xmlns:wmts="http://www.opengis.net/wmts/1.0"
 	xmlns:ctlFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/ctlFunctions.xml"	
 >
+	<ctl:function name="ctlFunctions:getSupportedImageTypes">
+		<ctl:description>Gets the supported image types in the ImageIO class (gives a comma-seperated list)</ctl:description>
+		<ctl:java class="com.occamlab.te.parsers.ImageParser" 
+                  method="getSupportedImageTypes"/>		
+	</ctl:function>
 
 	<ctl:function name="ctlFunctions:getImageFormat">
 		<ctl:param name="image.uri"/>
@@ -170,5 +175,37 @@
 			<xsl:copy-of select="$results"/>
 		</ctl:code>
 	</ctl:function>
+
+	<!--Function to parse base64 image data, e.g.
+
+						<xsl:variable name="base64Data">
+iVBORw0KGgoAAAANSUhEUgAABMYAAAOxCAYAAAAejas7AACAAElEQVR42uy9d1SV17r2ff759tl7&#xD;
+p+wUuyAqIL0JUgSkSG/Se+8sWPTee0cQEVTA3k00mpioiVGj0STGVBsivTd7oqZd37wnPoR4dnvf&#xD;
+...
+AAAAAMCT/j9KGCQIgHYI9QAAAABJRU5ErkJggg==&#xD;></xsl:variable>
+						<xsl:variable name="instruction">
+							<parsers:ImageParser>
+								<parsers:type/>
+								<parsers:height/>
+								<parsers:width/>
+								<parsers:metadata/>
+							</parsers:ImageParser>
+						</xsl:variable>
+						<xsl:variable name="response" select="ctlFunctions:ParseBase64ImageData($base64Data, $instruction/*)"/>
+						<xsl:variable name="parsersFormatTokens" select="tokenize($parsersFormatElementName, '_')"/>
+						<xsl:variable name="parsersFormat" select="concat('image/', $parsersFormatTokens[3])"/>
+						<xsl:variable name="type"  select="$response/parsers:ImageParser/parsers:type"/>
+						<xsl:variable name="width" select="$response/parsers:ImageParser/parsers:width"/>
+						<xsl:variable name="height" select="$response/parsers:ImageParser/parsers:height"/>
+						<ctl:message select="concat('parsersFormat ', $parsersFormat, ' type ', $type, ' width: ', $width, ' height: ', $height)"/>
+	 -->
+  <ctl:function name="ctlFunctions:ParseBase64ImageData">
+		<ctl:param name="base64Data">Base 64 image data, e.g. from wmts:BinaryPayload/wmts:BinaryContent returned by SOAPParser as unwrapped content from SOAP GetTile response, or from ImageParser parsers:base64Data instruction from a GetTile image. </ctl:param>
+		<ctl:param name="instruction">parsers:ImageParser element containing a list of parsers:* instruction child elements (any or all of type, height, width, metadata) for the ImageParser</ctl:param>
+		<ctl:return>Requested parsers:* elements with requested data</ctl:return>
+		<ctl:description>Invokes the ImageParser on the specified base64Data using the parsers:* elements specified in the instruction.</ctl:description>
+		<ctl:java class="com.occamlab.te.parsers.ImageParser" method="parseBase64" initialized="false"/>
+  </ctl:function>
+
 
 </ctl:package>
