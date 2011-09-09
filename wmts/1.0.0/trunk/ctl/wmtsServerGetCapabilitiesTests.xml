@@ -243,7 +243,6 @@
 							<ctl:with-param name="service">WMTS</ctl:with-param>
 							<ctl:with-param name="method">get</ctl:with-param>
 							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
-							<ctl:with-param name="exceptionReportSchemaType" select="$exceptionReportSchemaType"/>
 							<ctl:with-param name="version" select="$wmtsVersion"/>
 						</ctl:call-function>
 					</xsl:when>
@@ -1732,7 +1731,6 @@
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
-	<ctl:param name="exceptionReportSchemaType">url | file | resource</ctl:param>
 	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
@@ -3108,7 +3106,7 @@
 							<ctl:call-function name="owsFunctions:provokeXMLException">
 								<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
 								<ctl:with-param name="invalidBody">
-									<wmts:GetCapabilities/>
+									<GetCapabilities  xmlns="http://www.opengis.net/wmts/1.0" />
 								</ctl:with-param>
 								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 								<ctl:with-param name="exceptionCodes">MissingParameterValue</ctl:with-param>
@@ -3162,7 +3160,7 @@
 							<ctl:call-function name="owsFunctions:provokeXMLException">
 								<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
 								<ctl:with-param name="invalidBody">
-									<wmts:GetCapabilities service="BOGUS"/>
+									<GetCapabilities service="BOGUS" xmlns="http://www.opengis.net/wmts/1.0" />
 								</ctl:with-param>
 								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 								<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
@@ -3212,46 +3210,15 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<xsl:variable name="validVersion" select="owsFunctions:validateVersion($wmtsVersion)"/>
-						<xsl:choose>
-							<xsl:when test="not(string($validVersion) = 'true')">
-								<ctl:message><xsl:value-of select="concat('WMTS server version ',$wmtsVersion, ' does not contain three non-negative integers separated by decimal points, in the form x.y.z where he integers y and z do not exceed 99')"/></ctl:message>
-								<ctl:fail/>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:variable name="serviceURL" select="owsFunctions:getServiceURL($capabilitiesURL)"/>
-								<ctl:message select="concat('Sending XML POST GetCapabilities request to ', $serviceURL, ' and validating response.' )"/>
-								<xsl:variable name="response">
-									<ctl:request>
-										<ctl:url>
-											<xsl:value-of select="$serviceURL"/>
-										</ctl:url>
-										<ctl:method>post</ctl:method>
-										<ctl:body>
-											<wmts:GetCapabilities service="WMTS">
-												<ows:AcceptVersions>
-													<ows:Version><xsl:value-of select="$wmtsVersion"/></ows:Version>
-												</ows:AcceptVersions>
-											</wmts:GetCapabilities> 
-										</ctl:body>
-										<parsers:XMLValidatingParser>
-											<parsers:schemas>
-												<parsers:schema type="url">http://www.w3.org/2001/xml.xsd</parsers:schema>
-												<parsers:schema>
-													<xsl:attribute name="type"><xsl:value-of select="$wmtsSchemaType" /></xsl:attribute>
-													<xsl:value-of select="$wmtsSchemaPath" />
-												</parsers:schema>
-											</parsers:schemas>
-										</parsers:XMLValidatingParser>
-									</ctl:request>
-								</xsl:variable>	
-								<ctl:call-function name="owsFunctions:check.GetCapabilities.Request.AcceptVersions.Valid">
-									<ctl:with-param name="service">WMTS</ctl:with-param>
-									<ctl:with-param name="response" select="$response"/>
-									<ctl:with-param name="version" select="$wmtsVersion"/>
-								</ctl:call-function>	
-							</xsl:otherwise>
-						</xsl:choose>	
+						<xsl:variable name="serviceURL" select="owsFunctions:getServiceURL($capabilitiesURL)"/>
+						<ctl:call-function name="owsFunctions:XML.GetCapabilities.Request.AcceptVersions.Valid">
+							<ctl:with-param name="serviceURL" select="$serviceURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
+							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetCapabilities.Request.AcceptVersions.Valid not tested.</ctl:message>
@@ -3289,44 +3256,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<xsl:variable name="validVersion" select="owsFunctions:validateVersion($wmtsVersion)"/>
-						<xsl:choose>
-							<xsl:when test="not(string($validVersion) = 'true')">
-								<ctl:message><xsl:value-of select="concat('WMTS server version ',$wmtsVersion, ' does not contain three non-negative integers separated by decimal points, in the form x.y.z where he integers y and z do not exceed 99')"/></ctl:message>
-								<ctl:fail/>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:variable name="newVersionOne" select="owsFunctions:incrementVersion($wmtsVersion)"/>
-								<xsl:variable name="newVersionTwo" select="owsFunctions:incrementVersion($newVersionOne)"/>
-								<xsl:variable name="acceptVersions" select="concat($newVersionOne, ',', $newVersionTwo)"/>
-								<!-- <ctl:message><xsl:value-of select="concat('newVersionOne ', $newVersionOne, ' newVersionTwo ', $newVersionTwo)"/></ctl:message> -->
-								<xsl:variable name="postBody">
-									<wmts:GetCapabilities service="WMTS">
-										<ows:AcceptVersions>
-											<ows:Version><xsl:value-of select="$newVersionOne"/></ows:Version>
-											<ows:Version><xsl:value-of select="$newVersionTwo"/></ows:Version>
-										</ows:AcceptVersions>
-									</wmts:GetCapabilities> 
-								</xsl:variable>
-								<xsl:variable name="testResult">
-									<ctl:call-function name="owsFunctions:provokeXMLException">
-										<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
-										<ctl:with-param name="invalidBody">
-											<xsl:copy-of select="$postBody"/>
-										</ctl:with-param>
-										<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
-										<ctl:with-param name="exceptionCodes">VersionNegotiationFailed</ctl:with-param>
-										<ctl:with-param name="locators">^</ctl:with-param>
-									</ctl:call-function>
-								</xsl:variable>
-								<ctl:call-function name="owsFunctions:checkGetCapabilities.Request.AcceptVersions.Invalid">
-									<ctl:with-param name="service">WMTS</ctl:with-param>
-									<ctl:with-param name="testResult" select="$testResult"/>
-									<ctl:with-param name="version" select="$wmtsVersion"/>
-									<ctl:with-param name="acceptVersions" select="$acceptVersions"/>
-								</ctl:call-function>
-							</xsl:otherwise>
-						</xsl:choose>
+						<ctl:call-function name="owsFunctions:XML.GetCapabilities.Request.AcceptVersions.Invalid">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetCapabilities.Request.AcceptVersions.Invalid not tested.</ctl:message>
@@ -3361,37 +3296,12 @@
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
 						<xsl:variable name="serviceURL" select="owsFunctions:getServiceURL($capabilitiesURL)"/>
-						<ctl:message select="concat('Sending XML POST GetCapabilities request to ', $serviceURL, ' with optional parameter sections=all and validating response.' )"/>
-						<xsl:variable name="response">
-							<ctl:request>
-								<ctl:url>
-									<xsl:value-of select="$serviceURL"/>
-								</ctl:url>
-								<ctl:method>post</ctl:method>
-								<ctl:body>
-									<wmts:GetCapabilities service="WMTS">
-										<ows:AcceptVersions>
-											<ows:Sections>
-												<ows:Section>All</ows:Section>
-											</ows:Sections>
-										</ows:AcceptVersions>
-									</wmts:GetCapabilities> 
-								</ctl:body>
-								<parsers:XMLValidatingParser>
-									<parsers:schemas>
-										<parsers:schema type="url">http://www.w3.org/2001/xml.xsd</parsers:schema>
-										<parsers:schema>
-											<xsl:attribute name="type"><xsl:value-of select="$wmtsSchemaType" /></xsl:attribute>
-											<xsl:value-of select="$wmtsSchemaPath" />
-										</parsers:schema>
-									</parsers:schemas>
-								</parsers:XMLValidatingParser>
-							</ctl:request>
-						</xsl:variable>		
-						<ctl:call-function name="owsFunctions:check.GetCapabilities.Request.Sections.All">
+						<ctl:call-function name="owsFunctions:XML.GetCapabilities.Request.Sections.All">
+							<ctl:with-param name="serviceURL" select="$serviceURL"/>
 							<ctl:with-param name="service">WMTS</ctl:with-param>
-							<ctl:with-param name="response" select="$response"/>
-						</ctl:call-function>
+							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
+							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
+						</ctl:call-function>					
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.XML.POST.GetCapabilities.Request.Sections.All not tested.</ctl:message>
@@ -3680,11 +3590,11 @@
 							<ctl:call-function name="owsFunctions:provokeXMLException">
 								<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
 								<ctl:with-param name="invalidBody">
-									<wmts:GetCapabilities service="WMTS">
+									<ows:GetCapabilities service="WMTS"  xmlns:ows="http://www.opengis.net/ows/1.1" >
 										<ows:Sections>
 											<ows:Section>Bogus</ows:Section>
 										</ows:Sections>
-									</wmts:GetCapabilities> 
+									</ows:GetCapabilities> 
 								</ctl:with-param>
 								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 								<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
@@ -3743,11 +3653,11 @@
 							<ctl:call-function name="owsFunctions:provokeXMLException">
 								<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
 								<ctl:with-param name="invalidBody">
-									<wmts:GetCapabilities service="WMTS">
+									<ows:GetCapabilities service="WMTS"  xmlns:ows="http://www.opengis.net/ows/1.1" >
 										<ows:Sections>
 											<ows:Section/>
 										</ows:Sections>
-									</wmts:GetCapabilities> 
+									</ows:GetCapabilities> 
 								</ctl:with-param>
 								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 								<ctl:with-param name="exceptionCodes">MissingParameterValue</ctl:with-param>
@@ -4583,6 +4493,9 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Request.Mandatory" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
+	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -4595,8 +4508,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.Mandatory not implemented yet</ctl:message>
-						<ctl:warning/>
+						<xsl:variable name="serviceURL" select="owsFunctions:getServiceURL($capabilitiesURL)"/>
+						<ctl:message select="concat('Sending SOAP POST GetCapabilities request to ', $serviceURL, ' and validating response.' )"/>
+						<ctl:call-function name="wmtsFunctions:SOAP.GetCapabilities.Request.Mandatory">
+							<ctl:with-param name="serviceURL" select="$serviceURL"/>
+							<ctl:with-param name="wmtsSchemaPath" select="$wmtsSchemaPath"/>
+							<ctl:with-param name="wmtsSchemaType" select="$wmtsSchemaType"/>
+						</ctl:call-function>						
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.Mandatory not tested.</ctl:message>
@@ -4615,6 +4533,8 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Request.NoService" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -4630,8 +4550,25 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.NoService not implemented yet</ctl:message>
-						<ctl:warning/>
+						<xsl:variable name="testResult">
+							<ctl:call-function name="owsFunctions:provokeSOAPException">
+								<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+								<ctl:with-param name="invalidBody">
+									<GetCapabilities xmlns="http://www.opengis.net/wmts/1.0" />
+								</ctl:with-param>
+								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+								<ctl:with-param name="exceptionCodes">MissingParameterValue</ctl:with-param>
+								<ctl:with-param name="locators">service</ctl:with-param>
+							</ctl:call-function>
+						</xsl:variable>
+						<xsl:choose>
+							<xsl:when test="$testResult = 'true' ">
+								<ctl:pass/>
+							</xsl:when>
+							<xsl:otherwise>
+								<ctl:fail/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.NoService not tested.</ctl:message>
@@ -4650,6 +4587,8 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Request.InvalidService" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -4665,8 +4604,25 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.InvalidService not implemented yet</ctl:message>
-						<ctl:warning/>
+						<xsl:variable name="testResult">
+							<ctl:call-function name="owsFunctions:provokeSOAPException">
+								<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+								<ctl:with-param name="invalidBody">
+									<GetCapabilities service="BOGUS" xmlns="http://www.opengis.net/wmts/1.0" />
+								</ctl:with-param>
+								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+								<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
+								<ctl:with-param name="locators">service</ctl:with-param>
+							</ctl:call-function>
+						</xsl:variable>
+						<xsl:choose>
+							<xsl:when test="$testResult = 'true' ">
+								<ctl:pass/>
+							</xsl:when>
+							<xsl:otherwise>
+								<ctl:fail/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.InvalidService not tested.</ctl:message>
@@ -4685,6 +4641,10 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Request.AcceptVersions.Valid" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
+	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the optional AcceptVersions parameter;
@@ -4698,8 +4658,15 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.AcceptVersions.Valid not implemented yet</ctl:message>
-						<ctl:warning/>
+						<xsl:variable name="serviceURL" select="owsFunctions:getServiceURL($capabilitiesURL)"/>
+						<ctl:call-function name="owsFunctions:SOAP.GetCapabilities.Request.AcceptVersions.Valid">
+							<ctl:with-param name="serviceURL" select="$serviceURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+							<ctl:with-param name="method">post</ctl:with-param>
+							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
+							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.AcceptVersions.Valid not tested.</ctl:message>
@@ -4718,6 +4685,10 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Request.AcceptVersions.Invalid" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
+	<ctl:param name="exceptionReportSchemaType">url | file | resource</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the optional AcceptVersions parameter;
@@ -4733,8 +4704,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.AcceptVersions.Invalid not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="owsFunctions:SOAP.GetCapabilities.Request.AcceptVersions.Invalid">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.AcceptVersions.Invalid not tested.</ctl:message>
@@ -4753,6 +4728,9 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Request.Sections.All" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
+	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the optional Sections parameter;
@@ -4765,8 +4743,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.Sections.All not implemented yet</ctl:message>
-						<ctl:warning/>
+						<xsl:variable name="serviceURL" select="owsFunctions:getServiceURL($capabilitiesURL)"/>
+						<ctl:call-function name="owsFunctions:SOAP.GetCapabilities.Request.Sections.All">
+							<ctl:with-param name="serviceURL" select="$serviceURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
+							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
+						</ctl:call-function>					
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.Sections.All not tested.</ctl:message>
@@ -4785,6 +4768,9 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Request.Sections.ServiceIdentification" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
+	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the optional Sections parameter;
@@ -4797,8 +4783,14 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.Sections.ServiceIdentification not implemented yet</ctl:message>
-						<ctl:warning/>
+						<xsl:variable name="serviceURL" select="owsFunctions:getServiceURL($capabilitiesURL)"/>
+						<ctl:call-function name="owsFunctions:SOAP.GetCapabilities.Request.Specific.Sections">
+							<ctl:with-param name="serviceURL" select="$serviceURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+							<ctl:with-param name="sections">ServiceIdentification</ctl:with-param>
+							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
+							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.Sections.ServiceIdentification not tested.</ctl:message>
@@ -4817,6 +4809,9 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Request.Sections.ServiceProvider" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
+	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the optional Sections parameter;
@@ -4829,8 +4824,14 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.Sections.ServiceProvider not implemented yet</ctl:message>
-						<ctl:warning/>
+						<xsl:variable name="serviceURL" select="owsFunctions:getServiceURL($capabilitiesURL)"/>
+						<ctl:call-function name="owsFunctions:SOAP.GetCapabilities.Request.Specific.Sections">
+							<ctl:with-param name="serviceURL" select="$serviceURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+							<ctl:with-param name="sections">ServiceProvider</ctl:with-param>
+							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
+							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.Sections.ServiceProvider not tested.</ctl:message>
@@ -4849,6 +4850,9 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Request.Sections.OperationsMetadata" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
+	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1. the request entity is a valid SOAP POST GetCapabilities request with the optional Sections parameter;
@@ -4861,8 +4865,14 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.Sections.OperationsMetadata not implemented yet</ctl:message>
-						<ctl:warning/>
+						<xsl:variable name="serviceURL" select="owsFunctions:getServiceURL($capabilitiesURL)"/>
+						<ctl:call-function name="owsFunctions:SOAP.GetCapabilities.Request.Specific.Sections">
+							<ctl:with-param name="serviceURL" select="$serviceURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+							<ctl:with-param name="sections">OperationsMetadata</ctl:with-param>
+							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
+							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.Sections.OperationsMetadata not tested.</ctl:message>
@@ -4881,6 +4891,9 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Request.Sections.Contents" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
+	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the optional Sections parameter;
@@ -4893,8 +4906,14 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.Sections.Contents not implemented yet</ctl:message>
-						<ctl:warning/>
+						<xsl:variable name="serviceURL" select="owsFunctions:getServiceURL($capabilitiesURL)"/>
+						<ctl:call-function name="owsFunctions:SOAP.GetCapabilities.Request.Specific.Sections">
+							<ctl:with-param name="serviceURL" select="$serviceURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+							<ctl:with-param name="sections">Contents</ctl:with-param>
+							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
+							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.Sections.Contents not tested.</ctl:message>
@@ -4913,6 +4932,9 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Request.Sections.Themes" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
+	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the optional Sections parameter;
@@ -4925,8 +4947,14 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.Sections.Themes not implemented yet</ctl:message>
-						<ctl:warning/>
+						<xsl:variable name="serviceURL" select="owsFunctions:getServiceURL($capabilitiesURL)"/>
+						<ctl:call-function name="owsFunctions:SOAP.GetCapabilities.Request.Specific.Sections">
+							<ctl:with-param name="serviceURL" select="$serviceURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+							<ctl:with-param name="sections">Themes</ctl:with-param>
+							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
+							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.Sections.Themes not tested.</ctl:message>
@@ -4945,6 +4973,9 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Request.Sections.Multiple" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
+	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the optional Sections parameter;
@@ -4957,8 +4988,14 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.Sections.Multiple not implemented yet</ctl:message>
-						<ctl:warning/>
+						<xsl:variable name="serviceURL" select="owsFunctions:getServiceURL($capabilitiesURL)"/>
+						<ctl:call-function name="owsFunctions:SOAP.GetCapabilities.Request.Specific.Sections">
+							<ctl:with-param name="serviceURL" select="$serviceURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+							<ctl:with-param name="sections">Contents,Themes</ctl:with-param>
+							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
+							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.Sections.Multiple not tested.</ctl:message>
@@ -4977,6 +5014,9 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Request.Sections.Invalid" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
+	<ctl:param name="exceptionReportSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the optional Sections parameter;
@@ -4992,8 +5032,33 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.Sections.Invalid not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:message>Sending SOAP POST GetCapabilities request with optional parameter sections=Bogus and validating response.</ctl:message>
+						<xsl:variable name="invalidQuery">service=WMTS&amp;request=GetCapabilities&amp;sections=Bogus</xsl:variable>
+						<xsl:variable name="testResult">
+							<ctl:call-function name="owsFunctions:provokeSOAPException">
+								<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+								<ctl:with-param name="invalidBody">
+									<ows:GetCapabilities service="WMTS"  xmlns:ows="http://www.opengis.net/ows/1.1" >
+										<ows:Sections>
+											<ows:Section>Bogus</ows:Section>
+										</ows:Sections>
+									</ows:GetCapabilities> 
+								</ctl:with-param>
+								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+								<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
+								<ctl:with-param name="locators">sections</ctl:with-param>
+							</ctl:call-function>
+						</xsl:variable>
+						<xsl:choose>
+							<xsl:when test="$testResult = 'true' ">
+								<ctl:message>Test passed:  Server returned correct ows:ExceptionReport and HTTP status in response to request with a sections parameter value of Bogus.</ctl:message>
+								<ctl:pass/>
+							</xsl:when>
+							<xsl:otherwise>
+								<ctl:message>Test skipped:  Server did not return a correct ows:ExceptionReport and HTTP status in response to request with a sections parameter value of Bogus, so sections option considered to not be implemented.')"/></ctl:message>
+								<ctl:skipped/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.Sections.Invalid not tested.</ctl:message>
@@ -5012,6 +5077,9 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Request.Sections.Missing" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
+	<ctl:param name="exceptionReportSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the optional Sections parameter;
@@ -5027,8 +5095,33 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.Sections.Missing not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:message>Sending SOAP POST GetCapabilities request with optional parameter sections with a missing parameter value and validating response.</ctl:message>
+						<xsl:variable name="invalidQuery">service=WMTS&amp;request=GetCapabilities&amp;sections=</xsl:variable>
+						<xsl:variable name="testResult">
+							<ctl:call-function name="owsFunctions:provokeSOAPException">
+								<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+								<ctl:with-param name="invalidBody">
+									<ows:GetCapabilities service="WMTS"  xmlns:ows="http://www.opengis.net/ows/1.1" >
+										<ows:Sections>
+											<ows:Section/>
+										</ows:Sections>
+									</ows:GetCapabilities> 
+								</ctl:with-param>
+								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+								<ctl:with-param name="exceptionCodes">MissingParameterValue</ctl:with-param>
+								<ctl:with-param name="locators">sections</ctl:with-param>
+							</ctl:call-function>
+						</xsl:variable>
+						<xsl:choose>
+							<xsl:when test="$testResult = 'true' ">
+								<ctl:message>Test passed:  Server returned correct ows:ExceptionReport and HTTP status in response to request with a sections parameter with a missing value.</ctl:message>
+								<ctl:pass/>
+							</xsl:when>
+							<xsl:otherwise>
+								<ctl:message>Test skipped: Server did not return a correct ows:ExceptionReport and HTTP status in response to request with a sections parameter with a missing value, so sections option considered to not be implemented.')"/></ctl:message>
+								<ctl:skipped/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.Sections.Missing not tested.</ctl:message>
@@ -5047,6 +5140,12 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Request.UpdateSequence" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
+	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
+	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
+	<ctl:param name="updateSequence">updateSequence attribute value from bootstrap capabilities document</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
     1.  Operation Request and Service Metadata updateSequence values are equal
@@ -5071,8 +5170,15 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.UpdateSequence not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="owsFunctions:SOAP.GetCapabilities.Request.UpdateSequence">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
+							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+							<ctl:with-param name="version" select="$wmtsVersion"/>
+							<ctl:with-param name="updateSequence" select="$updateSequence"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.UpdateSequence not tested.</ctl:message>
@@ -5091,6 +5197,10 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Request.AcceptFormats" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
+	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
+	<ctl:param name="acceptFormats">comma separated list of values from capabilties document elements wmts:Capabilities/ows:OperationsMetadata/ows:Parameter[@name='AcceptFormats']/ows:AllowedValues/ows:Value</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
     1.  Request AcceptFormats parameter value is supported by the server.
@@ -5106,8 +5216,27 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.AcceptFormats not implemented yet</ctl:message>
-						<ctl:warning/>
+						<xsl:variable name="acceptFormatsList" select="tokenize(concat($acceptFormats, ',bogus/xml'), ',')"/>
+						<xsl:variable name="acceptFormatResults">
+							<xsl:for-each select="$acceptFormatsList">
+								<ctl:call-function name="owsFunctions:SOAP.GetCapabilities.AcceptFormats">
+									<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+									<ctl:with-param name="service">WMTS</ctl:with-param>
+									<ctl:with-param name="format" select="."/>
+									<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
+								</ctl:call-function>
+							</xsl:for-each>
+						</xsl:variable>
+						<xsl:choose>
+							<xsl:when test="contains($acceptFormatResults, 'false')">
+								<ctl:message>One or more tests of optional acceptFormats parameter failed.</ctl:message>
+								<ctl:fail/>
+							</xsl:when>
+							<xsl:otherwise>
+								<ctl:message>Tests of optional acceptFormats parameter passed.</ctl:message>
+								<ctl:pass/>
+							</xsl:otherwise>
+						</xsl:choose>					
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Request.AcceptFormats not tested.</ctl:message>
@@ -5126,6 +5255,7 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Response.XML.Well.Formed" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -5138,8 +5268,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.XML.Well.Formed not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="owsFunctions:SOAP.GetCapabilities.Response.XML.Well.Formed">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+						</ctl:call-function>					
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.XML.Well.Formed not tested.</ctl:message>
@@ -5158,6 +5290,7 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Response.SchemaReferenced" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -5170,8 +5303,11 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.SchemaReferenced not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="owsFunctions:SOAP.GetCapabilities.Response.SchemaReferenced">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+							<ctl:with-param name="schemas">wmts.xsd,wmtsGetCapabilities_response.xsd</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.SchemaReferenced not tested.</ctl:message>
@@ -5190,6 +5326,9 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Response.SchemaValid" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
+	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -5202,8 +5341,12 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.SchemaValid not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="owsFunctions:SOAP.GetCapabilities.Response.SchemaValid">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
+							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.SchemaValid not tested.</ctl:message>
@@ -5222,6 +5365,7 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Response.AdvertisedFormat" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -5234,8 +5378,11 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.AdvertisedFormat not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="owsFunctions:SOAP.GetCapabilities.Response.AdvertisedFormat">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+							<ctl:with-param name="requiredFormat">application/xml</ctl:with-param>
+						</ctl:call-function>				
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.AdvertisedFormat not tested.</ctl:message>
@@ -5254,6 +5401,7 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Response.OnlineResource" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -5266,8 +5414,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.OnlineResource not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="owsFunctions:SOAP.GetCapabilities.Response.OnlineResource">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.OnlineResource not tested.</ctl:message>
@@ -5286,6 +5436,7 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Response.Encoding.Constraint" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -5298,8 +5449,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.Encoding.Constraint not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="owsFunctions:SOAP.GetCapabilities.Response.Encoding.Constraint">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.Encoding.Constraint not tested.</ctl:message>
@@ -5318,6 +5471,7 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Response.Layer.Identifiers.Unique" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -5330,8 +5484,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.Layer.Identifiers.Unique not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:SOAP.GetCapabilities.Response.Layer.Identifiers.Unique">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.Layer.Identifiers.Unique not tested.</ctl:message>
@@ -5350,6 +5506,7 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Response.No.Layers.OtherSource" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -5362,8 +5519,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.No.Layers.OtherSource not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:SOAP.GetCapabilities.Response.No.Layers.OtherSource">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.No.Layers.OtherSource not tested.</ctl:message>
@@ -5382,6 +5541,7 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Response.Style.Identifiers.Unique" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -5394,8 +5554,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.Style.Identifiers.Unique not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:SOAP.GetCapabilities.Response.Style.Identifiers.Unique">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.Style.Identifiers.Unique not tested.</ctl:message>
@@ -5414,6 +5576,7 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Response.Layer.LegendURL.Correct.Resource" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -5432,8 +5595,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.Layer.LegendURL.Correct.Resource not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:SOAP.GetCapabilities.Response.Layer.LegendURL.Correct.Resource">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+						</ctl:call-function>					
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.Layer.LegendURL.Correct.Resource not tested.</ctl:message>
@@ -5452,6 +5617,7 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Response.Layer.LegendURL.Correct.Format" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -5464,8 +5630,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.Layer.LegendURL.Correct.Format not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions.SOAP.GetCapabilities.Response.Layer.LegendURL.Correct.Format">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.Layer.LegendURL.Correct.Format not tested.</ctl:message>
@@ -5484,6 +5652,7 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Response.Layer.LegendURL.Correct.Size" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -5496,8 +5665,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.Layer.LegendURL.Correct.Size not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:SOAP.GetCapabilities.Response.Layer.LegendURL.Correct.Size">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+						</ctl:call-function>					
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.Layer.LegendURL.Correct.Size not tested.</ctl:message>
@@ -5516,6 +5687,7 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Response.Dimension.Identifiers.Unique" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -5528,8 +5700,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.Dimension.Identifiers.Unique not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:SOAP.GetCapabilities.Response.Dimension.Identifiers.Unique">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.Dimension.Identifiers.Unique not tested.</ctl:message>
@@ -5548,6 +5722,7 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Response.Layer.TileMatrixSet.Valid" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -5560,8 +5735,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.Layer.TileMatrixSet.Valid not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:SOAP.GetCapabilities.Response.Layer.TileMatrixSet.Valid">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.Layer.TileMatrixSet.Valid not tested.</ctl:message>
@@ -5580,6 +5757,7 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Response.TileMatrixSet.Identifiers.Unique" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -5592,8 +5770,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.TileMatrixSet.Identifiers.Unique not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:SOAP.GetCapabilities.Response.TileMatrixSet.Identifiers.Unique">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+						</ctl:call-function>		
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.TileMatrixSet.Identifiers.Unique not tested.</ctl:message>
@@ -5612,6 +5792,7 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Response.TileMatrix.Identifiers.Unique" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -5624,8 +5805,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.TileMatrix.Identifiers.Unique not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:SOAP.GetCapabilities.Response.TileMatrix.Identifiers.Unique">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+						</ctl:call-function>					
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.TileMatrix.Identifiers.Unique not tested.</ctl:message>
@@ -5644,6 +5827,7 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Response.TileMatrixSet.ScaleDenominators.Unique" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -5656,8 +5840,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.TileMatrixSet.ScaleDenominators.Unique not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:SOAP.GetCapabilities.Response.TileMatrixSet.ScaleDenominators.Unique">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+						</ctl:call-function>	
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.TileMatrixSet.ScaleDenominators.Unique not tested.</ctl:message>
@@ -5676,6 +5862,7 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -5694,8 +5881,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:SOAP.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet not tested.</ctl:message>
@@ -5714,6 +5903,9 @@
 <ctl:test name="wmts:Server.SOAP.POST.GetCapabilities.Response.Theme.LayerRef.Valid" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
+	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
+	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -5726,8 +5918,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.Theme.LayerRef.Valid not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:SOAP.GetCapabilities.Response.Theme.LayerRef.Valid">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="service">WMTS</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.SOAP.POST.GetCapabilities.Response.Theme.LayerRef.Valid not tested.</ctl:message>
