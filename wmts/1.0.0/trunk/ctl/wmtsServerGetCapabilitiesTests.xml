@@ -716,7 +716,6 @@
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
 	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
-	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
 	<ctl:param name="updateSequence">updateSequence attribute value from bootstrap capabilities document</ctl:param>
@@ -749,7 +748,6 @@
 							<ctl:with-param name="service">WMTS</ctl:with-param>
 							<ctl:with-param name="method">get</ctl:with-param>
 							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
-							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
 							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 							<ctl:with-param name="version" select="$wmtsVersion"/>
 							<ctl:with-param name="updateSequence" select="$updateSequence"/>
@@ -2226,7 +2224,6 @@
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
-	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
 	<ctl:param name="updateSequence">updateSequence attribute value from bootstrap capabilities document</ctl:param>
@@ -2259,7 +2256,6 @@
 							<ctl:with-param name="service">WMTS</ctl:with-param>
 							<ctl:with-param name="method">post</ctl:with-param>
 							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
-							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
 							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 							<ctl:with-param name="version" select="$wmtsVersion"/>
 							<ctl:with-param name="updateSequence" select="$updateSequence"/>
@@ -3694,7 +3690,6 @@
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
-	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
 	<ctl:param name="updateSequence">updateSequence attribute value from bootstrap capabilities document</ctl:param>
@@ -3726,7 +3721,6 @@
 							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
 							<ctl:with-param name="service">WMTS</ctl:with-param>
 							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
-							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
 							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 							<ctl:with-param name="version" select="$wmtsVersion"/>
 							<ctl:with-param name="updateSequence" select="$updateSequence"/>
@@ -4495,7 +4489,6 @@
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
-	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -4513,7 +4506,6 @@
 						<ctl:call-function name="wmtsFunctions:SOAP.GetCapabilities.Request.Mandatory">
 							<ctl:with-param name="serviceURL" select="$serviceURL"/>
 							<ctl:with-param name="wmtsSchemaPath" select="$wmtsSchemaPath"/>
-							<ctl:with-param name="wmtsSchemaType" select="$wmtsSchemaType"/>
 						</ctl:call-function>						
 					</xsl:when>
 					<xsl:otherwise>
@@ -4643,7 +4635,6 @@
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
-	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
@@ -4664,7 +4655,6 @@
 							<ctl:with-param name="service">WMTS</ctl:with-param>
 							<ctl:with-param name="method">post</ctl:with-param>
 							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
-							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
 							<ctl:with-param name="version" select="$wmtsVersion"/>
 						</ctl:call-function>
 					</xsl:when>
@@ -4730,7 +4720,6 @@
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
-	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the optional Sections parameter;
@@ -4748,7 +4737,6 @@
 							<ctl:with-param name="serviceURL" select="$serviceURL"/>
 							<ctl:with-param name="service">WMTS</ctl:with-param>
 							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
-							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
 						</ctl:call-function>					
 					</xsl:when>
 					<xsl:otherwise>
@@ -4770,7 +4758,6 @@
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
-	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the optional Sections parameter;
@@ -4789,7 +4776,6 @@
 							<ctl:with-param name="service">WMTS</ctl:with-param>
 							<ctl:with-param name="sections">ServiceIdentification</ctl:with-param>
 							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
-							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
 						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
@@ -4811,7 +4797,6 @@
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
-	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the optional Sections parameter;
@@ -4830,7 +4815,6 @@
 							<ctl:with-param name="service">WMTS</ctl:with-param>
 							<ctl:with-param name="sections">ServiceProvider</ctl:with-param>
 							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
-							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
 						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
@@ -4852,7 +4836,6 @@
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
-	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1. the request entity is a valid SOAP POST GetCapabilities request with the optional Sections parameter;
@@ -4871,7 +4854,6 @@
 							<ctl:with-param name="service">WMTS</ctl:with-param>
 							<ctl:with-param name="sections">OperationsMetadata</ctl:with-param>
 							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
-							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
 						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
@@ -4893,7 +4875,6 @@
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
-	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the optional Sections parameter;
@@ -4912,7 +4893,6 @@
 							<ctl:with-param name="service">WMTS</ctl:with-param>
 							<ctl:with-param name="sections">Contents</ctl:with-param>
 							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
-							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
 						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
@@ -4934,7 +4914,6 @@
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
-	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the optional Sections parameter;
@@ -4953,7 +4932,6 @@
 							<ctl:with-param name="service">WMTS</ctl:with-param>
 							<ctl:with-param name="sections">Themes</ctl:with-param>
 							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
-							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
 						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
@@ -4975,7 +4953,6 @@
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
-	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the optional Sections parameter;
@@ -4994,7 +4971,6 @@
 							<ctl:with-param name="service">WMTS</ctl:with-param>
 							<ctl:with-param name="sections">Contents,Themes</ctl:with-param>
 							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
-							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
 						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
@@ -5016,7 +4992,6 @@
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
-	<ctl:param name="exceptionReportSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the optional Sections parameter;
@@ -5079,7 +5054,6 @@
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
-	<ctl:param name="exceptionReportSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the optional Sections parameter;
@@ -5142,7 +5116,6 @@
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
-	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
 	<ctl:param name="updateSequence">updateSequence attribute value from bootstrap capabilities document</ctl:param>
@@ -5174,7 +5147,6 @@
 							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
 							<ctl:with-param name="service">WMTS</ctl:with-param>
 							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
-							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
 							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 							<ctl:with-param name="version" select="$wmtsVersion"/>
 							<ctl:with-param name="updateSequence" select="$updateSequence"/>
@@ -5328,7 +5300,6 @@
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
-	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid SOAP POST GetCapabilities request with the mandatory request parameter with a value of GetCapabilities;
@@ -5345,7 +5316,6 @@
 							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
 							<ctl:with-param name="service">WMTS</ctl:with-param>
 							<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
-							<ctl:with-param name="schemaType" select="$wmtsSchemaType"/>
 						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
@@ -5940,6 +5910,9 @@
 <ctl:test name="wmts:Server.RESTful.GetCapabilities.Request.Mandatory" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/wmts:ServiceMetadataURL/@xlink:href</ctl:param>
+	<ctl:param name="wmtsSchemaPath">full path to wmts.xsd</ctl:param>
+	<ctl:param name="wmtsSchemaType">url | file | resource</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetCapabilities request invoking the ServiceMetadataURL for a complete Service Metadata document advertised by a WMTS server.
@@ -5955,8 +5928,13 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetCapabilities.Request.Mandatory not implemented yet</ctl:message>
-						<ctl:warning/>
+						<xsl:variable name="serviceURL" select="owsFunctions:getServiceURL($capabilitiesURL)"/>
+						<ctl:message select="concat('Sending RESTful GetCapabilities request to ', $serviceURL, ' and validating response.' )"/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetCapabilities.Request.Mandatory">
+							<ctl:with-param name="serviceURL" select="$serviceURL"/>
+							<ctl:with-param name="wmtsSchemaPath" select="$wmtsSchemaPath"/>
+							<ctl:with-param name="wmtsSchemaType" select="$wmtsSchemaType"/>
+						</ctl:call-function>						
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetCapabilities.Request.Mandatory not tested.</ctl:message>
