@@ -808,9 +808,12 @@
 <ctl:test name="wmts:Server.RESTful.HTTP.Mandatory" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/wmts:ServiceMetadataURL/@xlink:href</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
-	1.  TBD
+	A.  TBD: First Draft:   HTTP status code 404
+	1.  The request entity is for a non-existent service
+	2.  The HTTP status code value is set to 404, corresponding to the message "Not Found"
 	</ctl:assertion>
 	<ctl:comment>Test that a WMTS server observes the rules and conventions governing the use of HTTP GET operations.</ctl:comment>
 	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.RESTful.HTTP.Mandatory</ctl:link>
@@ -819,8 +822,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.HTTP.Mandatory not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wwwFunctions:provokeNotFound">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.HTTP.Mandatory not tested.</ctl:message>
@@ -836,22 +841,26 @@
 	</ctl:code>
 </ctl:test>
 
-<ctl:test name="wmts:Server.RESTful.InvalidRequest" type="MandatoryIfImplemented">
+<ctl:test name="wmts:Server.RESTful.InvalidQueryString" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="capabilitiesURL">/wmts:Capabilities/wmts:ServiceMetadataURL/@xlink:href</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request invokes a URL that consists of the ServiceMetadataURL advertised in the Service Metadata document, concatenated with "/Bogus".
-	2.  the server returns an HTTP status code of 404 (File not found).</ctl:assertion>
-	<ctl:comment>Test that a WMTS server returns an HTTP status code of 404 (File not found) in response to an invalid request.</ctl:comment>
+	2.  the server returns an HTTP status code of 404 (Not Found).</ctl:assertion>
+	<ctl:comment>Test that a WMTS server returns an HTTP status code of 404 (Not Found) in response to an invalid request.</ctl:comment>
 	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.RESTful.InvalidRequest</ctl:link>
 	<ctl:code>
 		<xsl:choose>
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.InvalidRequest not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wwwFunctions:provokeNotFound">
+							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
+							<ctl:with-param name="method">get</ctl:with-param>
+							<ctl:with-param name="bogusSuffix">/Bogus</ctl:with-param>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.InvalidRequest not tested.</ctl:message>
