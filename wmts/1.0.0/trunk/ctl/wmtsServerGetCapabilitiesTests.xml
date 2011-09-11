@@ -221,7 +221,6 @@
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
 	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
-	<ctl:param name="exceptionReportSchemaType">url | file | resource</ctl:param>
 	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
@@ -1750,7 +1749,6 @@
 							<ctl:with-param name="service">WMTS</ctl:with-param>
 							<ctl:with-param name="method">post</ctl:with-param>
 							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
-							<ctl:with-param name="exceptionReportSchemaType" select="$exceptionReportSchemaType"/>
 							<ctl:with-param name="version" select="$wmtsVersion"/>
 						</ctl:call-function>
 					</xsl:when>
@@ -3235,7 +3233,6 @@
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
-	<ctl:param name="exceptionReportSchemaType">url | file | resource</ctl:param>
 	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
@@ -4677,7 +4674,6 @@
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
 	<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
-	<ctl:param name="exceptionReportSchemaType">url | file | resource</ctl:param>
 	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
