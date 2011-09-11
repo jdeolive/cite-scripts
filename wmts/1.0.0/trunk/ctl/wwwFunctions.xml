@@ -130,13 +130,33 @@ MIME parameters don't have to match anymore - see issue 24, MIME type test too s
 		<ctl:param name="method">get|post</ctl:param>
 		<ctl:description>Provoke an HTTP 404 error and test whether the server returns that status code.</ctl:description>
 		<ctl:code>
+			<xsl:value-of select="wwwFunctions:provokeNotFound($capabilitiesURL, $method, '/nonesuch')"/>
+		</ctl:code>
+	</ctl:function>	
+	
+	<ctl:function name="wwwFunctions:provokeNotFound">
+		<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
+		<ctl:param name="method">get|post</ctl:param>
+		<ctl:param name="bogusSuffix"/>
+		<ctl:description>Provoke an HTTP 404 error and test whether the server returns that status code.</ctl:description>
+		<ctl:code>
 			<xsl:variable name="invalidQueryString">
 				<xsl:choose>
 					<xsl:when test="ends-with($capabilitiesURL,'?')">
-						<xsl:value-of select="concat(substring-before($capabilitiesURL, '?'),  '/nonesuch')"/>
+						<xsl:value-of select="concat(substring-before($capabilitiesURL, '?'),  $bogusSuffix)"/>
+					</xsl:when>
+					<xsl:when test="ends-with($capabilitiesURL,'.xml')">
+						<xsl:choose>
+							<xsl:when test="starts-with($bogusSuffix, '/')">
+								<xsl:value-of select="concat(substring-before($capabilitiesURL, '.xml'), substring-after($bogusSuffix,'/'), '.xml')"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="concat(substring-before($capabilitiesURL, '.xml'), $bogusSuffix, '.xml')"/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:value-of select="concat($capabilitiesURL, '/nonesuch')"/>
+						<xsl:value-of select="concat($capabilitiesURL, $bogusSuffix)"/>
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:variable>
@@ -163,7 +183,7 @@ MIME parameters don't have to match anymore - see issue 24, MIME type test too s
 			</xsl:choose>		
 		</ctl:code>
 	</ctl:function>	
-
+	
 	<ctl:function name="wwwFunctions:provokeNotFoundXMLPOST">
 		<ctl:param name="capabilitiesURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Post/@xlink:href</ctl:param>
 		<ctl:description>Provoke an HTTP 404 error and test whether the server returns that status code.</ctl:description>
@@ -221,5 +241,39 @@ MIME parameters don't have to match anymore - see issue 24, MIME type test too s
 		</ctl:code>
 	</ctl:function>	
 
-	
+	<ctl:function name="wwwFunctions:describeNode">
+		<ctl:param name="node">The XML node to be described.</ctl:param>
+		<ctl:description>Describes an XML node by the name of the first element and the name of the first child element if any, or by the general xs:anyAtomicType name of item()s that are not node(s).  It should be called with a node parameter value of a variable name without XPath qualification to avoid not a node() type XPath expression evaluation errors, e.g. select="wwwFunctions:describeNode($var)", not ($var/*). </ctl:description>
+		<ctl:code>
+			<xsl:choose>
+				<xsl:when test="$node instance of element()">
+					<xsl:value-of select="concat('element with name ', name($node))"/>
+					<xsl:variable name="firstChild" select="$node/*[1]"/>
+					<xsl:if test="exists($firstChild)">
+						<xsl:value-of select="concat(' and first child ', name($firstChild))"/>
+					</xsl:if>
+				</xsl:when>
+				<xsl:when test="$node instance of text()">
+					<xsl:text>text</xsl:text>
+				</xsl:when>
+				<xsl:when test="$node instance of node()">
+					<xsl:variable name="firstChild" select="$node/*[1]"/>
+					<xsl:choose>
+						<xsl:when test="exists($firstChild)">
+							<xsl:text>node contains </xsl:text>
+							<xsl:value-of select="wwwFunctions:describeNode($firstChild)"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:variable name="data" select="data($node)"/>
+							<xsl:text>node is </xsl:text>
+							<xsl:value-of select="wwwFunctions:describeNode($data)"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:when>
+				<xsl:when test="$node instance of xs:anyAtomicType">
+					<xsl:text>anyAtomicType</xsl:text>
+				</xsl:when>
+			</xsl:choose>
+		</ctl:code>
+	</ctl:function>
 </ctl:package>
