@@ -145,4 +145,9 @@ Issue is the spec confirms « 0 values are allowed » (table 12) when at the same 
 		</complexType>
 	</element>
 	
+9/11/2011
+
+    In the KVP GET/POST, XML POST and SOAP POST interfaces, a GetFeatureRequest must include both the format of the tile, and the infoFormat of the FeatureInfo.  
+However, Table 33 on p. 65  of OGC 07-057r7 specifies that the format attribute of the URL template is to be used for the infoFormat of the FeatureInfo.  As there is no 
+infoFormat variable specified in Table 34 on pp 66-67, this leaves no way to specify the Tile format, making the RESTful GetFeatureRequest inconsistent with the other interfaces.
 
