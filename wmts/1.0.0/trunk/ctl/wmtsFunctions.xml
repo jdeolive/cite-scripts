@@ -5483,7 +5483,6 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 									<ctl:with-param name="selected" select="$testSelected"/>
 									<ctl:with-param name="capabilitiesURL" select="$kvpGetCapabilitiesURL"/>
 									<ctl:with-param name="exceptionReportSchemaPath" select="$bootstrap/exceptionReportSchemaPath"/>
-									<ctl:with-param name="exceptionReportSchemaType" select="string(url)"/>
 									<ctl:with-param name="wmtsVersion" select="$bootstrap/wmtsVersion"/>
 								</ctl:call-test>
 							</xsl:when>
@@ -6284,7 +6283,6 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 									<ctl:with-param name="selected" select="$testSelected"/>
 									<ctl:with-param name="capabilitiesURL" select="$postGetCapabilitiesURL"/>
 									<ctl:with-param name="exceptionReportSchemaPath" select="$bootstrap/exceptionReportSchemaPath"/>
-									<ctl:with-param name="exceptionReportSchemaType" select="string(url)"/>									
 									<ctl:with-param name="wmtsVersion" select="$bootstrap/wmtsVersion"/>
 								</ctl:call-test>
 							</xsl:when>
@@ -7086,7 +7084,6 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 									<ctl:with-param name="selected" select="$testSelected"/>
 									<ctl:with-param name="capabilitiesURL" select="$postGetCapabilitiesURL"/>
 									<ctl:with-param name="exceptionReportSchemaPath" select="$bootstrap/exceptionReportSchemaPath"/>
-									<ctl:with-param name="exceptionReportSchemaType" select="string(url)"/>	
 									<ctl:with-param name="wmtsVersion" select="$bootstrap/wmtsVersion"/>
 								</ctl:call-test>
 							</xsl:when>
@@ -7874,7 +7871,6 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 									<ctl:with-param name="selected" select="$testSelected"/>
 									<ctl:with-param name="capabilitiesURL" select="$postGetCapabilitiesURL"/>
 									<ctl:with-param name="exceptionReportSchemaPath" select="$bootstrap/exceptionReportSchemaPath"/>
-									<ctl:with-param name="exceptionReportSchemaType" select="string(url)"/>
 									<ctl:with-param name="wmtsVersion" select="$bootstrap/wmtsVersion"/>
 								</ctl:call-test>
 							</xsl:when>
