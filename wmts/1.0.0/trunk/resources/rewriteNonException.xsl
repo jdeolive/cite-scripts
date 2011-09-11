@@ -14,6 +14,10 @@
 		<xsl:copy-of select="."/>
 	</xsl:template>
 	
+	<xsl:template match="ExceptionReport">
+		<xsl:copy-of select="."/>	
+	</xsl:template>
+
  	<xsl:template match="@*">
 		<xsl:copy-of select="."/>
 	</xsl:template>
