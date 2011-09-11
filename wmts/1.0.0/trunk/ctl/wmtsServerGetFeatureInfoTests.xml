@@ -2016,7 +2016,6 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 							<ctl:with-param name="version" select="$wmtsVersion"/>
 							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
 							<ctl:with-param name="method">post</ctl:with-param>
-							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
