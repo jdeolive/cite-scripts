@@ -42,103 +42,125 @@
 			</xsl:variable>
 			<xsl:choose>
 				<xsl:when test="$mode = 'Redo From Cache Mode' ">
-					<ctl:message>Mode is <xsl:value-of select="$mode"/> - reuse Bootstrap Prerequisites from cache.</ctl:message>
-					<xsl:variable name="bootstrap">
+					<ctl:message>Mode is <xsl:value-of select="$mode"/> - reuse Bootstrap Capabilities Document and Prerequisites from cache.</ctl:message>
+					
+					<xsl:variable name="wmts.capabilities.doc">
 						<ctl:call-function name="ctl:getLogCache">
-							<ctl:with-param name="id">bootstrap</ctl:with-param>
+							<ctl:with-param name="id">capabilities</ctl:with-param>
 						</ctl:call-function>
 					</xsl:variable>
-					<!--
-					<xsl:message>bs <xsl:copy-of select="$bootstrap/*"/></xsl:message>
-					<ctl:call-function name="wmtsBootstrap:printBootstrap">
-						<ctl:with-param name="bootstrap" select="$bootstrap"/>
-					</ctl:call-function> 
-					-->
+
 					<xsl:choose>
-						<xsl:when test="$bootstrap">
-							<ctl:message>Retrieved Bootstrap Prerequisites from cache.</ctl:message>
+						<xsl:when test="$wmts.capabilities.doc">
+							<ctl:message>Retrieved bootstrap wmts.capabilities.doc from cache</ctl:message>
+							
 							<ctl:call-function name="ctl:putLogCache">
-								<ctl:with-param name="id">bootstrap</ctl:with-param>
-								<ctl:with-param name="xmlToCache"><xsl:copy-of select="$bootstrap"/></ctl:with-param> 
+								<ctl:with-param name="id">capabilities</ctl:with-param>
+								<ctl:with-param name="xmlToCache"><xsl:copy-of select="$wmts.capabilities.doc"/></ctl:with-param> 
 							</ctl:call-function>
-							<xsl:variable name="form-values">
-								<ctl:form>						
-									<body>
-										<h2 align="center">Compliance test suite for Web Map Tile Service (WMTS) 1.0</h2>
-										<p/>
-										<blockquote>
-											<table width="400" border="0" padding="4" bgcolor="#00ffff" align="center">
-												<tr>
-													<th colspan="3" align="center">Test Selection - From Cache or New</th>
-												</tr>
-												<tr/>
-												<tr>
-													<td colspan="3" align="left">Please click one of the following radio buttons, then click OK</td>
-												</tr>
-												<tr>
-													<td width="80"><input type="radio" name="newOrFromCache" checked="true" value="cached">Cached Selections</input></td>
-													<td width="80"><input type="radio" name="newOrFromCache" value="new">New Selections</input></td>
-													<td align="right"><input type="submit" value="OK" /></td>
-														</tr>			
-											</table>
-										</blockquote>
-									</body>
-								</ctl:form>
+							
+							<xsl:variable name="bootstrap">
+								<ctl:call-function name="ctl:getLogCache">
+									<ctl:with-param name="id">bootstrap</ctl:with-param>
+								</ctl:call-function>
 							</xsl:variable>
-							<xsl:variable name="reselect" select="$form-values/values/value[@key='newOrFromCache']"/>
-							<xsl:variable name="selected">
-								<xsl:choose>
-									<xsl:when test="$reselect = 'new' ">
-										<ctl:call-function name="wmts:testMenus">
-											<ctl:with-param name="bootstrap" select="$bootstrap/*"/>
-										</ctl:call-function>
-									</xsl:when>
-									<xsl:otherwise>
-										<ctl:call-function name="ctl:getLogCache">
-											<ctl:with-param name="id">selected</ctl:with-param>
-										</ctl:call-function>
-									</xsl:otherwise>
-								</xsl:choose>
-							</xsl:variable>
+									
 							<xsl:choose>
-								<xsl:when test="count($selected/sel/*) gt 0">		
-									<xsl:variable name="selectedWithSummary">
-										<ctl:call-function name="wmtsFunctions:interfaceSummary">
-											<ctl:with-param name="selected" select="$selected"/>
-										</ctl:call-function>
-									</xsl:variable>
-
+								<xsl:when test="$bootstrap">
+									<ctl:message>Retrieved Bootstrap Prerequisites from cache.</ctl:message>
+									
 									<ctl:call-function name="ctl:putLogCache">
-										<ctl:with-param name="id">selected</ctl:with-param>
-										<ctl:with-param name="xmlToCache" select="$selectedWithSummary"/>
+										<ctl:with-param name="id">bootstrap</ctl:with-param>
+										<ctl:with-param name="xmlToCache"><xsl:copy-of select="$bootstrap"/></ctl:with-param> 
 									</ctl:call-function>
-									<ctl:message>Completed test selecton - selected tests will now be run.</ctl:message>
-
-									<!-- <xsl:message>selected <xsl:copy-of select="$selected"/></xsl:message> -->
-									<ctl:call-function name="wmtsFunctions:printSelected">
-										<ctl:with-param name="selected" select="$selectedWithSummary"/>
-									</ctl:call-function>
-
-									<ctl:message>calling wmtsFunctions:invokeSelectedTest in RedoFromCache mode</ctl:message>
-									<xsl:variable name="testResults">
-										<ctl:call-function name="wmtsFunctions:invokeSelectedTests">
-											<ctl:with-param name="bootstrap" select="$bootstrap/*"/>
-											<ctl:with-param name="selected" select="$selected"/>
-										</ctl:call-function>
+									
+									<xsl:variable name="form-values">
+										<ctl:form>						
+											<body>
+												<h2 align="center">Compliance test suite for Web Map Tile Service (WMTS) 1.0</h2>
+												<p/>
+												<blockquote>
+													<table width="400" border="0" padding="4" bgcolor="#00ffff" align="center">
+														<tr>
+															<th colspan="3" align="center">Test Selection - From Cache or New</th>
+														</tr>
+														<tr/>
+														<tr>
+															<td colspan="3" align="left">Please click one of the following radio buttons, then click OK</td>
+														</tr>
+														<tr>
+															<td width="80"><input type="radio" name="newOrFromCache" checked="true" value="cached">Cached Selections</input></td>
+															<td width="80"><input type="radio" name="newOrFromCache" value="new">New Selections</input></td>
+															<td align="right"><input type="submit" value="OK" /></td>
+																</tr>			
+													</table>
+												</blockquote>
+											</body>
+										</ctl:form>
 									</xsl:variable>
-
+									<xsl:variable name="reselect" select="$form-values/values/value[@key='newOrFromCache']"/>
+									<xsl:variable name="selected">
+										<xsl:choose>
+											<xsl:when test="$reselect = 'new' ">
+												<ctl:call-function name="wmts:testMenus">
+													<ctl:with-param name="bootstrap" select="$bootstrap/*"/>
+												</ctl:call-function>
+											</xsl:when>
+											<xsl:otherwise>
+												<ctl:call-function name="ctl:getLogCache">
+													<ctl:with-param name="id">selected</ctl:with-param>
+												</ctl:call-function>
+											</xsl:otherwise>
+										</xsl:choose>
+									</xsl:variable>
+									<xsl:choose>
+										<xsl:when test="count($selected/sel/*) gt 0">		
+											<xsl:variable name="selectedWithSummary">
+												<ctl:call-function name="wmtsFunctions:interfaceSummary">
+													<ctl:with-param name="selected" select="$selected"/>
+												</ctl:call-function>
+											</xsl:variable>
+		
+											<ctl:call-function name="ctl:putLogCache">
+												<ctl:with-param name="id">selected</ctl:with-param>
+												<ctl:with-param name="xmlToCache" select="$selectedWithSummary"/>
+											</ctl:call-function>
+											<ctl:message>Completed test selecton - selected tests will now be run.</ctl:message>
+		
+											<!-- <xsl:message>selected <xsl:copy-of select="$selected"/></xsl:message> -->
+											<ctl:call-function name="wmtsFunctions:printSelected">
+												<ctl:with-param name="selected" select="$selectedWithSummary"/>
+											</ctl:call-function>
+		
+											<ctl:message>calling wmtsFunctions:invokeSelectedTest in RedoFromCache mode</ctl:message>
+											<xsl:variable name="testResults">
+												<ctl:call-function name="wmtsFunctions:invokeSelectedTests">
+													<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc/*"/>
+													<ctl:with-param name="bootstrap" select="$bootstrap/*"/>
+													<ctl:with-param name="selected" select="$selected"/>
+												</ctl:call-function>
+											</xsl:variable>
+		
+										</xsl:when>
+										<xsl:otherwise>
+											<ctl:message>No tests selected -- failed test selection</ctl:message>
+											<ctl:fail/>
+										</xsl:otherwise>
+									</xsl:choose>
 								</xsl:when>
 								<xsl:otherwise>
-									<ctl:message>No tests selected -- failed test selection</ctl:message>
+									<ctl:message>Failed to retrieve bootstrap from cache - you must start a new test session.</ctl:message>
 									<ctl:fail/>
 								</xsl:otherwise>
 							</xsl:choose>
 						</xsl:when>
 						<xsl:otherwise>
-							<ctl:message>Failed to retrieve bootstrap from cache - you must start a new test session.</ctl:message>
+							<ctl:message>Failed to retrieve bootstrap wmts.capabilities.doc from cache - you must start a new test session.</ctl:message>
 							<ctl:fail/>
 						</xsl:otherwise>
 					</xsl:choose>
+
+
 				</xsl:when>
 				<xsl:otherwise>
 					<ctl:message>Mode is <xsl:value-of select="$mode"/> - get Capabilities Document, validate it, check Bootstrap Prerequisites, get Test Selections.</ctl:message>	
@@ -158,7 +180,9 @@
 				   <xsl:variable name="schemaEncoding">wmts</xsl:variable>
 				   <xsl:variable name="schemaVersion">1.0</xsl:variable>
 				   <xsl:variable name="schemaFilename">wmts.xsd</xsl:variable>
-				   <xsl:variable name="schemaPath" select="ctlFunctions:schemaPath($schemaRoot, $schemaEncoding, $schemaVersion, $schemaFilename)"/>
+				   <xsl:variable name="wmtsSchemaPath" select="ctlFunctions:schemaPath($schemaRoot, $schemaEncoding, $schemaVersion, $schemaFilename)"/>
+				   <!-- change wmtsSchemaType to string('url') once TileMatrixLimits schema errors are fixed -->
+				   <xsl:variable name="wmtsSchemaType" select="string('file')"/>
 				   
 					<!-- prompt the tester for a capabilities document URL -->
 					<xsl:variable name="form-values"> 
@@ -194,7 +218,11 @@
 											<td align="left" width="500">
 												<input name="capabilities-url" size="128" onmouseover="status = 'Provide URL of an OGC WMTS Server'; return true;"
 														type="text" 
-														value="http://localhost:8080/teamengine/data/WMTScapabilitiesETS.xml"/> <!--http://hostname/path ...-->
+														value="http://localhost:8080/teamengine/data/WMTScapabilitiesETS.xml"/> 
+														<!--http://hostname/path ...-->
+														<!-- http://localhost:8080/teamengine/data/WMTScapabilitiesETS.xml -->
+														<!-- http://iws.erdas.com/ImageX/ecw_wmts.dll?service=WMTS&amp;request=getcapabilities&amp;version=1.0.0-->
+														<!-- http://hexagon.intergraph.pl/sdiprowmtscite/service.svc/get?request=GetCapabilities&amp;service=WMTS -->
 											</td>
 											<td><input type="submit" value="OK" /></td>
 										</tr>			
@@ -207,27 +235,31 @@
 					<xsl:variable name="wmts.capabilities.url" select="$form-values/values/value[@key='capabilities-url']"/>
 					<xsl:variable name="isRESTfulURL" select="wwwFunctions:isRESTfulURL($wmts.capabilities.url)"/>
 					<ctl:message select="'********************************************************'"/>
+					
 					<xsl:choose>
 						<xsl:when test="not($isRESTfulURL = 'true')">
 							<ctl:message>KVP Request for a Capabilities Document from the WMTS server: <xsl:value-of select="$wmts.capabilities.url"/></ctl:message>
+							<xsl:value-of select="substring-before($wmts.capabilities.url,'?')"/>
 						</xsl:when>
 						<xsl:otherwise>
 							<ctl:message>RESTful Request for a Capabilities Document from the WMTS server: <xsl:value-of select="$wmts.capabilities.url"/></ctl:message>
+							<xsl:value-of select="$wmts.capabilities.url"/>
 						</xsl:otherwise>
 					</xsl:choose>
+					
 					<xsl:variable name="wmts.capabilities.doc.response">
 						<ctl:request>
 							<ctl:url>
 								<xsl:value-of select="$wmts.capabilities.url"/>
 							</ctl:url>
 							<ctl:method>get</ctl:method>
-							<parsers:HTTPParser/>			
+							<parsers:HTTPParser/>
 						</ctl:request>
 					</xsl:variable>
 					
 					<xsl:choose>
 						<xsl:when test="not($wmts.capabilities.doc.response/*)">
-							<ctl:message>FAILURE: Missing or invalid GetCapabilities response entity.</ctl:message>
+							<ctl:message>FAILURE: Missing or invalid GetCapabilities response entity contents.</ctl:message>
 							<ctl:fail/>
 						</xsl:when>
 						<xsl:otherwise>
@@ -248,19 +280,25 @@
 									<ctl:fail/>
 								</xsl:when>
 								<xsl:otherwise>
+									<!-- <ctl:message>NOT Validating Capabilities Document against its XML Schema... FOR DEVELPMENT, CHANGE ME</ctl:message> -->
 									<ctl:message>Validating Capabilities Document against its XML Schema...</ctl:message>
+
 									<ctl:call-function name="ctl:startStopwatch">
 										<ctl:with-param name="watchName">capabilities.validation</ctl:with-param>
 									</ctl:call-function>
+									
+									<!-- CHANGE ME to disable schema validation during development -->
 									<xsl:variable name="results">
 										<ctl:call-function name="ctlFunctions:XMLschemaValidate">
 											<ctl:with-param name="doc"><xsl:copy-of select="$wmts.capabilities.doc/*"/></ctl:with-param>
-											<ctl:with-param name="schemaPath" select="$schemaPath"/>
+											<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
 										</ctl:call-function>
 									</xsl:variable>
+									
 									<xsl:variable name="capabilities.validation.elapsed" select="ctl:elapsedTime('capabilities.validation')"/>
 									<xsl:choose>
-										<xsl:when test="count($results/*) &gt; 0">
+										<!-- <xsl:when test="not(true())"> uncomment me for development CHANGE ME-->
+										<xsl:when test="count($results/*) &gt; 0"> 
 											<ctl:message>Capabilities document failed schema validation; capabilities.validation.elapsed [<xsl:value-of select="$capabilities.validation.elapsed"/>] milliseconds</ctl:message>
 											<ctl:message>results: <xsl:copy-of select="$results"/></ctl:message>
 											<ctl:fail/> 
@@ -269,6 +307,12 @@
 											<ctl:message>capabilities.validation.elapsed [<xsl:value-of select="$capabilities.validation.elapsed"/>] milliseconds</ctl:message>
 											<ctl:message>Capabilities response is valid, continuing...</ctl:message>
 											<ctl:message select="'********************************************************'"/>
+											
+											<ctl:call-function name="ctl:putLogCache">
+												<ctl:with-param name="id">capabilities</ctl:with-param>
+												<ctl:with-param name="xmlToCache"><xsl:copy-of select="$wmts.capabilities.doc/*"/></ctl:with-param> 
+											</ctl:call-function>
+
 											<ctl:call-test name="wmtsBootstrap:main">
 												<ctl:with-param name="wmts.capabilities.url" select="$wmts.capabilities.url"/>
 												<ctl:with-param name="wmts.capabilities.doc"><xsl:copy-of select="$wmts.capabilities.doc/*"/></ctl:with-param>
@@ -291,18 +335,15 @@
 													<xsl:variable name="bootstrap">
 														<ctl:call-function name="wmtsBootstrap:bootstrap">
 															<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc/*"/>
+															<ctl:with-param name="wmtsSchemaPath" select="$wmtsSchemaPath"/>
+															<ctl:with-param name="wmtsSchemaType" select="$wmtsSchemaType"/>
 														</ctl:call-function>
 													</xsl:variable>
 													
 													<xsl:variable name="check.prerequisites.elapsed" select="ctl:elapsedTime('check.prerequisites')"/>
 													<ctl:message>check.prerequisites.elapsed [<xsl:value-of select="$check.prerequisites.elapsed"/>] milliseconds</ctl:message>
 													
-													<!-- <xsl:message>bs <xsl:copy-of select="$bootstrap/*"/></xsl:message>
-													<ctl:call-function name="wmtsBootstrap:printBootstrap">
-														<ctl:with-param name="bootstrap" select="$bootstrap"/>
-													</ctl:call-function> 
-													 -->
-													 
+													<!-- bootstrap xml contains global variables for use in both test and redo from cache modes-->
 													<ctl:call-function name="ctl:putLogCache">
 														<ctl:with-param name="id">bootstrap</ctl:with-param>
 														<ctl:with-param name="xmlToCache"><xsl:copy-of select="$bootstrap"/></ctl:with-param> 
@@ -335,9 +376,10 @@
 																		<ctl:with-param name="selected" select="$selectedWithSummary"/>
 																	</ctl:call-function>
 		
-																	<ctl:message>calling wmtsFunctions:invokeSelectedTest in Test mode</ctl:message>
+																	<ctl:message>calling wmtsFunctions:invokeSelectedTests in Test mode</ctl:message>
 																	<xsl:variable name="results">
 																		<ctl:call-function name="wmtsFunctions:invokeSelectedTests">
+																			<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc/*"/>
 																			<ctl:with-param name="bootstrap" select="$bootstrap/*"/>
 																			<ctl:with-param name="selected" select="$selected"/>
 																		</ctl:call-function>
