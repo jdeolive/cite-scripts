@@ -48,7 +48,7 @@ updateSequence="1"
       </ows:ContactInfo>
     </ows:ServiceContact>
   </ows:ServiceProvider>
-  <ows:OperationsMetadata>
+  <ows:OperationsMetadata> 
     <ows:Operation name="GetCapabilities">
       <ows:DCP>
         <ows:HTTP>
@@ -338,7 +338,7 @@ updateSequence="1"
 	  <ResourceURL format="application/gml+xml; version=3.1" resourceType="FeatureInfo"
 		   template="http://localhost:8080/wmts/1.0.0/rest/SixthWasL44/Default_style/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
 	  <ResourceURL format="application/gml+xml; version=3.2.1" resourceType="FeatureInfo"
-		   template="http://localhost:8080/wmts/1.0.0/rest/SixthWasL44/Default_style/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
+		   template="http://localhost:8080/wmts/1.0.0/rest/SixthWasL44/Default_style/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.gml"/>
     </Layer>
     <Layer>
       <ows:Title>One Image Format, Two Info Formats,  Three Sample Dimensions, No Default or Current</ows:Title>
@@ -385,7 +385,7 @@ updateSequence="1"
 	  <ResourceURL format="application/gml+xml; version=3.1" resourceType="FeatureInfo"
 		   template="http://localhost:8080/wmts/1.0.0/rest/SeventhWasL43/Default_style/{band}/{elevation}/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
 	  <ResourceURL format="application/gml+xml; version=3.2.1" resourceType="FeatureInfo"
-		   template="http://localhost:8080/wmts/1.0.0/rest/SeventhWasL43/Default_style/{band}/{elevation}/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
+		   template="http://localhost:8080/wmts/1.0.0/rest/SeventhWasL43/Default_style/{band}/{elevation}/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.gml"/>
     </Layer>
     <Layer>
       <ows:Title>One Image Format, Two Info Formats,  One Sample Dimension with a default</ows:Title>
@@ -420,9 +420,9 @@ updateSequence="1"
 	  <ResourceURL format="image/png" resourceType="tile"
 		   template="http://localhost:8080/wmts/1.0.0/rest/EighthWasL42/Default_style/{elevation}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png"/>
 	  <ResourceURL format="application/gml+xml; version=3.1" resourceType="FeatureInfo"
-		   template="http://localhost:8080/wmts/1.0.0/rest/EighthWasL42/Default_style/{elevation}{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
-	  <ResourceURL format="application/gml+xml; version=3.2.1" resourceType="FeatureInfo"
 		   template="http://localhost:8080/wmts/1.0.0/rest/EighthWasL42/Default_style/{elevation}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
+	  <ResourceURL format="application/gml+xml; version=3.2.1" resourceType="FeatureInfo"
+		   template="http://localhost:8080/wmts/1.0.0/rest/EighthWasL42/Default_style/{elevation}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.gml"/>
     </Layer>
     <Layer>
       <ows:Title>One Image Format, Two Info Formats, One Sample Dimension with current values</ows:Title>
@@ -457,7 +457,7 @@ updateSequence="1"
 	  <ResourceURL format="application/gml+xml; version=3.1" resourceType="FeatureInfo"
 		   template="http://localhost:8080/wmts/1.0.0/rest/NinethWasL41/Default_style/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
 	  <ResourceURL format="application/gml+xml; version=3.2.1" resourceType="FeatureInfo"
-		   template="http://localhost:8080/wmts/1.0.0/rest/NinethWasL41/Default_style/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
+		   template="http://localhost:8080/wmts/1.0.0/rest/NinethWasL41/Default_style/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.gml"/>
     </Layer>
     <Layer>
       <ows:Title>One Image Format, Tile Matrix Set Limits</ows:Title>
@@ -1318,7 +1318,7 @@ updateSequence="1"
 	  <ResourceURL format="application/gml+xml; version=3.1" resourceType="FeatureInfo"
 		   template="http://localhost:8080/wmts/1.0.0/rest/FourteenthWasL36/Default_style/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
 	  <ResourceURL format="application/gml+xml; version=3.2.1" resourceType="FeatureInfo"
-		   template="http://localhost:8080/wmts/1.0.0/rest/FourteenthWasL36/Default_style/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/> 
+		   template="http://localhost:8080/wmts/1.0.0/rest/FourteenthWasL36/Default_style/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.gml"/> 
      </Layer>
     <Layer>
       <ows:Title>One Image Format, Two Info Formats, Tile Matrix Set Limits, Three sample dimensions.</ows:Title>
@@ -1507,7 +1507,7 @@ updateSequence="1"
 	  <ResourceURL format="application/gml+xml; version=3.1" resourceType="FeatureInfo"
 		   template="http://localhost:8080/wmts/1.0.0/rest/FifteenthWasL35/Default_style/{band}/{elevation}/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
 	  <ResourceURL format="application/gml+xml; version=3.2.1" resourceType="FeatureInfo"
-		   template="http://localhost:8080/wmts/1.0.0/rest/FifteenthWasL35/Default_style/{band}/{elevation}/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
+		   template="http://localhost:8080/wmts/1.0.0/rest/FifteenthWasL35/Default_style/{band}/{elevation}/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.gml"/>
     </Layer>
     <Layer>
       <ows:Title>One Image Format, Two Info Formats, Tile Matrix Set Limits, Sample Dimension with default value.</ows:Title>
@@ -1683,7 +1683,7 @@ updateSequence="1"
 	  <ResourceURL format="application/gml+xml; version=3.1" resourceType="FeatureInfo"
 		   template="http://localhost:8080/wmts/1.0.0/rest/SixteenthWasL34/Default_style/{elevation}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
 	  <ResourceURL format="application/gml+xml; version=3.2.1" resourceType="FeatureInfo"
-		   template="http://localhost:8080/wmts/1.0.0/rest/SixteenthWasL34/Default_style/{elevation}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
+		   template="http://localhost:8080/wmts/1.0.0/rest/SixteenthWasL34/Default_style/{elevation}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.gml"/>
     </Layer>
     <Layer>
       <ows:Title>One Image Format, Two Info Formats, Tile Matrix Set Limits, Sample Dimension with current values.</ows:Title>
@@ -1860,7 +1860,7 @@ updateSequence="1"
 	  <ResourceURL format="application/gml+xml; version=3.1" resourceType="FeatureInfo"
 		   template="http://localhost:8080/wmts/1.0.0/rest/SeventeenthWasL33/Default_style/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
 	  <ResourceURL format="application/gml+xml; version=3.2.1" resourceType="FeatureInfo"
-		   template="http://localhost:8080/wmts/1.0.0/rest/SeventeenthWasL33/Default_style/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
+		   template="http://localhost:8080/wmts/1.0.0/rest/SeventeenthWasL33/Default_style/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.gml"/>
     </Layer>
     <Layer>
       <ows:Title>Three Image Formats</ows:Title>
@@ -2053,7 +2053,7 @@ updateSequence="1"
 	  <ResourceURL format="application/gml+xml; version=3.1" resourceType="FeatureInfo"
 		   template="http://localhost:8080/wmts/1.0.0/rest/TwentySecondWasL28/Default_style/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
 	  <ResourceURL format="application/gml+xml; version=3.2.1" resourceType="FeatureInfo"
-		   template="http://localhost:8080/wmts/1.0.0/rest/TwentySecondWasL28/Default_style/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
+		   template="http://localhost:8080/wmts/1.0.0/rest/TwentySecondWasL28/Default_style/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.gml"/>
     </Layer>
     <Layer>
       <ows:Title>Three Image Formats, Two Info Formats, Three Sample Dimensions</ows:Title>
@@ -2109,7 +2109,7 @@ updateSequence="1"
 	  <ResourceURL format="application/gml+xml; version=3.1" resourceType="FeatureInfo"
 		   template="http://localhost:8080/wmts/1.0.0/rest/TwentyThirdWasL27/Default_style/{band}/{elevation}/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
 	  <ResourceURL format="application/gml+xml; version=3.2.1" resourceType="FeatureInfo"
-		   template="http://localhost:8080/wmts/1.0.0/rest/TwentyThirdWasL27/Default_style/{band}/{elevation}/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
+		   template="http://localhost:8080/wmts/1.0.0/rest/TwentyThirdWasL27/Default_style/{band}/{elevation}/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.gml"/>
     </Layer>
     <Layer>
       <ows:Title>Three Image Formats, Two Info Formats, One Sample Dimension with default value</ows:Title>
@@ -2152,7 +2152,7 @@ updateSequence="1"
 	  <ResourceURL format="application/gml+xml; version=3.1" resourceType="FeatureInfo"
 		   template="http://localhost:8080/wmts/1.0.0/rest/TwentyFourthWasL26/Default_style/{elevation}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
 	  <ResourceURL format="application/gml+xml; version=3.2.1" resourceType="FeatureInfo"
-		   template="http://localhost:8080/wmts/1.0.0/rest/TwentyFourthWasL26/Default_style/{elevation}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
+		   template="http://localhost:8080/wmts/1.0.0/rest/TwentyFourthWasL26/Default_style/{elevation}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.gml"/>
     </Layer>
     <Layer>
       <ows:Title>Three Image Formats, Two Info Formats, One Sample Dimension with current values</ows:Title>
@@ -2196,7 +2196,7 @@ updateSequence="1"
 	  <ResourceURL format="application/gml+xml; version=3.1" resourceType="FeatureInfo"
 		   template="http://localhost:8080/wmts/1.0.0/rest/TwentyFifthWasL25/Default_style/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
 	  <ResourceURL format="application/gml+xml; version=3.2.1" resourceType="FeatureInfo"
-		   template="http://localhost:8080/wmts/1.0.0/rest/TwentyFifthWasL25/Default_style/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
+		   template="http://localhost:8080/wmts/1.0.0/rest/TwentyFifthWasL25/Default_style/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.gml"/>
     </Layer>
     <Layer>
       <ows:Title>Three Image Formats and Tile Matrix Set Limits</ows:Title>
@@ -2729,7 +2729,7 @@ updateSequence="1"
 	  <ResourceURL format="image/png" resourceType="tile"
 		   template="http://localhost:8080/wmts/1.0.0/rest/TwentyEighthWasL22/Default_style/{elevation}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png"/>
 	  <ResourceURL format="image/jp2" resourceType="tile"
-		   template="http://localhost:8080/wmts/1.0.0/rest/TwentyEighthWasL22/Default_style/{elevation}/TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jp2"/>
+		   template="http://localhost:8080/wmts/1.0.0/rest/TwentyEighthWasL22/Default_style/{elevation}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jp2"/>
 	  <ResourceURL format="image/jpeg" resourceType="tile"
 		   template="http://localhost:8080/wmts/1.0.0/rest/TwentyEighthWasL22/Default_style/{elevation}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpeg"/>
     </Layer>
@@ -3084,7 +3084,7 @@ updateSequence="1"
 	  <ResourceURL format="application/gml+xml; version=3.1" resourceType="FeatureInfo"
 		   template="http://localhost:8080/wmts/1.0.0/rest/ThirtythWasL20/Default_style/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
 	  <ResourceURL format="application/gml+xml; version=3.2.1" resourceType="FeatureInfo"
-		   template="http://localhost:8080/wmts/1.0.0/rest/ThirtythWasL20/Default_style/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
+		   template="http://localhost:8080/wmts/1.0.0/rest/ThirtythWasL20/Default_style/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.gml"/>
     </Layer>
     <Layer>
       <ows:Title>Three Image Formats, Two Info Formats, Three Sample Dimensions and Tile Matrix Set Limits</ows:Title>
@@ -3279,7 +3279,7 @@ updateSequence="1"
 	  <ResourceURL format="application/gml+xml; version=3.1" resourceType="FeatureInfo"
 		   template="http://localhost:8080/wmts/1.0.0/rest/ThirtyFirstWasL20/Default_style/{band}/{elevation}/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
 	  <ResourceURL format="application/gml+xml; version=3.2.1" resourceType="FeatureInfo"
-		   template="http://localhost:8080/wmts/1.0.0/rest/ThirtyFirstWasL20/Default_style/{band}/{elevation}/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
+		   template="http://localhost:8080/wmts/1.0.0/rest/ThirtyFirstWasL20/Default_style/{band}/{elevation}/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.gml"/>
     </Layer>
     <Layer>
       <ows:Title>Three Image Formats, Two Info Formats, One Sample Dimension with a default value and Tile Matrix Set Limits</ows:Title>
@@ -3460,7 +3460,7 @@ updateSequence="1"
 	  <ResourceURL format="application/gml+xml; version=3.1" resourceType="FeatureInfo"
 		   template="http://localhost:8080/wmts/1.0.0/rest/ThirtySecondWasL20/Default_style/{elevation}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
 	  <ResourceURL format="application/gml+xml; version=3.2.1" resourceType="FeatureInfo"
-		   template="http://localhost:8080/wmts/1.0.0/rest/ThirtySecondWasL20/Default_style/{elevation}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
+		   template="http://localhost:8080/wmts/1.0.0/rest/ThirtySecondWasL20/Default_style/{elevation}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.gml"/>
     </Layer>
    <Layer>
       <ows:Title>Three Image Formats, Two Info Formats, One Sample Dimension with current values and Tile Matrix Set Limits</ows:Title>
@@ -3643,7 +3643,7 @@ updateSequence="1"
 	  <ResourceURL format="application/gml+xml; version=3.1" resourceType="FeatureInfo"
 		   template="http://localhost:8080/wmts/1.0.0/rest/ThirtyThirdWasL20/Default_style/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
 	  <ResourceURL format="application/gml+xml; version=3.2.1" resourceType="FeatureInfo"
-		   template="http://localhost:8080/wmts/1.0.0/rest/ThirtyThirdWasL20/Default_style/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
+		   template="http://localhost:8080/wmts/1.0.0/rest/ThirtyThirdWasL20/Default_style/{time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.gml"/>
     </Layer>
    <Layer>
       <ows:Title>Three Image Formats, two Info Formats, tiles with transparent background and opaque foreground data</ows:Title>
@@ -3680,7 +3680,7 @@ updateSequence="1"
 	  <ResourceURL format="application/gml+xml; version=3.1" resourceType="FeatureInfo"
 		   template="http://localhost:8080/wmts/1.0.0/rest/ThirtyFourthWasL28/Default_style/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
 	  <ResourceURL format="application/gml+xml; version=3.2.1" resourceType="FeatureInfo"
-		   template="http://localhost:8080/wmts/1.0.0/rest/ThirtyFourthWasL28/Default_style/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
+		   template="http://localhost:8080/wmts/1.0.0/rest/ThirtyFourthWasL28/Default_style/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.gml"/>
     </Layer>       
     <Layer>
       <ows:Title>Three Image Formats, two Info Formats, tiles with transparent background and NODATA foreground data</ows:Title>
@@ -3717,7 +3717,7 @@ updateSequence="1"
 	  <ResourceURL format="application/gml+xml; version=3.1" resourceType="FeatureInfo"
 		   template="http://localhost:8080/wmts/1.0.0/rest/ThirtyFifthWasL28/Default_style/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
 	  <ResourceURL format="application/gml+xml; version=3.2.1" resourceType="FeatureInfo"
-		   template="http://localhost:8080/wmts/1.0.0/rest/ThirtyFifthWasL28/Default_style/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.xml"/>
+		   template="http://localhost:8080/wmts/1.0.0/rest/ThirtyFifthWasL28/Default_style/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.gml"/>
     </Layer>   
     <TileMatrixSet>
       <ows:Identifier>GoogleCRS84Quad</ows:Identifier>
