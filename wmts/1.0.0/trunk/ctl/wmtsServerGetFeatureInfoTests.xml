@@ -4667,6 +4667,7 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Mandatory" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template for a layer with no sample dimensions, or with sample dimensions with a default dimension;
@@ -4689,8 +4690,9 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetFeatureInfo.Mandatory not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetFeatureInfo.Mandatory">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetFeatureInfo.Mandatory not tested.</ctl:message>
@@ -4709,6 +4711,7 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Optional" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -4733,8 +4736,9 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetFeatureInfo.Optional not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetFeatureInfo.Optional">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetFeatureInfo.Optional not tested.</ctl:message>
@@ -4750,9 +4754,11 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 	</ctl:code>
 </ctl:test>
 
-<ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Missing" type="MandatoryIfImplemented">
+<ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Missing" type="MandatoryIfImplemented">	
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template for a layer with no sample dimensions, or with sample dimensions with a default dimension;
@@ -4775,8 +4781,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetFeatureInfo.Missing not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetFeatureInfo.Missing">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetFeatureInfo.Missing not tested.</ctl:message>
@@ -4795,6 +4803,8 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Invalid.Layer" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetFeatureInfo request URL with an invalid mandatory Layer identifier value not provided in the ResourceURL template;
@@ -4817,8 +4827,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.Layer not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetFeatureInfo.Invalid.Layer">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.Layer not tested.</ctl:message>
@@ -4837,6 +4849,8 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Invalid.TileMatrixSet" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -4859,8 +4873,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.TileMatrixSet not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetFeatureInfo.Invalid.TileMatrixSet">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.TileMatrixSet not tested.</ctl:message>
@@ -4879,6 +4895,8 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Invalid.TileMatrix" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -4901,8 +4919,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.TileMatrix not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetFeatureInfo.Invalid.TileMatrix">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.TileMatrix not tested.</ctl:message>
@@ -4921,6 +4941,8 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -4941,8 +4963,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits not tested.</ctl:message>
@@ -4961,6 +4985,8 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -4981,8 +5007,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits not tested.</ctl:message>
@@ -5001,6 +5029,8 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -5021,8 +5051,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits not tested.</ctl:message>
@@ -5041,6 +5073,8 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -5061,8 +5095,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits not tested.</ctl:message>
@@ -5081,6 +5117,8 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Invalid.Tile.Style" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -5103,8 +5141,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.Tile.Style not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetFeatureInfo.Invalid.Tile.Style">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.Tile.Style not tested.</ctl:message>
@@ -5123,8 +5163,6 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Missing.Optional" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
-	<ctl:param name="featureInfoURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetFeatureInfo']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
-	<ctl:param name="wmtsVersion">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
 	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
@@ -5155,223 +5193,30 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<xsl:variable name="serviceURL" select="owsFunctions:getServiceURL($featureInfoURL)"/> 
-						<ctl:message select="concat('Issuing GetFeatureInfo requests to ', $serviceURL, ' for the following:')"/>
-						<xsl:variable name="layerPos" select="(count($wmts.capabilities.doc/wmts:Contents/wmts:Layer[wmts:InfoFormat][wmts:Dimension[not(wmts:Default)]]) + 1) idiv 2 "/>
-						<xsl:variable name="results">
-							<xsl:for-each select="$wmts.capabilities.doc/wmts:Contents/wmts:Layer[wmts:InfoFormat][wmts:Dimension[not(wmts:Default)]][$layerPos]">
-								<xsl:variable name="layer" select="."/>
-								<xsl:variable name="layerId" select="$layer/ows:Identifier"/>
-								<xsl:variable name="stylePos" select="(count($layer/wmts:Style) +1) idiv 2"/>
-								<!-- <ctl:message select="concat('layer ', $layerId, ' stylePos ', $stylePos)"/> -->
-								<xsl:for-each select="$layer/wmts:Style[$stylePos]">
-									<xsl:variable name="style" select="."/> 
-									<xsl:variable name="styleId" select="$style/ows:Identifier"/>
-									<xsl:variable name="formatPos" select="(count($layer/wmts:Format) + 1) idiv 2"/>
-									<!-- <ctl:message select="concat('style ', $styleId, ' formatPos ', $formatPos)"/> -->
-									<xsl:for-each select="$layer/wmts:InfoFormat[$formatPos]">
-										<xsl:variable name="infoFormat" select="."/>
-										<xsl:variable name="tmslPos" select="(count($layer/wmts:TileMatrixSetLink) + 1) idiv 2"/>
-										<!-- <ctl:message select="concat('infoFormat ', $infoFormat, ' tmslPos ', $tmslPos)"/> -->
-										<xsl:for-each select="$layer/wmts:TileMatrixSetLink[$tmslPos]">
-											<xsl:variable name="tileMatrixSetId" select="wmts:TileMatrixSet"/>
-											<xsl:variable name="tileMatrixSetLimits" select="wmts:TileMatrixSetLimits"/>
-											<xsl:variable name="setLimits" select="count($tileMatrixSetLimits/*) gt 0"/>
-											<!-- <ctl:message select="concat('tileMatrixSet ', $tileMatrixSetId, ' has limits ', $setLimits)"/> -->
-											<xsl:variable name="tileMatrixSet" select="$wmts.capabilities.doc/wmts:Contents/wmts:TileMatrixSet[ows:Identifier = $tileMatrixSetId]"/>
-											<xsl:variable name="tmsPos" select="(count($tileMatrixSet/wmts:TileMatrix)  + 1) idiv 2"/>
-											<xsl:for-each select="$tileMatrixSet/wmts:TileMatrix[$tmsPos]">
-												<xsl:variable name="tileMatrix" select="."/>
-												<xsl:variable name="tileMatrixId" select="$tileMatrix/ows:Identifier"/>
-												<xsl:variable name="tileWidth" select="$tileMatrix/wmts:TileWidth"/>
-												<xsl:variable name="tileHeight" select="$tileMatrix/wmts:TileHeight"/>
-												<!-- <ctl:message select="concat('tileMatrix ', $tileMatrixId)"/> -->
-												<xsl:variable name="tileMatrixLimits" select="$tileMatrixSetLimits/wmts:TileMatrixLimits[wmts:TileMatrix = $tileMatrixId]"/>
-												<xsl:variable name="matrixLimits" select="count($tileMatrixLimits/*) gt 0"/>
-												<xsl:variable name="minTileRow">
-													<xsl:choose>
-														<xsl:when test="$matrixLimits">
-															<xsl:value-of select="$tileMatrixLimits/wmts:MinTileRow"/>
-														</xsl:when>
-														<xsl:otherwise>
-															<xsl:value-of select="abs(0)"/>
-														</xsl:otherwise>
-													</xsl:choose>
-												</xsl:variable>
-												<xsl:variable name="maxTileRow">
-													<xsl:choose>
-														<xsl:when test="$matrixLimits">
-															<xsl:value-of select="$tileMatrixLimits/wmts:MaxTileRow"/>
-														</xsl:when>
-														<xsl:otherwise>
-															<xsl:value-of select="$tileMatrix/wmts:MatrixHeight - 1"/>
-														</xsl:otherwise>
-													</xsl:choose>											
-												</xsl:variable>
-												<xsl:variable name="midTileRow" select="($minTileRow + $maxTileRow) idiv 2"/>
-												<xsl:variable name="minTileCol">
-													<xsl:choose>
-														<xsl:when test="$matrixLimits">
-															<xsl:value-of select="$tileMatrixLimits/wmts:MinTileCol"/>
-														</xsl:when>
-														<xsl:otherwise>
-															<xsl:value-of select="abs(0)"/>
-														</xsl:otherwise>
-													</xsl:choose>											
-												</xsl:variable>
-												<xsl:variable name="maxTileCol">
-													<xsl:choose>
-														<xsl:when test="$matrixLimits">
-															<xsl:value-of select="$tileMatrixLimits/wmts:MaxTileCol"/>
-														</xsl:when>
-														<xsl:otherwise>
-															<xsl:value-of select="$tileMatrix/wmts:MatrixWidth - 1"/>
-														</xsl:otherwise>
-													</xsl:choose>											
-												</xsl:variable>
-												<xsl:variable name="midTileCol" select="($minTileCol + $maxTileCol) idiv 2"/>
-												<xsl:variable name="minTileJ">0</xsl:variable>
-												<xsl:variable name="maxTileJ" select="$tileHeight -1"/>
-												<xsl:variable name="midTileJ" select="($minTileJ + $maxTileJ) idiv 2"/>
-												<xsl:variable name="minTileI">0</xsl:variable>
-												<xsl:variable name="maxTileI" select="$tileWidth -1"/>
-												<xsl:variable name="midTileI" select="($minTileI + $maxTileI) idiv 2"/>
-												<xsl:variable name="row" select="$midTileRow"/>
-												<xsl:variable name="col" select="$midTileCol"/>
-												<xsl:variable name="j" select="$midTileJ"/>
-												<xsl:variable name="i" select="$midTileI"/>													
-												<xsl:variable name="dimensionsWithNoDefault" select="string-join($layer/wmts:Dimension[not(wmts:Default)]/ows:Identifier, ',')"/>
-												<ctl:message select="concat('layer ', $layerId, ' style ', $styleId, ' infoFormat ', $infoFormat, ' tileMatrixSet ', $tileMatrixSetId, ' has limits ', boolean($tileMatrixSetLimits), ' tileMatrix ', $tileMatrixId, ' row ', $row, ' col ', $col, ' j ', $j, ' i ', $i, ' missing parameters for dimensions with no default: ', $dimensionsWithNoDefault)"/>											
-												<xsl:variable name="response">
-													<ctl:request>
-														<ctl:url>
-															<xsl:value-of select="$serviceURL"/>
-														</ctl:url>
-														<ctl:method>get</ctl:method>
-														<ctl:param name="service">WMTS</ctl:param>
-														<ctl:param name="request">GetFeatureInfo</ctl:param>
-														<ctl:param name="version"><xsl:value-of select="$wmtsVersion"/></ctl:param> 	
-														<ctl:param name="layer"><xsl:value-of select="$layerId"/></ctl:param>
-														<ctl:param name="style"><xsl:value-of select="$styleId"/></ctl:param>
-														<ctl:param name="infoFormat"><xsl:value-of select="$infoFormat"/></ctl:param>
-														<ctl:param name="TileMatrixSet"><xsl:value-of select="$tileMatrixSetId"/></ctl:param>
-														<ctl:param name="TileMatrix"><xsl:value-of select="$tileMatrixId"/></ctl:param>
-														<ctl:param name="TileRow"><xsl:value-of select="$row"/></ctl:param>
-														<ctl:param name="TileCol"><xsl:value-of select="$col"/></ctl:param>
-														<ctl:param name="J"><xsl:value-of select="$j"/></ctl:param>
-														<ctl:param name="I"><xsl:value-of select="$i"/></ctl:param>
-														<parsers:HTTPParser>
-															<parsers:parse>
-																<parsers:XSLTransformationParser resource="rewriteNonException.xsl"/> 
-															</parsers:parse>
-														</parsers:HTTPParser>
-													</ctl:request>
-												</xsl:variable>		
-												<xsl:choose>
-													<xsl:when test="not($response/response/content/*)">
-														<ctl:message>FAILURE: Missing or invalid response entity contents; should have been an ows:ExceptionReport.</ctl:message>
-														<xsl:variable name="code" select="$response/response/status/@code"/>
-														<xsl:if test="$code != '' ">
-															<ctl:message select="concat('HTTP status code ', $code)"/>
-														</xsl:if>
-														<xsl:text>false|</xsl:text>
-													</xsl:when>
-													<xsl:otherwise>
-														<xsl:variable name="dimWithNoDefaultList" select="tokenize($dimensionsWithNoDefault, ',')"/>
-														<xsl:variable name="exceptionCodes">
-															<xsl:for-each select="$dimWithNoDefaultList">
-																<xsl:text>MissingParameterValue</xsl:text>
-																<xsl:if test="not(position() = last())">
-																	<xsl:text>,</xsl:text>
-																</xsl:if>
-															</xsl:for-each>
-														</xsl:variable>
-														<ctl:call-function name="owsFunctions:validateExceptionReport">
-															<ctl:with-param name="httpParserExceptionReport" select="$response"/>
-															<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
-															<ctl:with-param name="exceptionCodes" select="$exceptionCodes"/>
-															<ctl:with-param name="locators" select="$dimensionsWithNoDefault"/>
-														</ctl:call-function>
-													</xsl:otherwise>
-												</xsl:choose>
-											</xsl:for-each>
-										</xsl:for-each>
-											</xsl:for-each>
-										</xsl:for-each>
-									</xsl:for-each>
-						</xsl:variable>	
-						<xsl:choose>
-							<xsl:when test="contains($results, 'false')">
-								<ctl:message>Test failed. Server.KVP.GET.GetFeatureInfo.Missing.Optional</ctl:message>
-								<ctl:fail/>
-							</xsl:when>
-							<xsl:otherwise>
-								<ctl:message>Test passed:  Server.KVP.GET.GetFeatureInfo.Missing.Optional</ctl:message>
-								<ctl:pass/>
-							</xsl:otherwise>
-						</xsl:choose>					
+						<ctl:call-function name="wmtsFunctions:RESTful.GetFeatureInfo.Missing.Optional">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
-						<ctl:message>Server.KVP.GET.GetFeatureInfo.Missing.Optional not tested.</ctl:message>
+						<ctl:message>Server.RESTful.GetFeatureInfo.Missing.Optional not tested.</ctl:message>
 						<ctl:notTested/>
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:when>
 			<xsl:otherwise>
-				<ctl:message>Server.KVP.GET.GetFeatureInfo.Missing.Optional test skipped because its prerequisites were not met.</ctl:message>
-				<ctl:skipped/>
-			</xsl:otherwise>
-		</xsl:choose>	
-	</ctl:code>	
-</ctl:test>
-
-<ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name" type="MandatoryIfImplemented">
-	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
-	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
-	<ctl:context>wmts:main</ctl:context>
-	<ctl:assertion>
-	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template;
-	2.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document substituted in place of the "style" URL template variable;
-	3.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Format MIME type format value provided in the ResourceURL template;
-	4.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document substituted in place of the "TileMatrixSet" URL template variable;
-	5.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory TileMatrix identifier value equal to a &lt;TileMatrixSet&gt;&lt;TileMatrix&gt;&lt;owsIdentifier&gt; value for the specified TileMatrixSet from the Service Metadata document substituted in place of the "TileMatrix" URL template variable;
-	6.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory TileRow index value from zero to the value of &lt;MatrixHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document substituted in place of the "TileRow" URL template variable;
-	7.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory TileCol index value from zero to the value of &lt;MatrixWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document substituted in place of the "TileCol" URL template variable;
-	8.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileRow index value within the TileMatrixLimits MinTileRow and MaxTileRow values.
-	9.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileCol index value within the TileMatrixLimits MinTileCol and MaxTileCol values.
-	10.  the request entity is a valid RESTful GetFeatureInfo request URL with an optional sample dimensions parameter with a name that is not specified in a &lt;Contents&gt;&lt;Layer&gt;&lt;Dimension&gt;&lt;ows:Identifier&gt; in the Service Metadata document;
-	11.  the request entity is a valid RESTful GetFeatureInfo request URL with an optional sample dimensions parameter with any value;
-	12.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory J parameter with a row index value from zero to the value of &lt;TileHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document substituted in place of the "J" URL template variable;
-	13.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory I parameter with a column index value from zero to the value of &lt;TileWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document substituted in place of the "I" URL template variable;
-	14.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory infoFormat parameter with an InfoFormat value from one of the &lt;InfoFormat&gt;s for the specified Layer provided in the ResourceURL template from the Service Metadata document;
-	15.  the HTTP status code value is set to indicate an error.</ctl:assertion>
-	<ctl:comment>Verify that when a GetFeatureInfo request contains the name not defined as a sample dimension, then the server throws an exception. </ctl:comment>
-	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name</ctl:link>
-	<ctl:code>
-		<xsl:choose>
-			<xsl:when test="$metPrerequisites = 'true' ">
-				<xsl:choose>
-					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name not implemented yet</ctl:message>
-						<ctl:warning/>
-					</xsl:when>
-					<xsl:otherwise>
-						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name not tested.</ctl:message>
-						<ctl:notTested/>
-					</xsl:otherwise>
-				</xsl:choose>
-			</xsl:when>
-			<xsl:otherwise>
-				<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:message>Server.RESTful.GetFeatureInfo.Missing.Optional test skipped because its prerequisites were not met.</ctl:message>
 				<ctl:skipped/>
 			</xsl:otherwise>
 		</xsl:choose>
-	</ctl:code>
+	</ctl:code>	
 </ctl:test>
 
 <ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Value" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -5396,8 +5241,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Value not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetFeatureInfo.Invalid.SampleDimension.Value">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Value not tested.</ctl:message>
@@ -5416,6 +5263,7 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Default.SampleDimension" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -5440,8 +5288,9 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetFeatureInfo.Default.SampleDimension not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetFeatureInfo.Default.SampleDimension">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetFeatureInfo.Default.SampleDimension not tested.</ctl:message>
@@ -5460,6 +5309,7 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Current.SampleDimension" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -5484,8 +5334,9 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetFeatureInfo.Current.SampleDimension not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetFeatureInfo.Current.SampleDimension">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetFeatureInfo.Current.SampleDimension not tested.</ctl:message>
@@ -5501,51 +5352,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 	</ctl:code>
 </ctl:test>
 
-<ctl:test name="wmts:Server.RESTful.GetFeatureInfo.NonQueryable.Layer" type="MandatoryIfImplemented">
-	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
-	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
-	<ctl:context>wmts:main</ctl:context>
-	<ctl:assertion>
-	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template for a Layer with no InfoFormats;
-	2.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Style parameter with a style identifier value listed in the Service Metadata document substituted in place of the "style" URL template variable;
-	3.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Format MIME type format value provided in the ResourceURL template;
-	4.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document substituted in place of the "TileMatrixSet" URL template variable;
-	5.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory TileMatrix identifier value equal to a &lt;TileMatrixSet&gt;&lt;TileMatrix&gt;&lt;owsIdentifier&gt; value for the specified TileMatrixSet from the Service Metadata document substituted in place of the "TileMatrix" URL template variable;
-	6.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory TileRow index value from zero to the value of &lt;MatrixHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document substituted in place of the "TileRow" URL template variable;
-	7.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory TileCol index value from zero to the value of &lt;MatrixWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document substituted in place of the "TileCol" URL template variable;
-	8.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileRow index value within the TileMatrixLimits MinTileRow and MaxTileRow values.
-	9.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileCol index value within the TileMatrixLimits MinTileCol and MaxTileCol values.
-	10.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory J parameter with a row index value from zero to the value of &lt;TileHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document substituted in place of the "J" URL template variable;
-	11.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory I parameter with a column index value from zero to the value of &lt;TileWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document substituted in place of the "I" URL template variable;
-	12.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory infoFormat parameter with an InfoFormat value from one of the &lt;InfoFormat&gt;s for the specified Layer provided in the ResourceURL template from the Service Metadata document;
-	13.  the HTTP status code value is set to indicate an error.</ctl:assertion>
-	<ctl:comment>Verify that when a GetFeatureInfo request is made for a non-queryable layer, then the server throws an exception. </ctl:comment>
-	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.RESTful.GetFeatureInfo.NonQueryable.Layer</ctl:link>
-	<ctl:code>
-		<xsl:choose>
-			<xsl:when test="$metPrerequisites = 'true' ">
-				<xsl:choose>
-					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetFeatureInfo.NonQueryable.Layer not implemented yet</ctl:message>
-						<ctl:warning/>
-					</xsl:when>
-					<xsl:otherwise>
-						<ctl:message>Server.RESTful.GetFeatureInfo.NonQueryable.Layer not tested.</ctl:message>
-						<ctl:notTested/>
-					</xsl:otherwise>
-				</xsl:choose>
-			</xsl:when>
-			<xsl:otherwise>
-				<ctl:message>Server.RESTful.GetFeatureInfo.NonQueryable.Layer test skipped because its prerequisites were not met.</ctl:message>
-				<ctl:skipped/>
-			</xsl:otherwise>
-		</xsl:choose>
-	</ctl:code>
-</ctl:test>
-
 <ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Valid.InfoFormat" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -5570,8 +5380,9 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetFeatureInfo.Valid.InfoFormat not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetFeatureInfo.Valid.InfoFormat">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetFeatureInfo.Valid.InfoFormat not tested.</ctl:message>
@@ -5587,53 +5398,11 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 	</ctl:code>
 </ctl:test>
 
-<ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Invalid.InfoFormat" type="MandatoryIfImplemented">
-	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
-	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
-	<ctl:context>wmts:main</ctl:context>
-	<ctl:assertion>
-	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template;
-	2.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document substituted in place of the "style" URL template variable;
-	3.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Format MIME type format value provided in the ResourceURL template;
-	4.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document substituted in place of the "TileMatrixSet" URL template variable;
-	5.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory TileMatrix identifier value equal to a &lt;TileMatrixSet&gt;&lt;TileMatrix&gt;&lt;owsIdentifier&gt; value for the specified TileMatrixSet from the Service Metadata document substituted in place of the "TileMatrix" URL template variable;
-	6.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory TileRow index value from zero to the value of &lt;MatrixHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document substituted in place of the "TileRow" URL template variable;
-	7.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory TileCol index value from zero to the value of &lt;MatrixWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document substituted in place of the "TileCol" URL template variable;
-	8.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileRow index value within the TileMatrixLimits MinTileRow and MaxTileRow values.
-	9.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileCol index value within the TileMatrixLimits MinTileCol and MaxTileCol values.
-	10.  the request entity is a valid RESTful GetFeatureInfo request URL with an optional sample dimensions parameter with a with a name from a &lt;Dimension&gt;&lt;ows:Identifier&gt; value for the specified Layer from the Service Metadata document;
-	11.  the request entity is a valid RESTful GetFeatureInfo request URL with an optional sample dimensions parameter with a value from one of the &lt;Dimension&gt;&lt;Value&gt; elements for the specified Dimension from the Service Metadata document;
-	12.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory J parameter with a row index value from zero to the value of &lt;TileHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document substituted in place of the "J" URL template variable;
-	13.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory I parameter with a column index value from zero to the value of &lt;TileWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document substituted in place of the "I" URL template variable;
-	14.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory infoFormat parameter with an InfoFormat value that is not one of the &lt;InfoFormat&gt;s for the specified Layer from the Service Metadata document;
-	15.  the HTTP status code value is set to indicate an error.</ctl:assertion>
-	<ctl:comment>Verify that when a GetFeature request contains an InfoFormat incorrect value, then the server throws an exception. </ctl:comment>
-	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.RESTful.GetFeatureInfo.Invalid.InfoFormat</ctl:link>
-	<ctl:code>
-		<xsl:choose>
-			<xsl:when test="$metPrerequisites = 'true' ">
-				<xsl:choose>
-					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.InfoFormat not implemented yet</ctl:message>
-						<ctl:warning/>
-					</xsl:when>
-					<xsl:otherwise>
-						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.InfoFormat not tested.</ctl:message>
-						<ctl:notTested/>
-					</xsl:otherwise>
-				</xsl:choose>
-			</xsl:when>
-			<xsl:otherwise>
-				<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.InfoFormat test skipped because its prerequisites were not met.</ctl:message>
-				<ctl:skipped/>
-			</xsl:otherwise>
-		</xsl:choose>
-	</ctl:code>
-</ctl:test>
-
 <ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Invalid.Pixel.Row.J" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -5658,8 +5427,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.Pixel.Row.J not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetFeatureInfo.Invalid.Pixel.Row.J">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.Pixel.Row.J not tested.</ctl:message>
@@ -5678,6 +5449,8 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 <ctl:test name="wmts:Server.RESTful.GetFeatureInfo.Invalid.Pixel.Col.I" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetFeatureInfo request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -5702,8 +5475,10 @@ the request entity is a valid KVP GET GetFeatureInfo request with an optional sa
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.Pixel.Col.I not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetFeatureInfo.Invalid.Pixel.Col.I">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetFeatureInfo.Invalid.Pixel.Col.I not tested.</ctl:message>
