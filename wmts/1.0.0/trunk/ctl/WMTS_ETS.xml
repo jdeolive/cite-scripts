@@ -22,9 +22,12 @@
 	xmlns:wmtsFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wmtsFunctions.xml"	
 	xmlns:wmtsBootstrap="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/bootstrap.xml"
 >
+	<!-- 2011-10-28  PwD  everything specifically supporting client tests commented out for future development -->
+				
 	<ctl:suite name="wmts:suite">		
 		<ctl:title>WMTS 1.0 Compliance Test Suite</ctl:title>
-		<ctl:description>Verifies that a WMTS 1.0 client or server implementation complies with a given conformance classes.</ctl:description>
+		<!-- 2011-10-28  PwD  <ctl:description>Verifies that a WMTS 1.0 client or server implementation complies with a given conformance classes.</ctl:description> -->
+		<ctl:description>Verifies that a WMTS 1.0 server implementation complies with a given conformance classes.</ctl:description>
         <ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html</ctl:link>		
 		<ctl:defaultResult>Pass</ctl:defaultResult>
 		<ctl:starting-test>wmts:main</ctl:starting-test>
@@ -281,20 +284,20 @@
 								</xsl:when>
 								<xsl:otherwise>
 									<!-- <ctl:message>NOT Validating Capabilities Document against its XML Schema... FOR DEVELPMENT, CHANGE ME</ctl:message> -->
-									<ctl:message>Validating Capabilities Document against its XML Schema...</ctl:message>
+									<ctl:message>Validating Capabilities Document against its XML Schema...</ctl:message> 
 
 									<ctl:call-function name="ctl:startStopwatch">
 										<ctl:with-param name="watchName">capabilities.validation</ctl:with-param>
 									</ctl:call-function>
 									
-									<!-- CHANGE ME to disable schema validation during development -->
+									<!-- CHANGE ME to disable schema validation during development 	-->
 									<xsl:variable name="results">
 										<ctl:call-function name="ctlFunctions:XMLschemaValidate">
 											<ctl:with-param name="doc"><xsl:copy-of select="$wmts.capabilities.doc/*"/></ctl:with-param>
 											<ctl:with-param name="schemaPath" select="$wmtsSchemaPath"/>
 										</ctl:call-function>
 									</xsl:variable>
-									
+								
 									<xsl:variable name="capabilities.validation.elapsed" select="ctl:elapsedTime('capabilities.validation')"/>
 									<xsl:choose>
 										<!-- <xsl:when test="not(true())"> uncomment me for development CHANGE ME-->
