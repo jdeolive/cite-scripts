@@ -4207,6 +4207,7 @@
 <ctl:test name="wmts:Server.RESTful.GetTile.Mandatory" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetTile request URL with the mandatory Layer identifier value provided in the ResourceURL template for layers with no sample dimensions, or with sample dimensions with a default dimension;
@@ -4226,8 +4227,9 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetTile.Mandatory not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetTile.Mandatory">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetTile.Mandatory not tested.</ctl:message>
@@ -4246,6 +4248,7 @@
 <ctl:test name="wmts:Server.RESTful.GetTile.Optional" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetTile request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -4268,8 +4271,9 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetTile.Optional not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetTile.Optional">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetTile.Optional not tested.</ctl:message>
@@ -4288,6 +4292,8 @@
 <ctl:test name="wmts:Server.RESTful.GetTile.Missing" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetTile request URL with the mandatory Layer identifier value provided in the ResourceURL template for layers with no sample dimensions, or with sample dimensions with a default dimension from the Service Metadata document;
@@ -4307,8 +4313,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetTile.Missing not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetTile.Missing">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetTile.Missing not tested.</ctl:message>
@@ -4327,6 +4335,8 @@
 <ctl:test name="wmts:Server.RESTful.GetTile.Invalid.Layer" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetTile request URL with an invalid mandatory Layer identifier value not provided in the ResourceURL template;
@@ -4346,8 +4356,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetTile.Invalid.Layer not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetTile.Invalid.Layer">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetTile.Invalid.Layer not tested.</ctl:message>
@@ -4366,6 +4378,8 @@
 <ctl:test name="wmts:Server.RESTful.GetTile.Invalid.TileMatrixSet" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetTile request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -4385,8 +4399,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetTile.Invalid.TileMatrixSet not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetTile.Invalid.TileMatrixSet">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetTile.Invalid.TileMatrixSet not tested.</ctl:message>
@@ -4405,6 +4421,8 @@
 <ctl:test name="wmts:Server.RESTful.GetTile.Invalid.TileMatrix" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetTile request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -4424,8 +4442,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetTile.Invalid.TileMatrix not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetTile.Invalid.TileMatrix">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetTile.Invalid.TileMatrix not tested.</ctl:message>
@@ -4444,6 +4464,8 @@
 <ctl:test name="wmts:Server.RESTful.GetTile.Invalid.Tile.Row.No.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetTile request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -4461,8 +4483,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetTile.Invalid.Tile.Row.No.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetTile.Invalid.Tile.Row.No.TileMatrixSetLimits">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetTile.Invalid.Tile.Row.No.TileMatrixSetLimits not tested.</ctl:message>
@@ -4481,6 +4505,8 @@
 <ctl:test name="wmts:Server.RESTful.GetTile.Invalid.Tile.Col.No.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetTile request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -4498,8 +4524,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetTile.Invalid.Tile.Col.No.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetTile.Invalid.Tile.Col.No.TileMatrixSetLimits">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetTile.Invalid.Tile.Col.No.TileMatrixSetLimits not tested.</ctl:message>
@@ -4518,6 +4546,8 @@
 <ctl:test name="wmts:Server.RESTful.GetTile.Invalid.Tile.Row.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetTile request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -4535,8 +4565,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetTile.Invalid.Tile.Row.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetTile.Invalid.Tile.Row.TileMatrixSetLimits">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetTile.Invalid.Tile.Row.TileMatrixSetLimits not tested.</ctl:message>
@@ -4555,6 +4587,8 @@
 <ctl:test name="wmts:Server.RESTful.GetTile.Invalid.Tile.Col.TileMatrixSetLimits" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetTile request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -4572,8 +4606,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetTile.Invalid.Tile.Col.TileMatrixSetLimits not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetTile.Invalid.Tile.Col.TileMatrixSetLimits">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetTile.Invalid.Tile.Col.TileMatrixSetLimits not tested.</ctl:message>
@@ -4592,6 +4628,8 @@
 <ctl:test name="wmts:Server.RESTful.GetTile.Invalid.Tile.Style" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetTile request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -4611,8 +4649,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetTile.Invalid.Tile.Style not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetTile.Invaild.Tile.Style">
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetTile.Invalid.Tile.Style not tested.</ctl:message>
@@ -4628,50 +4668,59 @@
 	</ctl:code>
 </ctl:test>
 
-<ctl:test name="wmts:Server.RESTful.GetTile.Invalid.SampleDimension.Name" type="MandatoryIfImplemented">
+<ctl:test name="wmts:Server.RESTful.GetTile.Missing.Optional" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
-	1.  the request entity is a valid RESTful GetTile request URL with the mandatory Layer identifier value provided in the ResourceURL template;
-	2.  the request entity is a valid RESTful GetTile request URL with the mandatory Style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document substituted in place of the "style" URL template variable;
-	3.  the request entity is a valid RESTful GetTile request URL with the mandatory Format MIME type format value provided in the ResourceURL template;
-	4.  the request entity is a valid RESTful GetTile request URL with the mandatory TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document substituted in place of the "TileMatrixSet" URL template variable;
-	5.  the request entity is a valid RESTful GetTile request URL with the mandatory TileMatrix identifier value equal to a &lt;TileMatrixSet&gt;&lt;TileMatrix&gt;&lt;owsIdentifier&gt; value for the specified TileMatrixSet from the Service Metadata document substituted in place of the "TileMatrix" URL template variable;
-	6.  the request entity is a valid RESTful GetTile request URL with the mandatory TileRow index value from zero to the value of &lt;MatrixHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document substituted in place of the "TileRow" URL template variable;
-	7.  the request entity is a valid RESTful GetTile request URL with the mandatory TileCol index value from zero to the value of &lt;MatrixWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document substituted in place of the "TileCol" URL template variable;
-	8.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileRow index value within the TileMatrixLimits MinTileRow and MaxTileRow values.
-	9.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileCol index value within the TileMatrixLimits MinTileCol and MaxTileCol values.
-	10.  the request entity is a valid RESTful GetTile request URL with an optional sample dimensions parameter with a name that is not specified in a &lt;Contents&gt;&lt;Layer&gt;&lt;Dimension&gt;&lt;ows:Identifier&gt; in the Service Metadata document;
-	11.  the request entity is a valid RESTful GetTile request URL with an optional sample dimensions parameter with any value;
-	12.  the HTTP status code value is set to indicate an error.</ctl:assertion>
-	<ctl:comment>Verify that when a GetTile request contains the name not defined as a sample dimension, then the server throws an exception. </ctl:comment>
-	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.RESTful.GetTile.Invalid.SampleDimension.Name</ctl:link>
+	1.  the request entity is a valid RESTful GetTile request with the mandatory request parameter with a value of GetTile;
+	2.  the request entity is a valid RESTful GetTile request with the mandatory service parameter with a value of WMTS;
+	3.  the request entity is a valid RESTful GetTile request with the mandatory Version parameter with a value of 1.0.0;
+	4.  the request entity is a valid RESTful GetTile request with the mandatory Layer parameter with a layer identifier value equal to a &lt;Layer&gt;&lt;ows:Identifier&gt; value from the Service Metadata document;
+	5.  the request entity is a valid RESTful GetTile request with the mandatory Style parameter with a style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document;
+	6.  the request entity is a valid RESTful GetTile request with the mandatory Format parameter parameter with a MIME type format value equal to a &lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document
+	7.  the request entity is a valid RESTful GetTile request with the mandatory TileMatrixSet parameter with a TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document
+	8.  the request entity is a valid RESTful GetTile request with the mandatory TileMatrix parameter with a TileMatrix identifier value equal to a &lt;TileMatrixSet&gt;&lt;TileMatrix&gt;&lt;owsIdentifier&gt; value for the specified TileMatrixSet from the Service Metadata document;
+	9.  the request entity is a valid RESTful GetTile request with the mandatory TileRow parameter with a TileRow index value from zero to the value of &lt;MatrixHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	10.  the request entity is a valid RESTful GetTile request with the mandatory TileCol parameter with a TileCol index value from zero to the value of &lt;MatrixWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document;
+	11.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileRow index value within the TileMatrixLimits MinTileRow and MaxTileRow values.
+	12.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileCol index value within the TileMatrixLimits MinTileCol and MaxTileCol values.
+	13.  the request entity is a valid RESTful GetTile request without an optional sample dimensions parameter for a sample dimension without a default value that is specified in the &lt;Contents&gt;&lt;Layer&gt;&lt;Dimension&gt;&lt;ows:Identifier&gt; in the Service Metadata document for the specified layer.
+	14. the HTTP status code value is set to indicate an error.
+	</ctl:assertion>
+	<ctl:comment>Verify that when a GetTile request for a tile from a layer with a sample dimension with no default sample dimension value is missing a request parameter for the sample dimension name, that the server throws an exception.</ctl:comment>
+	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.RESTful.GetTile.Missing.Optional</ctl:link>
 	<ctl:code>
 		<xsl:choose>
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetTile.Invalid.SampleDimension.Name not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions.RESTful.GetTile.Missing.Optional"> 
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
-						<ctl:message>Server.RESTful.GetTile.Invalid.SampleDimension.Name not tested.</ctl:message>
+						<ctl:message>Server.KVP.GET.GetTile.Missing.Optional not tested.</ctl:message>
 						<ctl:notTested/>
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:when>
 			<xsl:otherwise>
-				<ctl:message>Server.RESTful.GetTile.Invalid.SampleDimension.Name test skipped because its prerequisites were not met.</ctl:message>
+				<ctl:message>Server.KVP.GET.GetTile.Missing.Optional test skipped because its prerequisites were not met.</ctl:message>
 				<ctl:skipped/>
 			</xsl:otherwise>
-		</xsl:choose>
-	</ctl:code>
+		</xsl:choose>	
+	</ctl:code>	
 </ctl:test>
 
 <ctl:test name="wmts:Server.RESTful.GetTile.Invalid.SampleDimension.Value" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
+	<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetTile request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -4693,8 +4742,10 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetTile.Invalid.SampleDimension.Value not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetTile.Invalid.SampleDimension.Value"> 
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>						
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetTile.Invalid.SampleDimension.Value not tested.</ctl:message>
@@ -4713,6 +4764,7 @@
 <ctl:test name="wmts:Server.RESTful.GetTile.Default.SampleDimension" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetTile request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -4734,8 +4786,9 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetTile.Default.SampleDimension not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetTile.Default.SampleDimension"> 
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetTile.Default.SampleDimension not tested.</ctl:message>
@@ -4754,6 +4807,7 @@
 <ctl:test name="wmts:Server.RESTful.GetTile.Current.SampleDimension" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetTile request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -4775,8 +4829,9 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetTile.Current.SampleDimension not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetTile.Current.SampleDimension"> 
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetTile.Current.SampleDimension not tested.</ctl:message>
@@ -4795,6 +4850,7 @@
 <ctl:test name="wmts:Server.RESTful.GetTile.Valid.Tile.Format" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetTile request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -4816,8 +4872,9 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetTile.Valid.Tile.Format not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetTile.Valid.Tile.Format"> 
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetTile.Valid.Tile.Format not tested.</ctl:message>
@@ -4833,50 +4890,10 @@
 	</ctl:code>
 </ctl:test>
 
-<ctl:test name="wmts:Server.RESTful.GetTile.Invalid.Tile.Format" type="MandatoryIfImplemented">
-	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
-	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
-	<ctl:context>wmts:main</ctl:context>
-	<ctl:assertion>
-	1.  the request entity is a valid RESTful GetTile request URL with the mandatory Layer identifier value provided in the ResourceURL template;
-	2.  the request entity is a valid RESTful GetTile request URL with the mandatory Style identifier value equal to a &lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document substituted in place of the "style" URL template variable;
-	3.  the request entity is a valid RESTful GetTile request URL with a mandatory Format MIME type format value not provided in a ResourceURL template;
-	4.  the request entity is a valid RESTful GetTile request URL with the mandatory TileMatrixSet identifier value equal to a &lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document substituted in place of the "TileMatrixSet" URL template variable;
-	5.  the request entity is a valid RESTful GetTile request URL with the mandatory TileMatrix identifier value equal to a &lt;TileMatrixSet&gt;&lt;TileMatrix&gt;&lt;owsIdentifier&gt; value for the specified TileMatrixSet from the Service Metadata document substituted in place of the "TileMatrix" URL template variable;
-	6.  the request entity is a valid RESTful GetTile request URL with the mandatory TileRow index value from zero to the value of &lt;MatrixHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document substituted in place of the "TileRow" URL template variable;
-	7.  the request entity is a valid RESTful GetTile request URL with the mandatory TileCol index value from zero to the value of &lt;MatrixWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document substituted in place of the "TileCol" URL template variable;
-	8.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileRow index value within the TileMatrixLimits MinTileRow and MaxTileRow values.
-	9.  the request entity for a tile from a Layer with TileMatrixSetLimits with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileCol index value within the TileMatrixLimits MinTileCol and MaxTileCol values.
-	10.  the request entity is a valid RESTful GetTile request URL with an optional sample dimensions parameter with a with a name from a &lt;Dimension&gt;&lt;ows:Identifier&gt; value for the specified Layer from the Service Metadata document;
-	11.  the request entity is a valid RESTful GetTile request URL with an optional sample dimensions parameter with a value from one of the &lt;Dimension&gt;&lt;Value&gt; elements for the specified Dimension from the Service Metadata document;
-	12.  the HTTP status code value is set to indicate an error.</ctl:assertion>
-	<ctl:comment>Test that the responses returned by a WMTS server to RESTful GetTile requests with tile formats not advertised in the Service Metadata Document for each layer, and each sample dimension if applicable, are valid exception reports. </ctl:comment>
-	<ctl:link>docs/wmts/1.0/WMTS 1.0 ATS.html#Server.RESTful.GetTile.Invalid.Tile.Format</ctl:link>
-	<ctl:code>
-		<xsl:choose>
-			<xsl:when test="$metPrerequisites = 'true' ">
-				<xsl:choose>
-					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetTile.Invalid.Tile.Format not implemented yet</ctl:message>
-						<ctl:warning/>
-					</xsl:when>
-					<xsl:otherwise>
-						<ctl:message>Server.RESTful.GetTile.Invalid.Tile.Format not tested.</ctl:message>
-						<ctl:notTested/>
-					</xsl:otherwise>
-				</xsl:choose>
-			</xsl:when>
-			<xsl:otherwise>
-				<ctl:message>Server.RESTful.GetTile.Invalid.Tile.Format test skipped because its prerequisites were not met.</ctl:message>
-				<ctl:skipped/>
-			</xsl:otherwise>
-		</xsl:choose>
-	</ctl:code>
-</ctl:test>
-
 <ctl:test name="wmts:Server.RESTful.GetTile.Valid.Tile.Size" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetTile request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -4898,8 +4915,9 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetTile.Valid.Tile.Size not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetTile.Valid.Tile.Size"> 
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetTile.Valid.Tile.Size not tested.</ctl:message>
@@ -4918,6 +4936,7 @@
 <ctl:test name="wmts:Server.RESTful.GetTile.Valid.Tile.Transparency" type="MandatoryIfImplemented">
 	<ctl:param name="metPrerequisites">Bootstrap prerequisites test result for this test - true or false</ctl:param>
 	<ctl:param name="selected">This test was selected for execution - true or false </ctl:param>
+	<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 	<ctl:context>wmts:main</ctl:context>
 	<ctl:assertion>
 	1.  the request entity is a valid RESTful GetTile request URL with the mandatory Layer identifier value provided in the ResourceURL template;
@@ -4940,8 +4959,9 @@
 			<xsl:when test="$metPrerequisites = 'true' ">
 				<xsl:choose>
 					<xsl:when test="$selected = 'true' ">
-						<ctl:message>Server.RESTful.GetTile.Valid.Tile.Transparency not implemented yet</ctl:message>
-						<ctl:warning/>
+						<ctl:call-function name="wmtsFunctions:RESTful.GetTile.Valid.Tile.Transparency"> 
+							<ctl:with-param name="wmts.capabilities.doc" select="$wmts.capabilities.doc"/>
+						</ctl:call-function>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>Server.RESTful.GetTile.Valid.Tile.Transparency not tested.</ctl:message>
