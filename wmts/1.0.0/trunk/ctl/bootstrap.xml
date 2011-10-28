@@ -97,7 +97,7 @@
 							</xsl:when>
 							<xsl:otherwise>
 								<ctl:message>Service Metadata URL <xsl:value-of select="$serviceMetadataURL"/> does not match wmts.capabilities.url <xsl:value-of select="$wmts.capabilities.url"/></ctl:message>
-								<ctl:fail/>
+								<ctl:fail/> 
 							</xsl:otherwise>
 						</xsl:choose>
 					</xsl:if>
@@ -195,9 +195,11 @@
 				<xsl:element name="getTileRESTful"><xsl:value-of select="string($getTileRESTful)"/></xsl:element>
 				<xsl:element name="getFeatureInfoRESTful"><xsl:value-of select="string($getFeatureInfoRESTful)"/></xsl:element>
 				
+				<xsl:variable name="hasThemes" select="exists($wmts.capabilities.doc/wmts:Themes/wmts:Theme)"/>
+
 				<!-- Client KVP GET-->
 				
-
+				<!-- 2011-10-28  PwD  everything specifically supporting client tests commented out for future development 
 				<xsl:element name="Client.KVP.GET.GetCapabilities.Mandatory.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Client.KVP.GET.GetCapabilities.AcceptVersions.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Client.KVP.GET.GetCapabilities.Sections.All.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
@@ -205,11 +207,11 @@
 				<xsl:element name="Client.KVP.GET.GetCapabilities.Sections.ServiceProvider.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Client.KVP.GET.GetCapabilities.Sections.OperationsMetadata.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Client.KVP.GET.GetCapabilities.Sections.Contents.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
-				<xsl:variable name="hasThemes" select="exists($wmts.capabilities.doc/wmts:Themes/wmts:Theme)"/>
 				<xsl:element name="Client.KVP.GET.GetCapabilities.Sections.Themes.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $hasThemes)"/></xsl:element>
 				<xsl:element name="Client.KVP.GET.GetCapabilities.Sections.Multiple.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Client.KVP.GET.GetCapabilities.UpdateSequence.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Client.KVP.GET.GetCapabilities.AcceptFormats.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
+				-->
 				
 				<!-- UNCOMMENT ME FOR DEVELOPMENT / PRODUCTION
 				
@@ -532,7 +534,7 @@
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Response.TileMatrixSet.ScaleDenominators.Unique.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and ($Server.KVP.GET.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and ($Server.KVP.GET.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisite-2 = 'true'))"/></xsl:element>
-
+ 
 
 <!-- UNCOMMENT ME FOR DEVELOPMENT/ PRODUCTION -->
 
@@ -762,62 +764,86 @@
 				<xsl:element name="Server.SOAP.POST.GetFeatureInfo.Invalid.InfoFormat.Prerequisites"><xsl:value-of select="string($getFeatureInfoSOAPPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.InfoFormat.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetFeatureInfo.Invalid.Pixel.Row.J.Prerequisites"><xsl:value-of select="string($getFeatureInfoSOAPPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Row.J.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetFeatureInfo.Invalid.Pixel.Col.I.Prerequisites"><xsl:value-of select="string($getFeatureInfoSOAPPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Col.I.Prerequisite-2 = 'true'))"/></xsl:element>
-
+ 
 				<!-- Server RESTful-->
-				<!-- UNCOMMENT ME FOR DEVELOPMENT 
+				<!-- UNCOMMENT ME FOR DEVELOPMENT -->
 				<xsl:element name="Server.RESTful.HTTP.Mandatory.Prerequisites"><xsl:value-of select="string($getCapabilitiesRESTful)"/></xsl:element>
 				<xsl:element name="Server.RESTful.InvalidQueryString.Prerequisites"><xsl:value-of select="string($getCapabilitiesRESTful)"/></xsl:element>
 
 				<xsl:element name="Server.RESTful.GetCapabilities.Request.Mandatory.Prerequisites"><xsl:value-of select="string($getCapabilitiesRESTful)"/></xsl:element>
 				
 				<xsl:element name="Server.RESTful.GetTile.Mandatory.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Mandatory.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetTile.Optional.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Optional.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetTile.Missing.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Mandatory.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetTile.Invalid.Layer.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Invalid.Layer.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetTile.Invalid.TileMatrixSet.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Invalid.TileMatrixSet.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetTile.Invalid.TileMatrix.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Invalid.TileMatrix.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetTile.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetTile.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetTile.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
-				<xsl:element name="Server.RESTful.GetTile.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2))"/></xsl:element>
+
+				<xsl:element name="Server.RESTful.GetTile.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2))"/></xsl:element>				
+
 				<xsl:element name="Server.RESTful.GetTile.Invalid.Tile.Style.Prerequisites"><xsl:value-of select="string($getTileRESTful)"/></xsl:element>
 
 				<xsl:element name="Server.RESTful.GetTile.Missing.Optional.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Missing.Optional.Prerequisite-2 = 'true'))"/></xsl:element>		
 
-				<xsl:element name="Server.RESTful.GetTile.Invalid.SampleDimension.Name.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Invalid.SampleDimension.Name.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetTile.Invalid.SampleDimension.Value.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Invalid.SampleDimension.Value.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetTile.Default.SampleDimension.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Default.SampleDimension.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetTile.Current.SampleDimension.Prerequisites"><xsl:value-of select="string($getTileRESTful and ($Server.KVP.GET.GetTile.Current.SampleDimension.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetTile.Valid.Tile.Format.Prerequisites"><xsl:value-of select="string($getTileRESTful)"/></xsl:element>
-				<xsl:element name="Server.RESTful.GetTile.Invalid.Tile.Format.Prerequisites"><xsl:value-of select="string($getTileRESTful)"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetTile.Valid.Tile.Size.Prerequisites"><xsl:value-of select="string($getTileRESTful)"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetTile.Valid.Tile.Transparency.Prerequisites"><xsl:value-of select="string($getTileRESTful)"/></xsl:element>
 
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Mandatory.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Mandatory.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Optional.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Optional.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Missing.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Missing.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.Layer.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.Layer.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.TileMatrixSet.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.TileMatrixSet.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.TileMatrix.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.TileMatrix.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
+
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.Tile.Style.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Style.Prerequisite-2 = 'true'))"/></xsl:element>
 
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Missing.Optional.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Missing.Optional.Prerequisite-2 = 'true'))"/></xsl:element>
 
-				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.SampleDimension.Value.Prerequisite-2 = 'true'))"/></xsl:element>
-				<xsl:element name="Server.RESTful.GetFeatureInfo.Default.SampleDimension.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Default.SampleDimension.Prerequisite-2 = 'true'))"/></xsl:element>
-				<xsl:element name="Server.RESTful.GetFeatureInfo.Current.SampleDimension.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Current.SampleDimension.Prerequisite-2 = 'true'))"/></xsl:element>
-				<xsl:element name="Server.RESTful.GetFeatureInfo.NonQueryable.Layer.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.NonQueryable.Layer.Prerequisite-2 = 'true'))"/></xsl:element>
-				<xsl:element name="Server.RESTful.GetFeatureInfo.Valid.InfoFormat.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Valid.InfoFormat.Prerequisite-2 = 'true'))"/></xsl:element>
-				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.InfoFormat.Prerequisite-2 = 'true'))"/></xsl:element>
-				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.Pixel.Row.J.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Row.J.Prerequisite-2 = 'true'))"/></xsl:element>
-				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.Pixel.Col.I.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Col.I.Prerequisite-2 = 'true'))"/></xsl:element>
--->
 
+				<xsl:element name="Server.RESTful.GetFeatureInfo.Default.SampleDimension.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Default.SampleDimension.Prerequisite-2 = 'true'))"/></xsl:element>
+
+				<xsl:element name="Server.RESTful.GetFeatureInfo.Current.SampleDimension.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Current.SampleDimension.Prerequisite-2 = 'true'))"/></xsl:element>
+
+				<xsl:element name="Server.RESTful.GetFeatureInfo.Valid.InfoFormat.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Valid.InfoFormat.Prerequisite-2 = 'true'))"/></xsl:element>
+
+				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.Pixel.Row.J.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Row.J.Prerequisite-2 = 'true'))"/></xsl:element>
+
+				<xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.Pixel.Col.I.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.Pixel.Col.I.Prerequisite-2 = 'true'))"/></xsl:element>
 	
 			</xsl:element>
 		</ctl:code>
