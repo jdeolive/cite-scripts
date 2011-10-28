@@ -81,6 +81,28 @@
           <th colspan="2">Revision History</th>
         </tr>
         <tr>
+			<td>Revision 0.6</td>
+			<td>2011-10-10 -- 2011-10-13</td>
+        </tr>
+        <tr>
+			<td colspan="2">Removed RESTful.GetTile.Invalid.Tile.Format as impossible because all such formats are provided by resource URL templates from Capabilities Document.</td>
+		</tr>
+        <tr>
+			<td colspan="2">Removed RESTful.GetFeatureInfo.Invalid.InfoFormat as impossible because all such formats are provided by resource URL templates from Capabilities Document.</td>
+		</tr>
+        <tr>
+			<td colspan="2">Removed RESTful.GetTile.Invalid.SampleDimension.Name as impossible because all such names are provided by resource URL templates from Capabilities Document.</td>
+		</tr>
+        <tr>
+			<td colspan="2">Removed RESTful.GetFeatureInfo.Invalid.SampleDimension.Name as impossible because all such names are provided by resource URL templates from Capabilities Document.</td>
+		</tr>
+		<tr>
+			<td colspan="2">Removed RESTful.GetFeatureInfo.NonQueryable.Layer as impossible because there is no resourceURLtemplate with resourceType="FeatureInfo" for non-queryable layers for a client to use to create a RESTful request URL.</td>
+		</tr>
+        <tr>
+			<td colspan="2">Changed assertions and added BestPractice assertions for wmts:Server.RESTful.GetTile.Missing.Optional test</td>
+		</tr>
+        <tr>
 			<td>Revision 0.5</td>
 			<td>2011-08-14 -- 2011-09-11</td>
 		</tr>
@@ -57970,14 +57992,12 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 			<dt>35.10. <a href="#Server.RESTful.GetTile.Invalid.Tile.Col.TileMatrixSetLimits">Server RESTful - GetTile - Invalid Tile Col - TileMatrixSetLimits</a></dt>
 			<dt>35.11. <a href="#Server.RESTful.GetTile.Invalid.Tile.Style">Server RESTful - GetTile - Invalid Tile Style</a></dt>
 			<dt>35.12. <a href="#Server.RESTful.GetTile.Missing.Optional">Server RESTful - GetTile - Missing optional parameters</a></dt>
-			<dt>35.13. <a href="#Server.RESTful.GetTile.Invalid.SampleDimension.Name">Server RESTful - GetTile - Invalid Sample Dimension Name</a></dt>
-			<dt>35.14. <a href="#Server.RESTful.GetTile.Invalid.SampleDimension.Value">Server RESTful - GetTile - Invalid Sample Dimension Value</a></dt>
-			<dt>35.15. <a href="#Server.RESTful.GetTile.Default.SampleDimension">Server RESTful - GetTile - Default Sample Dimension</a></dt>
-			<dt>35.16. <a href="#Server.RESTful.GetTile.Current.SampleDimension">Server RESTful - GetTile - Current Sample Dimension</a></dt>
-			<dt>35.17. <a href="#Server.RESTful.GetTile.Valid.Tile.Format">Server RESTful - GetTile - Valid Tile Format</a></dt>
-			<dt>35.18. <a href="#Server.RESTful.GetTile.Invalid.Tile.Format">Server RESTful - GetTile - Invalid Tile Format</a></dt>
-			<dt>35.19. <a href="#Server.RESTful.GetTile.Valid.Tile.Size">Server RESTful - GetTile - Valid Tile Size</a></dt>
-			<dt>35.20. <a href="#Server.RESTful.GetTile.Valid.Tile.Transparency">Server RESTful - GetTile - Valid Tile Transparency</a></dt>		
+			<dt>35.13. <a href="#Server.RESTful.GetTile.Invalid.SampleDimension.Value">Server RESTful - GetTile - Invalid Sample Dimension Value</a></dt>
+			<dt>35.14. <a href="#Server.RESTful.GetTile.Default.SampleDimension">Server RESTful - GetTile - Default Sample Dimension</a></dt>
+			<dt>35.15. <a href="#Server.RESTful.GetTile.Current.SampleDimension">Server RESTful - GetTile - Current Sample Dimension</a></dt>
+			<dt>35.16. <a href="#Server.RESTful.GetTile.Valid.Tile.Format">Server RESTful - GetTile - Valid Tile Format</a></dt>
+			<dt>35.17. <a href="#Server.RESTful.GetTile.Valid.Tile.Size">Server RESTful - GetTile - Valid Tile Size</a></dt>
+			<dt>35.18. <a href="#Server.RESTful.GetTile.Valid.Tile.Transparency">Server RESTful - GetTile - Valid Tile Transparency</a></dt>		
 		</dl>
 	</div>
 	<div class="atc"><a id="Server.RESTful.GetTile.Mandatory"></a>
@@ -59870,20 +59890,37 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 									</li>
 									<li>
 										<p><a id="Server.RESTful.GetTile.Missing.Optional-13"></a>the request entity is a valid RESTful GetTile request
-										without an optional <code class="code">sample dimensions</code> parameter for a sample dimension without a default value that is specified in the
+										without an optional <code class="code">sample dimensions</code> parameter for each sample dimension that is specified in the
 										&lt;Contents&gt;&lt;Layer&gt;&lt;Dimension&gt;&lt;ows:Identifier&gt; in the Service Metadata document for the specified layer.</p>
 									</li>
 									<li>
-										<p><a id="Server.RESTful.GetTile.Missing.Optional-14"></a>the response entity is a schema-valid ows:Exception document.</p>
+										<p><a id="Server.RESTful.GetTile.Missing.Optional-14"></a>the HTTP status code value is set to indicate an error.</p>
+									</li>
+								</ol>
+							</div>
+						</td>
+					</tr>
+					<tr class="bestPractice">
+						<td class="rowhead">BestPracticeAssertions</td>
+						<td>
+							<p>In addition to the assertions above, all of the following assertions must hold for the responses to be Best Practice:</p>
+							<div class="orderedlist">
+								<ol type="1">
+									<li>
+										<p><a id="Server.RESTful.GetTile.Missing.Optional.BestPractice-1"></a>
+										the response entity is a schema-valid ows:Exception document.</p>
 									</li>									
 									<li>
-										<p><a id="Server.RESTful.GetTile.Missing.Optional-15"></a>the response entity contains an exceptionCode attribute value of "MissingParameterValue".</p>
+										<p><a id="Server.RESTful.GetTile.Missing.Optional.BestPractice-2"></a>
+										the response entity contains an exceptionCode attribute value of "MissingParameterValue" for each sample dimension.</p>
 									</li>
 									<li>
-										<p><a id="Server.RESTful.GetTile.Missing.Optional-16"></a>the response entity contains a locator attribute value of the name of the sample dimension.</p>
+										<p><a id="Server.RESTful.GetTile.Missing.Optional.BestPractice-3"></a>
+										the response entity contains a locator attribute value equal to the name of each sample dimension.</p>
 									</li>
 									<li>
-										<p><a id="Server.RESTful.GetTile.Missing.Optional-17"></a>the HTTP status code value is set to 400, corresponding to the message "Bad Request".</p>
+										<p><a id="Server.RESTful.GetTile.Missing.Optional.BestPractice-4"></a>
+										the HTTP status code value is set to 404, corresponding to the message "File Not Found".</p>
 									</li>
 								</ol>
 							</div>
@@ -59940,192 +59977,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 	</div>
 	
 	<br class="atc-break" />
-	<div class="atc"><a id="Server.RESTful.GetTile.Invalid.SampleDimension.Name"></a>
-		<p class="title"><b>Table&nbsp;35.13.&nbsp;Server RESTful - GetTile - Invalid Sample Dimension Name</b></p>
-		<div class="atc-contents">
-			<table summary="Server RESTful - GetTile - Invalid Sample Dimension Name" border="1">
-				<colgroup>
-					<col />
-					<col />
-				</colgroup>
-				<tbody>
-					<tr class="identifier">
-						<td class="rowhead">Test case identifier</td>
-						<td>Server.RESTful.GetTile.Invalid.SampleDimension.Name</td>
-					</tr>
-					<tr class="prerequisite">
-						<td class="rowhead">Prerequisites</td>
-						<td>
-							<p><a href="#Bootstrap.RESTful.GetCapabilities">Bootstrap</a> RESTful - GetCapabilities</p>
-							<div class="orderedlist">
-								<ol type="1">
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.SampleDimension.Name.Prerequisite-1"></a>
-										the resonse entity has a separate &lt;ResourceURL&gt; template element for the "GetTile" operation with a 
-										name for each &lt;Dimension&gt;&lt;ows:Identifier&gt; element defined for each Layer.</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.SampleDimension.Name.Prerequisite-2"></a>the response entity has a 
-										&lt;Layer&gt; with one or more &lt;Dimension&gt;s.</p>
-									</li>
-								</ol>
-							</div>
-						</td>
-					</tr>
-					<tr class="purpose">
-						<td class="rowhead">Test purpose</td>
-						<td>
-							<p>Verify that when a GetTile request contains the name not defined as a sample dimension, then the server throws an exception. </p>
-						</td>
-					</tr>
-					<tr class="assertions">
-						<td class="rowhead">Assertions</td>
-						<td>
-							<p>All of the following assertions must hold for the responses to be valid:</p>
-							<div class="orderedlist">
-								<ol type="1">
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.SampleDimension.Name-1"></a>the request entity is a valid RESTful GetTile request URL 
-										with the mandatory <code class="code">Layer</code> identifier value provided in the ResourceURL template;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.SampleDimension.Name-2"></a>the request entity is a valid RESTful GetTile request URL 
-										with the mandatory <code class="code">Style</code> identifier value equal to a
-										&lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document
-										substituted in place of the "style" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.SampleDimension.Name-3"></a>the request entity is a valid RESTful GetTile request URL 
-										with the mandatory <code class="code">format</code> MIME type format value provided in the ResourceURL template;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.SampleDimension.Name-4"></a>the request entity is a valid RESTful GetTile request URL 
-										with the mandatory <code class="code">TileMatrixSet</code> identifier value equal to a
-										&lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document
-										substituted in place of the "TileMatrixSet" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.SampleDimension.Name-5"></a>the request entity is a valid RESTful GetTile request URL 
-										with the mandatory <code class="code">TileMatrix</code> identifier value equal to a
-										&lt;TileMatrixSet&gt;&lt;TileMatrix&gt;&lt;owsIdentifier&gt; value for the specified TileMatrixSet from the 
-										Service Metadata document substituted in place of the "TileMatrix" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.SampleDimension.Name-6"></a>the request entity is a valid RESTful GetTile request URL 
-										with the mandatory <code class="code">TileRow</code> index value from zero to
-										the value of &lt;MatrixHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document
-										substituted in place of the "TileRow" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.SampleDimension.Name-7"></a>the request entity is a valid RESTful GetTile request URL 
-										with the mandatory <code class="code">TileCol</code> index value from zero to
-										the value of &lt;MatrixWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document
-										substituted in place of the "TileCol" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.SampleDimension.Name-8">the request entity for a tile from a Layer with TileMatrixSetLimits 
-										with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileRow index value
-										within the TileMatrixLimits MinTileRow and MaxTileRow values.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.SampleDimension.Name-9">the request entity for a tile from a Layer with TileMatrixSetLimits 
-										with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileCol index value
-										within the TileMatrixLimits MinTileCol and MaxTileCol values.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.SampleDimension.Name-10"></a>the request entity is a valid RESTful GetTile request URL 
-										with an optional <code class="code">sample dimensions</code> parameter with a name that is not specified in a
-										&lt;Contents&gt;&lt;Layer&gt;&lt;Dimension&gt;&lt;ows:Identifier&gt; in the Service Metadata document;</p>
-									</li>
-									<li>
-										<p><a id="Client.RESTful.GetTile.Invalid.SampleDimension.Name-11"></a>the request entity is a valid RESTful GetTile request URL 
-										with an optional <code class="code">sample dimensions</code> parameter with any value;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.SampleDimension.Name-12"></a>the HTTP status code value is set to indicate an error.</p>
-									</li>
-								</ol>
-							</div>
-						</td>
-					</tr>
-					<tr class="bestPractice">
-						<td class="rowhead">BestPracticeAssertions</td>
-						<td>
-							<p>In addition to the assertions above, all of the following assertions must hold for the responses to be Best Practice:</p>
-							<div class="orderedlist">
-								<ol type="1">
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.SampleDimension.Name.BestPractice-1"></a>
-										the response entity is a schema-valid ows:Exception document.</p>
-									</li>									
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.SampleDimension.Name.BestPractice-2"></a>
-										the response entity contains an exceptionCode attribute value of "InvalidParameterValue".</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.SampleDimension.Name.BestPractice-3"></a>
-										the response entity contains a locator attribute value of the name of the sample dimension.</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.SampleDimension.Name.BestPractice-4"></a>
-										the HTTP status code value is set to 404, corresponding to the message "File Not Found".</p>
-									</li>
-								</ol>
-							</div>
-						</td>
-					</tr>
-					<tr class="method">
-						<td class="rowhead">Test method</td>
-						<td>Generate parameter values in the request with contents of Service Metadata document.  
-						Check that responses are HTTP error status codes.  Pass if all assertions hold; BestPractice if all best practice assertions also hold; fail otherwise.</td>
-					</tr>
-					<tr class="reference">
-						<td class="rowhead">Reference</td>
-						<td>
-							<div class="itemizedlist">
-								<ul>
-									<li>
-										<p><a class="xref" href="#OGC-06-121r3">OGC-06-121r3</a> : cl. 9.2, p. 46</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. 7.1.1.1.2 p. 22</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. 7.2, pp. 39-40</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : table 22, p. 42</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : table 24, p 43</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. 8.2.3, p. 52</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. 10.2, pp. 62-65</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : table 32, pp. 63-64</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. A.3.5.7, p. 82</p>
-									</li>
-								</ul>
-							</div>
-						</td>
-					</tr>
-					<tr class="type">
-						<td class="rowhead">Test type</td>
-						<td>Capability</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-	<br class="atc-break" />
 	<div class="atc"><a id="Server.RESTful.GetTile.Invalid.SampleDimension.Value"></a>
-		<p class="title"><b>Table&nbsp;35.14.&nbsp;Server RESTful - GetTile - Invalid Sample Dimension Value</b></p>
+		<p class="title"><b>Table&nbsp;35.13.&nbsp;Server RESTful - GetTile - Invalid Sample Dimension Value</b></p>
 		<div class="atc-contents">
 			<table summary="Server RESTful - GetTile - Invalid Sample Dimension Value" border="1">
 				<colgroup>
@@ -60312,7 +60165,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 	</div>
 	<br class="atc-break" />
 	<div class="atc"><a id="Server.RESTful.GetTile.Default.SampleDimension"></a>
-		<p class="title"><b>Table&nbsp;35.15.&nbsp;Server RESTful - GetTile - Default Sample Dimension</b></p>
+		<p class="title"><b>Table&nbsp;35.14.&nbsp;Server RESTful - GetTile - Default Sample Dimension</b></p>
 		<div class="atc-contents">
 			<table summary="Server RESTful - GetTile - Default Sample Dimension" border="1">
 				<colgroup>
@@ -60469,7 +60322,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 	</div>			
 	<br class="atc-break" />
 	<div class="atc"><a id="Server.RESTful.GetTile.Current.SampleDimension"></a>
-		<p class="title"><b>Table&nbsp;35.16.&nbsp;Server RESTful - GetTile - Current Sample Dimension</b></p>
+		<p class="title"><b>Table&nbsp;35.15.&nbsp;Server RESTful - GetTile - Current Sample Dimension</b></p>
 		<div class="atc-contents">
 			<table summary="Server RESTful - GetTile - Current Sample Dimension" border="1">
 				<colgroup>
@@ -60626,7 +60479,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 	</div>			
 	<br class="atc-break" />
 	<div class="atc"><a id="Server.RESTful.GetTile.Valid.Tile.Format"></a>
-		<p class="title"><b>Table&nbsp;35.17.&nbsp;Server RESTful - GetTile - Valid Tile Format</b></p>
+		<p class="title"><b>Table&nbsp;35.16.&nbsp;Server RESTful - GetTile - Valid Tile Format</b></p>
 		<div class="atc-contents">
 			<table summary="Server RESTful - GetTile - Valid Tile Format" border="1">
 				<colgroup>
@@ -60780,188 +60633,10 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 			</table>
 		</div>
 	</div>
-	<br class="atc-break" />
-	<div class="atc"><a id="Server.RESTful.GetTile.Invalid.Tile.Format"></a>
-		<p class="title"><b>Table&nbsp;35.18.&nbsp;Server RESTful - GetTile - Invalid Tile Format</b></p>
-		<div class="atc-contents">
-			<table summary="Server RESTful - GetTile - Invalid Tile Format" border="1">
-				<colgroup>
-					<col />
-					<col />
-				</colgroup>
-				<tbody>
-					<tr class="identifier">
-						<td class="rowhead">Test case identifier</td>
-						<td>Server.RESTful.GetTile.Invalid.Tile.Format</td>
-					</tr>
-					<tr class="prerequisite">
-						<td class="rowhead">Prerequisites</td>
-						<td>
-							<p><a href="#Bootstrap.RESTful.GetCapabilities">Bootstrap</a> RESTful - GetCapabilities</p>
-							<div class="orderedlist">
-								<ol type="1">
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.Tile.Format.Prerequisite-1"></a>
-										the resonse entity has a &lt;ResourceURL&gt; template element for the "GetTile" operation for each advertised Layer.</p>
-									</li>
-								</ol>
-							</div>
-						</td>
-					</tr>
-					<tr class="purpose">
-						<td class="rowhead">Test purpose</td>
-						<td>
-							<p>Test that the responses returned by a WMTS server to RESTful GetTile requests with tile formats not
-							advertised in the Service Metadata Document for each layer, and each sample dimension if applicable,
-							are valid exception reports. </p>
-						</td>
-					</tr>
-					<tr class="assertions">
-						<td class="rowhead">Assertions</td>
-						<td>
-							<p>All of the following assertions must hold for the responses to be valid:</p>
-							<div class="orderedlist">
-								<ol type="1">
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.Tile.Format-1"></a>the request entity is a valid RESTful GetTile request URL 
-										with the mandatory <code class="code">Layer</code> identifier value provided in the ResourceURL template;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.Tile.Format-2"></a>the request entity is a valid RESTful GetTile request URL 
-										with the mandatory <code class="code">Style</code> identifier value equal to a
-										&lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document
-										substituted in place of the "style" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.Tile.Format-3"></a>the request entity is a valid RESTful GetTile request URL 
-										with a mandatory <code class="code">format</code> MIME type format value not provided in a ResourceURL template;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.Tile.Format-4"></a>the request entity is a valid RESTful GetTile request URL 
-										with the mandatory <code class="code">TileMatrixSet</code> identifier value equal to a
-										&lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document
-										substituted in place of the "TileMatrixSet" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.Tile.Format-5"></a>the request entity is a valid RESTful GetTile request URL 
-										with the mandatory <code class="code">TileMatrix</code> identifier value equal to a
-										&lt;TileMatrixSet&gt;&lt;TileMatrix&gt;&lt;owsIdentifier&gt; value for the specified TileMatrixSet from the 
-										Service Metadata document substituted in place of the "TileMatrix" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.Tile.Format-6"></a>the request entity is a valid RESTful GetTile request URL 
-										with the mandatory <code class="code">TileRow</code> index value from zero to
-										the value of &lt;MatrixHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document
-										substituted in place of the "TileRow" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.Tile.Format-7"></a>the request entity is a valid RESTful GetTile request URL 
-										with the mandatory <code class="code">TileCol</code> index value from zero to
-										the value of &lt;MatrixWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document
-										substituted in place of the "TileCol" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.Tile.Format-8">the request entity for a tile from a Layer with TileMatrixSetLimits 
-										with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileRow index value
-										within the TileMatrixLimits MinTileRow and MaxTileRow values.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.Tile.Format-9">the request entity for a tile from a Layer with TileMatrixSetLimits 
-										with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileCol index value
-										within the TileMatrixLimits MinTileCol and MaxTileCol values.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.Tile.Format-10"></a>the request entity is a valid RESTful GetTile request URL 
-										with an optional <code class="code">sample dimensions</code> parameter with a with a name from a 
-										&lt;Dimension&gt;&lt;ows:Identifier&gt; value for the specified Layer from the Service Metadata document;</p>
-									</li>
-									<li>
-										<p><a id="Client.RESTful.GetTile.Invalid.Tile.Format-11"></a>the request entity is a valid RESTful GetTile request URL 
-										with an optional <code class="code">sample dimensions</code> parameter with a value from one of the
-										&lt;Dimension&gt;&lt;Value&gt; elements for the specified Dimension from the Service Metadata document;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.Tile.Format-12"></a>the HTTP status code value is set to indicate an error.</p>
-									</li>
-								</ol>
-							</div>
-						</td>
-					</tr>
-					<tr class="bestPractice">
-						<td class="rowhead">BestPracticeAssertions</td>
-						<td>
-							<p>In addition to the assertions above, all of the following assertions must hold for the responses to be Best Practice:</p>
-							<div class="orderedlist">
-								<ol type="1">
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.Tile.Format.BestPractice-1"></a>
-										the response entity is a schema-valid ows:Exception document.</p>
-									</li>									
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.Tile.Format.BestPractice-2"></a>
-										the response entity contains an exceptionCode attribute value of "InvalidParameterValue".</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.Tile.Format.BestPractice-3"></a>
-										the response entity contains a locator attribute value of "format".</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetTile.Invalid.Tile.Format.BestPractice-4"></a>
-										the HTTP status code value is set to 404, corresponding to the message "File Not Found".</p>
-									</li>
-								</ol>
-							</div>
-						</td>
-					</tr>
-					<tr class="method">
-						<td class="rowhead">Test method</td>
-						<td>Generate parameter values in the request with contents of Service Metadata document, and formats not in the Service Metadata document.  
-						Check that responses are HTTP error status codes.  Pass if all assertions hold; BestPractice if all best practice assertions also hold; fail otherwise.</td>
-					</tr>
-					<tr class="reference">
-						<td class="rowhead">Reference</td>
-						<td>
-							<div class="itemizedlist">
-								<ul>
-									<li>
-										<p><a class="xref" href="#OGC-06-121r3">OGC-06-121r3</a> : cl. 9.2, p. 46</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. 7.2, pp. 39-40</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : table 22, p. 42</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : table 24, p 43</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. 8.2.3, p. 52</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. 10.2, pp. 62-65</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : table 32, pp. 63-64</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. A.3.5.9, p. 83</p>
-									</li>
-								</ul>
-							</div>
-						</td>
-					</tr>
-					<tr class="type">
-						<td class="rowhead">Test type</td>
-						<td>Capability</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
+
 	<br class="atc-break" />
 	<div class="atc"><a id="Server.RESTful.GetTile.Valid.Tile.Size"></a>
-		<p class="title"><b>Table&nbsp;35.19.&nbsp;Server RESTful - GetTile - Valid Tile Size</b></p>
+		<p class="title"><b>Table&nbsp;35.17.&nbsp;Server RESTful - GetTile - Valid Tile Size</b></p>
 		<div class="atc-contents">
 			<table summary="Server RESTful - GetTile - Valid Tile Size" border="1">
 				<colgroup>
@@ -61120,7 +60795,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 	</div>
 	<br class="atc-break" />
 	<div class="atc"><a id="Server.RESTful.GetTile.Valid.Tile.Transparency"></a>
-		<p class="title"><b>Table&nbsp;35.20.&nbsp;Server RESTful - GetTile - Valid Tile Transparency</b></p>
+		<p class="title"><b>Table&nbsp;35.18.&nbsp;Server RESTful - GetTile - Valid Tile Transparency</b></p>
 		<div class="atc-contents">
 			<table summary="Server RESTful - GetTile - Valid Tile Transparency" border="1">
 				<colgroup>
@@ -61309,15 +60984,12 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 			<dt>36.10. <a href="#Server.RESTful.GetFeatureInfo.Invalid.Tile.Col.TileMatrixSetLimits">Server RESTful - GetFeatureInfo - Invalid Tile Col - TileMatrixSetLimits</a></dt>
 			<dt>36.11. <a href="#Server.RESTful.GetFeatureInfo.Invalid.Tile.Style">Server RESTful - GetFeatureInfo - Invalid Tile Style</a></dt>
 			<dt>36.12. <a href="#Server.RESTful.GetFeatureInfo.Missing.Optional">Server RESTful - GetFeatureInfo - Missing optional parameters</a></dt>
-			<dt>36.13. <a href="#Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name">Server RESTful - GetFeatureInfo - Invalid Sample Dimension Name</a></dt>
-			<dt>36.14. <a href="#Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Value">Server RESTful - GetFeatureInfo - Invalid Sample Dimension Value</a></dt>
-			<dt>36.15. <a href="#Server.RESTful.GetFeatureInfo.Default.SampleDimension">Server RESTful - GetFeatureInfo - Default Sample Dimension</a></dt>
-			<dt>36.16. <a href="#Server.RESTful.GetFeatureInfo.Current.SampleDimension">Server RESTful - GetFeatureInfo - Current Sample Dimension</a></dt>
-			<dt>36.17. <a href="#Server.RESTful.GetFeatureInfo.NonQueryable.Layer">Server RESTful - GetFeatureInfo - Non-Queryable Layer</a></dt>
-			<dt>36.18. <a href="#Server.RESTful.GetFeatureInfo.Valid.InfoFormat">Server RESTful - GetFeatureInfo - Valid InfoFormat</a></dt>
-			<dt>36.19. <a href="#Server.RESTful.GetFeatureInfo.Invalid.InfoFormat">Server RESTful - GetFeatureInfo - Invalid InfoFormat</a></dt>
-			<dt>36.20. <a href="#Server.RESTful.GetFeatureInfo.Invalid.Pixel.Row.J">Server RESTful - GetFeatureInfo - Invalid Pixel Row J</a></dt>
-			<dt>36.21. <a href="#Server.RESTful.GetFeatureInfo.Invalid.Pixel.Col.I">Server RESTful - GetFeatureInfo - Invalid Pixel Col I</a></dt>
+			<dt>36.13. <a href="#Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Value">Server RESTful - GetFeatureInfo - Invalid Sample Dimension Value</a></dt>
+			<dt>36.14. <a href="#Server.RESTful.GetFeatureInfo.Default.SampleDimension">Server RESTful - GetFeatureInfo - Default Sample Dimension</a></dt>
+			<dt>36.15. <a href="#Server.RESTful.GetFeatureInfo.Current.SampleDimension">Server RESTful - GetFeatureInfo - Current Sample Dimension</a></dt>
+			<dt>36.16. <a href="#Server.RESTful.GetFeatureInfo.Valid.InfoFormat">Server RESTful - GetFeatureInfo - Valid InfoFormat</a></dt>
+			<dt>36.17. <a href="#Server.RESTful.GetFeatureInfo.Invalid.Pixel.Row.J">Server RESTful - GetFeatureInfo - Invalid Pixel Row J</a></dt>
+			<dt>36.18. <a href="#Server.RESTful.GetFeatureInfo.Invalid.Pixel.Col.I">Server RESTful - GetFeatureInfo - Invalid Pixel Col I</a></dt>
 			
 		</dl>
 	</div>
@@ -63503,213 +63175,9 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 			</table>
 		</div>
 	</div>
-
-	
-	
-	<br class="atc-break" />
-	<div class="atc"><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name"></a>
-		<p class="title"><b>Table&nbsp;36.13.&nbsp;Server RESTful - GetFeatureInfo - Invalid Sample Dimension Name</b></p>
-		<div class="atc-contents">
-			<table summary="Server RESTful - GetFeatureInfo - Invalid Sample Dimension Name" border="1">
-				<colgroup>
-					<col />
-					<col />
-				</colgroup>
-				<tbody>
-					<tr class="identifier">
-						<td class="rowhead">Test case identifier</td>
-						<td>Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name</td>
-					</tr>
-					<tr class="prerequisite">
-						<td class="rowhead">Prerequisites</td>
-						<td>
-							<p><a href="#Bootstrap.RESTful.GetCapabilities">Bootstrap</a> RESTful - GetCapabilities</p>
-							<div class="orderedlist">
-								<ol type="1">
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-1"></a>
-										the resonse entity has a separate &lt;ResourceURL&gt; template element for the "GetFeatureInfo" operation with a 
-										name for each &lt;Dimension&gt;&lt;ows:Identifier&gt; element defined for each Layer.</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name.Prerequisite-2"></a>the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s and one or more &lt;Dimension&gt;s.</p>
-									</li>
-								</ol>
-							</div>
-						</td>
-					</tr>
-					<tr class="purpose">
-						<td class="rowhead">Test purpose</td>
-						<td>
-							<p>Verify that when a GetFeatureInfo request contains the name not defined as a sample dimension, then the server throws an exception. </p>
-						</td>
-					</tr>
-					<tr class="assertions">
-						<td class="rowhead">Assertions</td>
-						<td>
-							<p>All of the following assertions must hold for the responses to be valid:</p>
-							<div class="orderedlist">
-								<ol type="1">
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name-1"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with the mandatory <code class="code">Layer</code> identifier value provided in the ResourceURL template;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name-2"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with the mandatory <code class="code">Style</code> identifier value equal to a
-										&lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document
-										substituted in place of the "style" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name-3"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with the mandatory <code class="code">format</code> MIME type format value provided in the ResourceURL template;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name-4"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with the mandatory <code class="code">TileMatrixSet</code> identifier value equal to a
-										&lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document
-										substituted in place of the "TileMatrixSet" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name-5"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with the mandatory <code class="code">TileMatrix</code> identifier value equal to a
-										&lt;TileMatrixSet&gt;&lt;TileMatrix&gt;&lt;owsIdentifier&gt; value for the specified TileMatrixSet from the 
-										Service Metadata document substituted in place of the "TileMatrix" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name-6"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with the mandatory <code class="code">TileRow</code> index value from zero to
-										the value of &lt;MatrixHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document
-										substituted in place of the "TileRow" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name-7"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with the mandatory <code class="code">TileCol</code> index value from zero to
-										the value of &lt;MatrixWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document
-										substituted in place of the "TileCol" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name-8">the request entity for a tile from a Layer with TileMatrixSetLimits 
-										with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileRow index value
-										within the TileMatrixLimits MinTileRow and MaxTileRow values.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name-9">the request entity for a tile from a Layer with TileMatrixSetLimits 
-										with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileCol index value
-										within the TileMatrixLimits MinTileCol and MaxTileCol values.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name-10"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with an optional <code class="code">sample dimensions</code> parameter with a name that is not specified in a
-										&lt;Contents&gt;&lt;Layer&gt;&lt;Dimension&gt;&lt;ows:Identifier&gt; in the Service Metadata document;</p>
-									</li>
-									<li>
-										<p><a id="Client.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name-11"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with an optional <code class="code">sample dimensions</code> parameter with any value;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name-12"></a>the request entity is a valid RESTful GetFeatureInfo request URL
-										with the mandatory <code class="code">J</code> parameter with a row index value from zero to
-										the value of &lt;TileHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document
-										substituted in place of the "J" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name-13"></a>the request entity is a valid RESTful GetFeatureInfo request URL
-										with the mandatory <code class="code">I</code> parameter with a column index value from zero to 
-										the value of &lt;TileWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document
-										substituted in place of the "I" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name-14"></a>the request entity is a valid RESTful GetFeatureInfo request URL
-										with the mandatory <code class="code">infoFormat</code> parameter with an InfoFormat value from one of the 
-										&lt;InfoFormat&gt;s for the specified Layer provided in the ResourceURL template from the Service Metadata document;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name-15"></a>the HTTP status code value is set to indicate an error.</p>
-									</li>
-								</ol>
-							</div>
-						</td>
-					</tr>
-					<tr class="bestPractice">
-						<td class="rowhead">BestPracticeAssertions</td>
-						<td>
-							<p>In addition to the assertions above, all of the following assertions must hold for the responses to be Best Practice:</p>
-							<div class="orderedlist">
-								<ol type="1">
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name.BestPractice-1"></a>
-										the response entity is a schema-valid ows:Exception document.</p>
-									</li>									
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name.BestPractice-2"></a>
-										the response entity contains an exceptionCode attribute value of "InvalidParameterValue".</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name.BestPractice-3"></a>
-										the response entity contains a locator attribute value of the name of the sample dimension.</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Name.BestPractice-4"></a>
-										the HTTP status code value is set to 404, corresponding to the message "File Not Found".</p>
-									</li>
-								</ol>
-							</div>
-						</td>
-					</tr>
-					<tr class="method">
-						<td class="rowhead">Test method</td>
-						<td>Generate parameter values in the request with contents of Service Metadata document.  
-						Check that responses are HTTP error status codes.  Pass if all assertions hold; BestPractice if all best practice assertions also hold; fail otherwise.</td>
-					</tr>
-					<tr class="reference">
-						<td class="rowhead">Reference</td>
-						<td>
-							<div class="itemizedlist">
-								<ul>
-									<li>
-										<p><a class="xref" href="#OGC-06-121r3">OGC-06-121r3</a> : cl. 9.2, p. 46</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. 6.1, pp. 7-10</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. 7.1.1.1.2 p. 22</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. 7.3.2.1, p. 45</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : figure 11, p. 46</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. 10.3, pp. 65-68</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : table 34, pp. 66-67</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. 8.3.3, p. 53</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. A.3.6, p. 84</p>
-									</li>
-								</ul>
-							</div>
-						</td>
-					</tr>
-					<tr class="type">
-						<td class="rowhead">Test type</td>
-						<td>Capability</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
 	<br class="atc-break" />
 	<div class="atc"><a id="Server.RESTful.GetFeatureInfo.Invalid.SampleDimension.Value"></a>
-		<p class="title"><b>Table&nbsp;36.14.&nbsp;Server RESTful - GetFeatureInfo - Invalid Sample Dimension Value</b></p>
+		<p class="title"><b>Table&nbsp;36.13.&nbsp;Server RESTful - GetFeatureInfo - Invalid Sample Dimension Value</b></p>
 		<div class="atc-contents">
 			<table summary="Server RESTful - GetFeatureInfo - Invalid Sample Dimension Value" border="1">
 				<colgroup>
@@ -63913,7 +63381,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 	</div>
 	<br class="atc-break" />
 	<div class="atc"><a id="Server.RESTful.GetFeatureInfo.Default.SampleDimension"></a>
-		<p class="title"><b>Table&nbsp;36.15.&nbsp;Server RESTful - GetFeatureInfo - Default Sample Dimension</b></p>
+		<p class="title"><b>Table&nbsp;36.14.&nbsp;Server RESTful - GetFeatureInfo - Default Sample Dimension</b></p>
 		<div class="atc-contents">
 			<table summary="Server RESTful - GetFeatureInfo - Default Sample Dimension" border="1">
 				<colgroup>
@@ -64090,7 +63558,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 	</div>			
 	<br class="atc-break" />
 	<div class="atc"><a id="Server.RESTful.GetFeatureInfo.Current.SampleDimension"></a>
-		<p class="title"><b>Table&nbsp;36.16.&nbsp;Server RESTful - GetFeatureInfo - Current Sample Dimension</b></p>
+		<p class="title"><b>Table&nbsp;36.15.&nbsp;Server RESTful - GetFeatureInfo - Current Sample Dimension</b></p>
 		<div class="atc-contents">
 			<table summary="Server RESTful - GetFeatureInfo - Current Sample Dimension" border="1">
 				<colgroup>
@@ -64266,200 +63734,8 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 		</div>
 	</div>			
 	<br class="atc-break" />	
-	<div class="atc"><a id="Server.RESTful.GetFeatureInfo.NonQueryable.Layer"></a>
-		<p class="title"><b>Table&nbsp;36.17.&nbsp;Server RESTful - GetFeatureInfo - Non-Queryable Layer</b></p>
-		<div class="atc-contents">
-			<table summary="Server RESTful - GetFeatureInfo - Non-QueryableLayer" border="1">
-				<colgroup>
-					<col />
-					<col />
-				</colgroup>
-				<tbody>
-					<tr class="identifier">
-						<td class="rowhead">Test case identifier</td>
-						<td>Server.RESTful.GetFeatureInfo.NonQueryable.Layer</td>
-					</tr>
-					<tr class="prerequisite">
-						<td class="rowhead">Prerequisites</td>
-						<td>
-							<p><a href="#Bootstrap.RESTful.GetCapabilities">Bootstrap</a> RESTful - GetCapabilities</p>
-							<div class="orderedlist">
-								<ol type="1">
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.NonQueryable.Layer.Prerequisite-1"></a>
-										the resonse entity has a &lt;ResourceURL&gt; template element for the "GetFeatureInfo" operation for each advertised Layer.</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.NonQueryable.Layer.Prerequisite-2">the response entity has a &lt;Layer&gt; with no
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-								</ol>
-							</div>
-						</td>
-					</tr>
-					<tr class="purpose">
-						<td class="rowhead">Test purpose</td>
-						<td>
-							<p>Verify that when a GetFeatureInfo request is made for a non-queryable layer, then the server throws an exception. </p>
-						</td>
-					</tr>
-					<tr class="assertions">
-						<td class="rowhead">Assertions</td>
-						<td>
-							<p>All of the following assertions must hold for the responses to be valid:</p>
-							<div class="orderedlist">
-								<ol type="1">
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.NonQueryable.Layer-1"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with the mandatory <code class="code">Layer</code> identifier value provided in the ResourceURL template for a Layer with
-										no InfoFormats;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.NonQueryable.Layer-2"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with the mandatory <code class="code">Style</code> parameter with a style identifier value listed in the Service Metadata document
-										substituted in place of the "style" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.NonQueryable.Layer-3"></a>the request entity is a valid KVP POST GetFeatureInfo 
-										request with the mandatory <code class="code">format</code> parameter with a MIME type format value equal to a
-										&lt;Layer&gt;&lt;Format&gt; value for the specified Layer from the Service Metadata document;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.NonQueryable.Layer-4"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with the mandatory <code class="code">TileMatrixSet</code> identifier value equal to a
-										&lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document
-										substituted in place of the "TileMatrixSet" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.NonQueryable.Layer-5"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with the mandatory <code class="code">TileMatrix</code> identifier value equal to a
-										&lt;TileMatrixSet&gt;&lt;TileMatrix&gt;&lt;owsIdentifier&gt; value for the specified TileMatrixSet from the 
-										Service Metadata document substituted in place of the "TileMatrix" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.NonQueryable.Layer-6"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with the mandatory <code class="code">TileRow</code> index value from zero to
-										the value of &lt;MatrixHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document
-										substituted in place of the "TileRow" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.NonQueryable.Layer-7"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with the mandatory <code class="code">TileCol</code> index value from zero to
-										the value of &lt;MatrixWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document
-										substituted in place of the "TileCol" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.NonQueryable.Layer-8"></a>the request entity for a tile from a Layer with TileMatrixSetLimits 
-										with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileRow index value
-										within the TileMatrixLimits MinTileRow and MaxTileRow values.</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.NonQueryable.Layer-9"></a>the request entity for a tile from a Layer with TileMatrixSetLimits 
-										with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileCol index value
-										within the TileMatrixLimits MinTileCol and MaxTileCol values.</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.NonQueryable.Layer-10"></a>the request entity is a valid RESTful GetFeatureInfo request URL
-										with the mandatory <code class="code">J</code> parameter with a row index value from zero to
-										the value of &lt;TileHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document
-										substituted in place of the "J" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.NonQueryable.Layer-11"></a>the request entity is a valid RESTful GetFeatureInfo request URL
-										with the mandatory <code class="code">I</code> parameter with a column index value from zero to 
-										the value of &lt;TileWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document
-										substituted in place of the "I" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.NonQueryable.Layer-12"></a>the request entity is a valid RESTful GetFeatureInfo request URL
-										with the mandatory <code class="code">infoFormat</code> parameter with an InfoFormat value from one of the 
-										&lt;InfoFormat&gt;s specified in the OperationsMetadata of the Service Metadata document;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.NonQueryable.Layer-13"></a>the HTTP status code value is set to indicate an error.</p>
-									</li>
-								</ol>
-							</div>
-						</td>
-					</tr>
-					<tr class="bestPractice">
-						<td class="rowhead">BestPracticeAssertions</td>
-						<td>
-							<p>In addition to the assertions above, all of the following assertions must hold for the responses to be Best Practice:</p>
-							<div class="orderedlist">
-								<ol type="1">
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.NonQueryable.Layer.BestPractice-1"></a>
-										the response entity is a schema-valid ows:Exception document.</p>
-									</li>									
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.NonQueryable.Layer.BestPractice-2"></a>
-										the response entity contains an exceptionCode attribute value of "OperationNotSupported".</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.NonQueryable.Layer.BestPractice-3"></a>
-										the response entity contains a locator attribute value of "GetFeatureInfo".</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.NonQueryable.Layer.BestPractice-4"></a>
-										the HTTP status code value is set to 404, corresponding to the message "File Not Found".</p>
-									</li>
-								</ol>
-							</div>
-						</td>
-					</tr>
-					<tr class="method">
-						<td class="rowhead">Test method</td>
-						<td>Generate parameter values in the request with contents of Service Metadata document.  
-						Check that responses are HTTP error status codes.  Pass if all assertions hold; BestPractice if all best practice assertions also hold; fail otherwise.</td>
-					</tr>
-					<tr class="reference">
-						<td class="rowhead">Reference</td>
-						<td>
-							<div class="itemizedlist">
-								<ul>
-									<li>
-										<p><a class="xref" href="#OGC-06-121r3">OGC-06-121r3</a> : cl. 9.2, p. 46</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. 6.1, pp. 7-10</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : table 6, pp. 19-20</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. 7.3.2.2, pp, 47-48</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : figure 11, p. 46</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. 10.3, pp. 65-68</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : table 34, pp. 66-67</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. 8.3.3, p. 53</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. A.3.6.1, p. 84</p>
-									</li>
-								</ul>
-							</div>
-						</td>
-					</tr>
-					<tr class="type">
-						<td class="rowhead">Test type</td>
-						<td>Capability</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-	<br class="atc-break" />	
 	<div class="atc"><a id="Server.RESTful.GetFeatureInfo.Valid.InfoFormat"></a>
-		<p class="title"><b>Table&nbsp;36.18.&nbsp;Server RESTful - GetFeatureInfo - Valid InfoFormat</b></p>
+		<p class="title"><b>Table&nbsp;36.16.&nbsp;Server RESTful - GetFeatureInfo - Valid InfoFormat</b></p>
 		<div class="atc-contents">
 			<table summary="Server RESTful - GetFeatureInfo - Valid InfoFormat" border="1">
 				<colgroup>
@@ -64634,210 +63910,9 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 			</table>
 		</div>
 	</div>
-	<br class="atc-break" />	
-	<div class="atc"><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat"></a>
-		<p class="title"><b>Table&nbsp;36.19.&nbsp;Server RESTful - GetFeatureInfo - Invalid InfoFormat</b></p>
-		<div class="atc-contents">
-			<table summary="Server RESTful - GetFeatureInfo - Invalid InfoFormat" border="1">
-				<colgroup>
-					<col />
-					<col />
-				</colgroup>
-				<tbody>
-					<tr class="identifier">
-						<td class="rowhead">Test case identifier</td>
-						<td>Server.RESTful.GetFeatureInfo.Invalid.InfoFormat</td>
-					</tr>
-					<tr class="prerequisite">
-						<td class="rowhead">Prerequisites</td>
-						<td>
-							<p><a href="#Bootstrap.RESTful.GetCapabilities">Bootstrap</a> RESTful - GetCapabilities</p>
-							<div class="orderedlist">
-								<ol type="1">
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat.Prerequisite-1"></a>
-										the resonse entity has a &lt;ResourceURL&gt; template element for the "GetFeatureInfo" operation for each advertised Layer.</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat.Prerequisite-2">the response entity has a &lt;Layer&gt; with one or more 
-										&lt;InfoFormat&gt;s.</a></p>
-									</li>
-								</ol>
-							</div>
-						</td>
-					</tr>
-					<tr class="purpose">
-						<td class="rowhead">Test purpose</td>
-						<td>
-							<p>Verify that when a GetFeature request contains an InfoFormat incorrect value, then the server throws an exception. </p>
-						</td>
-					</tr>
-					<tr class="assertions">
-						<td class="rowhead">Assertions</td>
-						<td>
-							<p>All of the following assertions must hold for the responses to be valid:</p>
-							<div class="orderedlist">
-								<ol type="1">
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat-1"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with the mandatory <code class="code">Layer</code> identifier value provided in the ResourceURL template;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat-2"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with the mandatory <code class="code">Style</code> identifier value equal to a
-										&lt;Layer&gt;&lt;Style&gt;&lt;owsIdentifier&gt; value for the specified Layer from the Service Metadata document
-										substituted in place of the "style" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat-3"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with the mandatory <code class="code">format</code> MIME type format value provided in the ResourceURL template;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat-4"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with the mandatory <code class="code">TileMatrixSet</code> identifier value equal to a
-										&lt;Layer&gt;&lt;TileMatrixSetLink&gt;&lt;TileMatrixSet&gt; value for the specified Layer from the Service Metadata document
-										substituted in place of the "TileMatrixSet" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat-5"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with the mandatory <code class="code">TileMatrix</code> identifier value equal to a
-										&lt;TileMatrixSet&gt;&lt;TileMatrix&gt;&lt;owsIdentifier&gt; value for the specified TileMatrixSet from the 
-										Service Metadata document substituted in place of the "TileMatrix" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat-6"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with the mandatory <code class="code">TileRow</code> index value from zero to
-										the value of &lt;MatrixHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document
-										substituted in place of the "TileRow" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat-7"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with the mandatory <code class="code">TileCol</code> index value from zero to
-										the value of &lt;MatrixWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document
-										substituted in place of the "TileCol" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat-8">the request entity for a tile from a Layer with TileMatrixSetLimits 
-										with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileRow index value
-										within the TileMatrixLimits MinTileRow and MaxTileRow values.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat-9">the request entity for a tile from a Layer with TileMatrixSetLimits 
-										with TileMatrixLimits that references the identifier of the TileMatrix for the tile specifies a TileCol index value
-										within the TileMatrixLimits MinTileCol and MaxTileCol values.</a></p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat-10"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with an optional <code class="code">sample dimensions</code> parameter with a with a name from a 
-										&lt;Dimension&gt;&lt;ows:Identifier&gt; value for the specified Layer from the Service Metadata document;</p>
-									</li>
-									<li>
-										<p><a id="Client.RESTful.GetFeatureInfo.Invalid.InfoFormat-11"></a>the request entity is a valid RESTful GetFeatureInfo request URL 
-										with an optional <code class="code">sample dimensions</code> parameter with a value from one of the
-										&lt;Dimension&gt;&lt;Value&gt; elements for the specified Dimension from the Service Metadata document;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat-12"></a>the request entity is a valid RESTful GetFeatureInfo request URL
-										with the mandatory <code class="code">J</code> parameter with a row index value from zero to
-										the value of &lt;TileHeight&gt; minus 1 for the specified TileMatrix from the Service Metadata document
-										substituted in place of the "J" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat-13"></a>the request entity is a valid RESTful GetFeatureInfo request URL
-										with the mandatory <code class="code">I</code> parameter with a column index value from zero to 
-										the value of &lt;TileWidth&gt; minus 1 for the specified TileMatrix from the Service Metadata document
-										substituted in place of the "I" URL template variable;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat-14"></a>the request entity is a valid RESTful GetFeatureInfo request URL
-										with the mandatory <code class="code">infoFormat</code> parameter with an InfoFormat value that is not one of the 
-										&lt;InfoFormat&gt;s for the specified Layer from the Service Metadata document;</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat-13"></a>the HTTP status code value is set to indicate an error.</p>
-									</li>
-								</ol>
-							</div>
-						</td>
-					</tr>
-					<tr class="bestPractice">
-						<td class="rowhead">BestPracticeAssertions</td>
-						<td>
-							<p>In addition to the assertions above, all of the following assertions must hold for the responses to be Best Practice:</p>
-							<div class="orderedlist">
-								<ol type="1">
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat.BestPractice-1"></a>
-										the response entity is a schema-valid ows:Exception document.</p>
-									</li>									
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat.BestPractice-2"></a>
-										the response entity contains an exceptionCode attribute value of "OperationNotSupported".</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat.BestPractice-3"></a>
-										the response entity contains a locator attribute value of "GetFeatureInfo".</p>
-									</li>
-									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat.BestPractice-4"></a>
-										the HTTP status code value is set to 404, corresponding to the message "File Not Found".</p>
-									</li>
-								</ol>
-							</div>
-						</td>
-					</tr>
-					<tr class="method">
-						<td class="rowhead">Test method</td>
-						<td>Generate parameter values in the request with contents of Service Metadata document.  
-						Check that responses are HTTP error status codes.  Pass if all assertions hold; BestPractice if all best practice assertions also hold; fail otherwise.</td>
-					</tr>
-					<tr class="reference">
-						<td class="rowhead">Reference</td>
-						<td>
-							<div class="itemizedlist">
-								<ul>
-									<li>
-										<p><a class="xref" href="#OGC-06-121r3">OGC-06-121r3</a> : cl. 9.2, p. 46</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. 6.1, pp. 7-10</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : table 6, pp. 19-20</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. 7.3.2.2, pp, 47-48</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : figure 11, p. 46</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. 10.3, pp. 65-68</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : table 34, pp. 66-67</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. 8.3.3, p. 53</p>
-									</li>
-									<li>
-										<p><a class="xref" href="#OGC-07-057r7">OGC-07-057r7</a> : cl. A.3.6.2, p. 84</p>
-									</li>
-								</ul>
-							</div>
-						</td>
-					</tr>
-					<tr class="type">
-						<td class="rowhead">Test type</td>
-						<td>Capability</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
 	<br class="atc-break" />		
 	<div class="atc"><a id="Server.RESTful.GetFeatureInfo.Invalid.Pixel.Row.J"></a>
-		<p class="title"><b>Table&nbsp;36.20.&nbsp;Server RESTful - GetFeatureInfo - Invalid Pixel.Row.J</b></p>
+		<p class="title"><b>Table&nbsp;36.17.&nbsp;Server RESTful - GetFeatureInfo - Invalid Pixel.Row.J</b></p>
 		<div class="atc-contents">
 			<table summary="Server RESTful - GetFeatureInfo - Invalid Pixel.Row.J" border="1">
 				<colgroup>
@@ -65038,7 +64113,7 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 	</div>
 	<br class="atc-break" />	
 	<div class="atc"><a id="Server.RESTful.GetFeatureInfo.Invalid.Pixel.Col.I"></a>
-		<p class="title"><b>Table&nbsp;36.21.&nbsp;Server RESTful - GetFeatureInfo - Invalid Pixel.Col.I</b></p>
+		<p class="title"><b>Table&nbsp;36.18.&nbsp;Server RESTful - GetFeatureInfo - Invalid Pixel.Col.I</b></p>
 		<div class="atc-contents">
 			<table summary="Server RESTful - GetFeatureInfo - Invalid Pixel.Col.I" border="1">
 				<colgroup>
@@ -65169,19 +64244,19 @@ contains a prioritized sequence of one or more <code class="code">Version</code>
 							<div class="orderedlist">
 								<ol type="1">
 									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat.BestPractice-1"></a>
+										<p><a id="Server.RESTful.GetFeatureInfo.Invalid Pixel.Col.I.BestPractice-1"></a>
 										the response entity is a schema-valid ows:Exception document.</p>
 									</li>									
 									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat.BestPractice-2"></a>
+										<p><a id="Server.RESTful.GetFeatureInfo.Invalid Pixel.Col.I.BestPractice-2"></a>
 										the response entity contains an exceptionCode attribute value of "InvalidParameterValue".</p>
 									</li>
 									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat.BestPractice-3"></a>
+										<p><a id="Server.RESTful.GetFeatureInfo.Invalid Pixel.Col.I.BestPractice-3"></a>
 										the response entity contains a locator attribute value of "I".</p>
 									</li>
 									<li>
-										<p><a id="Server.RESTful.GetFeatureInfo.Invalid.InfoFormat.BestPractice-4"></a>
+										<p><a id="Server.RESTful.GetFeatureInfo.Invalid Pixel.Col.I.BestPractice-4"></a>
 										the HTTP status code value is set to 404, corresponding to the message "File Not Found".</p>
 									</li>
 								</ol>
