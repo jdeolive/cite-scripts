@@ -359,7 +359,7 @@
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Request.Sections.ServiceProvider.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Request.Sections.OperationsMetadata.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Request.Sections.Contents.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
-				<xsl:element name="Server.KVP.GET.GetCapabilities.Request.Sections.Themes.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
+				<xsl:element name="Server.KVP.GET.GetCapabilities.Request.Sections.Themes.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $hasThemes)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Request.Sections.Multiple.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET and $hasThemes)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Request.Sections.Invalid.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetCapabilities.Request.Sections.Missing.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPGET)"/></xsl:element>
@@ -509,7 +509,7 @@
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Request.Sections.ServiceProvider.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Request.Sections.OperationsMetadata.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Request.Sections.Contents.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST)"/></xsl:element>
-				<xsl:element name="Server.KVP.POST.GetCapabilities.Request.Sections.Themes.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST)"/></xsl:element>
+				<xsl:element name="Server.KVP.POST.GetCapabilities.Request.Sections.Themes.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST and $hasThemes)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Request.Sections.Multiple.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST and $hasThemes)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Request.Sections.Invalid.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetCapabilities.Request.Sections.Missing.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST)"/></xsl:element>
@@ -602,7 +602,7 @@
 				<xsl:element name="Server.XML.POST.GetCapabilities.Request.Sections.ServiceProvider.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetCapabilities.Request.Sections.OperationsMetadata.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetCapabilities.Request.Sections.Contents.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
-				<xsl:element name="Server.XML.POST.GetCapabilities.Request.Sections.Themes.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
+				<xsl:element name="Server.XML.POST.GetCapabilities.Request.Sections.Themes.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST and $hasThemes)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetCapabilities.Request.Sections.Multiple.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST and $hasThemes)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetCapabilities.Request.Sections.Invalid.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetCapabilities.Request.Sections.Missing.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST)"/></xsl:element>
@@ -692,7 +692,7 @@
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.Sections.ServiceProvider.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.Sections.OperationsMetadata.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.Sections.Contents.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
-				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.Sections.Themes.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
+				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.Sections.Themes.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST and $hasThemes)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.Sections.Multiple.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST and $hasThemes)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.Sections.Invalid.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetCapabilities.Request.Sections.Missing.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST)"/></xsl:element>
