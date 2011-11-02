@@ -438,8 +438,8 @@
 				<xsl:element name="Server.KVP.GET.GetTile.Valid.Tile.Format.Prerequisites"><xsl:value-of select="string($getTileKVPGET)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetTile.Invalid.Tile.Format.Prerequisites"><xsl:value-of select="string($getTileKVPGET)"/></xsl:element>
 				<xsl:element name="Server.KVP.GET.GetTile.Valid.Tile.Size.Prerequisites"><xsl:value-of select="string($getTileKVPGET)"/></xsl:element>
-				<xsl:element name="Server.KVP.GET.GetTile.Valid.Tile.Transparency.Prerequisites"><xsl:value-of select="string($getTileKVPGET)"/></xsl:element>
-
+				<xsl:variable name="Server.KVP.GET.GetTile.Valid.Tile.Transparency.TransparentNodata" select="boolean($wmts.capabilities.doc/wmts:Contents/wmts:Layer[ows:Identifier = 'TransparentNodata'])"/>
+				<xsl:element name="Server.KVP.GET.GetTile.Valid.Tile.Transparency.Prerequisites"><xsl:value-of select="string($getTileKVPGET and $Server.KVP.GET.GetTile.Valid.Tile.Transparency.TransparentNodata = 'true')"/></xsl:element>
 
 <!-- UNCOMMENT ME FOR DEVELOPMENT / PRODUCTION -->
 
@@ -559,7 +559,7 @@
 				<xsl:element name="Server.KVP.POST.GetTile.Valid.Tile.Format.Prerequisites"><xsl:value-of select="string($getTileKVPPOST)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetTile.Invalid.Tile.Format.Prerequisites"><xsl:value-of select="string($getTileKVPPOST)"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetTile.Valid.Tile.Size.Prerequisites"><xsl:value-of select="string($getTileKVPPOST)"/></xsl:element>
-				<xsl:element name="Server.KVP.POST.GetTile.Valid.Tile.Transparency.Prerequisites"><xsl:value-of select="string($getTileKVPPOST)"/></xsl:element>
+				<xsl:element name="Server.KVP.POST.GetTile.Valid.Tile.Transparency.Prerequisites"><xsl:value-of select="string($getTileKVPPOST and $Server.KVP.GET.GetTile.Valid.Tile.Transparency.TransparentNodata = 'true')"/></xsl:element>
 
 				<xsl:element name="Server.KVP.POST.GetFeatureInfo.Mandatory.Prerequisites"><xsl:value-of select="string($getFeatureInfoKVPPOST and ($Server.KVP.GET.GetFeatureInfo.Mandatory.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.KVP.POST.GetFeatureInfo.Optional.Prerequisites"><xsl:value-of select="string($getFeatureInfoKVPPOST and ($Server.KVP.GET.GetFeatureInfo.Optional.Prerequisite-2 = 'true'))"/></xsl:element>
@@ -649,7 +649,7 @@
 				<xsl:element name="Server.XML.POST.GetTile.Valid.Tile.Format.Prerequisites"><xsl:value-of select="string($getTileXMLPOST)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetTile.Invalid.Tile.Format.Prerequisites"><xsl:value-of select="string($getTileXMLPOST)"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetTile.Valid.Tile.Size.Prerequisites"><xsl:value-of select="string($getTileXMLPOST)"/></xsl:element>
-				<xsl:element name="Server.XML.POST.GetTile.Valid.Tile.Transparency.Prerequisites"><xsl:value-of select="string($getTileXMLPOST)"/></xsl:element>
+				<xsl:element name="Server.XML.POST.GetTile.Valid.Tile.Transparency.Prerequisites"><xsl:value-of select="string($getTileXMLPOST and $Server.KVP.GET.GetTile.Valid.Tile.Transparency.TransparentNodata = 'true')"/></xsl:element>
 
 				<xsl:element name="Server.XML.POST.GetFeatureInfo.Mandatory.Prerequisites"><xsl:value-of select="string($getFeatureInfoXMLPOST and ($Server.KVP.GET.GetFeatureInfo.Mandatory.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.XML.POST.GetFeatureInfo.Optional.Prerequisites"><xsl:value-of select="string($getFeatureInfoXMLPOST and ($Server.KVP.GET.GetFeatureInfo.Optional.Prerequisite-2 = 'true'))"/></xsl:element>
@@ -739,7 +739,7 @@
 				<xsl:element name="Server.SOAP.POST.GetTile.Valid.Tile.Format.Prerequisites"><xsl:value-of select="string($getTileSOAPPOST)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetTile.Invalid.Tile.Format.Prerequisites"><xsl:value-of select="string($getTileSOAPPOST)"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetTile.Valid.Tile.Size.Prerequisites"><xsl:value-of select="string($getTileSOAPPOST)"/></xsl:element>
-				<xsl:element name="Server.SOAP.POST.GetTile.Valid.Tile.Transparency.Prerequisites"><xsl:value-of select="string($getTileSOAPPOST)"/></xsl:element>
+				<xsl:element name="Server.SOAP.POST.GetTile.Valid.Tile.Transparency.Prerequisites"><xsl:value-of select="string($getTileSOAPPOST and $Server.KVP.GET.GetTile.Valid.Tile.Transparency.TransparentNodata = 'true')"/></xsl:element>
 
 				<xsl:element name="Server.SOAP.POST.GetFeatureInfo.Mandatory.Prerequisites"><xsl:value-of select="string($getFeatureInfoSOAPPOST and ($Server.KVP.GET.GetFeatureInfo.Mandatory.Prerequisite-2 = 'true'))"/></xsl:element>
 				<xsl:element name="Server.SOAP.POST.GetFeatureInfo.Optional.Prerequisites"><xsl:value-of select="string($getFeatureInfoSOAPPOST and ($Server.KVP.GET.GetFeatureInfo.Optional.Prerequisite-2 = 'true'))"/></xsl:element>
@@ -807,7 +807,7 @@
 
 				<xsl:element name="Server.RESTful.GetTile.Valid.Tile.Size.Prerequisites"><xsl:value-of select="string($getTileRESTful)"/></xsl:element>
 
-				<xsl:element name="Server.RESTful.GetTile.Valid.Tile.Transparency.Prerequisites"><xsl:value-of select="string($getTileRESTful)"/></xsl:element>
+				<xsl:element name="Server.RESTful.GetTile.Valid.Tile.Transparency.Prerequisites"><xsl:value-of select="string($getTileRESTful and $Server.KVP.GET.GetTile.Valid.Tile.Transparency.TransparentNodata = 'true')"/></xsl:element>
 
 				<xsl:element name="Server.RESTful.GetFeatureInfo.Mandatory.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Mandatory.Prerequisite-2 = 'true'))"/></xsl:element>
 
