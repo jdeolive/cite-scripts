@@ -22258,199 +22258,196 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 		</ctl:code>
 	</ctl:function>
 
+	<!-- Capabilities Response Document required contents for *{binding}.GetTile.Valid.Tile.Transparency tests
+	...
+  <ows:OperationsMetadata> 
+	...
+
+    <ows:Operation name="GetTile">
+		...
+      <ows:Parameter name="TileMatrixSet">
+       <ows:AllowedValues>
+          <ows:Value>TransparentNodata</ows:Value>
+			...
+        </ows:AllowedValues>
+      </ows:Parameter>
+    </ows:Operation>
+  </ows:OperationsMetadata>
+  <Contents>
+	...
+   <Layer>
+		<ows:Title>TransparentNodata</ows:Title>
+		<ows:Abstract>Layer with one TileMatrixSet with one TileMatrix with one.png tile to support WMTS transparency test.</ows:Abstract>
+		<ows:WGS84BoundingBox>
+			<ows:LowerCorner>67.124799547605 25.1248883571773</ows:LowerCorner>
+			<ows:UpperCorner>67.2500765559152 25.250061690777</ows:UpperCorner>
+		</ows:WGS84BoundingBox>
+      <ows:Identifier>TransparentNodata</ows:Identifier>
+      <Style isDefault="true">
+        <ows:Title>Default</ows:Title>
+        <ows:Identifier>Default_style</ows:Identifier>
+      </Style>
+      <Format>image/png</Format>    
+     <TileMatrixSetLink>
+        <TileMatrixSet>TransparentNodata</TileMatrixSet>
+      </TileMatrixSetLink>
+	  <ResourceURL format="image/png" resourceType="tile"
+		   template="{your server RESTful URL prefix}/TransparentNodata/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png"/>
+    </Layer>
+    <TileMatrixSet>
+      <ows:Identifier>TransparentNodata</ows:Identifier>
+     <ows:BoundingBox crs="urn:ogc:def:crs:OGC:1.3:CRS84">
+        <ows:LowerCorner>-180 -90</ows:LowerCorner>
+        <ows:UpperCorner>180 90</ows:UpperCorner>
+      </ows:BoundingBox>
+      <ows:SupportedCRS>urn:ogc:def:crs:OGC:1.3:CRS84</ows:SupportedCRS>
+      <TileMatrix>
+        <ows:Identifier>0</ows:Identifier>
+        <ScaleDenominator>559082264.0287178</ScaleDenominator>
+        <TopLeftCorner>-180 90</TopLeftCorner>
+        <TileWidth>256</TileWidth>
+        <TileHeight>256</TileHeight>
+        <MatrixWidth>1</MatrixWidth>
+        <MatrixHeight>1</MatrixHeight>
+      </TileMatrix>
+    </TileMatrixSet>
+  </Contents>
+	......
+	-->
 	<ctl:function name="wmtsFunctions:KVP.GetTile.Valid.Tile.Transparency">
 		<ctl:param name="tileURL">/wmts:Capabilities/ows:OperationsMetadata/ows:Operation[@name='GetTile']/ows:DCP/ows:HTTP/ows:Get/@xlink:href</ctl:param>
 		<ctl:param name="version">version returned in the bootstrap capabilities document, expected to be 1.0.0</ctl:param>
 		<ctl:param name="wmts.capabilities.doc">Capabilities document from test suite bootstrap.</ctl:param>
 		<ctl:param name="method">get|post</ctl:param>
-		<ctl:description>Verify that the returned tile has transparent color for NODATA values. </ctl:description>
+		<ctl:description>Server must have TransparentNodata Layer and TileMatrixSet and serve nodataSquare.png tile to support this test.  
+		 Verify that the returned nodataSquare.png tile has transparent color for NODATA values. </ctl:description>
 		<ctl:code>
 			<xsl:variable name="serviceURL" select="owsFunctions:getServiceURL($tileURL)"/>
 			<ctl:message select="concat('Issuing GetTile requests to ', $serviceURL, ' for the following:')"/>
 			<xsl:variable name="results">
-				<xsl:for-each select="$wmts.capabilities.doc/wmts:Contents/wmts:Layer">
-					<xsl:variable name="layer" select="."/>
-					<xsl:variable name="layerId" select="$layer/ows:Identifier"/>
-					<!-- <ctl:message select="concat('layer ', $layerId)"/> -->
-					<xsl:variable name="stylePos" select="(count($layer/wmts:Style) +1) idiv 2"/>
-					<!-- <ctl:message select="concat('layer ', $layerId, ' stylePos ', $stylePos)"/> -->
-					<xsl:for-each select="$layer/wmts:Style[$stylePos]">
-						<xsl:variable name="style" select="."/>
-						<xsl:variable name="styleId" select="$style/ows:Identifier"/>
-						<!-- <ctl:message select="concat('style ', $styleId)"/> -->
-						<xsl:for-each select="$layer/wmts:Format/text()[. != 'image/jpeg']">
-							<!-- could be replaced by test for formats known to support transparency -->
-							<xsl:variable name="format" select="."/>
-							<!-- <ctl:message select="concat('format ', $format)"/> -->
-							<xsl:variable name="tmslPos" select="(count($layer/wmts:TileMatrixSetLink) + 1) idiv 2"/>
-							<!-- <ctl:message select="concat('format ', $format, ' tmslPos ', $tmslPos)"/> -->
-							<xsl:for-each select="$layer/wmts:TileMatrixSetLink[$tmslPos]">
-								<xsl:variable name="tileMatrixSetId" select="wmts:TileMatrixSet"/>
-								<xsl:variable name="tileMatrixSetLimits" select="wmts:TileMatrixSetLimits"/>
-								<xsl:variable name="setLimits" select="count($tileMatrixSetLimits/*) gt 0"/>
-								<!-- <ctl:message select="concat('tileMatrixSet ', $tileMatrixSetId, ' has limits ', $setLimits)"/> -->
-								<xsl:variable name="tileMatrixSet" select="$wmts.capabilities.doc/wmts:Contents/wmts:TileMatrixSet[ows:Identifier = $tileMatrixSetId]"/>
-								<xsl:variable name="tmsPos" select="(count($tileMatrixSet/wmts:TileMatrix)  + 1) idiv 2"/>
-								<xsl:for-each select="$tileMatrixSet/wmts:TileMatrix[$tmsPos]">
-									<xsl:variable name="tileMatrix" select="."/>
-									<xsl:variable name="tileMatrixId" select="$tileMatrix/ows:Identifier"/>
-									<!-- <ctl:message select="concat('tileMatrix ', $tileMatrixId)"/> -->
-									<xsl:variable name="tileMatrixLimits" select="$tileMatrixSetLimits/wmts:TileMatrixLimits[wmts:TileMatrix = $tileMatrixId]"/>
-									<xsl:variable name="matrixLimits" select="count($tileMatrixLimits/*) gt 0"/>
-									<xsl:variable name="minTileRow" select="wmtsFunctions:minTileRow($tileMatrixLimits)"/>
-									<xsl:variable name="maxTileRow" select="wmtsFunctions:maxTileRow($tileMatrixLimits, $tileMatrix)"/>
-									<xsl:variable name="midTileRow" select="($minTileRow + $maxTileRow) idiv 2"/>
-									<xsl:variable name="minTileCol" select="wmtsFunctions:minTileCol($tileMatrixLimits)"/>
-									<xsl:variable name="maxTileCol" select="wmtsFunctions:maxTileCol($tileMatrixLimits, $tileMatrix)"/>
-									<xsl:variable name="midTileCol" select="($minTileCol + $maxTileCol) idiv 2"/>
-									<xsl:variable name="rows" select="wmtsFunctions:getTileRows($minTileRow, $midTileRow, $maxTileRow)"/>
-									<xsl:variable name="rowList" select="tokenize($rows, ',')"/>
-									<xsl:variable name="cols" select="wmtsFunctions:getTileCols($minTileCol, $midTileCol, $maxTileCol)"/>
-									<xsl:variable name="colList" select="tokenize($cols, ',')"/>
-									<xsl:for-each select="$rowList">
-										<xsl:variable name="row" select="."/>
-										<xsl:for-each select="$colList">
-											<xsl:variable name="col" select="."/>
-											<xsl:variable name="dimensionsMessage">
-												<xsl:for-each select="$layer/wmts:Dimension[not(wmts:Default)]">
-													<xsl:variable name="dimensionNoDefault" select="."/>
-													<xsl:variable name="dimNoDefaultName" select="$dimensionNoDefault/ows:Identifier"/>
-													<xsl:variable name="value" select="$dimensionNoDefault/wmts:Value[1]"/>
-													<xsl:value-of select="concat(' dimension ', $dimNoDefaultName, ' value ', $value)"/>
-												</xsl:for-each>
-											</xsl:variable>
-											<ctl:message select="concat('layer ', $layerId, ' style ', $styleId, ' format ', $format, ' tileMatrixSet ', $tileMatrixSetId, ' has limits ', boolean($tileMatrixSetLimits), ' tileMatrix ', $tileMatrixId, ' row ', $row, ' col ', $col, $dimensionsMessage)"/>
-											<xsl:variable name="response">
-												<ctl:request>
-													<ctl:url>
-														<xsl:value-of select="$serviceURL"/>
-													</ctl:url>
-													<ctl:method>
-														<xsl:value-of select="$method"/>
-													</ctl:method>
-													<ctl:param name="service">WMTS</ctl:param>
-													<ctl:param name="request">GetTile</ctl:param>
-													<ctl:param name="version">
-														<xsl:value-of select="$version"/>
-													</ctl:param>
-													<ctl:param name="layer">
-														<xsl:value-of select="$layerId"/>
-													</ctl:param>
-													<ctl:param name="style">
-														<xsl:value-of select="$styleId"/>
-													</ctl:param>
-													<ctl:param name="format">
-														<xsl:value-of select="$format"/>
-													</ctl:param>
-													<ctl:param name="TileMatrixSet">
-														<xsl:value-of select="$tileMatrixSetId"/>
-													</ctl:param>
-													<ctl:param name="TileMatrix">
-														<xsl:value-of select="$tileMatrixId"/>
-													</ctl:param>
-													<ctl:param name="TileRow">
-														<xsl:value-of select="$row"/>
-													</ctl:param>
-													<ctl:param name="TileCol">
-														<xsl:value-of select="$col"/>
-													</ctl:param>
-													<xsl:for-each select="$layer/wmts:Dimension[not(wmts:Default)]">
-														<xsl:variable name="dimensionNoDefault" select="."/>
-														<xsl:variable name="dimNoDefaultName" select="$dimensionNoDefault/ows:Identifier"/>
-														<xsl:variable name="value" select="$dimensionNoDefault/wmts:Value[1]"/>
-														<ctl:dynamicParam>
-															<ctl:name>
-																<xsl:value-of select="$dimNoDefaultName"/>
-															</ctl:name>
-															<ctl:value>
-																<xsl:value-of select="$value"/>
-															</ctl:value>
-														</ctl:dynamicParam>
-													</xsl:for-each>
-													<parsers:HTTPParser>   <!-- include HTTPParser to get status code -->
-														<parsers:parse>
-															<parsers:ImageParser>
-																<parsers:type/>
-																<parsers:height/>
-																<parsers:width/>
-																<parsers:transparency/>
-																<parsers:model value="ARGB">
-																	<parsers:transparentNodata/>
-																</parsers:model>
-															</parsers:ImageParser>
-														</parsers:parse>
-													</parsers:HTTPParser>
-												</ctl:request>
-											</xsl:variable>
-											<!-- <xsl:message>response <xsl:copy-of select="$response"/></xsl:message>	-->
-											<xsl:choose>
-												<xsl:when test="not(exists($response/response/content/parsers:ImageParser/parsers:type))">
-													<ctl:message>Error: Could not read the image type.</ctl:message>
-													<xsl:text>false|</xsl:text>
+				<xsl:variable name="layerId">TransparentNodata</xsl:variable>
+				<xsl:variable name="layer" select="$wmts.capabilities.doc/wmts:Contents/wmts:Layer[ows:Identifier = $layerId]"/>
+				<xsl:variable name="styleId">Default_style</xsl:variable>
+				<xsl:variable name="format">image/png</xsl:variable>
+				<xsl:variable name="tileMatrixSetId" select="$layer/wmts:TileMatrixSetLink[1]/wmts:TileMatrixSet"/>
+				<xsl:variable name="tileMatrixSet" select="$wmts.capabilities.doc/wmts:Contents/wmts:TileMatrixSet[ows:Identifier = $tileMatrixSetId]"/>
+				<xsl:variable name="tileMatrix" select="$tileMatrixSet/wmts:TileMatrix[1]"/>
+				<xsl:variable name="tileMatrixId" select="$tileMatrix/ows:Identifier"/>
+				<xsl:variable name="row">0</xsl:variable>
+				<xsl:variable name="col">0</xsl:variable>
+				<ctl:message select="concat('layer ', $layerId, ' style ', $styleId, ' format ', $format, ' tileMatrixSet ', $tileMatrixSetId, ' tileMatrix ', $tileMatrixId, ' row ', $row, ' col ', $col)"/>
+				<xsl:variable name="response">
+					<ctl:request>
+						<!-- <ctl:url>http://localhost:8080/teamengine/data/nodataSquare.png</ctl:url> -->
+						<ctl:url>
+							<xsl:value-of select="$serviceURL"/>
+						</ctl:url>
+						<ctl:method>
+							<xsl:value-of select="$method"/>
+						</ctl:method>
+						<ctl:param name="service">WMTS</ctl:param>
+						<ctl:param name="request">GetTile</ctl:param>
+						<ctl:param name="version">
+							<xsl:value-of select="$version"/>
+						</ctl:param>
+						<ctl:param name="layer">
+							<xsl:value-of select="$layerId"/>
+						</ctl:param>
+						<ctl:param name="style">
+							<xsl:value-of select="$styleId"/>
+						</ctl:param>
+						<ctl:param name="format">
+							<xsl:value-of select="$format"/>
+						</ctl:param>
+						<ctl:param name="TileMatrixSet">
+							<xsl:value-of select="$tileMatrixSetId"/>
+						</ctl:param>
+						<ctl:param name="TileMatrix">
+							<xsl:value-of select="$tileMatrixId"/>
+						</ctl:param>
+						<ctl:param name="TileRow">
+							<xsl:value-of select="$row"/>
+						</ctl:param>
+						<ctl:param name="TileCol">
+							<xsl:value-of select="$col"/>
+						</ctl:param> 
+						<parsers:HTTPParser>   <!-- include HTTPParser to get status code -->
+							<parsers:parse>
+								<parsers:ImageParser>
+									<parsers:type/>
+									<parsers:height/>
+									<parsers:width/>
+									<parsers:transparency/>
+									<parsers:model value="ARGB">
+										<parsers:transparentNodata/>
+									</parsers:model>
+								</parsers:ImageParser>
+							</parsers:parse>
+						</parsers:HTTPParser>
+					</ctl:request>
+				</xsl:variable>
+				<!-- <xsl:message>response <xsl:copy-of select="$response"/></xsl:message>	-->
+				<xsl:choose>
+					<xsl:when test="not(exists($response/response/content/parsers:ImageParser/parsers:type))">
+						<ctl:message>Error: Could not read the image type.</ctl:message>
+						<xsl:text>false|</xsl:text>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:variable name="type"  select="$response/response/content/parsers:ImageParser/parsers:type"/>
+						<xsl:variable name="imageFormat" select="concat('image/', $type)"/>
+						<xsl:variable name="width" select="$response/response/content/parsers:ImageParser/parsers:width"/>
+						<xsl:variable name="height" select="$response/response/content/parsers:ImageParser/parsers:height"/>
+						<xsl:variable name="transparency" select="$response/response/content/parsers:ImageParser/parsers:transparency"/>
+						<xsl:variable name="transparentNodata" select="$response/response/content/parsers:ImageParser/parsers:model/parsers:transparentNodata"/>
+						<xsl:variable name="code" select="$response/response/status/@code"/>
+						<ctl:message select="concat('response image transparency: ', $transparency, ' transparent nodata (black) pixels: ', $transparentNodata, ' imageFormat ', $imageFormat, ' width ', $width, ' height ', $height, ' HTTP status code ', $code)"/>		
+						<xsl:choose>
+							<xsl:when test="number($width) = -1 or number($height) = -1">
+								<ctl:message>Error: Could not read the image size.</ctl:message>
+								<xsl:text>false|</xsl:text>
+							</xsl:when>
+							<xsl:when test="not($transparency)">
+								<ctl:message>Error: Could not read the image transparency.</ctl:message>
+								<xsl:text>false|</xsl:text>
+							</xsl:when>
+							<xsl:when test="$transparentNodata = '' ">
+								<ctl:message>Error: Could not read the image transparent nodata (black).</ctl:message>
+								<xsl:text>false|</xsl:text>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:choose>
+									<xsl:when test="$transparency = 'Opaque' ">
+										<ctl:message select="concat('Failure: ', $transparency, ' means all pixels have an alpha value of 1.0')"/>
+										<xsl:text>false|</xsl:text>
+									</xsl:when>
+									<xsl:when test="$transparency = 'Unknown' ">
+										<ctl:message select="concat('Failure: ', $transparency, ' transparency assumed to be completely Opaque, i.e.t all pixels have an alpha value of 1.0')"/>
+										<xsl:text>false|</xsl:text>
+									</xsl:when>
+									<xsl:when test="$transparentNodata = 'true' ">
+										<xsl:choose>
+											<xsl:when test="$transparency = 'Bitmask' ">
+												<ctl:message select="concat('Success: transparentNodata with transparency ', $transparency, ' represents image data that on a per-pixel basis is either completely opaque, with an alpha value of 1.0, or completely transparent, with an alpha value of 0.0, and all nodata (black) pixels are transparent.')"/>
+												<xsl:text>true|</xsl:text>
+											</xsl:when>
+											<xsl:when test="$transparency = 'Translucent' ">
+												<ctl:message select="concat('Success: transparentNodata with transparency ', $transparency, ' represents image data that on a per-pixel basis has arbitrary alpha values between and including 0.0 (transparent) and 1.0 (opaque).and all nodata (black) pixels are transparent.')"/>
+												<xsl:text>true|</xsl:text>
+											</xsl:when>
+										</xsl:choose>
+									</xsl:when>
+									<xsl:when test="$transparentNodata = 'NA' ">
+										<ctl:message>Indeterminate: there were not any nodata (black) pixels in the image.</ctl:message>I
 												</xsl:when>
-												<xsl:otherwise>
-													<xsl:variable name="type"  select="$response/response/content/parsers:ImageParser/parsers:type"/>
-													<xsl:variable name="imageFormat" select="concat('image/', $type)"/>
-													<xsl:variable name="width" select="$response/response/content/parsers:ImageParser/parsers:width"/>
-													<xsl:variable name="height" select="$response/response/content/parsers:ImageParser/parsers:height"/>
-													<xsl:variable name="transparency" select="$response/response/content/parsers:ImageParser/parsers:transparency"/>
-													<xsl:variable name="transparentNodata" select="$response/response/content/parsers:ImageParser/parsers:model/parsers:transparentNodata"/>
-													<xsl:variable name="code" select="$response/response/status/@code"/>
-													<ctl:message select="concat('response image transparency: ', $transparency, ' transparent nodata (black) pixels: ', $transparentNodata, ' imageFormat ', $imageFormat, ' width ', $width, ' height ', $height, ' HTTP status code ', $code)"/>		
-													<xsl:choose>
-														<xsl:when test="number($width) = -1 or number($height) = -1">
-															<ctl:message>Error: Could not read the image size.</ctl:message>
-															<xsl:text>false|</xsl:text>
-														</xsl:when>
-														<xsl:when test="not($transparency)">
-															<ctl:message>Error: Could not read the image transparency.</ctl:message>
-															<xsl:text>false|</xsl:text>
-														</xsl:when>
-														<xsl:when test="$transparentNodata = '' ">
-															<ctl:message>Error: Could not read the image transparent nodata (black).</ctl:message>
-															<xsl:text>false|</xsl:text>
-														</xsl:when>
-														<xsl:otherwise>
-															<xsl:choose>
-																<xsl:when test="$transparency = 'Opaque' ">
-																	<ctl:message select="concat('Failure: ', $transparency, ' means all pixels have an alpha value of 1.0')"/>
-																	<xsl:text>false|</xsl:text>
-																</xsl:when>
-																<xsl:when test="$transparency = 'Unknown' ">
-																	<ctl:message select="concat('Failure: ', $transparency, ' transparency assumed to be completely Opaque, i.e.t all pixels have an alpha value of 1.0')"/>
-																	<xsl:text>false|</xsl:text>
-																</xsl:when>
-																<xsl:when test="$transparentNodata = 'true' ">
-																	<xsl:choose>
-																		<xsl:when test="$transparency = 'Bitmask' ">
-																			<ctl:message select="concat('Success: transparentNodata with transparency ', $transparency, ' represents image data that on a per-pixel basis is either completely opaque, with an alpha value of 1.0, or completely transparent, with an alpha value of 0.0, and all nodata (black) pixels are transparent.')"/>
-																			<xsl:text>true|</xsl:text>
-																		</xsl:when>
-																		<xsl:when test="$transparency = 'Translucent' ">
-																			<ctl:message select="concat('Success: transparentNodata with transparency ', $transparency, ' represents image data that on a per-pixel basis has arbitrary alpha values between and including 0.0 (transparent) and 1.0 (opaque).and all nodata (black) pixels are transparent.')"/>
-																			<xsl:text>true|</xsl:text>
-																		</xsl:when>
-																	</xsl:choose>
-																</xsl:when>
-																<xsl:when test="$transparentNodata = 'NA' ">
-																	<ctl:message>Indeterminate: there were not any nodata (black) pixels in the image.</ctl:message>I
-																			</xsl:when>
-																<xsl:otherwise>
-																	<ctl:message>Failure: nodata (black) pixels in the image are not transparent.</ctl:message>
-																	<xsl:text>false|</xsl:text>
-																</xsl:otherwise>
-															</xsl:choose>											
-														</xsl:otherwise>
-													</xsl:choose>
-												</xsl:otherwise>
-											</xsl:choose>
-										</xsl:for-each>
-									</xsl:for-each>
-								</xsl:for-each>
-							</xsl:for-each>
-						</xsl:for-each>
-					</xsl:for-each>
-				</xsl:for-each>
+									<xsl:otherwise>
+										<ctl:message>Failure: nodata (black) pixels in the image are not transparent.</ctl:message>
+										<xsl:text>false|</xsl:text>
+									</xsl:otherwise>
+								</xsl:choose>											
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:otherwise>
+				</xsl:choose>
 			</xsl:variable>
 			<xsl:choose>
 				<xsl:when test="contains($results, 'true') and not(contains($results, 'false'))">
@@ -22474,181 +22471,115 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 			<xsl:variable name="serviceURL" select="owsFunctions:getServiceURL($tileURL)"/>
 			<ctl:message select="concat('Issuing GetTile requests to ', $serviceURL, ' for the following:')"/>
 			<xsl:variable name="results">
-				<xsl:for-each select="$wmts.capabilities.doc/wmts:Contents/wmts:Layer">
-					<xsl:variable name="layer" select="."/>
-					<xsl:variable name="layerId" select="$layer/ows:Identifier"/>
-					<!-- <ctl:message select="concat('layer ', $layerId)"/> -->
-					<xsl:variable name="stylePos" select="(count($layer/wmts:Style) +1) idiv 2"/>
-					<!-- <ctl:message select="concat('layer ', $layerId, ' stylePos ', $stylePos)"/> -->
-					<xsl:for-each select="$layer/wmts:Style[$stylePos]">
-						<xsl:variable name="style" select="."/>
-						<xsl:variable name="styleId" select="$style/ows:Identifier"/>
-						<!-- <ctl:message select="concat('style ', $styleId)"/> -->
-						<xsl:for-each select="$layer/wmts:Format/text()[. != 'image/jpeg']">
-							<!-- could be replaced by test for formats known to support transparency -->
-							<xsl:variable name="format" select="."/>
-							<!-- <ctl:message select="concat('format ', $format)"/> -->
-							<xsl:variable name="tmslPos" select="(count($layer/wmts:TileMatrixSetLink) + 1) idiv 2"/>
-							<!-- <ctl:message select="concat('format ', $format, ' tmslPos ', $tmslPos)"/> -->
-							<xsl:for-each select="$layer/wmts:TileMatrixSetLink[$tmslPos]">
-								<xsl:variable name="tileMatrixSetId" select="wmts:TileMatrixSet"/>
-								<xsl:variable name="tileMatrixSetLimits" select="wmts:TileMatrixSetLimits"/>
-								<xsl:variable name="setLimits" select="count($tileMatrixSetLimits/*) gt 0"/>
-								<!-- <ctl:message select="concat('tileMatrixSet ', $tileMatrixSetId, ' has limits ', $setLimits)"/> -->
-								<xsl:variable name="tileMatrixSet" select="$wmts.capabilities.doc/wmts:Contents/wmts:TileMatrixSet[ows:Identifier = $tileMatrixSetId]"/>
-								<xsl:variable name="tmsPos" select="(count($tileMatrixSet/wmts:TileMatrix)  + 1) idiv 2"/>
-								<xsl:for-each select="$tileMatrixSet/wmts:TileMatrix[$tmsPos]">
-									<xsl:variable name="tileMatrix" select="."/>
-									<xsl:variable name="tileMatrixId" select="$tileMatrix/ows:Identifier"/>
-									<!-- <ctl:message select="concat('tileMatrix ', $tileMatrixId)"/> -->
-									<xsl:variable name="tileMatrixLimits" select="$tileMatrixSetLimits/wmts:TileMatrixLimits[wmts:TileMatrix = $tileMatrixId]"/>
-									<xsl:variable name="matrixLimits" select="count($tileMatrixLimits/*) gt 0"/>
-									<xsl:variable name="minTileRow" select="wmtsFunctions:minTileRow($tileMatrixLimits)"/>
-									<xsl:variable name="maxTileRow" select="wmtsFunctions:maxTileRow($tileMatrixLimits, $tileMatrix)"/>
-									<xsl:variable name="midTileRow" select="($minTileRow + $maxTileRow) idiv 2"/>
-									<xsl:variable name="minTileCol" select="wmtsFunctions:minTileCol($tileMatrixLimits)"/>
-									<xsl:variable name="maxTileCol" select="wmtsFunctions:maxTileCol($tileMatrixLimits, $tileMatrix)"/>
-									<xsl:variable name="midTileCol" select="($minTileCol + $maxTileCol) idiv 2"/>
-									<xsl:variable name="rows" select="wmtsFunctions:getTileRows($minTileRow, $midTileRow, $maxTileRow)"/>
-									<xsl:variable name="rowList" select="tokenize($rows, ',')"/>
-									<xsl:variable name="cols" select="wmtsFunctions:getTileCols($minTileCol, $midTileCol, $maxTileCol)"/>
-									<xsl:variable name="colList" select="tokenize($cols, ',')"/>
-									<xsl:for-each select="$rowList">
-										<xsl:variable name="row" select="."/>
-										<xsl:for-each select="$colList">
-											<xsl:variable name="col" select="."/>
-											<xsl:variable name="dimensionsMessage">
-												<xsl:for-each select="$layer/wmts:Dimension[not(wmts:Default)]">
-													<xsl:variable name="dimensionNoDefault" select="."/>
-													<xsl:variable name="dimNoDefaultName" select="$dimensionNoDefault/ows:Identifier"/>
-													<xsl:variable name="value" select="$dimensionNoDefault/wmts:Value[1]"/>
-													<xsl:value-of select="concat(' dimension ', $dimNoDefaultName, ' value ', $value)"/>
-												</xsl:for-each>
-											</xsl:variable>
-											<ctl:message select="concat('layer ', $layerId, ' style ', $styleId, ' format ', $format, ' tileMatrixSet ', $tileMatrixSetId, ' has limits ', boolean($tileMatrixSetLimits), ' tileMatrix ', $tileMatrixId, ' row ', $row, ' col ', $col, $dimensionsMessage)"/>
-											<xsl:variable name="dimensionNames">
-												<xsl:for-each select="$layer/wmts:Dimension[not(wmts:Default)]">
-													<xsl:variable name="dimensionNoDefault" select="."/>
-													<xsl:variable name="dimNoDefaultName" select="$dimensionNoDefault/ows:Identifier"/>
-													<xsl:value-of select="$dimNoDefaultName"/>
-													<xsl:if test="not(position() = last())">
-														<xsl:text>,</xsl:text>
-													</xsl:if>
-												</xsl:for-each>
-											</xsl:variable>
-											<xsl:variable name="dimensionValues">
-												<xsl:for-each select="$layer/wmts:Dimension[not(wmts:Default)]">
-													<xsl:variable name="dimensionNoDefault" select="."/>
-													<xsl:variable name="value" select="$dimensionNoDefault/wmts:Value[1]"/>
-													<xsl:value-of select="$value"/>
-													<xsl:if test="not(position() = last())">
-														<xsl:text>,</xsl:text>
-													</xsl:if>
-												</xsl:for-each>
-											</xsl:variable>
-											<xsl:variable name="postBody" select="wmtsFunctions:makeXMLpostGetTileRequest($version, $layerId, $styleId, $format, $dimensionNames, $dimensionValues, $tileMatrixSetId, $tileMatrixId, $row, $col)"/>
-											<xsl:message>post Body: <xsl:copy-of select="$postBody"/></xsl:message> 											
-											<xsl:variable name="response">
-												<ctl:request>
-													<ctl:url>
-														<xsl:value-of select="$serviceURL"/>
-													</ctl:url>
-													<ctl:method>post</ctl:method>
-													<ctl:body>
-														<xsl:copy-of select="$postBody"/>
-													</ctl:body>
-													<parsers:HTTPParser>   <!-- include HTTPParser to get status code -->
-														<parsers:parse>
-															<parsers:ImageParser>
-																<parsers:type/>
-																<parsers:height/>
-																<parsers:width/>
-																<parsers:transparency/>
-																<parsers:model value="ARGB">
-																	<parsers:transparentNodata/>
-																</parsers:model>
-															</parsers:ImageParser>
-														</parsers:parse>
-													</parsers:HTTPParser>
-												</ctl:request>
-											</xsl:variable>
-											<!-- <xsl:message>response <xsl:copy-of select="$response"/></xsl:message>	-->
-											<xsl:choose>
-												<xsl:when test="not(exists($response/response/content/parsers:ImageParser/parsers:type))">
-													<ctl:message>Error: Could not read the image type.</ctl:message>
-													<xsl:text>false|</xsl:text>
+				<xsl:variable name="layerId">TransparentNodata</xsl:variable>
+				<xsl:variable name="layer" select="$wmts.capabilities.doc/wmts:Contents/wmts:Layer[ows:Identifier = $layerId]"/>
+				<xsl:variable name="styleId">Default_style</xsl:variable>
+				<xsl:variable name="format">image/png</xsl:variable>
+				<xsl:variable name="tileMatrixSetId" select="$layer/wmts:TileMatrixSetLink[1]/wmts:TileMatrixSet"/>
+				<xsl:variable name="tileMatrixSet" select="$wmts.capabilities.doc/wmts:Contents/wmts:TileMatrixSet[ows:Identifier = $tileMatrixSetId]"/>
+				<xsl:variable name="tileMatrix" select="$tileMatrixSet/wmts:TileMatrix[1]"/>
+				<xsl:variable name="tileMatrixId" select="$tileMatrix/ows:Identifier"/>
+				<xsl:variable name="row">0</xsl:variable>
+				<xsl:variable name="col">0</xsl:variable>
+				<ctl:message select="concat('layer ', $layerId, ' style ', $styleId, ' format ', $format, ' tileMatrixSet ', $tileMatrixSetId, ' tileMatrix ', $tileMatrixId, ' row ', $row, ' col ', $col)"/>
+				<xsl:variable name="dimensionNames"></xsl:variable>
+				<xsl:variable name="dimensionValues"></xsl:variable>
+				<xsl:variable name="postBody" select="wmtsFunctions:makeXMLpostGetTileRequest($version, $layerId, $styleId, $format, $dimensionNames, $dimensionValues, $tileMatrixSetId, $tileMatrixId, $row, $col)"/>
+				<xsl:message>post Body: <xsl:copy-of select="$postBody"/></xsl:message> 											
+				<xsl:variable name="response">
+					<ctl:request>
+						<ctl:url>
+							<xsl:value-of select="$serviceURL"/>
+						</ctl:url>
+						<ctl:method>post</ctl:method>
+						<ctl:body>
+							<xsl:copy-of select="$postBody"/>
+						</ctl:body>
+						<parsers:HTTPParser>   <!-- include HTTPParser to get status code -->
+							<parsers:parse>
+								<parsers:ImageParser>
+									<parsers:type/>
+									<parsers:height/>
+									<parsers:width/>
+									<parsers:transparency/>
+									<parsers:model value="ARGB">
+										<parsers:transparentNodata/>
+									</parsers:model>
+								</parsers:ImageParser>
+							</parsers:parse>
+						</parsers:HTTPParser>
+					</ctl:request>
+				</xsl:variable>
+				<!-- <xsl:message>response <xsl:copy-of select="$response"/></xsl:message>	-->
+				<xsl:choose>
+					<xsl:when test="not(exists($response/response/content/parsers:ImageParser/parsers:type))">
+						<ctl:message>Error: Could not read the image type.</ctl:message>
+						<xsl:text>false|</xsl:text>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:variable name="type"  select="$response/response/content/parsers:ImageParser/parsers:type"/>
+						<xsl:variable name="imageFormat" select="concat('image/', $type)"/>
+						<xsl:variable name="width" select="$response/response/content/parsers:ImageParser/parsers:width"/>
+						<xsl:variable name="height" select="$response/response/content/parsers:ImageParser/parsers:height"/>
+						<xsl:variable name="transparency" select="$response/response/content/parsers:ImageParser/parsers:transparency"/>
+						<xsl:variable name="transparentNodata" select="$response/response/content/parsers:ImageParser/parsers:model/parsers:transparentNodata"/>
+						<xsl:variable name="code" select="$response/response/status/@code"/>
+						<ctl:message select="concat('response image transparency: ', $transparency, ' transparent nodata (black) pixels: ', $transparentNodata, ' imageFormat ', $imageFormat, ' width ', $width, ' height ', $height, ' HTTP status code ', $code)"/>		
+						<xsl:choose>
+							<xsl:when test="number($width) = -1 or number($height) = -1">
+								<ctl:message>Error: Could not read the image size.</ctl:message>
+								<xsl:text>false|</xsl:text>
+							</xsl:when>
+							<xsl:when test="not($transparency)">
+								<ctl:message>Error: Could not read the image transparency.</ctl:message>
+								<xsl:text>false|</xsl:text>
+							</xsl:when>
+							<xsl:when test="$transparentNodata = '' ">
+								<ctl:message>Error: Could not read the image transparent nodata (black).</ctl:message>
+								<xsl:text>false|</xsl:text>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:choose>
+									<xsl:when test="$transparency = 'Opaque' ">
+										<ctl:message select="concat('Failure: ', $transparency, ' means all pixels have an alpha value of 1.0')"/>
+										<xsl:text>false|</xsl:text>
+									</xsl:when>
+									<xsl:when test="$transparency = 'Unknown' ">
+										<ctl:message select="concat('Failure: ', $transparency, ' transparency assumed to be completely Opaque, i.e.t all pixels have an alpha value of 1.0')"/>
+										<xsl:text>false|</xsl:text>
+									</xsl:when>
+									<xsl:when test="$transparentNodata = 'true' ">
+										<xsl:choose>
+											<xsl:when test="$transparency = 'Bitmask' ">
+												<ctl:message select="concat('Success: transparentNodata with transparency ', $transparency, ' represents image data that on a per-pixel basis is either completely opaque, with an alpha value of 1.0, or completely transparent, with an alpha value of 0.0, and all nodata (black) pixels are transparent.')"/>
+												<xsl:text>true|</xsl:text>
+											</xsl:when>
+											<xsl:when test="$transparency = 'Translucent' ">
+												<ctl:message select="concat('Success: transparentNodata with transparency ', $transparency, ' represents image data that on a per-pixel basis has arbitrary alpha values between and including 0.0 (transparent) and 1.0 (opaque).and all nodata (black) pixels are transparent.')"/>
+												<xsl:text>true|</xsl:text>
+											</xsl:when>
+										</xsl:choose>
+									</xsl:when>
+									<xsl:when test="$transparentNodata = 'NA' ">
+										<ctl:message>Indeterminate: there were not any nodata (black) pixels in the image.</ctl:message>I
 												</xsl:when>
-												<xsl:otherwise>
-													<xsl:variable name="type"  select="$response/response/content/parsers:ImageParser/parsers:type"/>
-													<xsl:variable name="imageFormat" select="concat('image/', $type)"/>
-													<xsl:variable name="width" select="$response/response/content/parsers:ImageParser/parsers:width"/>
-													<xsl:variable name="height" select="$response/response/content/parsers:ImageParser/parsers:height"/>
-													<xsl:variable name="transparency" select="$response/response/content/parsers:ImageParser/parsers:transparency"/>
-													<xsl:variable name="transparentNodata" select="$response/response/content/parsers:ImageParser/parsers:model/parsers:transparentNodata"/>
-													<xsl:variable name="code" select="$response/response/status/@code"/>
-													<ctl:message select="concat('response image transparency: ', $transparency, ' transparent nodata (black) pixels: ', $transparentNodata, ' imageFormat ', $imageFormat, ' width ', $width, ' height ', $height, ' HTTP status code ', $code)"/>		
-													<xsl:choose>
-														<xsl:when test="number($width) = -1 or number($height) = -1">
-															<ctl:message>Error: Could not read the image size.</ctl:message>
-															<xsl:text>false|</xsl:text>
-														</xsl:when>
-														<xsl:when test="not($transparency)">
-															<ctl:message>Error: Could not read the image transparency.</ctl:message>
-															<xsl:text>false|</xsl:text>
-														</xsl:when>
-														<xsl:when test="$transparentNodata = '' ">
-															<ctl:message>Error: Could not read the image transparent nodata (black).</ctl:message>
-															<xsl:text>false|</xsl:text>
-														</xsl:when>
-														<xsl:otherwise>
-															<xsl:choose>
-																<xsl:when test="$transparency = 'Opaque' ">
-																	<ctl:message select="concat('Failure: ', $transparency, ' means all pixels have an alpha value of 1.0')"/>
-																	<xsl:text>false|</xsl:text>
-																</xsl:when>
-																<xsl:when test="$transparency = 'Unknown' ">
-																	<ctl:message select="concat('Failure: ', $transparency, ' transparency assumed to be completely Opaque, i.e.t all pixels have an alpha value of 1.0')"/>
-																	<xsl:text>false|</xsl:text>
-																</xsl:when>
-																<xsl:when test="$transparentNodata = 'true' ">
-																	<xsl:choose>
-																		<xsl:when test="$transparency = 'Bitmask' ">
-																			<ctl:message select="concat('Success: transparentNodata with transparency ', $transparency, ' represents image data that on a per-pixel basis is either completely opaque, with an alpha value of 1.0, or completely transparent, with an alpha value of 0.0, and all nodata (black) pixels are transparent.')"/>
-																			<xsl:text>true|</xsl:text>
-																		</xsl:when>
-																		<xsl:when test="$transparency = 'Translucent' ">
-																			<ctl:message select="concat('Success: transparentNodata with transparency ', $transparency, ' represents image data that on a per-pixel basis has arbitrary alpha values between and including 0.0 (transparent) and 1.0 (opaque).and all nodata (black) pixels are transparent.')"/>
-																			<xsl:text>true|</xsl:text>
-																		</xsl:when>
-																	</xsl:choose>
-																</xsl:when>
-																<xsl:when test="$transparentNodata = 'NA' ">
-																	<ctl:message>Indeterminate: there were not any nodata (black) pixels in the image.</ctl:message>I
-																			</xsl:when>
-																<xsl:otherwise>
-																	<ctl:message>Failure: nodata (black) pixels in the image are not transparent.</ctl:message>
-																	<xsl:text>false|</xsl:text>
-																</xsl:otherwise>
-															</xsl:choose>											
-														</xsl:otherwise>
-													</xsl:choose>
-												</xsl:otherwise>		
-											</xsl:choose>
-										</xsl:for-each>
-									</xsl:for-each>
-								</xsl:for-each>
-							</xsl:for-each>
-						</xsl:for-each>
-					</xsl:for-each>
-				</xsl:for-each>
+									<xsl:otherwise>
+										<ctl:message>Failure: nodata (black) pixels in the image are not transparent.</ctl:message>
+										<xsl:text>false|</xsl:text>
+									</xsl:otherwise>
+								</xsl:choose>											
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:otherwise>		
+				</xsl:choose>
 			</xsl:variable>
 			<xsl:choose>
 				<xsl:when test="contains($results, 'true') and not(contains($results, 'false'))">
-					<ctl:message>Test passed.  Server.XML.POST.GetTile.Valid.Tile.Transparenc</ctl:message>
+					<ctl:message>Test passed.  Server.XML.POST.GetTile.Valid.Tile.Transparency</ctl:message>
 					<ctl:pass/>
 				</xsl:when>
 				<xsl:otherwise>
-					<ctl:message>Test failed.  Server.XML.POST.GetTile.Valid.Tile.Transparenc</ctl:message>
+					<ctl:message>Test failed.  Server.XML.POST.GetTile.Valid.Tile.Transparency</ctl:message>
 					<ctl:fail/>
 				</xsl:otherwise>
 			</xsl:choose>
@@ -22664,184 +22595,104 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 			<xsl:variable name="serviceURL" select="owsFunctions:getServiceURL($tileURL)"/>
 			<ctl:message select="concat('Issuing GetTile requests to ', $serviceURL, ' for the following:')"/>
 			<xsl:variable name="results">
-				<xsl:for-each select="$wmts.capabilities.doc/wmts:Contents/wmts:Layer">
-					<xsl:variable name="layer" select="."/>
-					<xsl:variable name="layerId" select="$layer/ows:Identifier"/>
-					<!-- <ctl:message select="concat('layer ', $layerId)"/> -->
-					<xsl:variable name="stylePos" select="(count($layer/wmts:Style) +1) idiv 2"/>
-					<!-- <ctl:message select="concat('layer ', $layerId, ' stylePos ', $stylePos)"/> -->
-					<xsl:for-each select="$layer/wmts:Style[$stylePos]">
-						<xsl:variable name="style" select="."/>
-						<xsl:variable name="styleId" select="$style/ows:Identifier"/>
-						<!-- <ctl:message select="concat('style ', $styleId)"/> -->
-						<xsl:for-each select="$layer/wmts:Format/text()[. != 'image/jpeg']">
-							<!-- could be replaced by test for formats known to support transparency -->
-							<xsl:variable name="format" select="."/>
-							<!-- <ctl:message select="concat('format ', $format)"/> -->
-							<xsl:variable name="tmslPos" select="(count($layer/wmts:TileMatrixSetLink) + 1) idiv 2"/>
-							<!-- <ctl:message select="concat('format ', $format, ' tmslPos ', $tmslPos)"/> -->
-							<xsl:for-each select="$layer/wmts:TileMatrixSetLink[$tmslPos]">
-								<xsl:variable name="tileMatrixSetId" select="wmts:TileMatrixSet"/>
-								<xsl:variable name="tileMatrixSetLimits" select="wmts:TileMatrixSetLimits"/>
-								<xsl:variable name="setLimits" select="count($tileMatrixSetLimits/*) gt 0"/>
-								<!-- <ctl:message select="concat('tileMatrixSet ', $tileMatrixSetId, ' has limits ', $setLimits)"/> -->
-								<xsl:variable name="tileMatrixSet" select="$wmts.capabilities.doc/wmts:Contents/wmts:TileMatrixSet[ows:Identifier = $tileMatrixSetId]"/>
-								<xsl:variable name="tmsPos" select="(count($tileMatrixSet/wmts:TileMatrix)  + 1) idiv 2"/>
-								<xsl:for-each select="$tileMatrixSet/wmts:TileMatrix[$tmsPos]">
-									<xsl:variable name="tileMatrix" select="."/>
-									<xsl:variable name="tileMatrixId" select="$tileMatrix/ows:Identifier"/>
-									<!-- <ctl:message select="concat('tileMatrix ', $tileMatrixId)"/> -->
-									<xsl:variable name="tileMatrixLimits" select="$tileMatrixSetLimits/wmts:TileMatrixLimits[wmts:TileMatrix = $tileMatrixId]"/>
-									<xsl:variable name="matrixLimits" select="count($tileMatrixLimits/*) gt 0"/>
-									<xsl:variable name="minTileRow" select="wmtsFunctions:minTileRow($tileMatrixLimits)"/>
-									<xsl:variable name="maxTileRow" select="wmtsFunctions:maxTileRow($tileMatrixLimits, $tileMatrix)"/>
-									<xsl:variable name="midTileRow" select="($minTileRow + $maxTileRow) idiv 2"/>
-									<xsl:variable name="minTileCol" select="wmtsFunctions:minTileCol($tileMatrixLimits)"/>
-									<xsl:variable name="maxTileCol" select="wmtsFunctions:maxTileCol($tileMatrixLimits, $tileMatrix)"/>
-									<xsl:variable name="midTileCol" select="($minTileCol + $maxTileCol) idiv 2"/>
-									<xsl:variable name="rows" select="wmtsFunctions:getTileRows($minTileRow, $midTileRow, $maxTileRow)"/>
-									<xsl:variable name="rowList" select="tokenize($rows, ',')"/>
-									<xsl:variable name="cols" select="wmtsFunctions:getTileCols($minTileCol, $midTileCol, $maxTileCol)"/>
-									<xsl:variable name="colList" select="tokenize($cols, ',')"/>
-									<xsl:for-each select="$rowList">
-										<xsl:variable name="row" select="."/>
-										<xsl:for-each select="$colList">
-											<xsl:variable name="col" select="."/>
-											<xsl:variable name="dimensionsMessage">
-												<xsl:for-each select="$layer/wmts:Dimension[not(wmts:Default)]">
-													<xsl:variable name="dimensionNoDefault" select="."/>
-													<xsl:variable name="dimNoDefaultName" select="$dimensionNoDefault/ows:Identifier"/>
-													<xsl:variable name="value" select="$dimensionNoDefault/wmts:Value[1]"/>
-													<xsl:value-of select="concat(' dimension ', $dimNoDefaultName, ' value ', $value)"/>
-												</xsl:for-each>
-											</xsl:variable>
-											<ctl:message select="concat('layer ', $layerId, ' style ', $styleId, ' format ', $format, ' tileMatrixSet ', $tileMatrixSetId, ' has limits ', boolean($tileMatrixSetLimits), ' tileMatrix ', $tileMatrixId, ' row ', $row, ' col ', $col, $dimensionsMessage)"/>
-											<xsl:variable name="dimensionNames">
-												<xsl:for-each select="$layer/wmts:Dimension[not(wmts:Default)]">
-													<xsl:variable name="dimensionNoDefault" select="."/>
-													<xsl:variable name="dimNoDefaultName" select="$dimensionNoDefault/ows:Identifier"/>
-													<xsl:value-of select="$dimNoDefaultName"/>
-													<xsl:if test="not(position() = last())">
-														<xsl:text>,</xsl:text>
-													</xsl:if>
-												</xsl:for-each>
-											</xsl:variable>
-											<xsl:variable name="dimensionValues">
-												<xsl:for-each select="$layer/wmts:Dimension[not(wmts:Default)]">
-													<xsl:variable name="dimensionNoDefault" select="."/>
-													<xsl:variable name="value" select="$dimensionNoDefault/wmts:Value[1]"/>
-													<xsl:value-of select="$value"/>
-													<xsl:if test="not(position() = last())">
-														<xsl:text>,</xsl:text>
-													</xsl:if>
-												</xsl:for-each>
-											</xsl:variable>
-											<xsl:variable name="postBody" select="wmtsFunctions:makeXMLpostGetTileRequest($version, $layerId, $styleId, $format, $dimensionNames, $dimensionValues, $tileMatrixSetId, $tileMatrixId, $row, $col)"/>
-											<!-- <xsl:message>post Body: <xsl:copy-of select="$postBody"/></xsl:message> 	-->
-											<xsl:variable name="response">
-												<ctl:soap-request  version="1.2" charset="utf-8">
-													<ctl:url>
-														<xsl:value-of select="$serviceURL"/>
-													</ctl:url>
-													<ctl:body>
-														<xsl:copy-of select="$postBody"/>
-													</ctl:body>
-													<parsers:HTTPParser>
-														<parsers:parse>
-															<parsers:SOAPParser return="content"/>
-														</parsers:parse>
-													</parsers:HTTPParser>
-												</ctl:soap-request>					
-											</xsl:variable>
-											<!-- <xsl:message>response <xsl:copy-of select="$response"/></xsl:message>	-->
-											<xsl:variable name="code" select="$response/response/status/@code"/>
-											<xsl:variable name="wmtsImageFormat" select="$response/response/content/wmts:BinaryPayload/wmts:Format"/> 
-											<xsl:variable name="base64Data" select="$response/response/content/wmts:BinaryPayload/wmts:BinaryContent"/> 
-											<xsl:variable name="instruction">
-												<parsers:ImageParser>
-													<parsers:type/>
-													<parsers:height/>
-													<parsers:width/>
-													<parsers:transparency/>
-													<parsers:model value="ARGB">
-														<parsers:transparentNodata/>
-													</parsers:model>
-												</parsers:ImageParser>
-											</xsl:variable>
-											<xsl:variable name="response2" select="ctlFunctions:ParseBase64ImageData($base64Data, $instruction/*)"/>
-											<xsl:variable name="type"  select="$response2/parsers:ImageParser/parsers:type"/>
-											<xsl:variable name="imageFormat" select="concat('image/', $type)"/>
-											<xsl:variable name="width" select="$response2/parsers:ImageParser/parsers:width"/>
-											<xsl:variable name="height" select="$response2/parsers:ImageParser/parsers:height"/>
-											<xsl:variable name="transparency" select="$response2/parsers:ImageParser/parsers:transparency"/>
-											<xsl:variable name="transparentNodata" select="$response2/parsers:ImageParser/parsers:model/parsers:transparentNodata"/>
-											<ctl:message select="concat('response image transparency: ', $transparency, ' transparent nodata (black) pixels: ', $transparentNodata, ' wmtsImageFormat ', $wmtsImageFormat, ' imageFormat ', $imageFormat, ' width ', $width, ' height ', $height, ' HTTP status code ', $code)"/>
-											<!--
-											<xsl:if test="string(wwwFunctions:mime-match($wmtsImageFormat, $format)) = 'false' ">
-												<ctl:message>Error:  wmtsImageFormat from wmts:BinaryPayload/wmtsFormat != request format</ctl:message>
-												<xsl:text>false|</xsl:text>
-											</xsl:if>
-											<xsl:if test="string(wwwFunctions:mime-match($imageFormat, $format)) = 'false' ">
-												<ctl:message>Error: imageFormat of image from wmtsBinaryPayload/wmts:BinaryContent != request format</ctl:message>
-												<xsl:text>false|</xsl:text>
-											</xsl:if>
-											<xsl:if test="string(wwwFunctions:mime-match($wmtsImageFormat, $imageFormat) = 'false' ">
-												<ctl:message>Error:  wmtsImageFormat from wmts:BinaryPayload/wmtsFormat !=  imageFormat of image from wmtsBinaryPayload/wmts:BinaryContent</ctl:message>
-												<xsl:text>false|</xsl:text>
-											</xsl:if>
-											-->
-											<xsl:choose>
-												<xsl:when test="number($width) = -1 or number($height) = -1">
-													<ctl:message>Error: Could not read the image size.</ctl:message>
-													<xsl:text>false|</xsl:text>
-												</xsl:when>
-												<xsl:when test="not($transparency)">
-													<ctl:message>Error: Could not read the image transparency.</ctl:message>
-													<xsl:text>false|</xsl:text>
-												</xsl:when>
-												<xsl:when test="$transparentNodata = '' ">
-													<ctl:message>Error: Could not read the image transparent nodata (black).</ctl:message>
-													<xsl:text>false|</xsl:text>
-												</xsl:when>
-												<xsl:otherwise>
-													<xsl:choose>
-														<xsl:when test="$transparency = 'Opaque' ">
-															<ctl:message select="concat('Failure: ', $transparency, ' means all pixels have an alpha value of 1.0')"/>
-															<xsl:text>false|</xsl:text>
-														</xsl:when>
-														<xsl:when test="$transparency = 'Unknown' ">
-															<ctl:message select="concat('Failure: ', $transparency, ' transparency assumed to be completely Opaque, i.e.t all pixels have an alpha value of 1.0')"/>
-															<xsl:text>false|</xsl:text>
-														</xsl:when>
-														<xsl:when test="$transparentNodata = 'true' ">
-															<xsl:choose>
-																<xsl:when test="$transparency = 'Bitmask' ">
-																	<ctl:message select="concat('Success: transparentNodata with transparency ', $transparency, ' represents image data that on a per-pixel basis is either completely opaque, with an alpha value of 1.0, or completely transparent, with an alpha value of 0.0, and all nodata (black) pixels are transparent.')"/>
-																	<xsl:text>true|</xsl:text>
-																</xsl:when>
-																<xsl:when test="$transparency = 'Translucent' ">
-																	<ctl:message select="concat('Success: transparentNodata with transparency ', $transparency, ' represents image data that on a per-pixel basis has arbitrary alpha values between and including 0.0 (transparent) and 1.0 (opaque).and all nodata (black) pixels are transparent.')"/>
-																	<xsl:text>true|</xsl:text>
-																</xsl:when>
-															</xsl:choose>
-														</xsl:when>
-														<xsl:when test="$transparentNodata = 'NA' ">
-															<ctl:message>Indeterminate: there were not any nodata (black) pixels in the image.</ctl:message>I
-														</xsl:when>
-														<xsl:otherwise>
-															<ctl:message>Failure: nodata (black) pixels in the image are not transparent.</ctl:message>
-															<xsl:text>false|</xsl:text>
-														</xsl:otherwise>
-													</xsl:choose>											
-												</xsl:otherwise>
-											</xsl:choose>
-										</xsl:for-each>
-									</xsl:for-each>
-								</xsl:for-each>
-							</xsl:for-each>
-						</xsl:for-each>
-					</xsl:for-each>
-				</xsl:for-each>
+				<xsl:variable name="layerId">TransparentNodata</xsl:variable>
+				<xsl:variable name="layer" select="$wmts.capabilities.doc/wmts:Contents/wmts:Layer[ows:Identifier = $layerId]"/>
+				<xsl:variable name="styleId">Default_style</xsl:variable>
+				<xsl:variable name="format">image/png</xsl:variable>
+				<xsl:variable name="tileMatrixSetId" select="$layer/wmts:TileMatrixSetLink[1]/wmts:TileMatrixSet"/>
+				<xsl:variable name="tileMatrixSet" select="$wmts.capabilities.doc/wmts:Contents/wmts:TileMatrixSet[ows:Identifier = $tileMatrixSetId]"/>
+				<xsl:variable name="tileMatrix" select="$tileMatrixSet/wmts:TileMatrix[1]"/>
+				<xsl:variable name="tileMatrixId" select="$tileMatrix/ows:Identifier"/>
+				<xsl:variable name="row">0</xsl:variable>
+				<xsl:variable name="col">0</xsl:variable>
+				<ctl:message select="concat('layer ', $layerId, ' style ', $styleId, ' format ', $format, ' tileMatrixSet ', $tileMatrixSetId, ' tileMatrix ', $tileMatrixId, ' row ', $row, ' col ', $col)"/>
+				<xsl:variable name="dimensionNames"></xsl:variable>
+				<xsl:variable name="dimensionValues"></xsl:variable>
+				<xsl:variable name="postBody" select="wmtsFunctions:makeXMLpostGetTileRequest($version, $layerId, $styleId, $format, $dimensionNames, $dimensionValues, $tileMatrixSetId, $tileMatrixId, $row, $col)"/>
+				<!-- <xsl:message>post Body: <xsl:copy-of select="$postBody"/></xsl:message> 	-->
+				<xsl:variable name="response">
+					<ctl:soap-request  version="1.2" charset="utf-8">
+						<ctl:url>
+							<xsl:value-of select="$serviceURL"/>
+						</ctl:url>
+						<ctl:body>
+							<xsl:copy-of select="$postBody"/>
+						</ctl:body>
+						<parsers:HTTPParser>
+							<parsers:parse>
+								<parsers:SOAPParser return="content"/>
+							</parsers:parse>
+						</parsers:HTTPParser>
+					</ctl:soap-request>					
+				</xsl:variable>
+				<!-- <xsl:message>response <xsl:copy-of select="$response"/></xsl:message>	-->
+				<xsl:variable name="code" select="$response/response/status/@code"/>
+				<xsl:variable name="wmtsImageFormat" select="$response/response/content/wmts:BinaryPayload/wmts:Format"/> 
+				<xsl:variable name="base64Data" select="$response/response/content/wmts:BinaryPayload/wmts:BinaryContent"/> 
+				<xsl:variable name="instruction">
+					<parsers:ImageParser>
+						<parsers:type/>
+						<parsers:height/>
+						<parsers:width/>
+						<parsers:transparency/>
+						<parsers:model value="ARGB">
+							<parsers:transparentNodata/>
+						</parsers:model>
+					</parsers:ImageParser>
+				</xsl:variable>
+				<xsl:variable name="response2" select="ctlFunctions:ParseBase64ImageData($base64Data, $instruction/*)"/>
+				<xsl:variable name="type"  select="$response2/parsers:ImageParser/parsers:type"/>
+				<xsl:variable name="imageFormat" select="concat('image/', $type)"/>
+				<xsl:variable name="width" select="$response2/parsers:ImageParser/parsers:width"/>
+				<xsl:variable name="height" select="$response2/parsers:ImageParser/parsers:height"/>
+				<xsl:variable name="transparency" select="$response2/parsers:ImageParser/parsers:transparency"/>
+				<xsl:variable name="transparentNodata" select="$response2/parsers:ImageParser/parsers:model/parsers:transparentNodata"/>
+				<ctl:message select="concat('response image transparency: ', $transparency, ' transparent nodata (black) pixels: ', $transparentNodata, ' wmtsImageFormat ', $wmtsImageFormat, ' imageFormat ', $imageFormat, ' width ', $width, ' height ', $height, ' HTTP status code ', $code)"/>
+				<xsl:choose>
+					<xsl:when test="number($width) = -1 or number($height) = -1">
+						<ctl:message>Error: Could not read the image size.</ctl:message>
+						<xsl:text>false|</xsl:text>
+					</xsl:when>
+					<xsl:when test="not($transparency)">
+						<ctl:message>Error: Could not read the image transparency.</ctl:message>
+						<xsl:text>false|</xsl:text>
+					</xsl:when>
+					<xsl:when test="$transparentNodata = '' ">
+						<ctl:message>Error: Could not read the image transparent nodata (black).</ctl:message>
+						<xsl:text>false|</xsl:text>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:choose>
+							<xsl:when test="$transparency = 'Opaque' ">
+								<ctl:message select="concat('Failure: ', $transparency, ' means all pixels have an alpha value of 1.0')"/>
+								<xsl:text>false|</xsl:text>
+							</xsl:when>
+							<xsl:when test="$transparency = 'Unknown' ">
+								<ctl:message select="concat('Failure: ', $transparency, ' transparency assumed to be completely Opaque, i.e.t all pixels have an alpha value of 1.0')"/>
+								<xsl:text>false|</xsl:text>
+							</xsl:when>
+							<xsl:when test="$transparentNodata = 'true' ">
+								<xsl:choose>
+									<xsl:when test="$transparency = 'Bitmask' ">
+										<ctl:message select="concat('Success: transparentNodata with transparency ', $transparency, ' represents image data that on a per-pixel basis is either completely opaque, with an alpha value of 1.0, or completely transparent, with an alpha value of 0.0, and all nodata (black) pixels are transparent.')"/>
+										<xsl:text>true|</xsl:text>
+									</xsl:when>
+									<xsl:when test="$transparency = 'Translucent' ">
+										<ctl:message select="concat('Success: transparentNodata with transparency ', $transparency, ' represents image data that on a per-pixel basis has arbitrary alpha values between and including 0.0 (transparent) and 1.0 (opaque).and all nodata (black) pixels are transparent.')"/>
+										<xsl:text>true|</xsl:text>
+									</xsl:when>
+								</xsl:choose>
+							</xsl:when>
+							<xsl:when test="$transparentNodata = 'NA' ">
+								<ctl:message>Indeterminate: there were not any nodata (black) pixels in the image.</ctl:message>I
+							</xsl:when>
+							<xsl:otherwise>
+								<ctl:message>Failure: nodata (black) pixels in the image are not transparent.</ctl:message>
+								<xsl:text>false|</xsl:text>
+							</xsl:otherwise>
+						</xsl:choose>											
+					</xsl:otherwise>
+				</xsl:choose>
 			</xsl:variable>
 			<xsl:choose>
 				<xsl:when test="contains($results, 'true') and not(contains($results, 'false'))">
@@ -22862,196 +22713,137 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 		<ctl:code>
 			<ctl:message>Issuing RESTful GetTile requests for the following:</ctl:message> 
 			<xsl:variable name="results">
-				<xsl:for-each select="$wmts.capabilities.doc/wmts:Contents/wmts:Layer">
-					<xsl:variable name="layer" select="."/>
-					<xsl:variable name="layerId" select="$layer/ows:Identifier"/>
-					<!-- <ctl:message select="concat('layer ', $layerId)"/> -->
-					<xsl:variable name="stylePos" select="(count($layer/wmts:Style) +1) idiv 2"/>
-					<!-- <ctl:message select="concat('layer ', $layerId, ' stylePos ', $stylePos)"/> -->
-					<xsl:for-each select="$layer/wmts:Style[$stylePos]">
-						<xsl:variable name="style" select="."/>
-						<xsl:variable name="styleId" select="$style/ows:Identifier"/>
-						<!-- <ctl:message select="concat('style ', $styleId)"/> -->
-						<xsl:for-each select="$layer/wmts:Format/text()[. != 'image/jpeg']">
-							<!-- could be replaced by test for formats known to support transparency -->
-							<xsl:variable name="format" select="."/>
-							<!-- <ctl:message select="concat('format ', $format)"/> -->
-							<xsl:variable name="resourceURLtemplate" select="wmtsFunctions:getResourceURLforLayer($layer, $format, 'tile')"/>
-							<!-- <ctl:message select="concat('layer ', $layer/ows:Identifier, ' format ', $format, ' template: ', $resourceURLtemplate)"/> -->
-							<xsl:choose>
-								<xsl:when test="$resourceURLtemplate != '' ">
-									<xsl:variable name="dimensionNames" select="string-join($layer/wmts:Dimension/ows:Identifier, ',')"/>  
-									<xsl:variable name="validRequestURLtemplate" select="wmtsFunctions:isValidTileURLtemplate($resourceURLtemplate, $layerId, $dimensionNames)"/>
-									<xsl:choose>
-										<xsl:when test="not(contains($validRequestURLtemplate, 'false'))">												
-											<xsl:variable name="tmslPos" select="(count($layer/wmts:TileMatrixSetLink) + 1) idiv 2"/>
-											<!-- <ctl:message select="concat('format ', $format, ' tmslPos ', $tmslPos)"/> -->
-											<xsl:for-each select="$layer/wmts:TileMatrixSetLink[$tmslPos]">
-												<xsl:variable name="tileMatrixSetId" select="wmts:TileMatrixSet"/>
-												<xsl:variable name="tileMatrixSetLimits" select="wmts:TileMatrixSetLimits"/>
-												<xsl:variable name="setLimits" select="count($tileMatrixSetLimits/*) gt 0"/>
-												<!-- <ctl:message select="concat('tileMatrixSet ', $tileMatrixSetId, ' has limits ', $setLimits)"/> -->
-												<xsl:variable name="tileMatrixSet" select="$wmts.capabilities.doc/wmts:Contents/wmts:TileMatrixSet[ows:Identifier = $tileMatrixSetId]"/>
-												<xsl:variable name="tmsPos" select="(count($tileMatrixSet/wmts:TileMatrix)  + 1) idiv 2"/>
-												<xsl:for-each select="$tileMatrixSet/wmts:TileMatrix[$tmsPos]">
-													<xsl:variable name="tileMatrix" select="."/>
-													<xsl:variable name="tileMatrixId" select="$tileMatrix/ows:Identifier"/>
-													<xsl:variable name="tileWidth" select="number($tileMatrix/wmts:TileWidth)"/>
-													<xsl:variable name="tileHeight" select="number($tileMatrix/wmts:TileHeight)"/>
-													<!-- <ctl:message select="concat('tileMatrix ', $tileMatrixId)"/> -->
-													<xsl:variable name="tileMatrixLimits" select="$tileMatrixSetLimits/wmts:TileMatrixLimits[wmts:TileMatrix = $tileMatrixId]"/>
-													<xsl:variable name="matrixLimits" select="count($tileMatrixLimits/*) gt 0"/>
-													<xsl:variable name="minTileRow" select="wmtsFunctions:minTileRow($tileMatrixLimits)"/>
-													<xsl:variable name="maxTileRow" select="wmtsFunctions:maxTileRow($tileMatrixLimits, $tileMatrix)"/>
-													<xsl:variable name="midTileRow" select="($minTileRow + $maxTileRow) idiv 2"/>
-													<xsl:variable name="minTileCol" select="wmtsFunctions:minTileCol($tileMatrixLimits)"/>
-													<xsl:variable name="maxTileCol" select="wmtsFunctions:maxTileCol($tileMatrixLimits, $tileMatrix)"/>
-													<xsl:variable name="midTileCol" select="($minTileCol + $maxTileCol) idiv 2"/>
-													<xsl:variable name="rows" select="wmtsFunctions:getTileRows($minTileRow, $midTileRow, $maxTileRow)"/>
-													<xsl:variable name="rowList" select="tokenize($rows, ',')"/>
-													<xsl:variable name="cols" select="wmtsFunctions:getTileCols($minTileCol, $midTileCol, $maxTileCol)"/>
-													<xsl:variable name="colList" select="tokenize($cols, ',')"/>
-													<xsl:for-each select="$rowList">
-														<xsl:variable name="row" select="."/>
-														<xsl:for-each select="$colList">
-															<xsl:variable name="col" select="."/>
-															<xsl:variable name="dimensionsMessage">
-																<xsl:for-each select="$layer/wmts:Dimension[not(wmts:Default)]">
-																	<xsl:variable name="dimensionNoDefault" select="."/>
-																	<xsl:variable name="dimNoDefaultName" select="$dimensionNoDefault/ows:Identifier"/>
-																	<xsl:variable name="value" select="$dimensionNoDefault/wmts:Value[1]"/>
-																	<xsl:value-of select="concat(' dimension ', $dimNoDefaultName, ' value ', $value)"/>
-																</xsl:for-each>
-															</xsl:variable>
-															<ctl:message select="concat('layer ', $layerId, ' style ', $styleId, ' format ', $format, ' tileMatrixSet ', $tileMatrixSetId, ' has limits ', boolean($tileMatrixSetLimits), ' tileMatrix ', $tileMatrixId, ' row ', $row, ' col ', $col, $dimensionsMessage)"/>
-															<xsl:variable name="dimensionValues">
-																<xsl:for-each select="$layer/wmts:Dimension">
-																	<xsl:variable name="dim" select="."/>
-																	<xsl:variable name="value" select="$dim/wmts:Value[1]"/>
-																	<xsl:value-of select="$value"/>
-																	<xsl:if test="not(position() = last())">
-																		<xsl:text>,</xsl:text>
-																	</xsl:if>
-																</xsl:for-each>
-															</xsl:variable>
-															<xsl:variable name="restURL">
-																<xsl:call-template name="wmts:RESTfulTemplateProcessor">
-																	<xsl:with-param name="urlTemplate" select="$resourceURLtemplate "/>
-																	<xsl:with-param name="dimensionNames" select="$dimensionNames"/>  
-																	<xsl:with-param name="dimensionValues" select="$dimensionValues"/>
-																	<xsl:with-param name="style" select="$styleId"/>
-																	<xsl:with-param name="tileMatrixSet" select="$tileMatrixSetId"/>
-																	<xsl:with-param name="tileMatrix" select="$tileMatrixId"/>
-																	<xsl:with-param name="tileRow" select="$row"/>
-																	<xsl:with-param name="tileCol" select="$col"/>
-																	<xsl:with-param name="j"></xsl:with-param> <!-- only for FeatureInfo -->
-																	<xsl:with-param name="i"></xsl:with-param> <!-- only for FeatureInfo -->
-																	<xsl:with-param name="requestURL"></xsl:with-param> <!-- initially empty, constructed via recursive template invocations -->
-																</xsl:call-template>
-															</xsl:variable>
-															<ctl:message select="concat('restURL: ', $restURL)"/>														
-															<xsl:variable name="response">
-																<ctl:request>
-																	<ctl:url>
-																		<xsl:value-of select="$restURL"/>
-																	</ctl:url>
-																	<ctl:method>get</ctl:method>
-																	<parsers:HTTPParser>   <!-- include HTTPParser to get status code -->
-																		<parsers:parse>
-																			<parsers:ImageParser>
-																				<parsers:type/>
-																				<parsers:height/>
-																				<parsers:width/>
-																				<parsers:transparency/>
-																				<parsers:model value="ARGB">
-																					<parsers:transparentNodata/>
-																				</parsers:model>
-																			</parsers:ImageParser>
-																		</parsers:parse>
-																	</parsers:HTTPParser>
-																</ctl:request>
-															</xsl:variable>
-															<!-- <xsl:message>response <xsl:copy-of select="$response"/></xsl:message>	-->
-															<xsl:choose>
-																<xsl:when test="not(exists($response/response/content/parsers:ImageParser/parsers:type))">
-																	<ctl:message>Error: Could not read the image type.</ctl:message>
-																	<xsl:text>false|</xsl:text>
+				<xsl:variable name="layerId">TransparentNodata</xsl:variable>
+				<xsl:variable name="layer" select="$wmts.capabilities.doc/wmts:Contents/wmts:Layer[ows:Identifier = $layerId]"/>
+				<xsl:variable name="styleId">Default_style</xsl:variable>
+				<xsl:variable name="format">image/png</xsl:variable>
+				<xsl:variable name="tileMatrixSetId" select="$layer/wmts:TileMatrixSetLink[1]/wmts:TileMatrixSet"/>
+				<xsl:variable name="tileMatrixSet" select="$wmts.capabilities.doc/wmts:Contents/wmts:TileMatrixSet[ows:Identifier = $tileMatrixSetId]"/>
+				<xsl:variable name="tileMatrix" select="$tileMatrixSet/wmts:TileMatrix[1]"/>
+				<xsl:variable name="tileMatrixId" select="$tileMatrix/ows:Identifier"/>
+				<xsl:variable name="row">0</xsl:variable>
+				<xsl:variable name="col">0</xsl:variable>
+				<xsl:variable name="dimensionNames"></xsl:variable>
+				<xsl:variable name="dimensionValues"></xsl:variable>
+				<xsl:variable name="resourceURLtemplate" select="wmtsFunctions:getResourceURLforLayer($layer, $format, 'tile')"/>
+				<!-- <ctl:message select="concat('layer ', $layer/ows:Identifier, ' format ', $format, ' template: ', $resourceURLtemplate)"/> -->
+				<xsl:choose>
+					<xsl:when test="$resourceURLtemplate != '' ">
+						<xsl:variable name="validRequestURLtemplate" select="wmtsFunctions:isValidTileURLtemplate($resourceURLtemplate, $layerId, $dimensionNames)"/>
+						<xsl:choose>
+							<xsl:when test="not(contains($validRequestURLtemplate, 'false'))">		
+								<ctl:message select="concat('layer ', $layerId, ' style ', $styleId, ' format ', $format, ' tileMatrixSet ', $tileMatrixSetId, ' tileMatrix ', $tileMatrixId, ' row ', $row, ' col ', $col)"/>
+								<xsl:variable name="restURL">
+									<xsl:call-template name="wmts:RESTfulTemplateProcessor">
+										<xsl:with-param name="urlTemplate" select="$resourceURLtemplate "/>
+										<xsl:with-param name="dimensionNames" select="$dimensionNames"/>  
+										<xsl:with-param name="dimensionValues" select="$dimensionValues"/>
+										<xsl:with-param name="style" select="$styleId"/>
+										<xsl:with-param name="tileMatrixSet" select="$tileMatrixSetId"/>
+										<xsl:with-param name="tileMatrix" select="$tileMatrixId"/>
+										<xsl:with-param name="tileRow" select="$row"/>
+										<xsl:with-param name="tileCol" select="$col"/>
+										<xsl:with-param name="j"></xsl:with-param> <!-- only for FeatureInfo -->
+										<xsl:with-param name="i"></xsl:with-param> <!-- only for FeatureInfo -->
+										<xsl:with-param name="requestURL"></xsl:with-param> <!-- initially empty, constructed via recursive template invocations -->
+									</xsl:call-template>
+								</xsl:variable>
+								<ctl:message select="concat('restURL: ', $restURL)"/>														
+								<xsl:variable name="response">
+									<ctl:request>
+										<ctl:url>
+											<xsl:value-of select="$restURL"/>
+										</ctl:url>
+										<ctl:method>get</ctl:method>
+										<parsers:HTTPParser>   <!-- include HTTPParser to get status code -->
+											<parsers:parse>
+												<parsers:ImageParser>
+													<parsers:type/>
+													<parsers:height/>
+													<parsers:width/>
+													<parsers:transparency/>
+													<parsers:model value="ARGB">
+														<parsers:transparentNodata/>
+													</parsers:model>
+												</parsers:ImageParser>
+											</parsers:parse>
+										</parsers:HTTPParser>
+									</ctl:request>
+								</xsl:variable>
+								<!-- <xsl:message>response <xsl:copy-of select="$response"/></xsl:message>	-->
+								<xsl:choose>
+									<xsl:when test="not(exists($response/response/content/parsers:ImageParser/parsers:type))">
+										<ctl:message>Error: Could not read the image type.</ctl:message>
+										<xsl:text>false|</xsl:text>
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:variable name="type"  select="$response/response/content/parsers:ImageParser/parsers:type"/>
+										<xsl:variable name="imageFormat" select="concat('image/', $type)"/>
+										<xsl:variable name="width" select="$response/response/content/parsers:ImageParser/parsers:width"/>
+										<xsl:variable name="height" select="$response/response/content/parsers:ImageParser/parsers:height"/>
+										<xsl:variable name="transparency" select="$response/response/content/parsers:ImageParser/parsers:transparency"/>
+										<xsl:variable name="transparentNodata" select="$response/response/content/parsers:ImageParser/parsers:model/parsers:transparentNodata"/>
+										<xsl:variable name="code" select="$response/response/status/@code"/>
+										<ctl:message select="concat('response image transparency: ', $transparency, ' transparent nodata (black) pixels: ', $transparentNodata, ' imageFormat ', $imageFormat, ' width ', $width, ' height ', $height, ' HTTP status code ', $code)"/>		
+										<xsl:choose>
+											<xsl:when test="number($width) = -1 or number($height) = -1">
+												<ctl:message>Error: Could not read the image size.</ctl:message>
+												<xsl:text>false|</xsl:text>
+											</xsl:when>
+											<xsl:when test="not($transparency)">
+												<ctl:message>Error: Could not read the image transparency.</ctl:message>
+												<xsl:text>false|</xsl:text>
+											</xsl:when>
+											<xsl:when test="$transparentNodata = '' ">
+												<ctl:message>Error: Could not read the image transparent nodata (black).</ctl:message>
+												<xsl:text>false|</xsl:text>
+											</xsl:when>
+											<xsl:otherwise>
+												<xsl:choose>
+													<xsl:when test="$transparency = 'Opaque' ">
+														<ctl:message select="concat('Failure: ', $transparency, ' means all pixels have an alpha value of 1.0')"/>
+														<xsl:text>false|</xsl:text>
+													</xsl:when>
+													<xsl:when test="$transparency = 'Unknown' ">
+														<ctl:message select="concat('Failure: ', $transparency, ' transparency assumed to be completely Opaque, i.e.t all pixels have an alpha value of 1.0')"/>
+														<xsl:text>false|</xsl:text>
+													</xsl:when>
+													<xsl:when test="$transparentNodata = 'true' ">
+														<xsl:choose>
+															<xsl:when test="$transparency = 'Bitmask' ">
+																<ctl:message select="concat('Success: transparentNodata with transparency ', $transparency, ' represents image data that on a per-pixel basis is either completely opaque, with an alpha value of 1.0, or completely transparent, with an alpha value of 0.0, and all nodata (black) pixels are transparent.')"/>
+																<xsl:text>true|</xsl:text>
+															</xsl:when>
+															<xsl:when test="$transparency = 'Translucent' ">
+																<ctl:message select="concat('Success: transparentNodata with transparency ', $transparency, ' represents image data that on a per-pixel basis has arbitrary alpha values between and including 0.0 (transparent) and 1.0 (opaque).and all nodata (black) pixels are transparent.')"/>
+																<xsl:text>true|</xsl:text>
+															</xsl:when>
+														</xsl:choose>
+													</xsl:when>
+													<xsl:when test="$transparentNodata = 'NA' ">
+														<ctl:message>Indeterminate: there were not any nodata (black) pixels in the image.</ctl:message>I
 																</xsl:when>
-																<xsl:otherwise>
-																	<xsl:variable name="type"  select="$response/response/content/parsers:ImageParser/parsers:type"/>
-																	<xsl:variable name="imageFormat" select="concat('image/', $type)"/>
-																	<xsl:variable name="width" select="$response/response/content/parsers:ImageParser/parsers:width"/>
-																	<xsl:variable name="height" select="$response/response/content/parsers:ImageParser/parsers:height"/>
-																	<xsl:variable name="transparency" select="$response/response/content/parsers:ImageParser/parsers:transparency"/>
-																	<xsl:variable name="transparentNodata" select="$response/response/content/parsers:ImageParser/parsers:model/parsers:transparentNodata"/>
-																	<xsl:variable name="code" select="$response/response/status/@code"/>
-																	<ctl:message select="concat('response image transparency: ', $transparency, ' transparent nodata (black) pixels: ', $transparentNodata, ' imageFormat ', $imageFormat, ' width ', $width, ' height ', $height, ' HTTP status code ', $code)"/>		
-																	<xsl:choose>
-																		<xsl:when test="number($width) = -1 or number($height) = -1">
-																			<ctl:message>Error: Could not read the image size.</ctl:message>
-																			<xsl:text>false|</xsl:text>
-																		</xsl:when>
-																		<xsl:when test="not($transparency)">
-																			<ctl:message>Error: Could not read the image transparency.</ctl:message>
-																			<xsl:text>false|</xsl:text>
-																		</xsl:when>
-																		<xsl:when test="$transparentNodata = '' ">
-																			<ctl:message>Error: Could not read the image transparent nodata (black).</ctl:message>
-																			<xsl:text>false|</xsl:text>
-																		</xsl:when>
-																		<xsl:otherwise>
-																			<xsl:choose>
-																				<xsl:when test="$transparency = 'Opaque' ">
-																					<ctl:message select="concat('Failure: ', $transparency, ' means all pixels have an alpha value of 1.0')"/>
-																					<xsl:text>false|</xsl:text>
-																				</xsl:when>
-																				<xsl:when test="$transparency = 'Unknown' ">
-																					<ctl:message select="concat('Failure: ', $transparency, ' transparency assumed to be completely Opaque, i.e.t all pixels have an alpha value of 1.0')"/>
-																					<xsl:text>false|</xsl:text>
-																				</xsl:when>
-																				<xsl:when test="$transparentNodata = 'true' ">
-																					<xsl:choose>
-																						<xsl:when test="$transparency = 'Bitmask' ">
-																							<ctl:message select="concat('Success: transparentNodata with transparency ', $transparency, ' represents image data that on a per-pixel basis is either completely opaque, with an alpha value of 1.0, or completely transparent, with an alpha value of 0.0, and all nodata (black) pixels are transparent.')"/>
-																							<xsl:text>true|</xsl:text>
-																						</xsl:when>
-																						<xsl:when test="$transparency = 'Translucent' ">
-																							<ctl:message select="concat('Success: transparentNodata with transparency ', $transparency, ' represents image data that on a per-pixel basis has arbitrary alpha values between and including 0.0 (transparent) and 1.0 (opaque).and all nodata (black) pixels are transparent.')"/>
-																							<xsl:text>true|</xsl:text>
-																						</xsl:when>
-																					</xsl:choose>
-																				</xsl:when>
-																				<xsl:when test="$transparentNodata = 'NA' ">
-																					<ctl:message>Indeterminate: there were not any nodata (black) pixels in the image.</ctl:message>I
-																							</xsl:when>
-																				<xsl:otherwise>
-																					<ctl:message>Failure: nodata (black) pixels in the image are not transparent.</ctl:message>
-																					<xsl:text>false|</xsl:text>
-																				</xsl:otherwise>
-																			</xsl:choose>											
-																		</xsl:otherwise>
-																	</xsl:choose>
-																</xsl:otherwise>
-															</xsl:choose>
-														</xsl:for-each>
-													</xsl:for-each>
-												</xsl:for-each>
-											</xsl:for-each>
-										</xsl:when>		
-										<xsl:otherwise>
-											<ctl:message select="concat('FAILURE: invalid template ', $resourceURLtemplate, ' for layer ', $layer/ows:Identifier, ' format ', $format)"/> 
-											<xsl:text>false|</xsl:text>
-										</xsl:otherwise>
-									</xsl:choose>
-								</xsl:when>
-								<xsl:otherwise>
-									<ctl:message select="concat('FAILURE:no resourceURLtemplate found for layer ', $layer/ows:Identifier, ' format ', $format)"/> 
-									<xsl:text>false|</xsl:text>
-								</xsl:otherwise>	
-							</xsl:choose>
-						</xsl:for-each>
-					</xsl:for-each>
-				</xsl:for-each>
+													<xsl:otherwise>
+														<ctl:message>Failure: nodata (black) pixels in the image are not transparent.</ctl:message>
+														<xsl:text>false|</xsl:text>
+													</xsl:otherwise>
+												</xsl:choose>											
+											</xsl:otherwise>
+										</xsl:choose>
+									</xsl:otherwise>
+								</xsl:choose>
+							</xsl:when>		
+							<xsl:otherwise>
+								<ctl:message select="concat('FAILURE: invalid template ', $resourceURLtemplate, ' for layer ', $layer/ows:Identifier, ' format ', $format)"/> 
+								<xsl:text>false|</xsl:text>
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message select="concat('FAILURE:no resourceURLtemplate found for layer ', $layer/ows:Identifier, ' format ', $format)"/> 
+						<xsl:text>false|</xsl:text>
+					</xsl:otherwise>	
+				</xsl:choose>
 			</xsl:variable>
 			<xsl:choose>
 				<xsl:when test="contains($results, 'false')">
