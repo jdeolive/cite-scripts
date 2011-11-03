@@ -124,6 +124,7 @@ updateSequence="1"
         <ows:AllowedValues>
           <ows:Value>GoogleCRS84Quad</ows:Value>
           <ows:Value>GoogleMapsCompatible</ows:Value>
+          <ows:Value>TransparentNodata</ows:Value>
         </ows:AllowedValues>
       </ows:Parameter>
     </ows:Operation>
@@ -3719,6 +3720,25 @@ updateSequence="1"
 	  <ResourceURL format="application/gml+xml; version=3.2.1" resourceType="FeatureInfo"
 		   template="http://localhost:8080/wmts/1.0.0/rest/ThirtyFifthWasL28/Default_style/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}/{J}/{I}.gml"/>
     </Layer>   
+    <Layer>
+		<ows:Title>TransparentNodata</ows:Title>
+		<ows:Abstract>Layer with one TileMatrixSet with one TileMatrix with one.png tile to support WMTS transparency test.</ows:Abstract>
+		<ows:WGS84BoundingBox>
+			<ows:LowerCorner>67.124799547605 25.1248883571773</ows:LowerCorner>
+			<ows:UpperCorner>67.2500765559152 25.250061690777</ows:UpperCorner>
+		</ows:WGS84BoundingBox>
+      <ows:Identifier>TransparentNodata</ows:Identifier>
+      <Style isDefault="true">
+        <ows:Title>Default</ows:Title>
+        <ows:Identifier>Default_style</ows:Identifier>
+      </Style>
+      <Format>image/png</Format>    
+     <TileMatrixSetLink>
+        <TileMatrixSet>TransparentNodata</TileMatrixSet>
+      </TileMatrixSetLink>
+	  <ResourceURL format="image/png" resourceType="tile"
+		   template="http://localhost:8080/wmts/1.0.0/rest/TransparentNodata/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png"/>
+    </Layer>
     <TileMatrixSet>
       <ows:Identifier>GoogleCRS84Quad</ows:Identifier>
       <ows:BoundingBox crs="urn:ogc:def:crs:OGC:1.3:CRS84">
@@ -4116,19 +4136,27 @@ updateSequence="1"
       </TileMatrix>
 -->
     </TileMatrixSet>
+    <TileMatrixSet>
+      <ows:Identifier>TransparentNodata</ows:Identifier>
+     <ows:BoundingBox crs="urn:ogc:def:crs:OGC:1.3:CRS84">
+        <ows:LowerCorner>-180 -90</ows:LowerCorner>
+        <ows:UpperCorner>180 90</ows:UpperCorner>
+      </ows:BoundingBox>
+      <ows:SupportedCRS>urn:ogc:def:crs:OGC:1.3:CRS84</ows:SupportedCRS>
+      <TileMatrix>
+        <ows:Identifier>0</ows:Identifier>
+        <ScaleDenominator>559082264.0287178</ScaleDenominator>
+        <TopLeftCorner>-180 90</TopLeftCorner>
+        <TileWidth>256</TileWidth>
+        <TileHeight>256</TileHeight>
+        <MatrixWidth>1</MatrixWidth>
+        <MatrixHeight>1</MatrixHeight>
+      </TileMatrix>
+    </TileMatrixSet>
   </Contents>
   <Themes>
 	  <Theme>
 			<ows:Identifier>WMTS.ETS</ows:Identifier>
-			<LayerRef>FirstWasL49</LayerRef>
-			<LayerRef>FirstWasL49</LayerRef>
-			<LayerRef>FirstWasL49</LayerRef>
-			<LayerRef>FirstWasL49</LayerRef>
-			<LayerRef>FirstWasL49</LayerRef>
-			<LayerRef>FirstWasL49</LayerRef>
-			<LayerRef>FirstWasL49</LayerRef>
-			<LayerRef>FirstWasL49</LayerRef>
-			<LayerRef>FirstWasL49</LayerRef>
 			<LayerRef>FirstWasL49</LayerRef>
 			<LayerRef>SecondWasL49</LayerRef>
 			<LayerRef>ThirdWasL47</LayerRef>
