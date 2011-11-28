@@ -2250,8 +2250,8 @@
 					<ctl:message select="concat('FAILURE: Missing or invalid response entity contents; should have been a ', upper-case($service), '  capabilties document.')"/>
 					<xsl:text>false</xsl:text>
 				</xsl:when>
-				<xsl:when test="$format = 'bogus/xml' and $contentType != 'application/xml.' ">
-					<ctl:message>FAILURE: Unexpected content type for response entity (Invalid Request format: <xsl:value-of select="$format"/>, Response format: <xsl:value-of select="$contentType"/>).</ctl:message>
+				<xsl:when test="$format = 'bogus/xml' and $contentType != 'application/xml' ">
+					<ctl:message select="concat('FAILURE: Unexpected content type for response entity (Invalid Request format: ', $format, ') Response format: ', $contentType, ' Required response format: application/xml')"/>
 					<xsl:text>false</xsl:text>
 				</xsl:when>
 				<xsl:when test="not(starts-with($contentType, $format))">
@@ -2764,11 +2764,11 @@
 			</xsl:variable>
 			<xsl:choose>
 				<xsl:when test="contains($acceptFormats, $requiredFormat)">
-					<ctl:message>Test passed: Capabilities document contains an AcceptFormats allowed value of application/xml.</ctl:message>
+					<ctl:message select="concat('Test passed: Capabilities document contains an AcceptFormats allowed value of ', $requiredFormat)"/>
 					<ctl:pass/>
 				</xsl:when>
 				<xsl:otherwise>
-					<ctl:message>Test failed: Capabilities document does not contain an AcceptFormats allowed value of application/xml.</ctl:message>
+					<ctl:message select="concat('Test failed: Capabilities document does not contain an AcceptFormats allowed value of ', $requiredFormat)"/>
 					<ctl:fail/>
 				</xsl:otherwise>
 			</xsl:choose>
