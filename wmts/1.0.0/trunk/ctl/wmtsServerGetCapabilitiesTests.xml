@@ -958,7 +958,7 @@
 							<ctl:with-param name="capabilitiesURL" select="$capabilitiesURL"/>
 							<ctl:with-param name="method">get</ctl:with-param>
 							<ctl:with-param name="service">WMTS</ctl:with-param>
-							<ctl:with-param name="requiredFormat">application/xml.</ctl:with-param>
+							<ctl:with-param name="requiredFormat">application/xml</ctl:with-param>
 						</ctl:call-function>				
 					</xsl:when>
 					<xsl:otherwise>
