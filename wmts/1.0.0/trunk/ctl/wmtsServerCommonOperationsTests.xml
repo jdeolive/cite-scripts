@@ -87,6 +87,7 @@
 								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 								<ctl:with-param name="exceptionCodes">MissingParameterValue,MissingParameterValue</ctl:with-param>
 								<ctl:with-param name="locators">service,request</ctl:with-param>
+								<ctl:with-param name="oneOrAll">one</ctl:with-param>
 							</ctl:call-function>
 						</xsl:variable>
 						<xsl:choose>
@@ -140,6 +141,7 @@
 								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 								<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 								<ctl:with-param name="locators">service</ctl:with-param>
+								<ctl:with-param name="oneOrAll">one</ctl:with-param>
 							</ctl:call-function>
 						</xsl:variable>
 						<xsl:choose>
@@ -193,6 +195,7 @@
 								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 								<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 								<ctl:with-param name="locators">request</ctl:with-param>
+								<ctl:with-param name="oneOrAll">one</ctl:with-param>
 							</ctl:call-function>
 						</xsl:variable>
 						<xsl:choose>
@@ -285,6 +288,7 @@
 								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 								<ctl:with-param name="exceptionCodes">MissingParameterValue,MissingParameterValue</ctl:with-param>
 								<ctl:with-param name="locators">service,request</ctl:with-param>
+								<ctl:with-param name="oneOrAll">one</ctl:with-param>
 							</ctl:call-function>
 						</xsl:variable>
 						<xsl:choose>
@@ -338,6 +342,7 @@
 								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 								<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 								<ctl:with-param name="locators">service</ctl:with-param>
+								<ctl:with-param name="oneOrAll">one</ctl:with-param>
 							</ctl:call-function>
 						</xsl:variable>
 						<xsl:choose>
@@ -391,6 +396,7 @@
 								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 								<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 								<ctl:with-param name="locators">request</ctl:with-param>
+								<ctl:with-param name="oneOrAll">one</ctl:with-param>
 							</ctl:call-function>
 						</xsl:variable>
 						<xsl:choose>
@@ -479,6 +485,7 @@
 								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 								<ctl:with-param name="exceptionCodes">MissingParameterValue,MissingParameterValue</ctl:with-param>
 								<ctl:with-param name="locators">service,request</ctl:with-param>
+								<ctl:with-param name="oneOrAll">one</ctl:with-param>
 							</ctl:call-function>
 						</xsl:variable>
 						<xsl:choose>
@@ -532,6 +539,7 @@
 								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 								<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 								<ctl:with-param name="locators">service</ctl:with-param>
+								<ctl:with-param name="oneOrAll">one</ctl:with-param>
 							</ctl:call-function>
 						</xsl:variable>
 						<xsl:choose>
@@ -585,6 +593,7 @@
 								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 								<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 								<ctl:with-param name="locators">request</ctl:with-param>
+								<ctl:with-param name="oneOrAll">one</ctl:with-param>
 							</ctl:call-function>
 						</xsl:variable>
 						<xsl:choose>
@@ -673,6 +682,7 @@
 								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 								<ctl:with-param name="exceptionCodes">MissingParameterValue,MissingParameterValue</ctl:with-param>
 								<ctl:with-param name="locators">service,request</ctl:with-param>
+								<ctl:with-param name="oneOrAll">one</ctl:with-param>
 							</ctl:call-function>
 						</xsl:variable>
 						<xsl:choose>
@@ -727,6 +737,7 @@
 								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 								<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 								<ctl:with-param name="locators">service</ctl:with-param>
+								<ctl:with-param name="oneOrAll">one</ctl:with-param>
 							</ctl:call-function>
 						</xsl:variable>
 						<xsl:choose>
@@ -780,6 +791,7 @@
 								<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 								<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 								<ctl:with-param name="locators">request</ctl:with-param>
+								<ctl:with-param name="oneOrAll">one</ctl:with-param>
 							</ctl:call-function>
 						</xsl:variable>
 						<xsl:choose>
