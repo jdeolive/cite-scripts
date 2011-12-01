@@ -1,0 +1,11 @@
+SPS 1.0 Test Suite Release Notes
+
+2011-12-01 (lbermudez) 
+Revision  for release prod 2.4 beta 2.5
+- tagged r1
+- cleaned release notes. Information about the test is avialable in index.html.
+
+
+2009-10-12 (kstegemoller):
+- tag r0 - SPS 1.0.0
+
