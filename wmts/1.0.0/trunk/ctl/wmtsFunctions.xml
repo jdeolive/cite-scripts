@@ -12105,6 +12105,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="locators">
 														<xsl:value-of select="$missingParameter"/>
 													</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -12345,6 +12346,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="locators">
 														<xsl:value-of select="$missingParameter"/>
 													</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -12584,6 +12586,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="locators">
 														<xsl:value-of select="$missingParameter"/>
 													</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -12852,6 +12855,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																				<ctl:with-param name="locators">
 																					<xsl:value-of select="$missingParameter"/>
 																				</ctl:with-param>
+																				<ctl:with-param name="oneOrAll">one</ctl:with-param>
 																				<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																			</ctl:call-function>
 																		</xsl:variable>
@@ -13032,6 +13036,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">layer</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -13164,6 +13169,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">layer</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -13295,6 +13301,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">layer</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -13442,6 +13449,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																			<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 																			<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 																			<ctl:with-param name="locators">layer</ctl:with-param>
+																			<ctl:with-param name="oneOrAll">one</ctl:with-param>
 																			<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																		</ctl:call-function>
 																	</xsl:variable>
@@ -13624,6 +13632,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">TileMatrixSet</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -13759,6 +13768,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">TileMatrixSet</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -13891,6 +13901,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">TileMatrixSet</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -14037,6 +14048,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																			<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 																			<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 																			<ctl:with-param name="locators">TileMatrixSet</ctl:with-param>
+																			<ctl:with-param name="oneOrAll">one</ctl:with-param>
 																			<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																		</ctl:call-function>
 																	</xsl:variable>
@@ -14218,6 +14230,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">TileMatrix</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -14353,6 +14366,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">TileMatrix</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -14486,6 +14500,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">TileMatrix</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -14632,6 +14647,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																			<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 																			<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 																			<ctl:with-param name="locators">TileMatrix</ctl:with-param>
+																			<ctl:with-param name="oneOrAll">one</ctl:with-param>
 																			<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																		</ctl:call-function>
 																	</xsl:variable>
@@ -14810,6 +14826,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">TileRow</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -14941,6 +14958,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">TileRow</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -15070,6 +15088,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">TileRow</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -15215,6 +15234,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																			<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 																			<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 																			<ctl:with-param name="locators">TileRow</ctl:with-param>
+																			<ctl:with-param name="oneOrAll">one</ctl:with-param>
 																			<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																		</ctl:call-function>
 																	</xsl:variable>
@@ -15393,6 +15413,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">TileCol</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -15524,6 +15545,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">TileCol</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -15653,6 +15675,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">TileCol</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -15798,6 +15821,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																			<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 																			<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 																			<ctl:with-param name="locators">TileCol</ctl:with-param>
+																			<ctl:with-param name="oneOrAll">one</ctl:with-param>
 																			<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																		</ctl:call-function>
 																	</xsl:variable>
@@ -15976,6 +16000,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">TileRow</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -16107,6 +16132,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">TileRow</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -16236,6 +16262,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">TileRow</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -16381,6 +16408,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																			<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 																			<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 																			<ctl:with-param name="locators">TileRow</ctl:with-param>
+																			<ctl:with-param name="oneOrAll">one</ctl:with-param>
 																			<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																		</ctl:call-function>
 																	</xsl:variable>
@@ -16559,6 +16587,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">TileCol</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -16690,6 +16719,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">TileCol</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -16819,6 +16849,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">TileCol</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -16964,6 +16995,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																			<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 																			<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 																			<ctl:with-param name="locators">TileCol</ctl:with-param>
+																			<ctl:with-param name="oneOrAll">one</ctl:with-param>
 																			<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																		</ctl:call-function>
 																	</xsl:variable>
@@ -17144,6 +17176,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">Style</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -17277,6 +17310,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">Style</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -17408,6 +17442,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 												<ctl:with-param name="locators">Style</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -17564,6 +17599,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																			<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 																			<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 																			<ctl:with-param name="locators">Style</ctl:with-param>
+																			<ctl:with-param name="oneOrAll">one</ctl:with-param>
 																			<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																		</ctl:call-function>
 																	</xsl:variable>
@@ -17731,6 +17767,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes" select="$exceptionCodes"/>
 												<ctl:with-param name="locators" select="$dimensionsWithNoDefault"/>
+												<ctl:with-param name="oneOrAll">all</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -17846,6 +17883,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes" select="$exceptionCodes"/>
 												<ctl:with-param name="locators" select="$dimensionsWithNoDefault"/>
+												<ctl:with-param name="oneOrAll">all</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -17960,6 +17998,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes" select="$exceptionCodes"/>
 												<ctl:with-param name="locators" select="$dimensionsWithNoDefault"/>
+												<ctl:with-param name="oneOrAll">all</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -18110,6 +18149,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																			<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 																			<ctl:with-param name="exceptionCodes" select="$exceptionCodes"/>
 																			<ctl:with-param name="locators" select="$dimensionNames"/>
+																			<ctl:with-param name="oneOrAll">all</ctl:with-param>
 																			<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																		</ctl:call-function>
 																	</xsl:variable>
@@ -18307,6 +18347,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 														<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 														<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 														<ctl:with-param name="locators">BogusForTest</ctl:with-param>
+														<ctl:with-param name="oneOrAll">one</ctl:with-param>
 														<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 													</ctl:call-function>
 												</xsl:otherwise>
@@ -18445,6 +18486,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 														<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 														<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 														<ctl:with-param name="locators">BogusForTest</ctl:with-param>
+														<ctl:with-param name="oneOrAll">one</ctl:with-param>
 														<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 													</ctl:call-function>
 												</xsl:otherwise>
@@ -18582,6 +18624,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 														<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 														<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 														<ctl:with-param name="locators">BogusForTest</ctl:with-param>
+														<ctl:with-param name="oneOrAll">one</ctl:with-param>
 														<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 													</ctl:call-function>
 												</xsl:otherwise>
@@ -18751,6 +18794,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators" select="$dimensionId"/>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -18888,6 +18932,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators" select="$dimensionId"/>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -19024,6 +19069,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators" select="$dimensionId"/>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -19187,6 +19233,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																					<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 																					<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 																					<ctl:with-param name="locators" select="$dimensionId"/>
+																					<ctl:with-param name="oneOrAll">one</ctl:with-param>
 																					<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																				</ctl:call-function>
 																			</xsl:variable>
@@ -21306,6 +21353,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 											<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 											<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 											<ctl:with-param name="locators">format</ctl:with-param>
+											<ctl:with-param name="oneOrAll">one</ctl:with-param>
 											<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 										</ctl:call-function>
 									</xsl:otherwise>
@@ -21436,6 +21484,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 											<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 											<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 											<ctl:with-param name="locators">format</ctl:with-param>
+											<ctl:with-param name="oneOrAll">one</ctl:with-param>
 											<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 										</ctl:call-function>
 									</xsl:otherwise>
@@ -21564,6 +21613,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 											<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 											<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 											<ctl:with-param name="locators">format</ctl:with-param>
+											<ctl:with-param name="oneOrAll">one</ctl:with-param>
 											<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 										</ctl:call-function>
 									</xsl:otherwise>
@@ -24405,6 +24455,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 														<ctl:with-param name="locators">
 															<xsl:value-of select="$missingParameter"/>
 														</ctl:with-param>
+														<ctl:with-param name="oneOrAll">one</ctl:with-param>
 														<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 													</ctl:call-function>
 												</xsl:otherwise>
@@ -24700,6 +24751,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 														<ctl:with-param name="locators">
 															<xsl:value-of select="$missingParameter"/>
 														</ctl:with-param>
+														<ctl:with-param name="oneOrAll">one</ctl:with-param>
 														<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 													</ctl:call-function>
 												</xsl:otherwise>
@@ -24995,6 +25047,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 														<ctl:with-param name="locators">
 															<xsl:value-of select="$missingParameter"/>
 														</ctl:with-param>
+														<ctl:with-param name="oneOrAll">one</ctl:with-param>
 														<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 													</ctl:call-function>
 												</xsl:otherwise>
@@ -25324,6 +25377,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																					<ctl:with-param name="locators">
 																						<xsl:value-of select="$missingParameter"/>
 																					</ctl:with-param>
+																					<ctl:with-param name="oneOrAll">one</ctl:with-param>
 																					<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																				</ctl:call-function>
 																			</xsl:variable>
@@ -25522,6 +25576,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">layer</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -25668,6 +25723,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">layer</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -25813,6 +25869,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">layer</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -25974,6 +26031,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																				<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 																				<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 																				<ctl:with-param name="locators">layer</ctl:with-param>
+																				<ctl:with-param name="oneOrAll">one</ctl:with-param>
 																				<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																			</ctl:call-function>
 																		</xsl:variable>
@@ -26179,6 +26237,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">TileMatrixSet</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -26330,6 +26389,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">TileMatrixSet</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -26479,6 +26539,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">TileMatrixSet</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -26640,6 +26701,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																				<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 																				<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 																				<ctl:with-param name="locators">TileMatrixSet</ctl:with-param>
+																				<ctl:with-param name="oneOrAll">one</ctl:with-param>
 																				<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																			</ctl:call-function>
 																		</xsl:variable>
@@ -26845,6 +26907,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">TileMatrix</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -26995,6 +27058,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">TileMatrix</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -27143,6 +27207,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">TileMatrix</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -27304,6 +27369,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																				<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 																				<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 																				<ctl:with-param name="locators">TileMatrix</ctl:with-param>
+																				<ctl:with-param name="oneOrAll">one</ctl:with-param>
 																				<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																			</ctl:call-function>
 																		</xsl:variable>
@@ -27506,6 +27572,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">TileRow</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -27654,6 +27721,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">TileRow</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -27800,6 +27868,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">TileRow</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -27960,6 +28029,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																				<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 																				<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 																				<ctl:with-param name="locators">TileRow</ctl:with-param>
+																				<ctl:with-param name="oneOrAll">one</ctl:with-param>
 																				<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																			</ctl:call-function>
 																		</xsl:variable>
@@ -28162,6 +28232,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">TileCol</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -28309,6 +28380,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">TileCol</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -28454,6 +28526,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">TileCol</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -28614,6 +28687,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																				<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 																				<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 																				<ctl:with-param name="locators">TileRow</ctl:with-param>
+																				<ctl:with-param name="oneOrAll">one</ctl:with-param>
 																				<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																			</ctl:call-function>
 																		</xsl:variable>
@@ -28816,6 +28890,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">TileRow</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -28963,6 +29038,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">TileRow</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -29108,6 +29184,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">TileRow</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -29266,6 +29343,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																				<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 																				<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 																				<ctl:with-param name="locators">TileRow</ctl:with-param>
+																				<ctl:with-param name="oneOrAll">one</ctl:with-param>
 																				<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																			</ctl:call-function>
 																		</xsl:variable>
@@ -29468,6 +29546,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">TileCol</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -29615,6 +29694,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">TileCol</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -29760,6 +29840,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">TileCol</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -29918,6 +29999,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																				<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 																				<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 																				<ctl:with-param name="locators">TileRow</ctl:with-param>
+																				<ctl:with-param name="oneOrAll">one</ctl:with-param>
 																				<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																			</ctl:call-function>
 																		</xsl:variable>
@@ -30122,6 +30204,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">Style</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -30271,6 +30354,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">Style</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -30418,6 +30502,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">Style</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -30588,6 +30673,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																				<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 																				<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 																				<ctl:with-param name="locators">Style</ctl:with-param>
+																				<ctl:with-param name="oneOrAll">one</ctl:with-param>
 																				<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																			</ctl:call-function>
 																		</xsl:variable>
@@ -30779,6 +30865,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes" select="$exceptionCodes"/>
 													<ctl:with-param name="locators" select="$dimensionsWithNoDefault"/>
+													<ctl:with-param name="oneOrAll">all</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -30910,6 +30997,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes" select="$exceptionCodes"/>
 													<ctl:with-param name="locators" select="$dimensionsWithNoDefault"/>
+													<ctl:with-param name="oneOrAll">all</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -31194,6 +31282,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																				<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 																				<ctl:with-param name="exceptionCodes" select="$exceptionCodes"/>
 																				<ctl:with-param name="locators" select="$dimensionNames"/>
+																				<ctl:with-param name="oneOrAll">all</ctl:with-param>
 																				<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																			</ctl:call-function>
 																		</xsl:variable>
@@ -31415,6 +31504,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 															<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 															<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 															<ctl:with-param name="locators">SampleDimension</ctl:with-param>
+															<ctl:with-param name="oneOrAll">one</ctl:with-param>
 															<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 														</ctl:call-function>
 													</xsl:otherwise>
@@ -31569,6 +31659,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 															<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 															<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 															<ctl:with-param name="locators">SampleDimension</ctl:with-param>
+															<ctl:with-param name="oneOrAll">one</ctl:with-param>
 															<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 														</ctl:call-function>
 													</xsl:otherwise>
@@ -31722,6 +31813,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 															<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 															<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 															<ctl:with-param name="locators">SampleDimension</ctl:with-param>
+															<ctl:with-param name="oneOrAll">one</ctl:with-param>
 															<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 														</ctl:call-function>
 													</xsl:otherwise>
@@ -31915,6 +32007,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 														<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 														<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 														<ctl:with-param name="locators" select="$dimensionId"/>
+														<ctl:with-param name="oneOrAll">one</ctl:with-param>
 														<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 													</ctl:call-function>
 												</xsl:otherwise>
@@ -32068,6 +32161,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 														<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 														<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 														<ctl:with-param name="locators" select="$dimensionId"/>
+														<ctl:with-param name="oneOrAll">one</ctl:with-param>
 														<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 													</ctl:call-function>
 												</xsl:otherwise>
@@ -32220,6 +32314,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 														<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 														<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 														<ctl:with-param name="locators" select="$dimensionId"/>
+														<ctl:with-param name="oneOrAll">one</ctl:with-param>
 														<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 													</ctl:call-function>
 												</xsl:otherwise>
@@ -32407,6 +32502,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																						<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 																						<ctl:with-param name="exceptionCodes" select="$exceptionCodes"/>
 																						<ctl:with-param name="locators" select="$dimensionNames"/>
+																						<ctl:with-param name="oneOrAll">all</ctl:with-param>
 																						<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																					</ctl:call-function>
 																				</xsl:variable>
@@ -33963,6 +34059,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">OperationNotSupported</ctl:with-param>
 												<ctl:with-param name="locators">GetFeatureInfo</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">501</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -34107,6 +34204,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">OperationNotSupported</ctl:with-param>
 												<ctl:with-param name="locators">GetFeatureInfo</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">501</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -34250,6 +34348,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 												<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 												<ctl:with-param name="exceptionCodes">OperationNotSupported</ctl:with-param>
 												<ctl:with-param name="locators">GetFeatureInfo</ctl:with-param>
+												<ctl:with-param name="oneOrAll">one</ctl:with-param>
 												<ctl:with-param name="httpStatusCode">501</ctl:with-param>
 											</ctl:call-function>
 										</xsl:otherwise>
@@ -35057,6 +35156,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvaildParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">InfoFormat</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -35206,6 +35306,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvaildParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">InfoFormat</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -35353,6 +35454,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvaildParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">InfoFormat</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -35525,6 +35627,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">J</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -35672,6 +35775,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">J</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -35817,6 +35921,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">J</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -35973,6 +36078,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																				<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 																				<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 																				<ctl:with-param name="locators">TileRow</ctl:with-param>
+																				<ctl:with-param name="oneOrAll">one</ctl:with-param>
 																				<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																			</ctl:call-function>
 																		</xsl:variable>
@@ -36175,6 +36281,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">I</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -36322,6 +36429,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">I</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -36467,6 +36575,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 													<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 													<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 													<ctl:with-param name="locators">I</ctl:with-param>
+													<ctl:with-param name="oneOrAll">one</ctl:with-param>
 													<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 												</ctl:call-function>
 											</xsl:otherwise>
@@ -36623,6 +36732,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 																				<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 																				<ctl:with-param name="exceptionCodes">InvalidParameterValue</ctl:with-param>
 																				<ctl:with-param name="locators">TileRow</ctl:with-param>
+																				<ctl:with-param name="oneOrAll">one</ctl:with-param>
 																				<ctl:with-param name="httpStatusCode">404</ctl:with-param>
 																			</ctl:call-function>
 																		</xsl:variable>
