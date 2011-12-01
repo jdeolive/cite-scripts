@@ -309,6 +309,7 @@
 		<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 		<ctl:param name="exceptionCodes">Exception code, or codes separated by commas, e.g.  MissingParameterValue,InvalidParameterValue</ctl:param>
 		<ctl:param name="locators">Locator code or codes, separated by commas, e.g. service,request</ctl:param>
+		<ctl:param name="oneOrAll">"one" if only one specified exception and locator code pair must be found to pass, or "all" if all are</ctl:param>
         <ctl:return>true/false depending on whether or not the provoked exception contains the specified exception code(s) and locator(s)</ctl:return>
 		<ctl:description>Provokes an ows:ExceptionReport by issuing an invalid KVP Get or Post query to a WMTS server.  The exceptionCodes and locators parameters must contain the same number of codes.</ctl:description>
 		<ctl:code>
@@ -357,6 +358,7 @@
 									<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 									<ctl:with-param name="exceptionCodes" select="$exceptionCodes"/>
 									<ctl:with-param name="locators" select="$locators"/>
+									<ctl:with-param name="oneOrAll" select="$oneOrAll"/>
 									<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 								</ctl:call-function>
 							</xsl:otherwise>
@@ -378,6 +380,7 @@
 		<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 		<ctl:param name="exceptionCodes">Exception code, or codes separated by commas, e.g.  MissingParameterValue,InvalidParameterValue</ctl:param>
 		<ctl:param name="locators">Locator code or codes, separated by commas, e.g. service,request</ctl:param>
+		<ctl:param name="oneOrAll">"one" if only one specified exception and locator code pair must be found to pass, or "all" if all are</ctl:param>
         <ctl:return>true/false depending on whether or not the provoked exception contains the specified exception code(s) and locator(s)</ctl:return>
 		<ctl:description>Provokes an ows:ExceptionReport by issuing an invalid XML Post request to a WMTS server.  The exceptionCodes and locators parameters must contain the same number of codes.</ctl:description>
 		<ctl:code>
@@ -417,6 +420,7 @@
 									<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 									<ctl:with-param name="exceptionCodes" select="$exceptionCodes"/>
 									<ctl:with-param name="locators" select="$locators"/>
+									<ctl:with-param name="oneOrAll" select="$oneOrAll"/>
 									<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 								</ctl:call-function>
 							</xsl:otherwise>
@@ -438,6 +442,7 @@
 		<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 		<ctl:param name="exceptionCodes">Exception code, or codes separated by commas, e.g.  MissingParameterValue,InvalidParameterValue</ctl:param>
 		<ctl:param name="locators">Locator code or codes, separated by commas, e.g. service,request</ctl:param>
+		<ctl:param name="oneOrAll">"one" if only one specified exception and locator code pair must be found to pass, or "all" if all are</ctl:param>
         <ctl:return>true/false depending on whether or not the provoked exception contains the specified exception code(s) and locator(s)</ctl:return>
 		<ctl:description>Provokes an ows:ExceptionReport by issuing an invalid SOAP Post request to a WMTS server.  The exceptionCodes and locators parameters must contain the same number of codes.</ctl:description>
 		<ctl:code>
@@ -475,6 +480,7 @@
 									<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 									<ctl:with-param name="exceptionCodes" select="$exceptionCodes"/>
 									<ctl:with-param name="locators" select="$locators"/>
+									<ctl:with-param name="oneOrAll" select="$oneOrAll"/>
 									<ctl:with-param name="httpStatusCode">400</ctl:with-param>
 								</ctl:call-function>
 							</xsl:otherwise>
@@ -495,6 +501,7 @@
 		<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 		<ctl:param name="exceptionCodes">Exception code, or codes separated by commas, e.g.  MissingParameterValue,InvalidParameterValue</ctl:param>
 		<ctl:param name="locators">Locator code or codes, separated by commas, e.g. service,request</ctl:param>
+		<ctl:param name="oneOrAll">"one" if only one specified exception and locator code pair must be found to pass, or "all" if all are</ctl:param>
 		<ctl:param name="httpStatusCode">HTTP status code required by test to be returned by server</ctl:param>
         <ctl:description>Validates an ExceptionReport and checks for supplied exceptionCode(s) and locator value(s)</ctl:description>
 		<ctl:code>
@@ -583,8 +590,11 @@
 							</xsl:for-each>
 						</xsl:for-each>
 					</xsl:variable>
+					<xsl:variable name="needAll" select="lower-case($oneOrAll) = 'all' "/>
+					<xsl:variable name="notAll" select="($needAll and (not(contains($exceptionReportResults, 'true')) or contains($exceptionReportResults, 'false')))"/>
+					<xsl:variable name="notOne" select="(not($needAll) and not(contains($exceptionReportResults, 'true')))"/>
 					<xsl:choose>
-						<xsl:when test="not(contains($exceptionReportResults, 'true')) or contains($exceptionReportResults, 'false')">
+						<xsl:when test="$notOne or $notAll">
 							<ctl:message>Exception report does not contain required valid exception code(s) and locator(s)</ctl:message>
 							<xsl:text>false</xsl:text>
 							<xsl:variable name="returnedStatusCode" select="$httpParserExceptionReport/response/status/@code"/>
@@ -622,6 +632,7 @@
 		<ctl:param name="exceptionReportSchemaPath">full path to owsExceptionReport.xsd</ctl:param>
 		<ctl:param name="exceptionCodes">Exception code, or codes separated by commas, e.g.  MissingParameterValue,InvalidParameterValue</ctl:param>
 		<ctl:param name="locators">Locator code or codes, separated by commas, e.g. service,request</ctl:param>
+		<ctl:param name="oneOrAll">"one" if only one specified exception and locator code pair must be found to pass, or "all" if all are</ctl:param>
 		<ctl:param name="httpStatusCode">HTTP status code required by test to be returned by server</ctl:param>
         <ctl:description>reformats httpParserExceptionReport to non-soap verson to validate an ExceptionReport and checks for supplied exceptionCode(s) and locator value(s)</ctl:description>
 		<ctl:code>
@@ -639,6 +650,7 @@
 				<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 				<ctl:with-param name="exceptionCodes" select="$exceptionCodes"/>
 				<ctl:with-param name="locators" select="$locators"/>
+				<ctl:with-param name="oneOrAll" select="$oneOrAll"/>
 				<ctl:with-param name="httpStatusCode" select="$httpStatusCode"/>
 			</ctl:call-function>
 		</ctl:code>
@@ -870,6 +882,7 @@
 							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 							<ctl:with-param name="exceptionCodes">VersionNegotiationFailed</ctl:with-param>
 							<ctl:with-param name="locators">^</ctl:with-param>
+							<ctl:with-param name="oneOrAll">one</ctl:with-param>
 						</ctl:call-function>
 					</xsl:variable>
 					<ctl:call-function name="owsFunctions:checkGetCapabilities.Request.AcceptVersions.Invalid">
@@ -914,6 +927,7 @@
 							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 							<ctl:with-param name="exceptionCodes">VersionNegotiationFailed</ctl:with-param>
 							<ctl:with-param name="locators">^</ctl:with-param>
+							<ctl:with-param name="oneOrAll">one</ctl:with-param>
 						</ctl:call-function>
 					</xsl:variable>
 					<ctl:call-function name="owsFunctions:checkGetCapabilities.Request.AcceptVersions.Invalid">
@@ -958,6 +972,7 @@
 							<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 							<ctl:with-param name="exceptionCodes">VersionNegotiationFailed</ctl:with-param>
 							<ctl:with-param name="locators">^</ctl:with-param>
+							<ctl:with-param name="oneOrAll">one</ctl:with-param>
 						</ctl:call-function>
 					</xsl:variable>
 					<ctl:call-function name="owsFunctions:checkGetCapabilities.Request.AcceptVersions.Invalid">
@@ -1673,6 +1688,7 @@
 					<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 					<ctl:with-param name="exceptionCodes">InvalidUpdateSequence</ctl:with-param>
 					<ctl:with-param name="locators">^</ctl:with-param>
+					<ctl:with-param name="oneOrAll">one</ctl:with-param>
 				</ctl:call-function>
 			</xsl:variable>
 			<xsl:choose>
@@ -1902,6 +1918,7 @@
 					<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 					<ctl:with-param name="exceptionCodes">InvalidUpdateSequence</ctl:with-param>
 					<ctl:with-param name="locators">^</ctl:with-param>
+					<ctl:with-param name="oneOrAll">one</ctl:with-param>
 				</ctl:call-function>
 			</xsl:variable>
 			<xsl:choose>
@@ -2138,6 +2155,7 @@
 					<ctl:with-param name="exceptionReportSchemaPath" select="$exceptionReportSchemaPath"/>
 					<ctl:with-param name="exceptionCodes">InvalidUpdateSequence</ctl:with-param>
 					<ctl:with-param name="locators">^</ctl:with-param>
+					<ctl:with-param name="oneOrAll">one</ctl:with-param>
 				</ctl:call-function>
 			</xsl:variable>
 			<xsl:choose>
