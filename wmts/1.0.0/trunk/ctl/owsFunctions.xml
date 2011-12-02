@@ -2272,12 +2272,19 @@
 					<ctl:message select="concat('FAILURE: Unexpected content type for response entity (Invalid Request format: ', $format, ') Response format: ', $contentType, ' Required response format: application/xml')"/>
 					<xsl:text>false</xsl:text>
 				</xsl:when>
-				<xsl:when test="not(starts-with($contentType, $format))">
+				<xsl:when test="$format != 'bogus/xml' and not(starts-with($contentType, $format))">
 					<ctl:message>FAILURE: Unexpected content type for response entity (Request format: <xsl:value-of select="$format"/>, Response format: <xsl:value-of select="$contentType"/>).</ctl:message>
 					<xsl:text>false</xsl:text>
 				</xsl:when>
 				<xsl:otherwise>
-					<ctl:message>Request: format <xsl:value-of select="$format"/> matches Response format: <xsl:value-of select="$contentType"/>).</ctl:message>
+					<xsl:choose>
+						<xsl:when test="$format = 'bogus/xml' ">
+							<ctl:message select="concat('Invalid Request format: ', $format, ' Response format: ', $contentType, ' Required response format: application/xml')"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<ctl:message>Request: format <xsl:value-of select="$format"/> matches Response format: <xsl:value-of select="$contentType"/>).</ctl:message>
+						</xsl:otherwise>
+					</xsl:choose>
 					<ctl:message select="concat('Validating capabilities document against its XML Schema ', $schemaPath)"/>
 					<ctl:call-function name="ctl:startStopwatch">
 						<ctl:with-param name="watchName">schema.validation</ctl:with-param>
@@ -2786,7 +2793,7 @@
 					<ctl:pass/>
 				</xsl:when>
 				<xsl:otherwise>
-					<ctl:message select="concat('Test failed: Capabilities document does not contain an AcceptFormats allowed value of ', $requiredFormat)"/>
+					<ctl:message select="concat('Test failed: Capabilities document AcceptFormats ', $acceptFormats, ' do not include allowed value of ', $requiredFormat)"/>
 					<ctl:fail/>
 				</xsl:otherwise>
 			</xsl:choose>
