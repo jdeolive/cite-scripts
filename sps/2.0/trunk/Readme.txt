@@ -1,5 +1,5 @@
 ******************************************
-SPS 2.0 Executable Test Suite (ETS) Notes:
+SPS 2.0 Executable Test Suite (ETS) Notes: 
 ******************************************
 
 The items below are important notes to consider regarding this SPS test suite.  More details on specific tests can be found in the SPS Abstract Test Suite (ATS).
