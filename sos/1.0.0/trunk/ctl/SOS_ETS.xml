@@ -269,7 +269,7 @@
 			<ctl:message select="concat('run sos-core: ',$run-sos-core)"/>
         
 			<!-- set other "global" variables -->			
-			<xsl:variable name="ogc.schema.root" select="'http://schemas.opengis.net/'"/>
+			<xsl:variable name="ogc.schema.root" select="'xsd/ogc/'"/>
 			<xsl:variable name="sos.schema.root" select="$ogc.schema.root"/>
 			
 			<xsl:variable name="sos.version" select="'1.0.0'"/>		
@@ -359,10 +359,10 @@
 				<ctl:with-param name="serviceVersion" select="$sosVersion" />
 				<ctl:with-param name="capabilitiesRootElementName" select="string('Capabilities')" />
 				<ctl:with-param name="capabilitiesResponseSchemaLocation" select="sosFunctions:schemaPath($sosSchemaRoot, $sosVersion,'sos', 'sosGetCapabilities.xsd')"/>
-				<ctl:with-param name="capabilitiesResponseSchemaType" select="string('url')" />
+				<ctl:with-param name="capabilitiesResponseSchemaType" select="string('resource')" />
 				<ctl:with-param name="capabilitiesResponseContentType" select="string('text/xml')" />
 				<ctl:with-param name="exceptionReportSchemaLocation" select="$exceptionReportSchema"/>
-				<ctl:with-param name="exceptionReportSchemaType" select="string('url')" />
+				<ctl:with-param name="exceptionReportSchemaType" select="string('resource')" />
 			</ctl:call-test>
 		</ctl:code>
 		</ctl:test>

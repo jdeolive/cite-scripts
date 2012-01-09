@@ -634,15 +634,15 @@
 			<xsl:choose>
 				<xsl:when test="starts-with($schemaFile,'http')">
 					<parsers:XMLValidatingParser ignoreErrors="false">
-						<parsers:schema type="url">http://www.w3.org/2001/xml.xsd</parsers:schema>
-						<xsl:if test="$schemaFile='http://schemas.opengis.net/om/1.0.0/om.xsd'">
-							<parsers:schema type="url">http://schemas.opengis.net/sampling/1.0.0/sampling.xsd</parsers:schema>
+						<parsers:schema type="resource">xsd/w3c/xml.xsd</parsers:schema>
+						<xsl:if test="$schemaFile='xsd/ogc/om/1.0.0/om.xsd'">
+							<parsers:schema type="resource">xsd/ogc/sampling/1.0.0/sampling.xsd</parsers:schema>
 						</xsl:if>
 						<parsers:schemas>
 							<parsers:schema type="url">
 								<xsl:value-of select="$schemaFile"/>								
 							</parsers:schema>							
-							<parsers:schema type="url">http://schemas.opengis.net/ows/1.1.0/owsExceptionReport.xsd</parsers:schema>	
+							<parsers:schema type="resource">xsd/ogc/ows/1.1.0/owsExceptionReport.xsd</parsers:schema>	
 							<!-- added 2010-12-18 so exception report gets returned; requires subsequent test to be changed to
 							<xsl:when test="not($response/*) or $response//*[local-name() = 'ExceptionReport']"> PwD -->				
 						</parsers:schemas>
@@ -651,7 +651,7 @@
 				<xsl:otherwise>
 					<parsers:XMLValidatingParser ignoreErrors="false">
 						<parsers:schemas>
-							<parsers:schema type="url">http://www.w3.org/2001/xml.xsd</parsers:schema>						
+							<parsers:schema type="resource">xsd/w3c/xml.xsd</parsers:schema>						
 							<parsers:schema type="file">
 								<xsl:value-of select="$schemaFile"/>
 							</parsers:schema>						
@@ -684,26 +684,26 @@
 			<xsl:choose>
 				<xsl:when test="starts-with($schemaFile,'http')">
 					<parsers:XMLValidatingParser ignoreErrors="false">
-					<parsers:schema type="url">http://www.w3.org/2001/xml.xsd</parsers:schema>
-					<xsl:if test="$schemaFile='http://schemas.opengis.net/om/1.0.0/om.xsd'">
-							<parsers:schema type="url">http://schemas.opengis.net/sampling/1.0.0/sampling.xsd</parsers:schema>						
+					<parsers:schema type="resource">xsd/w3c/xml.xsd</parsers:schema>
+					<xsl:if test="$schemaFile='xsd/ogc/om/1.0.0/om.xsd'">
+							<parsers:schema type="resource">xsd/ogc/sampling/1.0.0/sampling.xsd</parsers:schema>						
 					</xsl:if>
 						<parsers:schemas>
 							<parsers:schema type="url">
 								<xsl:value-of select="$schemaFile"/>								
 							</parsers:schema>
-							<parsers:schema type="url">http://schemas.opengis.net/ows/1.1.0/owsExceptionReport.xsd</parsers:schema>					
+							<parsers:schema type="resource">xsd/ogc/ows/1.1.0/owsExceptionReport.xsd</parsers:schema>					
 						</parsers:schemas>
 					</parsers:XMLValidatingParser>	
 				</xsl:when>
 				<xsl:otherwise>
 					<parsers:XMLValidatingParser ignoreErrors="false">
 						<parsers:schemas>
-							<parsers:schema type="url">http://www.w3.org/2001/xml.xsd</parsers:schema>						
+							<parsers:schema type="resource">xsd/w3c/xml.xsd</parsers:schema>						
 							<parsers:schema type="file">
 								<xsl:value-of select="$schemaFile"/>
 							</parsers:schema>						
-							<parsers:schema type="url">http://schemas.opengis.net/ows/1.1.0/owsExceptionReport.xsd</parsers:schema>
+							<parsers:schema type="resource">xsd/ogc/ows/1.1.0/owsExceptionReport.xsd</parsers:schema>
 						</parsers:schemas>
 					</parsers:XMLValidatingParser>
 				</xsl:otherwise>
@@ -772,7 +772,7 @@
 														  sosFunctions:mimeTypeSubtypeEncoding($mimeType),
 														  concat(sosFunctions:mimeTypeSubtypeEncoding($mimeType), '.xsd'))"/> 
 			<xsl:choose>
-				<xsl:when test="$schemaPath='http://schemas.opengis.net/om/1.0.0/om.xsd'">
+				<xsl:when test="$schemaPath='xsd/ogc/om/1.0.0/om.xsd'">
 					<xsl:text>http://www.ioos.gov/gml/IOOS/0.6.1/schemas/ioosObservationSpecializations.xsd</xsl:text>
 				</xsl:when>
 				<xsl:otherwise>
