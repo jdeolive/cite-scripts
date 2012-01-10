@@ -112,14 +112,14 @@
                     <ctl:with-param name="schemaName" select="string('spsGetCapabilities.xsd')" />
                 </ctl:call-function>
             </ctl:with-param>
-            <ctl:with-param name="capabilitiesResponseSchemaType" select="string('url')" />
+            <ctl:with-param name="capabilitiesResponseSchemaType" select="string('resource')" />
             <ctl:with-param name="capabilitiesResponseContentType" select="string('text/xml')" />
             <ctl:with-param name="exceptionReportSchemaLocation">
                 <ctl:call-function name="spsFunctions:getSchemaLocation">
                     <ctl:with-param name="schemaName" select="string('owsExceptionReport.xsd')" />
                 </ctl:call-function>
             </ctl:with-param>
-            <ctl:with-param name="exceptionReportSchemaType" select="string('url')" />
+            <ctl:with-param name="exceptionReportSchemaType" select="string('resource')" />
         </ctl:call-test>
       </ctl:code>
     </ctl:test>

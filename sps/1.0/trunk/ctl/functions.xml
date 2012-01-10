@@ -21,7 +21,7 @@
         <ctl:return>The full schema path</ctl:return>
         <ctl:description>Based on the provided schema name, this function returns the full URL to the schema document</ctl:description>
         <ctl:code>
-            <xsl:variable name="schemaLocation" select="string('http://schemas.opengis.net/')" />
+            <xsl:variable name="schemaLocation" select="string('xsd/ogc/')" />
             <xsl:variable name="spsSchemaLocation" select="concat($schemaLocation,'sps/1.0.0/')" />
             <xsl:variable name="owsSchemaLocation" select="concat($schemaLocation,'ows/1.0.0/')" />
             <xsl:variable name="sensorMLSchemaLocation" select="concat($schemaLocation,'sensorML/1.0.0/')" />
@@ -53,7 +53,7 @@
         <ctl:return>The full schema path</ctl:return>
         <ctl:description>Based on the provided schema name, this function returns the full URL to the schema document</ctl:description>
         <ctl:code>
-            <xsl:variable name="schemaLocation" select="string('http://schemas.opengis.net/')" />
+            <xsl:variable name="schemaLocation" select="string('xsd/ogc/')" />
             <xsl:variable name="sensorMLSchemaLocation" select="concat($schemaLocation,'sensorML/',$version,'/')" />
             <xsl:value-of select="concat($sensorMLSchemaLocation,$schemaName)" />
         </ctl:code>
@@ -149,7 +149,7 @@
         <ctl:code>
             <parsers:XMLValidatingParser>
                 <parsers:schemas>
-                    <parsers:schema type="url">
+                    <parsers:schema type="resource">
                         <xsl:value-of select="spsFunctions:getSchemaLocation(string('owsExceptionReport.xsd'))" />
                     </parsers:schema>
                 </parsers:schemas>
@@ -217,13 +217,13 @@
         <ctl:description>Validates a SensorML/TML document according to its schema</ctl:description>
         <ctl:code>
             <parsers:XMLValidatingParser>
-                <parsers:schema type="url">
+                <parsers:schema type="resource">
                     <xsl:value-of select="spsFunctions:getSensorMLSchemaLocation(string('sensorML.xsd'),string('1.0.0'))" />
                 </parsers:schema>
-                <parsers:schema type="url">
+                <parsers:schema type="resource">
                     <xsl:value-of select="spsFunctions:getSensorMLSchemaLocation(string('sensorML.xsd'),string('1.0.1'))" />
                 </parsers:schema>
-                <parsers:schema type="url">
+                <parsers:schema type="resource">
                     <xsl:value-of select="spsFunctions:getSchemaLocation(string('tml.xsd'))" />
                 </parsers:schema>
             </parsers:XMLValidatingParser>
@@ -236,7 +236,7 @@
         <ctl:description>Validates a SensorML document according to its schema</ctl:description>
         <ctl:code>
             <parsers:XMLValidatingParser>
-                <parsers:schema type="url">
+                <parsers:schema type="resource">
                     <xsl:value-of select="spsFunctions:getSchemaLocation(string('sensorML.xsd'))" />
                 </parsers:schema>
             </parsers:XMLValidatingParser>
@@ -249,7 +249,7 @@
         <ctl:description>Validates a TML document according to its schema</ctl:description>
         <ctl:code>
             <parsers:XMLValidatingParser>
-                <parsers:schema type="url">
+                <parsers:schema type="resource">
                     <xsl:value-of select="spsFunctions:getSchemaLocation(string('tml.xsd'))" />
                 </parsers:schema>
             </parsers:XMLValidatingParser>
@@ -263,10 +263,10 @@
         <ctl:code>
             <parsers:XMLValidatingParser>
                 <parsers:schemas>
-                    <parsers:schema type="url">
+                    <parsers:schema type="resource">
                         <xsl:value-of select="spsFunctions:getSchemaLocation(string('spsGetCapabilities.xsd'))" />
                     </parsers:schema>
-                    <parsers:schema type="url">
+                    <parsers:schema type="resource">
                         <xsl:value-of select="spsFunctions:getSchemaLocation(string('owsExceptionReport.xsd'))" />
                     </parsers:schema>
                 </parsers:schemas>
@@ -281,7 +281,7 @@
         <ctl:code>
             <parsers:XMLValidatingParser>
                 <parsers:schemas>
-                    <parsers:schema type="url">
+                    <parsers:schema type="resource">
                         <xsl:value-of select="spsFunctions:getSchemaLocation(string('spsGetCapabilities.xsd'))" />
                     </parsers:schema>
                 </parsers:schemas>
@@ -296,10 +296,10 @@
         <ctl:code>
             <parsers:XMLValidatingParser>
                 <parsers:schemas>
-                    <parsers:schema type="url">
+                    <parsers:schema type="resource">
                         <xsl:value-of select="spsFunctions:getSchemaLocation(string('spsDescribeTaskingRequestResponse.xsd'))" />
                     </parsers:schema>
-                    <parsers:schema type="url">
+                    <parsers:schema type="resource">
                         <xsl:value-of select="spsFunctions:getSchemaLocation(string('owsExceptionReport.xsd'))" />
                     </parsers:schema>
                 </parsers:schemas>
@@ -314,10 +314,10 @@
         <ctl:code>
             <parsers:XMLValidatingParser>
                 <parsers:schemas>
-                    <parsers:schema type="url">
+                    <parsers:schema type="resource">
                         <xsl:value-of select="spsFunctions:getSchemaLocation(string('spsSubmitRequestResponse.xsd'))" />
                     </parsers:schema>
-                    <parsers:schema type="url">
+                    <parsers:schema type="resource">
                         <xsl:value-of select="spsFunctions:getSchemaLocation(string('owsExceptionReport.xsd'))" />
                     </parsers:schema>
                 </parsers:schemas>
@@ -332,10 +332,10 @@
         <ctl:code>
             <parsers:XMLValidatingParser>
                 <parsers:schemas>
-                    <parsers:schema type="url">
+                    <parsers:schema type="resource">
                         <xsl:value-of select="spsFunctions:getSchemaLocation(string('spsDescribeResultAccessRequestResponse.xsd'))" />
                     </parsers:schema>
-                    <parsers:schema type="url">
+                    <parsers:schema type="resource">
                         <xsl:value-of select="spsFunctions:getSchemaLocation(string('owsExceptionReport.xsd'))" />
                     </parsers:schema>
                 </parsers:schemas>
