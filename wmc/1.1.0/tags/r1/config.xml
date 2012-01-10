@@ -3,7 +3,7 @@
 		<name>OGC</name>
 	</organization>
 	<standard>
-		<name>Context</name>
+		<name>WMC</name>
 	</standard>
 	<version>
 		<name>1.1.0</name>
@@ -15,6 +15,7 @@
 		<namespace-uri>http://cite.opengeospatial.org/context/1.1.0/ets/ctl</namespace-uri>
 		<prefix>wmc</prefix>
 		<local-name>compliance_suite</local-name>
+		<title>Web Map Context Documents</title>
 	</suite>
 	<source>ctl</source>
 	<web>web</web>
