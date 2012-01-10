@@ -17,6 +17,7 @@
 		<local-name>suite</local-name>
 	</suite>
 	<source>ctl</source>
+	<resources>resources</resources>
 	<web>web</web>
 </config>
 
