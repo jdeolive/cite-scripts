@@ -1,0 +1,4 @@
+WMTS 1.0.0  Test Suite Release Notes
+
+=== Changes included in R0 ===
+- first revision
