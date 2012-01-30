@@ -8,6 +8,9 @@
 	<version>
 		<name>1.1.0</name>
 	</version>
+<revision>
+		<name>r8</name>
+	</revision>
 	<suite>
 		<namespace-uri>http://www.occamlab.com/ctl</namespace-uri>
 		<prefix>ctl</prefix>
