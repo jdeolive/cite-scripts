@@ -762,11 +762,11 @@
         <ctl:param name="schemaRoot">The location of the schemas</ctl:param>
 		<ctl:param name="mimeType">The mimeType</ctl:param>
 		<ctl:code>	
-			<!-- was
 			<xsl:value-of select="sosFunctions:schemaPath($schemaRoot, 
 														  sosFunctions:mimeTypeSubtypeVersion($mimeType),
 														  sosFunctions:mimeTypeSubtypeEncoding($mimeType),
-														  concat(sosFunctions:mimeTypeSubtypeEncoding($mimeType), '.xsd'))"/>  2010-12-29 PwD -->
+														  concat(sosFunctions:mimeTypeSubtypeEncoding($mimeType), '.xsd'))"/>
+			<!-- Don't know Why IOOS use it.
 			<xsl:variable name="schemaPath" select= "sosFunctions:schemaPath($schemaRoot, 
 														  sosFunctions:mimeTypeSubtypeVersion($mimeType),
 														  sosFunctions:mimeTypeSubtypeEncoding($mimeType),
@@ -779,6 +779,7 @@
 					<xsl:value-of select="$schemaPath"/>
 				</xsl:otherwise>
 			</xsl:choose>
+			-->
 		</ctl:code>
 	</ctl:function>	
 
