@@ -573,8 +573,8 @@
 		<ctl:param name="response"/>
 		<ctl:return>The $procedure identifier if found, or the alternatives that were found if not.</ctl:return>
 		<ctl:code>
-			<xsl:variable name="ids" select="$response//sml10:identification/sml10:IdentifierList/sml10:identifier/sml10:Term/sml10:value | 
-			                                 $response//sml101:identification/sml101:IdentifierList/sml101:identifier/sml101:Term/sml101:value"/>
+			<xsl:variable name="ids" select="$response/*/*/*/sml10:identification/sml10:IdentifierList/sml10:identifier/sml10:Term/sml10:value | 
+			                                 $response/*/*/*/sml101:identification/sml101:IdentifierList/sml101:identifier/sml101:Term/sml101:value"/>
 			<xsl:variable name="identifier">
 				<xsl:for-each select="$ids">
 					<xsl:variable name="id" select="string(.)"/>
