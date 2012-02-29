@@ -16,10 +16,7 @@
     		<ctl:param name="Capabilities"/>
     		<ctl:assertion>Req40:If a WCS implementation offers coverages of type GMLCOV::GridCoverage , GMLCOV::RectifiedGridCoverage, or GMLCOV::ReferenceableGridCoverage then it shall support the extension for indexed subsetting, which has URI identifier http://www.opengis.net/spec/WCS_service-model_index-subsetting/1.0.</ctl:assertion>
     		<ctl:code>
-			<xsl:if test="not(contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_service-model_index-subsetting/1.0'))">
-				<ctl:message>[FAILURE] If a WCS implementation offers coverages of type GMLCOV::GridCoverage , GMLCOV::RectifiedGridCoverage, or GMLCOV::ReferenceableGridCoverage then it shall support the extension for indexed subsetting, which has URI identifier http://www.opengis.net/spec/WCS_service-model_index-subsetting/1.0.</ctl:message>
-				<ctl:fail/>
-			</xsl:if>
+	        	<ctl:message>[MESSAGE] TBD. This will be addressed in the corrigenda</ctl:message> 
     		</ctl:code>
   	</ctl:test>
   	<ctl:test name="wcs2:req41">
