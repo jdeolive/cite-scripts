@@ -1736,63 +1736,7 @@
     		<ctl:assertion>Req11:For all WCS request types, test the request version parameter has a fixed value of '2.0.0' by GetKVP.</ctl:assertion>
     		<ctl:code>
 
-     			<xsl:variable name="Capabilities">
-				<ctl:request>
-          				<ctl:url>
-            					<xsl:value-of select="$url"/>
-          				</ctl:url>
-          				<ctl:method>get</ctl:method>
-          				<ctl:param name="SERVICE">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0</ctl:param>
-          				<ctl:param name="REQUEST">GetCapabilities</ctl:param>
-           				<ctlp:XMLValidatingParser>
-	        				<ctlp:schemas>
-                        				<ctlp:schema type="resource">wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
-	        				</ctlp:schemas>
-           				</ctlp:XMLValidatingParser>
-        			</ctl:request>
-      			</xsl:variable>
-      			<xsl:choose>
-  				<xsl:when test="string-length($Capabilities)=0">
-					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
-					<ctl:fail/>
-  				</xsl:when>
-  				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//ows:ExceptionReport)">
-        			   		<ctl:message>[FAILURE] The result should contain an ows:ExceptionReport.</ctl:message>
-        			   		<ctl:fail/>
-        				</xsl:if>
-  				</xsl:otherwise>
-      			</xsl:choose> 
 
-     			<xsl:variable name="Capabilities">
-				<ctl:request>
-          				<ctl:url>
-            					<xsl:value-of select="$url"/>
-          				</ctl:url>
-          				<ctl:method>get</ctl:method>
-          				<ctl:param name="SERVICE">WCS</ctl:param>
-          				<ctl:param name="VERSION">2</ctl:param>
-          				<ctl:param name="REQUEST">GetCapabilities</ctl:param>
-           				<ctlp:XMLValidatingParser>
-	        				<ctlp:schemas>
-                        				<ctlp:schema type="resource">wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
-	        				</ctlp:schemas>
-           				</ctlp:XMLValidatingParser>
-        			</ctl:request>
-      			</xsl:variable>
-      			<xsl:choose>
-  				<xsl:when test="string-length($Capabilities)=0">
-					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
-					<ctl:fail/>
-  				</xsl:when>
-  				<xsl:otherwise>
-        				<xsl:if test="empty($Capabilities//ows:ExceptionReport)">
-        			   		<ctl:message>[FAILURE] The result should contain an ows:ExceptionReport.</ctl:message>
-        			   		<ctl:fail/>
-        				</xsl:if>
-  				</xsl:otherwise>
-      			</xsl:choose> 
      			<xsl:variable name="Capabilities">
 				<ctl:request>
           				<ctl:url>
