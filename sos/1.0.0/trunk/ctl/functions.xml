@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ctl:package
- xmlns:sosFunctions="https://cite.opengeospatial.org/sos-1.0.0/src/ctl/functions.xml"
+ xmlns:sosFunctions="https://svn.opengeospatial.org/ogc-projects/cite/scripts/sos/1.0.0/trunk/ctl/functions.xml"
  xmlns:ctl="http://www.occamlab.com/ctl"
  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
  xmlns:wms="http://www.opengis.net/wms"
@@ -475,7 +475,7 @@
 								xmlns:ctl="http://www.occamlab.com/ctl" 
 								xmlns:sos="http://www.opengis.net/sos/1.0" 
 								xmlns:wms="http://www.opengis.net/wms" 
-								xmlns:sosFunctions="https://cite.opengeospatial.org/sos-1.0.0/src/ctl/functions.xml" 
+								xmlns:sosFunctions="https://svn.opengeospatial.org/ogc-projects/cite/scripts/sos/1.0.0/trunk/ctl/functions.xml" 
 								xmlns:saxon="http://saxon.sf.net/" xmlns:ogc="http://www.opengis.net/ogc" 
 								xmlns:xs="http://www.w3.org/2001/XMLSchema" 
 								xmlns:ows="http://www.opengis.net/ows/1.1" 
@@ -613,7 +613,7 @@
 		<ctl:code>			
 			<xsl:value-of select="concat($schemaRoot, $encoding, '/', $version, '/', $filename)"/>
 		</ctl:code>
-	</ctl:function>
+	</ctl:function> 
 
 	<ctl:function name="sosFunctions:exceptionReportSchemaPath">
         <ctl:param name="schemaRoot">The location of the schemas</ctl:param>
