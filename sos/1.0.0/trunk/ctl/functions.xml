@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ctl:package
- xmlns:sosFunctions="https://svn.opengeospatial.org/ogc-projects/cite/scripts/sos/1.0.0/trunk/ctl/functions.xml"
+ xmlns:sosFunctions="https://cite.opengeospatial.org/sos-1.0.0/src/ctl/functions.xml"
  xmlns:ctl="http://www.occamlab.com/ctl"
  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
  xmlns:wms="http://www.opengis.net/wms"
