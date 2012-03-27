@@ -3,6 +3,15 @@ WCS 2.0 Test Suite Release Notes
 Changes included in latest revision:
 
 
+=== Changes included in R5 ===
+2012-03-22 summary (jyu)
+- fix bug for core req11 kvp test
+- fix core req40, this req will be addressed according to the corrigenda
+- fix soap req9. Currently, only valid body elements are allowed, see OGC06-126r4 9.3.3.10. 
+- fix core req12 and req17. Currently, only valid body elements are allowed, see OGC06-126r4 9.3.3.10.
+- fix bug in req17 soap test 
+
+
 === Changes included in R4 ===
 2011-08-17 summary (jyu)
 - added the missing DescribeCoverage parameter in the call-template
