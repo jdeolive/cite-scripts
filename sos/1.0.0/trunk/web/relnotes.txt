@@ -2,6 +2,17 @@ SOS 1.0.0 Test Suite Release Notes
 
 Changes included in latest revision:
 
+revision r3 2012-04-05
+
+- modified type="resource"
+- added  sensorML schema
+- modified sosFunctions:schemaPathFromMimeType
+- modified kvp
+- updated information about OWS and SOS
+- fixed exceptionReportSchemaPath function error
+- modified namepsace sosFunctions (4572)
+
+
 Revision r2 2012-01-23 (rocky and lbermudez)
 - User can now choose to execute a single-test or complete-tests.
 - Use a  MissingParameterValue  as a valid exception code instead of InvalidRequest. InvalidRequest is not listed in SOS or in OWS Common v 1.1 or 2.0 as a valid exception code. "InvalidRequest" is listed in SWES 2.0, but SOS 1.0 uses SWE 1.0.1 (xmlns:swe="http://www.opengis.net/swe/1.0.1").
