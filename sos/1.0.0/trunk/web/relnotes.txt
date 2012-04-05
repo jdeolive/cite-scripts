@@ -2,7 +2,7 @@ SOS 1.0.0 Test Suite Release Notes
 
 Changes included in latest revision:
 
-revision r3 2012-04-05
+Revision r3 2012-04-05
 
 - modified type="resource"
 - added  sensorML schema
