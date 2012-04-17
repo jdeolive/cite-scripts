@@ -962,7 +962,7 @@
 		</ctl:test>
 		<ctl:test name="sps:core-SPS.GetCapabilities-ResponseSPSContect.1">
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:assertion>SPSContect 下必定有一個 minStatusTime ,必定一個以上的supportedEncoding 且 supportedEncoding 的內容有特定</ctl:assertion>
+			<ctl:assertion>There must be a minStatusTime in SPSContect tag, and there are one or more supportedEncoding which value is designated .</ctl:assertion>
 			<ctl:comment>Pass if 1.SPSContent has just one sub-element "minStatusTime" 2.SPSContent has one or more sub-element "supportedEncoding" 3.sub-element "supportedEncoding" have only three Specified choice.</ctl:comment>
 			<ctl:link title="SPSContect."></ctl:link>
 			<ctl:code>
@@ -999,7 +999,7 @@
 		</ctl:test>
 		<ctl:test name="sps:core-SPS.GetCapabilities-ResponseContentsSensorOfferings.1">
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:assertion>Each SensorOffering sub-element (procedure, procedureDescriptionFormat, observableProperty, and observableArea) has a value,procedureDescriptionFormat和observableProperty可以提到SPScontent下表示所有sensoroffering都一樣</ctl:assertion>
+			<ctl:assertion>Each SensorOffering sub-element (procedure, procedureDescriptionFormat, observableProperty, and observableArea) has a value. There are one byPoint or one byPolygon in observableArea.</ctl:assertion>
 			<ctl:comment>Pass if each sub-element of a SensorOffering element has a value; fail otherwise.</ctl:comment>
 			<ctl:link title="Verify that each SensorOffering has appropriate values for its sub-elements.">docs/SPS%202.0%20ATS.html#SPS.GetCapabilities-ResponseContentsSensorOfferings</ctl:link>
 			<ctl:code>
@@ -1215,7 +1215,8 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetCapabilities request with no Service parameter specified.  The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "Service".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetCapabilities request with no Service parameter specified.  </ctl:message>  
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "Service".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -1288,7 +1289,8 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetCapabilities request with null Service parameter specified.  The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "Service".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetCapabilities request with null Service parameter specified.</ctl:message>  
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "Service".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -1361,7 +1363,8 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetCapabilities request with invalid Service parameter specified.  The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "Service".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetCapabilities request with invalid Service parameter specified. </ctl:message> 
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "Service".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -1434,7 +1437,8 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetCapabilities request with no Version parameter specified.  The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "Version".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetCapabilities request with no Version parameter specified.  </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "Version".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -1507,7 +1511,8 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetCapabilities request with null Version parameter specified.  The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "Version".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetCapabilities request with null Version parameter specified.</ctl:message>  
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "Version".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -1518,7 +1523,7 @@
 		<ctl:test name="sps:core-SPS.GetCapabilities-PostRequestInvalidVersion.1">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request with invalid parameter "Version",and the response must be a valid exception with code "InvalidParameterValue" and locator "procedure". </ctl:assertion>
+			<ctl:assertion>Send a request with invalid parameter "Version",and the response must be a valid exception with code "InvalidParameterValue" and locator "Version". </ctl:assertion>
 			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "Version"; fail otherwise.</ctl:comment>
 			<ctl:link title=""></ctl:link>
 			<ctl:code>
@@ -1579,7 +1584,8 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetCapabilities request with invalid Version parameter specified.  The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "Version".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetCapabilities request with invalid Version parameter specified. </ctl:message> 
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "Version".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -1590,8 +1596,8 @@
 		<ctl:test name="sps:core-SPS.GetCapabilities-PostRequestNormal">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request with invalid parameter "Version",and the response must be a valid exception with code "InvalidParameterValue" and locator "procedure". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "Version"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a valid request ,and the response must be a valid Capabilities response. </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid Capabilities response; fail otherwise.</ctl:comment>
 			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<xsl:variable name="getCapabilitiesResponse">
@@ -1828,7 +1834,8 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with no Service parameter specified.  The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "Service".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with no Service parameter specified. </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "Service".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -1840,9 +1847,9 @@
 			<ctl:param name="DescribeSensor_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request with null parameter "procedure",and the response must be a valid exception with code "InvalidParameterValue" and locator "procedure". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "procedure"; fail otherwise.</ctl:comment>
-			<ctl:link title="Verify that the server handles no procedure parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestInvalidprocedure</ctl:link>
+			<ctl:assertion>Send a request with null parameter "Service",and the response must be a valid exception with code "InvalidParameterValue" and locator "Service". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "Service"; fail otherwise.</ctl:comment>
+			<ctl:link title="Verify that the server handles no Service parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestNullService</ctl:link>
 			<ctl:code>
 				<!-- 取得一個 procedure-->
 				<xsl:variable name="procedure" select="$getCapabilitiesResponse//sps:contents//swes:procedure" />
@@ -1893,7 +1900,7 @@
 							<xsl:if test="not($PostEncodingIsSOAP=string('true'))">
 								<ctl:message>The response was:  <xsl:value-of select="spsFunctions:getExceptionInfo($describeSensorResponse)" /></ctl:message>
 							</xsl:if>
-							<ctl:message>Checking the validity of the response to a DescribeSensor request with invalid Procedure parameter.</ctl:message>
+							<ctl:message>Checking the validity of the response to a DescribeSensor request with invalid Service parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<ctl:call-function name="spsFunctions:checkExceptionReport">
 									<ctl:with-param name="exceptionReport" select="$describeSensorResponse" />
@@ -1904,7 +1911,8 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with no procedure parameter specified.  The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "procedure".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with null Service parameter specified.  </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "Service".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -1916,9 +1924,9 @@
 			<ctl:param name="DescribeSensor_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request with invalid parameter "procedure",and the response must be a valid exception with code "InvalidParameterValue" and locator "procedure". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "procedure"; fail otherwise.</ctl:comment>
-			<ctl:link title="Verify that the server handles no procedure parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestInvalidprocedure</ctl:link>
+			<ctl:assertion>Send a request with invalid parameter "procedure",and the response must be a valid exception with code "InvalidParameterValue" and locator "Service". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "Service"; fail otherwise.</ctl:comment>
+			<ctl:link title="Verify that the server handles no procedure parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestInvalidService</ctl:link>
 			<ctl:code>
 				<!-- 取得一個 procedure-->
 				<xsl:variable name="procedure" select="$getCapabilitiesResponse//sps:contents//swes:procedure" />
@@ -1969,7 +1977,7 @@
 							<xsl:if test="not($PostEncodingIsSOAP=string('true'))">
 								<ctl:message>The response was:  <xsl:value-of select="spsFunctions:getExceptionInfo($describeSensorResponse)" /></ctl:message>
 							</xsl:if>
-							<ctl:message>Checking the validity of the response to a DescribeSensor request with invalid Procedure parameter.</ctl:message>
+							<ctl:message>Checking the validity of the response to a DescribeSensor request with invalid Service parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<ctl:call-function name="spsFunctions:checkExceptionReport">
 									<ctl:with-param name="exceptionReport" select="$describeSensorResponse" />
@@ -1980,7 +1988,8 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with no procedure parameter specified.  The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "procedure".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with invalid Service parameter specified.  </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "Service".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -1992,9 +2001,9 @@
 			<ctl:param name="DescribeSensor_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request without parameter "procedure",and the response must be a valid exception with code "MissingParameterValue" and locator "procedure". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "MissingParameterValue" and locator is "procedure"; fail otherwise.</ctl:comment>
-			<ctl:link title="Verify that the server handles no procedure parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestInvalidprocedure</ctl:link>
+			<ctl:assertion>Send a request without parameter "Version",and the response must be a valid exception with code "MissingParameterValue" and locator "Version". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "MissingParameterValue" and locator is "Version"; fail otherwise.</ctl:comment>
+			<ctl:link title="Verify that the server handles no Version parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestNoVersion</ctl:link>
 			<ctl:code>
 				<!-- 取得一個 procedure-->
 				<xsl:variable name="procedure" select="$getCapabilitiesResponse//sps:contents//swes:procedure" />
@@ -2045,7 +2054,7 @@
 							<xsl:if test="not($PostEncodingIsSOAP=string('true'))">
 								<ctl:message>The response was:  <xsl:value-of select="spsFunctions:getExceptionInfo($describeSensorResponse)" /></ctl:message>
 							</xsl:if>
-							<ctl:message>Checking the validity of the response to a DescribeSensor request with no Procedure parameter.</ctl:message>
+							<ctl:message>Checking the validity of the response to a DescribeSensor request with no Version parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<ctl:call-function name="spsFunctions:checkExceptionReport">
 									<ctl:with-param name="exceptionReport" select="$describeSensorResponse" />
@@ -2056,7 +2065,8 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with no procedure parameter specified.  The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "procedure".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with no Version parameter specified.</ctl:message>  
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "Version".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -2068,9 +2078,9 @@
 			<ctl:param name="DescribeSensor_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request with null parameter "procedure",and the response must be a valid exception with code "InvalidParameterValue" and locator "procedure". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "procedure"; fail otherwise.</ctl:comment>
-			<ctl:link title="Verify that the server handles no procedure parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestInvalidprocedure</ctl:link>
+			<ctl:assertion>Send a request with null parameter "Version",and the response must be a valid exception with code "InvalidParameterValue" and locator "Version". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "Version"; fail otherwise.</ctl:comment>
+			<ctl:link title="Verify that the server handles null Version parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestNullVersion</ctl:link>
 			<ctl:code>
 				<!-- 取得一個 procedure-->
 				<xsl:variable name="procedure" select="$getCapabilitiesResponse//sps:contents//swes:procedure" />
@@ -2121,7 +2131,7 @@
 							<xsl:if test="not($PostEncodingIsSOAP=string('true'))">
 								<ctl:message>The response was:  <xsl:value-of select="spsFunctions:getExceptionInfo($describeSensorResponse)" /></ctl:message>
 							</xsl:if>
-							<ctl:message>Checking the validity of the response to a DescribeSensor request with invalid Procedure parameter.</ctl:message>
+							<ctl:message>Checking the validity of the response to a DescribeSensor request with invalid Version parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<ctl:call-function name="spsFunctions:checkExceptionReport">
 									<ctl:with-param name="exceptionReport" select="$describeSensorResponse" />
@@ -2132,7 +2142,8 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with no procedure parameter specified.  The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "procedure".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with null Version parameter specified. </ctl:message> 
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "Version".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -2144,9 +2155,9 @@
 			<ctl:param name="DescribeSensor_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request with invalid parameter "procedure",and the response must be a valid exception with code "InvalidParameterValue" and locator "procedure". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "procedure"; fail otherwise.</ctl:comment>
-			<ctl:link title="Verify that the server handles no procedure parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestInvalidprocedure</ctl:link>
+			<ctl:assertion>Send a request with invalid parameter "Version",and the response must be a valid exception with code "InvalidParameterValue" and locator "Version". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "Version"; fail otherwise.</ctl:comment>
+			<ctl:link title="Verify that the server handles invalid Version parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestInvalidVersion</ctl:link>
 			<ctl:code>
 				<!-- 取得一個 procedure-->
 				<xsl:variable name="procedure" select="$getCapabilitiesResponse//sps:contents//swes:procedure" />
@@ -2197,7 +2208,7 @@
 							<xsl:if test="not($PostEncodingIsSOAP=string('true'))">
 								<ctl:message>The response was:  <xsl:value-of select="spsFunctions:getExceptionInfo($describeSensorResponse)" /></ctl:message>
 							</xsl:if>
-							<ctl:message>Checking the validity of the response to a DescribeSensor request with invalid Procedure parameter.</ctl:message>
+							<ctl:message>Checking the validity of the response to a DescribeSensor request with invalid Version parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<ctl:call-function name="spsFunctions:checkExceptionReport">
 									<ctl:with-param name="exceptionReport" select="$describeSensorResponse" />
@@ -2208,7 +2219,8 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with no procedure parameter specified.  The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "procedure".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with invalid Version parameter specified.</ctl:message>  
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "Version".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -2222,7 +2234,7 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>Send a request without parameter "procedure",and the response must be a valid exception with code "MissingParameterValue" and locator "procedure". </ctl:assertion>
 			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "MissingParameterValue" and locator is "procedure"; fail otherwise.</ctl:comment>
-			<ctl:link title="Verify that the server handles no procedure parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestInvalidprocedure</ctl:link>
+			<ctl:link title="Verify that the server handles no procedure parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestNoProcedure</ctl:link>
 			<ctl:code>
 				<!-- get procedureDescriptionFormat value first-->
 				<xsl:variable name="procedureDescriptionFormat" select="$getCapabilitiesResponse//sps:contents//swes:procedureDescriptionFormat" />
@@ -2280,7 +2292,8 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with no procedure parameter specified.  The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "procedure".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with no procedure parameter specified.  </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "procedure".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -2294,7 +2307,7 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>Send a request with null parameter "procedure",and the response must be a valid exception with code "InvalidParameterValue" and locator "procedure". </ctl:assertion>
 			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "procedure"; fail otherwise.</ctl:comment>
-			<ctl:link title="Verify that the server handles no procedure parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestInvalidprocedure</ctl:link>
+			<ctl:link title="Verify that the server handles null procedure parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestNullProcedure</ctl:link>
 			<ctl:code>
 				<!-- set a invalid procedure -->
 				<xsl:variable name="procedure" select="string('')" />
@@ -2356,7 +2369,8 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with no procedure parameter specified.  The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "procedure".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with null procedure parameter specified.</ctl:message>  
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "procedure".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -2432,7 +2446,8 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with no procedure parameter specified.  The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "procedure".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with invalid procedure parameter specified.  </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "procedure".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -2446,7 +2461,7 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>Send a request without parameter "ProcedureDescriptionFormat",and the response must be a valid exception with code "MissingParameterValue" and locator "ProcedureDescriptionFormat". </ctl:assertion>
 			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "MissingParameterValue" and locator is "ProcedureDescriptionFormat"; fail otherwise.</ctl:comment>
-			<ctl:link title="Verify that the server handles no ProcedureDescriptionFormat parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestInvalidprocedure</ctl:link>
+			<ctl:link title="Verify that the server handles no ProcedureDescriptionFormat parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestNoProcedureDescriptionFormat</ctl:link>
 			<ctl:code>
 				<!-- 取得一個 procedure-->
 				<xsl:variable name="procedure" select="$getCapabilitiesResponse//sps:contents//swes:procedure" />
@@ -2504,7 +2519,8 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with no procedureDescriptionFormat parameter specified.  The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "procedureDescriptionFormat".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with no procedureDescriptionFormat parameter specified. </ctl:message> 
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "procedureDescriptionFormat".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -2516,9 +2532,9 @@
 			<ctl:param name="DescribeSensor_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request with invalid parameter "ProcedureDescriptionFormat",and the response must be a valid exception with code "InvalidParameterValue" and locator "ProcedureDescriptionFormat". </ctl:assertion>
+			<ctl:assertion>Send a request with null parameter "ProcedureDescriptionFormat",and the response must be a valid exception with code "InvalidParameterValue" and locator "ProcedureDescriptionFormat". </ctl:assertion>
 			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "ProcedureDescriptionFormat"; fail otherwise.</ctl:comment>
-			<ctl:link title="Verify that the server handles no procedure parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestInvalidProcedureDescriptionFormat</ctl:link>
+			<ctl:link title="Verify that the server handles null ProcedureDescriptionFormat parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestNullProcedureDescriptionFormat</ctl:link>
 			<ctl:code>
 				<!--  get procedure value first -->
 				<xsl:variable name="procedure" select="$getCapabilitiesResponse//sps:contents//swes:procedure" />
@@ -2580,7 +2596,8 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with no procedure parameter specified.  The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "procedureDescriptionFormat".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with null ProcedureDescriptionFormat parameter specified.  </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "procedureDescriptionFormat".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -2594,7 +2611,7 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>Send a request with invalid parameter "ProcedureDescriptionFormat",and the response must be a valid exception with code "InvalidParameterValue" and locator "ProcedureDescriptionFormat". </ctl:assertion>
 			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "ProcedureDescriptionFormat"; fail otherwise.</ctl:comment>
-			<ctl:link title="Verify that the server handles no procedure parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestInvalidProcedureDescriptionFormat</ctl:link>
+			<ctl:link title="Verify that the server handles invalid ProcedureDescriptionFormat parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestInvalidProcedureDescriptionFormat</ctl:link>
 			<ctl:code>
 				<!--  get procedure value first -->
 				<xsl:variable name="procedure" select="$getCapabilitiesResponse//sps:contents//swes:procedure" />
@@ -2656,7 +2673,8 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with no procedure parameter specified.  The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "procedureDescriptionFormat".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with invalid procedureDescriptionFormat parameter specified.  </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "procedureDescriptionFormat".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -2670,7 +2688,7 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>Send a request with invalid parameter "validTime" value "123",and the response must be a valid exception with code "OptionNotSupported" and locator "validTime". </ctl:assertion>
 			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "OptionNotSupported" and locator is "validTime"; fail otherwise.</ctl:comment>
-			<ctl:link title="Verify that the server handles no procedure parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestInvalidvalidTime</ctl:link>
+			<ctl:link title="Verify that the server handles invalid validTime parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestInvalidvalidTime</ctl:link>
 			<ctl:code>
 				<!-- get procedure value-->
 				<xsl:variable name="procedure" select="$getCapabilitiesResponse//sps:contents//swes:procedure" />
@@ -2736,7 +2754,8 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with invalid validTime parameter specified.  The response was expected to be an ExceptionReport with an exceptionCode of "OptionNotSupported" and a locator of "validTime".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with invalid validTime parameter specified. </ctl:message> 
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "OptionNotSupported" and a locator of "validTime".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -2750,7 +2769,7 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>Send a valid request ,and there must be have a valid DescribeSensor response returned. </ctl:assertion>
 			<ctl:comment>Pass if the DescribeSensor responses for all procedures listed in GetCapabilities response are valid; fail otherwise.</ctl:comment>
-			<ctl:link title="Verify that the server handles no procedure parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestValid</ctl:link>
+			<ctl:link title="Verify that the server handles valid request correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestValidRequest</ctl:link>
 			<ctl:code>
 				<!-- get the main procedureDescriptionFormat -->
 				<xsl:variable name="main_procedureDescriptionFormat" select="$getCapabilitiesResponse//sps:contents/sps:SPSContents/swes:procedureDescriptionFormat" />
@@ -2914,7 +2933,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no Service value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server returns a valid error report message with an exceptionCode parameter of MissingParameterValue; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!--PUT TEST CODE HERE-->
 				<!--
@@ -2991,7 +3009,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when null Service value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server returns a valid error report message with an exceptionCode parameter of InvalidParameterValue; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!--PUT TEST CODE HERE-->
 				<!--
@@ -3067,7 +3084,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when Invalid Service value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server returns a valid error report message with an exceptionCode parameter of InvalidParameterValue; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!--PUT TEST CODE HERE-->
 				<!--
@@ -3143,7 +3159,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no Version value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server returns a valid error report message with an exceptionCode parameter of MissingParameterValue; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!--PUT TEST CODE HERE-->
 				<!--
@@ -3220,7 +3235,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when null Version value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server returns a valid error report message with an exceptionCode parameter of InvalidParameterValue; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!--PUT TEST CODE HERE-->
 				<!--
@@ -3297,7 +3311,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when Invalid Version value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server returns a valid error report message with an exceptionCode parameter of InvalidParameterValue; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!--PUT TEST CODE HERE-->
 				<!--
@@ -3373,7 +3386,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no procedure value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server returns a valid error report message with an exceptionCode parameter of MissingParameterValue; fail otherwise.</ctl:comment>
-			<ctl:link title="Verify that the server handles a request with a null SensorID correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeTasking-RequestNullSensorID</ctl:link>
 			<ctl:code>
 				<!--PUT TEST CODE HERE-->
 				<!--
@@ -3444,7 +3456,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when Invalid procedure value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server returns a valid error report message with an exceptionCode parameter of InvalidParameterValue; fail otherwise.</ctl:comment>
-			<ctl:link title="Verify that the server handles a request with a null SensorID correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeTasking-RequestInvalidProcedure</ctl:link>
 			<ctl:code>
 				<!--PUT TEST CODE HERE-->
 				<!--
@@ -3517,7 +3528,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when Invalid procedure value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server returns a valid error report message with an exceptionCode parameter of InvalidParameterValue; fail otherwise.</ctl:comment>
-			<ctl:link title="Verify that the server handles a request with a null SensorID correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeTasking-RequestInvalidProcedure</ctl:link>
 			<ctl:code>
 				<!--PUT TEST CODE HERE-->
 				<!--
@@ -3591,7 +3601,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The response to a DescribeTasking request is valid.</ctl:assertion>
 			<ctl:comment>Pass if there is a valid xml schema response and the root element is "sps:DescribeTaskingResponse" and there is a not-empty-value sub-element "taskingParameters" ; fail otherwise.</ctl:comment>
-			<ctl:link title="Verify a DescribeTasking response."></ctl:link>
 			<ctl:code>
 				<!-- check every offering procedure-->
 				<xsl:for-each select="$getCapabilitiesResponse//sps:contents/sps:SPSContents/swes:offering">
@@ -3677,7 +3686,6 @@
 			<ctl:param name="DescribeResultAccess_URL" />
 			<ctl:assertion>Execute Submit Test.</ctl:assertion>
 			<ctl:comment>Pass if all the subtest not fail; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<ctl:message>DescribeTasking URL:  <xsl:value-of select="$DescribeTasking_URL" /></ctl:message>
 				
@@ -3833,7 +3841,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no Service value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create Submit request without procedure -->
 				<xsl:variable name="submitResponse">
@@ -3905,7 +3912,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when null Service value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create Submit request with invalid procedure -->
 				<xsl:variable name="submitResponse">
@@ -3977,7 +3983,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid Service value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create Submit request with invalid procedure -->
 				<xsl:variable name="submitResponse">
@@ -4049,7 +4054,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no procedure value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create Submit request without procedure -->
 				<xsl:variable name="submitResponse">
@@ -4121,7 +4125,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid procedure value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create Submit request with invalid procedure -->
 				<xsl:variable name="submitResponse">
@@ -4193,7 +4196,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid procedure value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create Submit request with invalid procedure -->
 				<xsl:variable name="submitResponse">
@@ -4264,7 +4266,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no procedure value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create Submit request without procedure -->
 				<xsl:variable name="submitResponse">
@@ -4333,7 +4334,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid procedure value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create Submit request with invalid procedure -->
 				<xsl:variable name="submitResponse">
@@ -4404,7 +4404,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid procedure value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create Submit request with invalid procedure -->
 				<xsl:variable name="submitResponse">
@@ -4475,7 +4474,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no TaskingParameters value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create Submit request without procedure -->
 				<xsl:variable name="submitResponse">
@@ -4544,7 +4542,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid taskingParameters value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create Submit request with invalid procedure -->
 				<xsl:variable name="submitResponse">
@@ -4615,7 +4612,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid taskingParameters value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create Submit request with invalid procedure -->
 				<xsl:variable name="submitResponse">
@@ -4690,7 +4686,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>All Submit request with valid parameters have correct response.</ctl:assertion>
 			<ctl:comment>Pass if all Submit response are correct; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 
 					檢查每個 getCapabilities 的 offering 的 procedure
@@ -5028,7 +5023,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no Task value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create GetStatus request without task -->
 				<xsl:variable name="GetStatusResponse">
@@ -5097,7 +5091,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid task value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create GetStatus request with invalid procedure -->
 				<xsl:variable name="GetStatusResponse">
@@ -5166,7 +5159,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid task value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create GetStatus request with invalid procedure -->
 				<xsl:variable name="GetStatusResponse">
@@ -5235,7 +5227,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no Version value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create GetStatus request without task -->
 				<xsl:variable name="GetStatusResponse">
@@ -5304,7 +5295,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when null Version value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create GetStatus request with invalid procedure -->
 				<xsl:variable name="GetStatusResponse">
@@ -5373,7 +5363,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid Version value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create GetStatus request with invalid procedure -->
 				<xsl:variable name="GetStatusResponse">
@@ -5441,7 +5430,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no Task value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create GetStatus request without task -->
 				<xsl:variable name="GetStatusResponse">
@@ -5507,7 +5495,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid task value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create Submit request with invalid procedure -->
 				<xsl:variable name="GetStatusResponse">
@@ -5575,7 +5562,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid task value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create Submit request with invalid procedure -->
 				<xsl:variable name="GetStatusResponse">
@@ -5644,7 +5630,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of OptionNotSupported for the exceptionCode parameter when invalid since value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create Submit request with invalid procedure -->
 				<xsl:variable name="GetStatusResponse">
@@ -5716,7 +5701,6 @@
 			<ctl:param name="SupportSince" />
 			<ctl:assertion>All GetStatus request with valid parameters have correct response.</ctl:assertion>
 			<ctl:comment>Pass if the GetStatus response are correct; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 根據每個task傳送GetStatus檢查取得的資料是否正確-->
 				<!-- 1.建立request -->
@@ -5953,7 +5937,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no Service value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create GetTask request without Service -->
 				<xsl:variable name="GetTaskResponse">
@@ -6022,7 +6005,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid Service value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create GetTask request with null Service -->
 				<xsl:variable name="GetTaskResponse">
@@ -6091,7 +6073,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid Service value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create GetTask request with invalid Service -->
 				<xsl:variable name="GetTaskResponse">
@@ -6160,7 +6141,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no Version value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create GetStatus request without Version -->
 				<xsl:variable name="GetTaskResponse">
@@ -6229,7 +6209,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when null Version value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create GetTask request with null Version -->
 				<xsl:variable name="GetTaskResponse">
@@ -6298,7 +6277,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid task value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create GetTask request with invalid procedure -->
 				<xsl:variable name="GetTaskResponse">
@@ -6366,7 +6344,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no Task value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create GetStatus request without task -->
 				<xsl:variable name="GetTaskResponse">
@@ -6432,7 +6409,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid task value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create Submit request with invalid procedure -->
 				<xsl:variable name="GetTaskResponse">
@@ -6500,7 +6476,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid task value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create Submit request with invalid procedure -->
 				<xsl:variable name="GetTaskResponse">
@@ -6569,7 +6544,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>All GetTask request with valid parameters have correct response.</ctl:assertion>
 			<ctl:comment>Pass if the GetTask response are correct; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.建立request -->
 				<xsl:variable name="GetTaskResponse">
@@ -6781,7 +6755,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no Service is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create DescribeResultAccess request without procedure and without Service-->
 				<xsl:variable name="DescribeResultAccessResponse">
@@ -6854,7 +6827,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when null Service value (empty) is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create DescribeResultAccess request with null Service -->
 				<xsl:variable name="DescribeResultAccessResponse">
@@ -6927,7 +6899,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid Service value (not element procedure or task) is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create DescribeResultAccess request with invalid target -->
 				<xsl:variable name="DescribeResultAccessResponse">
@@ -7000,7 +6971,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no Version is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create DescribeResultAccess request without procedure and without task-->
 				<xsl:variable name="DescribeResultAccessResponse">
@@ -7073,7 +7043,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when null Version value (empty) is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create DescribeResultAccess request with invalid target -->
 				<xsl:variable name="DescribeResultAccessResponse">
@@ -7146,7 +7115,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid Version value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create DescribeResultAccess request with invalid Version -->
 				<xsl:variable name="DescribeResultAccessResponse">
@@ -7218,7 +7186,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no Target is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create DescribeResultAccess request without procedure and without task-->
 				<xsl:variable name="DescribeResultAccessResponse">
@@ -7284,7 +7251,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid target value (empty) is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create DescribeResultAccess request with invalid target -->
 				<xsl:variable name="DescribeResultAccessResponse">
@@ -7352,7 +7318,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid target value (not element procedure or task) is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create DescribeResultAccess request with invalid target -->
 				<xsl:variable name="DescribeResultAccessResponse">
@@ -7424,7 +7389,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid target value (not element procedure or task) is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create DescribeResultAccess request with invalid procedure in the target -->
 				<xsl:variable name="DescribeResultAccessResponse_1">
@@ -7559,7 +7523,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid target value (not element procedure or task) is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.create DescribeResultAccess request with invalid procedure in the target -->
 				<xsl:variable name="DescribeResultAccessResponse_1">
@@ -7695,7 +7658,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>All GetTask request with valid parameters (valid procedure in the target) have correct response.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.For each procedure in the response for the GetCapabilities operation ,create a DescribeResultAccess request. -->
 				<xsl:for-each select="$getCapabilitiesResponse//sps:contents/sps:SPSContents/swes:offering">
@@ -7768,7 +7730,6 @@
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>All GetTask request with valid parameters (valid task in the target) have correct response.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid response; fail otherwise.</ctl:comment>
-			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- 1.Create a DescribeResultAccess request by using task. -->
 				<xsl:variable name="DescribeResultAccessResponse">
@@ -7857,7 +7818,7 @@
 					<xsl:otherwise>
 						<xsl:if test="count($DescribeResultAccessResponse//sps:DescribeResultAccessResponse/sps:availability/sps:available)=1">
 							<xsl:choose>
-								<xsl:when test="not(count($DescribeResultAccessResponse//sps:DescribeResultAccessResponse/sps:availability/sps:available/sps:DataAvailable/sps:dataReference)>1)">
+								<xsl:when test="not(count($DescribeResultAccessResponse//sps:DescribeResultAccessResponse/sps:availability/sps:available/sps:DataAvailable/sps:dataReference)>0)">
 									<ctl:message>FAILURE: There must be one or more "sps:dataReference" in the element:"sps:DataAvailable".[<xsl:value-of select="$ProcedureOrTask"/>=<xsl:value-of select="$ValueOfProcedureOrTask"/>]</ctl:message>
 									<ctl:fail />
 								</xsl:when>
