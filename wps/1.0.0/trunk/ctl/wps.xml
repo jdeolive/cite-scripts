@@ -32,7 +32,7 @@
 		<ctl:assertion>The IUT satisfies all applicable assertions.</ctl:assertion>
 		<ctl:code>
 		         
-		<!--xsl:variable name="form-values">
+		<xsl:variable name="form-values">
                 <ctl:form height="640" width="800">
                     <body>
                         <h2>Compliance test suite for Web Processing Service (WPS) 1.0</h2>
@@ -84,17 +84,17 @@
                         <input type="submit" value="Start"/>
                     </body>
                 </ctl:form>
-		</xsl:variable-->
+		</xsl:variable>
 		 
-			<!-- Get user input: >	
+			<!-- Get user input: -->	
                         <xsl:variable name="wps.service.url" select="$form-values/values/value[@key='service-url']"/>
                         <xsl:variable name="wps.updatesequence.high" select="$form-values/values/value[@key='updatesequence-high']"/>
-                        <xsl:variable name="wps.updatesequence.low" select="$form-values/values/value[@key='updatesequence-low']"/-->
+                        <xsl:variable name="wps.updatesequence.low" select="$form-values/values/value[@key='updatesequence-low']"/>
                         
-                        <!-- headless version -->
+                        <!-- headless version >
 			<xsl:variable name="wps.service.url" select="'http://localhost:9090/wps/default'"/>
                         <xsl:variable name="wps.updatesequence.high" select="'9999999999999'"/>
-                        <xsl:variable name="wps.updatesequence.low" select="'1'"/>
+                        <xsl:variable name="wps.updatesequence.low" select="'1'"/-->
         
 			<!-- set other "global" variables -->			
 			<xsl:variable name="ogc.schema.root" select="'http://schemas.opengis.net/'"/>
