@@ -73,7 +73,7 @@
 					</url>
 					<method>get</method>
 					<param name="service"><xsl:value-of select="$serviceType" /></param>
-					<param name="version"><xsl:value-of select="$serviceVersion" /></param>
+					<!-- <param name="version"><xsl:value-of select="$serviceVersion" /></param> No version parameter for GetCapabilities in Specification fix by rocky 2012/05/10-->
 					<param name="request">GetCapabilities</param>
 					<parsers:XMLValidatingParser>						
                         <parsers:schemas>
@@ -271,7 +271,7 @@
 					</url>
 					<method>get</method>
 					<param name="SERVICE"><xsl:value-of select="$serviceType" /></param>
-					<!--<param name="VERSION"><xsl:value-of select="$serviceVersion" /></param>-->
+					<!--<param name="VERSION"><xsl:value-of select="$serviceVersion" /></param> No version parameter for GetCapabilities in Specification fix by rocky 2012/05/10-->
 					<param name="REQUEST">GetCapabilities</param>
 					<parsers:XMLValidatingParser>
                         <parsers:schemas>
@@ -294,7 +294,7 @@
 					</url>
 					<method>get</method>
 					<param name="SeRvIcE"><xsl:value-of select="$serviceType" /></param>
-					<!--<param name="vErSiOn"><xsl:value-of select="$serviceVersion" /></param>-->
+					<!--<param name="vErSiOn"><xsl:value-of select="$serviceVersion" /></param> No version parameter for GetCapabilities in Specification fix by rocky 2012/05/10-->
 					<param name="RequesT">GetCapabilities</param>
 					<parsers:XMLValidatingParser>
                         <parsers:schemas>
@@ -317,7 +317,7 @@
 					</url>
 					<method>get</method>
 					<param name="service"><xsl:value-of select="$serviceType" /></param>
-					<!--<param name="version"><xsl:value-of select="$serviceVersion" /></param>-->
+					<!--<param name="version"><xsl:value-of select="$serviceVersion" /></param> No version parameter for GetCapabilities in Specification fix by rocky 2012/05/10-->
 					<param name="request">GetCapabilities</param>
 					<parsers:XMLValidatingParser>
                         <parsers:schemas>
@@ -369,7 +369,7 @@
 					</url>
 					<method>get</method>
 					<param name="service"><xsl:value-of select="$serviceType" /></param>
-					<param name="version"><xsl:value-of select="$serviceVersion" /></param>
+					<!--<param name="version"><xsl:value-of select="$serviceVersion" /></param> No version parameter for GetCapabilities in Specification fix by rocky 2012/05/10-->
 					<param name="request">GetCapabilities</param>
 					<parsers:HTTPParser/>
 				</request>
@@ -426,7 +426,7 @@
 					</url>
 					<method>get</method>
 					<param name="service"><xsl:value-of select="$serviceType" /></param>
-					<param name="version"><xsl:value-of select="$serviceVersion" /></param>
+					<!--<param name="version"><xsl:value-of select="$serviceVersion" /></param> No version parameter for GetCapabilities in Specification fix by rocky 2012/05/10-->
 					<param name="request">GetCapabilities</param>
 					<parsers:XMLValidatingParser>
                         <parsers:schemas>
@@ -479,7 +479,7 @@
 					<method>get</method>
                     <param name="request">GetCapabilities</param>
 					<param name="service"><xsl:value-of select="$serviceType" /></param>
-					<param name="version"><xsl:value-of select="$serviceVersion" /></param>
+					<!--<param name="version"><xsl:value-of select="$serviceVersion" /></param> No version parameter for GetCapabilities in Specification fix by rocky 2012/05/10-->
 					<parsers:XMLValidatingParser>
                         <parsers:schemas>
 							<parsers:schema type="resource">xsd/w3c/xml.xsd</parsers:schema>
@@ -528,7 +528,7 @@
 					</url>
                     <method>get</method>
 					<param name="request">GetCapabilities</param>
-					<param name="version"><xsl:value-of select="$serviceVersion" /></param>
+					<!--<param name="version"><xsl:value-of select="$serviceVersion" /></param> No version parameter for GetCapabilities in Specification fix by rocky 2012/05/10-->
 					<parsers:XMLValidatingParser>
                         <parsers:schemas>
 							<parsers:schema type="resource">xsd/w3c/xml.xsd</parsers:schema>
@@ -809,7 +809,7 @@
 						<xsl:value-of select="$serviceURL"/>
 					</url>
 					<method>get</method>
-					<param name="version"><xsl:value-of select="$serviceVersion" /></param>
+					<!--<param name="version"><xsl:value-of select="$serviceVersion" /></param> No version parameter for GetCapabilities in Specification fix by rocky 2012/05/10-->
 					<param name="request">GetCapabilities</param>
 					<parsers:XMLValidatingParser>
                         <parsers:schemas>
@@ -868,7 +868,7 @@
 					</url>
 					<method>get</method>
 					<param name="service">ASDF</param>
-					<param name="version"><xsl:value-of select="$serviceVersion" /></param>
+					<!--<param name="version"><xsl:value-of select="$serviceVersion" /></param> No version parameter for GetCapabilities in Specification fix by rocky 2012/05/10-->
 					<param name="request">GetCapabilities</param>
 					<parsers:XMLValidatingParser>
                         <parsers:schemas>
@@ -915,7 +915,7 @@
       <param name="exceptionReportSchemaLocation" />
       <param name="exceptionReportSchemaType" />
       <assertion>In the event that a GetCapabilities request cannot be processed for any reason, the response entity shall include an exception report. The exception code must be one of those listed in Table 5.</assertion>
-      <comment>GetCapabilities with an incorrect version parameter ('2000-01-01'), using acceptversions.  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root document is an ows:ExceptionReport document; (3) the ExceptionReport shall have the 'VersionNegotiationFailed' exception code.</comment>
+      <comment>GetCapabilities with an incorrect acceptversions parameter ('2000-01-01').  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root document is an ows:ExceptionReport document; (3) the ExceptionReport shall have the 'VersionNegotiationFailed' exception code.</comment>
       <link>ows-1.0.0-metadata-atc5</link>
       <link>OGC 05-008c1, 7.4.1, p.19</link>
 		<code>
@@ -990,7 +990,7 @@
 					</url>
 					<method>get</method>
 					<param name="service"><xsl:value-of select="$serviceType" /></param>
-					<param name="version"><xsl:value-of select="$serviceVersion" /></param>
+					<!--<param name="version"><xsl:value-of select="$serviceVersion" /></param> No version parameter for GetCapabilities in Specification fix by rocky 2012/05/10-->
 					<param name="request">GetCapabilities</param>
 					<param name="updatesequence">9999999999</param>
 					<parsers:XMLValidatingParser>
@@ -1041,7 +1041,8 @@
       <link>OGC 05-008c1, 7.4.1, p.19</link>
 		<code>
 			<ctl:message>GetCapabilities with an incorrect KVP query string, triggering the missing parameter value exception.  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root document is an ows:ExceptionReport document; (3) the ExceptionReport shall have the &quot;MissingParameterValue&quot; exception code, for both the request and service.</ctl:message>
-			<xsl:variable name="invalidQueryString" select="concat($serviceURL,'?request~GetCapabilities!service~!',$serviceType,'version~',$serviceVersion)"/>
+			<!--<xsl:variable name="invalidQueryString" select="concat($serviceURL,'?request~GetCapabilities!service~!',$serviceType,'version~',$serviceVersion)"/> No version parameter for GetCapabilities in Specification fix by rocky 2012/05/10-->
+			<xsl:variable name="invalidQueryString" select="concat($serviceURL,'?request~GetCapabilities!service~!',$serviceType)"/>
 			<ctl:message select="concat('Query String: ', $invalidQueryString)"/>
 			<xsl:variable name="request1">
 				<request>
@@ -1115,7 +1116,7 @@
 					</url>
 					<method>get</method>
 					<param name="service"><xsl:value-of select="$serviceType" /></param>
-					<param name="version"><xsl:value-of select="$serviceVersion" /></param>
+					<!--<param name="version"><xsl:value-of select="$serviceVersion" /></param> No version parameter for GetCapabilities in Specification fix by rocky 2012/05/10-->
 					<param name="request">GetCapabilities</param>
 					<parsers:XMLValidatingParser>
                         <parsers:schemas>
@@ -1170,7 +1171,7 @@
 					</url>
 					<method>GET</method>
 					<param name="service"><xsl:value-of select="$serviceType" /></param>
-					<param name="version"><xsl:value-of select="$serviceVersion" /></param>
+					<!--<param name="version"><xsl:value-of select="$serviceVersion" /></param> No version parameter for GetCapabilities in Specification fix by rocky 2012/05/10-->
 					<param name="request">GetCapabilities</param>
 					<parsers:XMLValidatingParser>
                         <parsers:schemas>
@@ -1285,7 +1286,7 @@
 					<method>get</method>
 					<param name="service"><xsl:value-of select="$serviceType" /></param>
 					<param name="request">GetCapabilities</param>
-                    <param name="version"><xsl:value-of select="$serviceVersion" /></param>
+                    <!--<param name="version"><xsl:value-of select="$serviceVersion" /></param> No version parameter for GetCapabilities in Specification fix by rocky 2012/05/10-->
                     <param name="sections">ServiceIdentification,OperationsMetadata</param>
 					<parsers:XMLValidatingParser>
                         <parsers:schemas>
