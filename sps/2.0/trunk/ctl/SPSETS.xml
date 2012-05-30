@@ -540,18 +540,18 @@
 						<ctl:with-param name="serviceURL" select="$serviceURL" />
 						<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 					</ctl:call-test>
-					<!-- 0.4. request no AcceptVersions
+					<!-- 0.4. request no acceptVersions
 					<ctl:call-test name="sps:core-SPS.GetCapabilities-PostRequestNoVersion.1">
 						<ctl:with-param name="serviceURL" select="$serviceURL" />
 						<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 					</ctl:call-test>
 					-->
-					<!-- 0.5. request null AcceptVersions -->
+					<!-- 0.5. request null acceptVersions -->
 					<ctl:call-test name="sps:core-SPS.GetCapabilities-PostRequestNullVersion.1">
 						<ctl:with-param name="serviceURL" select="$serviceURL" />
 						<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 					</ctl:call-test>
-					<!-- 0.6. request invalid AcceptVersions -->
+					<!-- 0.6. request invalid acceptVersions -->
 					<ctl:call-test name="sps:core-SPS.GetCapabilities-PostRequestInvalidVersion.1">
 						<ctl:with-param name="serviceURL" select="$serviceURL" />
 						<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
@@ -1286,7 +1286,7 @@
 		<ctl:test name="sps:core-SPS.GetCapabilities-PostRequestInvalidService.1">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request with invalid parameter "service",and the response must be a valid exception with code "InvalidParameterValue" and locator "procedure". </ctl:assertion>
+			<ctl:assertion>Send a request with invalid parameter "service",and the response must be a valid exception with code "InvalidParameterValue" and locator "service". </ctl:assertion>
 			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "service"; fail otherwise.</ctl:comment>
 			<ctl:link title=""></ctl:link>
 			<ctl:code>
@@ -1360,8 +1360,8 @@
 		<ctl:test name="sps:core-SPS.GetCapabilities-PostRequestNoVersion.1"><!-- no use -->
 			<ctl:param name="serviceURL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request without parameter "AcceptVersions",and the response must be a valid exception with code "MissingParameterValue" and locator "AcceptVersions". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "MissingParameterValue" and locator is "AcceptVersions"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request without parameter "acceptVersions",and the response must be a valid exception with code "MissingParameterValue" and locator "acceptVersions". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "MissingParameterValue" and locator is "acceptVersions"; fail otherwise.</ctl:comment>
 			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<xsl:variable name="getCapabilitiesResponse">
@@ -1418,8 +1418,8 @@
 		<ctl:test name="sps:core-SPS.GetCapabilities-PostRequestNullVersion.1">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request with null parameter "AcceptVersions",and the response must be a valid exception with code "InvalidParameterValue" and locator "AcceptVersions". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "AcceptVersions"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request with null parameter "acceptVersions",and the response must be a valid exception with code "InvalidParameterValue" and locator "acceptVersions". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "acceptVersions"; fail otherwise.</ctl:comment>
 			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<xsl:variable name="getCapabilitiesResponse">
@@ -1430,7 +1430,7 @@
 							</ctl:url> 
 							<ctl:method>post</ctl:method>
 							<ctl:body>
-								<sps:GetCapabilities AcceptVersions=""
+								<sps:GetCapabilities acceptVersions=""
 									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 									xmlns:sps="http://www.opengis.net/sps/2.0" 
@@ -1446,7 +1446,7 @@
 							</ctl:url>
 							<ctl:method>post</ctl:method>
 							<ctl:body>
-								<sps:GetCapabilities AcceptVersions=""
+								<sps:GetCapabilities acceptVersions=""
 									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 									xmlns:sps="http://www.opengis.net/sps/2.0" 
@@ -1469,19 +1469,19 @@
 							<xsl:if test="not($PostEncodingIsSOAP=string('true'))">
 								<ctl:message>The response was:  <xsl:value-of select="spsFunctions:getExceptionInfo($getCapabilitiesResponse)" /></ctl:message>
 							</xsl:if>
-							<ctl:message>Checking the validity of the response to a GetCapabilities request with invalid AcceptVersions parameter.</ctl:message>
+							<ctl:message>Checking the validity of the response to a GetCapabilities request with invalid acceptVersions parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<ctl:call-function name="spsFunctions:checkExceptionReport">
 									<ctl:with-param name="exceptionReport" select="$getCapabilitiesResponse" />
 									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
-									<ctl:with-param name="locatorToCheck" select="string('AcceptVersions')" />
+									<ctl:with-param name="locatorToCheck" select="string('acceptVersions')" />
 									<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 								</ctl:call-function>
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetCapabilities request with null AcceptVersions parameter specified.</ctl:message>  
-								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "AcceptVersions".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetCapabilities request with null acceptVersions parameter specified.</ctl:message>  
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "acceptVersions".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -1492,8 +1492,8 @@
 		<ctl:test name="sps:core-SPS.GetCapabilities-PostRequestInvalidVersion.1">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request with invalid parameter "AcceptVersions",and the response must be a valid exception with code "InvalidParameterValue" and locator "AcceptVersions". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "AcceptVersions"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request with invalid parameter "acceptVersions",and the response must be a valid exception with code "InvalidParameterValue" and locator "acceptVersions". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "acceptVersions"; fail otherwise.</ctl:comment>
 			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<xsl:variable name="getCapabilitiesResponse">
@@ -1503,7 +1503,7 @@
 								<xsl:value-of select="$serviceURL"/>
 							</ctl:url> 
 							<ctl:body>
-								<sps:GetCapabilities AcceptVersions="999"
+								<sps:GetCapabilities acceptVersions="999"
 									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 									xmlns:sps="http://www.opengis.net/sps/2.0" 
@@ -1519,7 +1519,7 @@
 							</ctl:url>
 							<ctl:method>post</ctl:method>
 							<ctl:body>
-								<sps:GetCapabilities AcceptVersions="999"
+								<sps:GetCapabilities acceptVersions="999"
 									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 									xmlns:sps="http://www.opengis.net/sps/2.0" 
@@ -1542,19 +1542,19 @@
 							<xsl:if test="not($PostEncodingIsSOAP=string('true'))">
 								<ctl:message>The response was:  <xsl:value-of select="spsFunctions:getExceptionInfo($getCapabilitiesResponse)" /></ctl:message>
 							</xsl:if>
-							<ctl:message>Checking the validity of the response to a GetCapabilities request with invalid AcceptVersions parameter.</ctl:message>
+							<ctl:message>Checking the validity of the response to a GetCapabilities request with invalid acceptVersions parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<ctl:call-function name="spsFunctions:checkExceptionReport">
 									<ctl:with-param name="exceptionReport" select="$getCapabilitiesResponse" />
 									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
-									<ctl:with-param name="locatorToCheck" select="string('AcceptVersions')" />
+									<ctl:with-param name="locatorToCheck" select="string('acceptVersions')" />
 									<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 								</ctl:call-function>
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetCapabilities request with invalid AcceptVersions parameter specified. </ctl:message> 
-								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "AcceptVersions".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetCapabilities request with invalid acceptVersions parameter specified. </ctl:message> 
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "acceptVersions".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -1576,7 +1576,7 @@
 								<xsl:value-of select="$serviceURL"/>
 							</ctl:url>
 							<ctl:body>
-								<sps:GetCapabilities service="SPS" AcceptVersions="2.0.0"
+								<sps:GetCapabilities service="SPS" acceptVersions="2.0.0"
 									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 									xmlns:sps="http://www.opengis.net/sps/2.0" 
@@ -1592,7 +1592,7 @@
 							</ctl:url>
 							<ctl:method>post</ctl:method>
 							<ctl:body>
-								<sps:GetCapabilities service="SPS" AcceptVersions="2.0.0"
+								<sps:GetCapabilities service="SPS" acceptVersions="2.0.0"
 									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 									xmlns:sps="http://www.opengis.net/sps/2.0" 

@@ -82,7 +82,7 @@
 							<xsl:value-of select="$serviceURL"/>
 						</ctl:url>
 						<ctl:body>
-							<sps:GetCapabilities service="SPS" AcceptVersions="2.0.0"
+							<sps:GetCapabilities service="SPS" acceptVersions="2.0.0"
 								xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 								xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 								xmlns:sps="http://www.opengis.net/sps/2.0" 
@@ -108,7 +108,7 @@
 							</ctl:url>
 							<ctl:method>get</ctl:method>
 							<ctl:param name="service"><xsl:value-of select="$serviceType" /></ctl:param>
-							<ctl:param name="AcceptVersions"><xsl:value-of select="$serviceVersion" /></ctl:param>
+							<ctl:param name="acceptVersions"><xsl:value-of select="$serviceVersion" /></ctl:param>
 							<ctl:param name="request">GetCapabilities</ctl:param>
 							<parsers:XMLValidatingParser>
 								<parsers:schemas>
@@ -127,7 +127,7 @@
 							</ctl:url>
 							<ctl:method>post</ctl:method>
 							<ctl:body>
-								<sps:GetCapabilities  service="SPS" AcceptVersions="2.0.0"
+								<sps:GetCapabilities  service="SPS" acceptVersions="2.0.0"
 									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 									xmlns:sps="http://www.opengis.net/sps/2.0" 
@@ -194,7 +194,7 @@
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP"/>
 								<ctl:with-param name="GetCapabilities_GET" select="$GetCapabilities_GET" />
                             </ctl:call-test>
-                            <!--Version negotiation failed  !!!Same to AcceptVersions.3 so Skip this test!!!
+                            <!--Version negotiation failed  !!!Same to acceptVersions.3 so Skip this test!!!
                             <ctl:message>**********************************************************************</ctl:message>
                             <ctl:call-test name="owsTests:ows-OWS.GetCapabilities-Exceptions.3">
                                 <ctl:with-param name="serviceURL" select="$serviceURL"/>
@@ -240,9 +240,9 @@
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP"/>
 								<ctl:with-param name="GetCapabilities_GET" select="$GetCapabilities_GET" />
                             </ctl:call-test>
-                            <!--AcceptVersions tests-->
+                            <!--acceptVersions tests-->
                             <ctl:message>**********************************************************************</ctl:message>
-                    		<ctl:call-test name="owsTests:ows-OWS.GetCapabilities-AcceptVersions.1">
+                    		<ctl:call-test name="owsTests:ows-OWS.GetCapabilities-acceptVersions.1">
                                 <ctl:with-param name="serviceURL" select="$serviceURL"/>
                                 <ctl:with-param name="serviceType" select="$serviceType" />
                                 <ctl:with-param name="serviceVersion" select="$serviceVersion" />
@@ -253,11 +253,11 @@
 								<ctl:with-param name="GetCapabilities_GET" select="$GetCapabilities_GET" />
                             </ctl:call-test>
                             <ctl:message>**********************************************************************</ctl:message>
-                            <ctl:call-test name="owsTests:ows-OWS.GetCapabilities-AcceptVersions.2">
+                            <ctl:call-test name="owsTests:ows-OWS.GetCapabilities-acceptVersions.2">
                                 <ctl:with-param name="serviceURL" select="$serviceURL"/>
                                 <ctl:with-param name="serviceType" select="$serviceType"/>
                                 <ctl:with-param name="serviceVersion" select="$serviceVersion"/>
-                                <ctl:with-param name="AcceptVersions" select="string('2.0.0,1.0.0')"/>
+                                <ctl:with-param name="acceptVersions" select="string('2.0.0,1.0.0')"/>
                                 <ctl:with-param name="responseSchemaLocation" select="$capabilitiesResponseSchemaLocation"/>
                                 <ctl:with-param name="responseSchemaType" select="$capabilitiesResponseSchemaType"/>
                                 <ctl:with-param name="rootElementName" select="$capabilitiesRootElementName"/>
@@ -265,7 +265,7 @@
 								<ctl:with-param name="GetCapabilities_GET" select="$GetCapabilities_GET" />
                             </ctl:call-test>
                             <ctl:message>**********************************************************************</ctl:message>
-                            <ctl:call-test name="owsTests:ows-OWS.GetCapabilities-AcceptVersions.3">
+                            <ctl:call-test name="owsTests:ows-OWS.GetCapabilities-acceptVersions.3">
                                 <ctl:with-param name="serviceURL" select="$serviceURL"/>
                                 <ctl:with-param name="serviceType" select="$serviceType"/>
                                 <ctl:with-param name="serviceVersion" select="$serviceVersion"/>
@@ -339,7 +339,7 @@
 							<xsl:value-of select="$serviceURL"/>
 						</ctl:url>
 						<ctl:body>
-							<sps:GetCapabilities service="SPS" AcceptVersions="2.0.0"
+							<sps:GetCapabilities service="SPS" acceptVersions="2.0.0"
 								xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 								xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 								xmlns:sps="http://www.opengis.net/sps/2.0" 
@@ -356,7 +356,7 @@
 							</ctl:url>
 							<ctl:method>get</ctl:method>
 							<ctl:param name="service"><xsl:value-of select="$serviceType" /></ctl:param>
-							<ctl:param name="AcceptVersions"><xsl:value-of select="$serviceVersion" /></ctl:param>
+							<ctl:param name="acceptVersions"><xsl:value-of select="$serviceVersion" /></ctl:param>
 							<ctl:param name="request">GetCapabilities</ctl:param>
 							<parsers:HTTPParser/>
 						</ctl:request>
@@ -368,7 +368,7 @@
 							</ctl:url>
 							<ctl:method>post</ctl:method>
 							<ctl:body>
-								<sps:GetCapabilities  service="SPS" AcceptVersions="2.0.0"
+								<sps:GetCapabilities  service="SPS" acceptVersions="2.0.0"
 									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 									xmlns:sps="http://www.opengis.net/sps/2.0" 
@@ -500,7 +500,7 @@
 					<ctl:fail/>
 			    </xsl:when>
 			    <xsl:otherwise>
-					<!-- request中只有request是必要的參數,其他像是service=SPS,AcceptVersions=2.0.0都可以省略,伺服器要給預設值-->
+					<!-- request中只有request是必要的參數,其他像是service=SPS,acceptVersions=2.0.0都可以省略,伺服器要給預設值-->
 					<xsl:if test="not($response/sps:Capabilities)">
                         <ctl:message>FAILURE:  The response to a GetCapabilities request is not a correct response.</ctl:message>
                         <ctl:fail />
@@ -512,7 +512,7 @@
 					</xsl:if> 
 					<!-- 預設acceptVersions=2.0.0 -->
 					<xsl:if test="not(string($response/sps:Capabilities/ows:ServiceIdentification/ows:ServiceTypeVersion)=string('2.0.0'))">
-                        <ctl:message>FAILURE:  When request didn't give the parameter "AcceptVersions",the service didn't give the default value "2.0.0".</ctl:message>
+                        <ctl:message>FAILURE:  When request didn't give the parameter "acceptVersions",the service didn't give the default value "2.0.0".</ctl:message>
                         <ctl:fail />
 					</xsl:if>
 					<!-- 沒有給 sections 值，預設要把必有項目都列出來 ServiceIdentification,ServiceProvider,OperationsMetadata,contents -->
@@ -558,7 +558,7 @@
 							<xsl:value-of select="$serviceURL"/>
 						</ctl:url>
 						<ctl:body>
-							<sps:GetCapabilities service="ASDF" AcceptVersions="2.0.0"
+							<sps:GetCapabilities service="ASDF" acceptVersions="2.0.0"
 								xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 								xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 								xmlns:sps="http://www.opengis.net/sps/2.0" 
@@ -584,7 +584,7 @@
 							</ctl:url>
 							<ctl:method>get</ctl:method>
 							<ctl:param name="service">ASDF</ctl:param>
-							<ctl:param name="AcceptVersions"><xsl:value-of select="$serviceVersion" /></ctl:param>
+							<ctl:param name="acceptVersions"><xsl:value-of select="$serviceVersion" /></ctl:param>
 							<ctl:param name="request">GetCapabilities</ctl:param>
 							<parsers:XMLValidatingParser>
 								<parsers:schemas>
@@ -603,7 +603,7 @@
 							</ctl:url>
 							<ctl:method>post</ctl:method>
 							<ctl:body>
-								<sps:GetCapabilities service="ASDF" AcceptVersions="2.0.0"
+								<sps:GetCapabilities service="ASDF" acceptVersions="2.0.0"
 									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 									xmlns:sps="http://www.opengis.net/sps/2.0" 
@@ -647,7 +647,7 @@
 		</code>
 	</test>
 	
-	<test name="owsTests:ows-OWS.GetCapabilities-Exceptions.3"><!-- Same to AcceptVersions.3 so Skip this test -->
+	<test name="owsTests:ows-OWS.GetCapabilities-Exceptions.3"><!-- Same to acceptVersions.3 so Skip this test -->
       <ctl:param name="serviceURL"/>
       <ctl:param name="serviceType"/>
       <ctl:param name="serviceVersion" />
@@ -656,11 +656,11 @@
       <ctl:param name="PostEncodingIsSOAP" />
 	  <ctl:param name="GetCapabilities_GET" />
       <assertion>In the event that a GetCapabilities request cannot be processed for any reason, the response entity shall include an exception report. The exception code must be one of those listed in Table 5.</assertion>
-      <comment>GetCapabilities with an incorrect version parameter ('2000-01-01'), using AcceptVersions.  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root document is an ows:ExceptionReport document; (3) the ExceptionReport shall have the 'VersionNegotiationFailed' exception code.</comment>
+      <comment>GetCapabilities with an incorrect version parameter ('2000-01-01'), using acceptVersions.  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root document is an ows:ExceptionReport document; (3) the ExceptionReport shall have the 'VersionNegotiationFailed' exception code.</comment>
       <link>ows-1.0.0-metadata-atc5</link>
       <link>OGC 05-008c1, 7.4.1, p.19</link>
 		<code>
-            <ctl:message>Issuing a GetCapabilities request with an AcceptVersions parameter of 2000-01-01...</ctl:message>
+            <ctl:message>Issuing a GetCapabilities request with an acceptVersions parameter of 2000-01-01...</ctl:message>
 			<xsl:variable name="request1">
 				<xsl:if test="$PostEncodingIsSOAP=string('true')">
 					<ctl:soap-request version="1.2" charset="UTF-8">
@@ -668,7 +668,7 @@
 							<xsl:value-of select="$serviceURL"/>
 						</ctl:url>
 						<ctl:body>
-							<sps:GetCapabilities service="SPS" AcceptVersions="2000-01-01"
+							<sps:GetCapabilities service="SPS" acceptVersions="2000-01-01"
 								xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 								xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 								xmlns:sps="http://www.opengis.net/sps/2.0" 
@@ -694,7 +694,7 @@
 						<ctl:method>get</ctl:method>
 						<ctl:param name="service"><xsl:value-of select="$serviceType" /></ctl:param>
 						<ctl:param name="request">GetCapabilities</ctl:param>
-						<ctl:param name="AcceptVersions">2000-01-01</ctl:param>
+						<ctl:param name="acceptVersions">2000-01-01</ctl:param>
 						<parsers:XMLValidatingParser>
 							<parsers:schemas>
 								<parsers:schema>
@@ -711,7 +711,7 @@
 							</ctl:url>
 							<ctl:method>post</ctl:method>
 							<ctl:body>
-								<sps:GetCapabilities service="SPS" AcceptVersions="2000-01-01"
+								<sps:GetCapabilities service="SPS" acceptVersions="2000-01-01"
 									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 									xmlns:sps="http://www.opengis.net/sps/2.0" 
@@ -883,7 +883,7 @@
 				<xsl:variable name="request1">
 					<ctl:request>
 						<ctl:url>
-							<xsl:value-of select="concat($serviceURL,'?request~GetCapabilities!service~',$serviceType,'!AcceptVersions~',$serviceVersion)"/>
+							<xsl:value-of select="concat($serviceURL,'?request~GetCapabilities!service~',$serviceType,'!acceptVersions~',$serviceVersion)"/>
 						</ctl:url>
 						<ctl:method>get</ctl:method>
 						<parsers:XMLValidatingParser>
@@ -950,7 +950,7 @@
 							<xsl:value-of select="$serviceURL"/>
 						</ctl:url>
 						<ctl:body>
-							<sps:GetCapabilities SERVICE="SPS" ACCEPTVERSIONS="2.0.0"
+							<sps:GetCapabilities SERVICE="SPS" acceptVersions="2.0.0"
 								xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 								xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 								xmlns:sps="http://www.opengis.net/sps/2.0" 
@@ -976,7 +976,7 @@
 							</ctl:url>
 							<ctl:method>get</ctl:method>
 							<ctl:param name="SERVICE"><xsl:value-of select="$serviceType" /></ctl:param>
-							<ctl:param name="ACCEPTVERSIONS"><xsl:value-of select="$serviceVersion" /></ctl:param>
+							<ctl:param name="acceptVersions"><xsl:value-of select="$serviceVersion" /></ctl:param>
 							<ctl:param name="REQUEST">GetCapabilities</ctl:param>
 							<parsers:XMLValidatingParser>
 								<parsers:schemas>
@@ -995,7 +995,7 @@
 							</ctl:url>
 							<ctl:method>post</ctl:method>
 							<ctl:body>
-								<sps:GetCapabilities SERVICE="SPS" ACCEPTVERSIONS="2.0.0"
+								<sps:GetCapabilities SERVICE="SPS" acceptVersions="2.0.0"
 									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 									xmlns:sps="http://www.opengis.net/sps/2.0" 
@@ -1023,7 +1023,7 @@
 							<xsl:value-of select="$serviceURL"/>
 						</ctl:url>
 						<ctl:body>
-							<sps:GetCapabilities SeRvIcE="SPS" aCcEpTVeRsIoNs="2.0.0"
+							<sps:GetCapabilities SeRvIcE="SPS" acceptVersions="2.0.0"
 								xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 								xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 								xmlns:sps="http://www.opengis.net/sps/2.0" 
@@ -1049,7 +1049,7 @@
 							</ctl:url>
 							<ctl:method>get</ctl:method>
 							<ctl:param name="SeRvIcE"><xsl:value-of select="$serviceType" /></ctl:param>
-							<ctl:param name="aCcEpTVeRsIoNs"><xsl:value-of select="$serviceVersion" /></ctl:param>
+							<ctl:param name="acceptVersions"><xsl:value-of select="$serviceVersion" /></ctl:param>
 							<ctl:param name="RequesT">GetCapabilities</ctl:param>
 							<parsers:XMLValidatingParser>
 								<parsers:schemas>
@@ -1068,7 +1068,7 @@
 							</ctl:url>
 							<ctl:method>post</ctl:method>
 							<ctl:body>
-								<sps:GetCapabilities SeRvIcE="SPS" aCcEpTVeRsIoNs="2.0.0"
+								<sps:GetCapabilities SeRvIcE="SPS" acceptVersions="2.0.0"
 									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 									xmlns:sps="http://www.opengis.net/sps/2.0" 
@@ -1096,7 +1096,7 @@
 							<xsl:value-of select="$serviceURL"/>
 						</ctl:url>
 						<ctl:body>
-							<sps:GetCapabilities service="SPS" acceptversions="2.0.0"
+							<sps:GetCapabilities service="SPS" acceptVersions="2.0.0"
 								xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 								xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 								xmlns:sps="http://www.opengis.net/sps/2.0" 
@@ -1122,7 +1122,7 @@
 							</ctl:url>
 							<ctl:method>get</ctl:method>
 							<ctl:param name="service"><xsl:value-of select="$serviceType" /></ctl:param>
-							<ctl:param name="acceptversions"><xsl:value-of select="$serviceVersion" /></ctl:param>
+							<ctl:param name="acceptVersions"><xsl:value-of select="$serviceVersion" /></ctl:param>
 							<ctl:param name="request">GetCapabilities</ctl:param>
 							<parsers:XMLValidatingParser>
 								<parsers:schemas>
@@ -1141,7 +1141,7 @@
 							</ctl:url>
 							<ctl:method>post</ctl:method>
 							<ctl:body>
-								<sps:GetCapabilities service="SPS" acceptversions="2.0.0"
+								<sps:GetCapabilities service="SPS" acceptVersions="2.0.0"
 									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 									xmlns:sps="http://www.opengis.net/sps/2.0" 
@@ -1179,7 +1179,7 @@
 		</code>
 	</test>
     
-	<test name="owsTests:ows-OWS.GetCapabilities-AcceptVersions.1"><!-- CHECK OK -->
+	<test name="owsTests:ows-OWS.GetCapabilities-acceptVersions.1"><!-- CHECK OK -->
       <ctl:param name="serviceURL"/>
       <ctl:param name="serviceType" />
       <ctl:param name="serviceVersion" />
@@ -1290,23 +1290,23 @@
 		</code>
 	</test>
 	
-	<test name="owsTests:ows-OWS.GetCapabilities-AcceptVersions.2"><!-- CHECK OK -->
+	<test name="owsTests:ows-OWS.GetCapabilities-acceptVersions.2"><!-- CHECK OK -->
       <ctl:param name="serviceURL"/>
       <ctl:param name="serviceType" />
       <ctl:param name="serviceVersion" />
-      <ctl:param name="AcceptVersions" />
+      <ctl:param name="acceptVersions" />
       <ctl:param name="responseSchemaLocation" />
       <ctl:param name="responseSchemaType" />
       <ctl:param name="rootElementName" />
       <ctl:param name="PostEncodingIsSOAP" />
       <ctl:param name="GetCapabilities_GET" />
-      <assertion>Version negotiation using AcceptVersions parameter (preference ordering): Return service metadata corresponding to the most preferred version that is supported. If none of the requested versions are supported, the server must generate an exception with code 'VersionNegotiationFailed'.</assertion>
-      <comment>GetCapabilities with no version and service of $serviceType.  With AcceptVersion, expecting one of the versions listed $AcceptVersions.  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root document is an Capabilities document; (3) the response version must be what was requested. The AcceptVersion element is used with a number of versions, one is expected to return ('1.1.0').</comment>
+      <assertion>Version negotiation using acceptVersions parameter (preference ordering): Return service metadata corresponding to the most preferred version that is supported. If none of the requested versions are supported, the server must generate an exception with code 'VersionNegotiationFailed'.</assertion>
+      <comment>GetCapabilities with no version and service of $serviceType.  With AcceptVersion, expecting one of the versions listed $acceptVersions.  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root document is an Capabilities document; (3) the response version must be what was requested. The AcceptVersion element is used with a number of versions, one is expected to return ('1.1.0').</comment>
       <link>ows-1.0.0-metadata-atc4</link>
       <link>OGC 05-008c1, 7.3.2, p.16</link>
 		<code>
 		
-            <ctl:message>Issuing a GetCapabilities request with an AcceptVersions parameter of <xsl:value-of select="$AcceptVersions"/>...</ctl:message>
+            <ctl:message>Issuing a GetCapabilities request with an acceptVersions parameter of <xsl:value-of select="$acceptVersions"/>...</ctl:message>
 			<xsl:variable name="request1">
 				<xsl:if test="$PostEncodingIsSOAP=string('true')">
 					<ctl:soap-request version="1.2" charset="UTF-8">
@@ -1319,9 +1319,9 @@
 								xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 								xmlns:sps="http://www.opengis.net/sps/2.0" 
 								xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-								<ows:AcceptVersions>
-									<ows:Version><xsl:value-of select="$AcceptVersions" /></ows:Version>
-								</ows:AcceptVersions>
+								<ows:acceptVersions>
+									<ows:Version><xsl:value-of select="$acceptVersions" /></ows:Version>
+								</ows:acceptVersions>
 							</sps:GetCapabilities>
 						</ctl:body>
 						<parsers:SOAPParser return="content">
@@ -1345,7 +1345,7 @@
 							<ctl:method>get</ctl:method>
 							<ctl:param name="request">GetCapabilities</ctl:param>				   
 							<ctl:param name="service"><xsl:value-of select="$serviceType" /></ctl:param>
-							<ctl:param name="acceptversions"><xsl:value-of select="$AcceptVersions" /></ctl:param>
+							<ctl:param name="acceptVersions"><xsl:value-of select="$acceptVersions" /></ctl:param>
 							<parsers:XMLValidatingParser>
 								<parsers:schemas>
 									<parsers:schema>
@@ -1368,9 +1368,9 @@
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 									xmlns:sps="http://www.opengis.net/sps/2.0" 
 									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-									<ows:AcceptVersions>
-										<ows:Version><xsl:value-of select="$AcceptVersions" /></ows:Version>
-									</ows:AcceptVersions>
+									<ows:acceptVersions>
+										<ows:Version><xsl:value-of select="$acceptVersions" /></ows:Version>
+									</ows:acceptVersions>
 								</sps:GetCapabilities>
 							</ctl:body>
 							<parsers:XMLValidatingParser>
@@ -1411,7 +1411,7 @@
 		</code>
 	</test>
 	
-	<test name="owsTests:ows-OWS.GetCapabilities-AcceptVersions.3"><!-- CHECK OK -->
+	<test name="owsTests:ows-OWS.GetCapabilities-acceptVersions.3"><!-- CHECK OK -->
       <ctl:param name="serviceURL"/>
       <ctl:param name="serviceType" />
       <ctl:param name="serviceVersion" />
@@ -1419,12 +1419,12 @@
       <ctl:param name="exceptionReportSchemaType" />
       <ctl:param name="PostEncodingIsSOAP" />
       <ctl:param name="GetCapabilities_GET" />
-      <assertion>Version negotiation using AcceptVersions parameter (preference ordering): Return service metadata corresponding to the most preferred version that is supported. If none of the requested versions are supported, the server must generate an exception with code 'VersionNegotiationFailed'.</assertion>
+      <assertion>Version negotiation using acceptVersions parameter (preference ordering): Return service metadata corresponding to the most preferred version that is supported. If none of the requested versions are supported, the server must generate an exception with code 'VersionNegotiationFailed'.</assertion>
       <comment>GetCapabilities with no version and service of $serviceType.  With AcceptVersion, using a bogus version number ('2000-01-01').  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root document is an ows:ExceptionReport document; (3) the ExceptionReport shall have the 'VersionNegotiationFailed' exception code.</comment>
       <link>ows-1.0.0-metadata-atc4</link>
       <link>OGC 05-008c1, 7.3.2, p.16</link>
 		<code>
-            <ctl:message>Issuing a GetCapabilities request with an AcceptVersions parameter of 2000-01-01...</ctl:message>
+            <ctl:message>Issuing a GetCapabilities request with an acceptVersions parameter of 2000-01-01...</ctl:message>
 			<xsl:variable name="request1">
 				<xsl:if test="$PostEncodingIsSOAP=string('true')">
 					<ctl:soap-request version="1.2" charset="UTF-8">
@@ -1437,9 +1437,9 @@
 								xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 								xmlns:sps="http://www.opengis.net/sps/2.0" 
 								xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-								<ows:AcceptVersions>
+								<ows:acceptVersions>
 									<ows:Version>2000-01-01</ows:Version>
-								</ows:AcceptVersions>
+								</ows:acceptVersions>
 							</sps:GetCapabilities>
 						</ctl:body>
 						<parsers:SOAPParser return="content">
@@ -1463,7 +1463,7 @@
 							<ctl:method>get</ctl:method>
 							<ctl:param name="request">GetCapabilities</ctl:param>				   
 							<ctl:param name="service"><xsl:value-of select="$serviceType" /></ctl:param>
-							<ctl:param name="acceptversions">2000-01-01</ctl:param>
+							<ctl:param name="acceptVersions">2000-01-01</ctl:param>
 							<parsers:XMLValidatingParser>
 								<parsers:schemas>
 									<parsers:schema>
@@ -1486,9 +1486,9 @@
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 									xmlns:sps="http://www.opengis.net/sps/2.0" 
 									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-									<ows:AcceptVersions>
+									<ows:acceptVersions>
 										<ows:Version>2000-01-01</ows:Version>
-									</ows:AcceptVersions>
+									</ows:acceptVersions>
 								</sps:GetCapabilities>
 							</ctl:body>
 							<parsers:XMLValidatingParser>
@@ -1670,7 +1670,7 @@
 							<xsl:value-of select="$serviceURL"/>
 						</ctl:url>
 						<ctl:body>
-							<sps:GetCapabilities service="SPS" AcceptVersions="2.0.0"
+							<sps:GetCapabilities service="SPS" acceptVersions="2.0.0"
 								xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 								xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 								xmlns:sps="http://www.opengis.net/sps/2.0" 
@@ -1702,7 +1702,7 @@
 							<ctl:method>get</ctl:method>
 							<ctl:param name="service"><xsl:value-of select="$serviceType" /></ctl:param>
 							<ctl:param name="request">GetCapabilities</ctl:param>
-							<ctl:param name="AcceptVersions"><xsl:value-of select="$serviceVersion" /></ctl:param>
+							<ctl:param name="acceptVersions"><xsl:value-of select="$serviceVersion" /></ctl:param>
 							<ctl:param name="sections">ServiceIdentification,OperationsMetadata</ctl:param>
 							<parsers:XMLValidatingParser>
 								<parsers:schemas>
@@ -1721,7 +1721,7 @@
 							</ctl:url>
 							<ctl:method>post</ctl:method>
 							<ctl:body>
-								<sps:GetCapabilities service="SPS" AcceptVersions="2.0.0"
+								<sps:GetCapabilities service="SPS" acceptVersions="2.0.0"
 									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 									xmlns:sps="http://www.opengis.net/sps/2.0" 
@@ -1778,7 +1778,7 @@
 		<ctl:param name="PostEncodingIsSOAP" />
 		<ctl:param name="GetCapabilities_GET" />
 		<assertion>
-		The response to a GetCapabilities request containing an AcceptVersions 
+		The response to a GetCapabilities request containing an acceptVersions 
 		parameter specifying a supported format must include a response entity 
 		that corresponds to the requested media type.
 		</assertion>
