@@ -3113,7 +3113,8 @@ offering. Enter the grid resolutions below.</p>
                </ctl:url>
                <ctl:method>post</ctl:method>
                <ctl:header name="Content-type">text/xml</ctl:header>
-               <ctl:body><![CDATA[<GetCapabilities xmlns="http://www.opengis.net/wcs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wcs http://schemas.opengis.net/wcs/1.0.0/wcsCapabilities.xsd" version="1.0.0" service="WCS"  section = "/">
+              <ctl:body><![CDATA[<GetCapabilities xmlns="http://www.opengis.net/wcs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wcs http://schemas.opengis.net/wcs/1.0.0/wcsCapabilities.xsd" version="1.0.0" service="WCS">
++  <section>/</section>
 </GetCapabilities>]]></ctl:body>
                <xsl:copy-of select="$parser"/>
             </ctl:request>
@@ -5721,7 +5722,7 @@ offering. Enter the grid resolutions below.</p>
                            </wcs:spatialSubset>
                         </wcs:domainSubset>
                         <wcs:output>
-                           <wcs:format><xsl:value-of select="wcs:supportedFormats/wcs:formats[1]"/></wcs:format>
+                           <wcs:format><xsl:value-of select="$request1//wcs:supportedFormats/wcs:formats[1]"/></wcs:format>
                         </wcs:output>
                      </wcs:GetCoverage>
                   </ctl:body>
