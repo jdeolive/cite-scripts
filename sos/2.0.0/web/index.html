@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SOS 2.0.0 Compliance Test Suite</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body>
+<h1>Overview</h1>
+<p>This test suite is based on the following OGC specifications:</p>
+<ul>
+    <li><em>OGC Web Services Common Specification</em>, Version 1.1.0 <a href="http://portal.opengeospatial.org/files/?artifact_id=20040">[OGC 06-121r3]</a></li>
+    <li><em>Definition Identifier URNs in OGC Namespace</em>, Version 1.1.0 <a href="http://portal.opengeospatial.org/files/?artifact_id=4700">[OGC 06-023r1]</a></a> 
+        (ISO/CD 19136, OGC 03-105r1)</li>
+    <li><em>OpenGIS Sensor Observation Service Implementation Specification</em>, Version 2.0 <a href="https://portal.opengeospatial.org/files/?artifact_id=47599">[OGC 12-006]</a></li>
+</ul>
+
+<h2>What is tested</h2>
+<ul>
+  <li>GetCapabilities, <i>GET / POST / SOAP</i> method</i></li>
+  <li>DescribeSenor, <i>GET / POST / SOAP</i> method</li>
+  <li>GetObservation, <i>GET / POST / SOAP</i> method</li>
+</ul>
+
+<h2>What is not tested</h2>
+<ul>
+	<li>Optional operations:
+		<ul>
+			<li>GetObservationByID</li>
+			<li>GetFeatureOfInterest</li>
+			<li>InsertSensor</li>
+			<li>DeleteSensor</li>
+			<li>InsertObservation</li>
+			<li>InsertResult</li>
+			<li>InsertResultTemplate</li>
+			<li>GetResultTemplate</li>
+			<li>GetResult</li>
+		</ul>
+	</li>
+</ul>
+
+
+<BR>
+<h2>Test Data</h2>
+<ul>
+	<li>n/a</li>
+</ul>
+
+
+<h2>Namespaces</h2>
+<ul>
+	<li><h3>Service being tested must use these namespaces:</h3>
+		<table>	
+			<tr><td>fes</td><td>-</td><td>http://www.opengis.net/fes/2.0</td></tr>
+			<tr><td>gml</td><td>-</td><td>http://www.opengis.net/gml/3.2</td></tr>
+			<tr><td>om</td><td>-</td><td>http://www.opengis.net/om/2.0</td></tr>
+			<tr><td>ows</td><td>-</td><td>http://www.opengis.net/ows/1.1</td></tr>
+			<tr><td>soap11</td><td>-</td><td>http://schemas.xmlsoap.org/soap/</td></tr>
+			<tr><td>soap12</td><td>-</td><td>http://www.w3.org/2003/05/soap-envelope</td></tr>
+			<tr><td>sos</td><td>-</td><td>http://www.opengis.net/sos/2.0</td></tr>
+			<tr><td>swe</td><td>-</td><td>http://www.opengis.net/swe/2.0</td></tr>
+			<tr><td>swes</td><td>-</td><td>http://www.opengis.net/swes/2.0</td></tr>
+			<tr><td>wsa</td><td>-</td><td>http://www.w3.org/2005/08/addressing</td></tr>
+			<tr><td>xs</td><td>-</td><td>http://www.w3.org/2001/XMLSchema</td></tr>
+		</table>
+	</li>
+</ul>
+
+<h2>Schemas</h2>
+<ul>All schemas used for validation in these tests can be found at:  <a href="http://schemas.opengis.net/">http://schemas.opengis.net/</a>
+
+<h2>Release Notes</h2>
+<p>
+  Release notes are available from the <a href="relnotes.txt">relnotes.txt</a>.
+</p>
+	
+</body>
+</html>

@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ctl:package 
+	xmlns:sosFunctions="http://www.opengis.net/sos/2.0"	
+	xmlns:owsTests="http://www.opengis.net/ows/1.1"
+	xmlns:ctl="http://www.occamlab.com/ctl" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+	xmlns:fes="http://www.opengis.net/fes/2.0"
+	xmlns:gml="http://www.opengis.net/gml/3.2" 
+	xmlns:om="http://www.opengis.net/om/2.0"
+	xmlns:ows="http://www.opengis.net/ows/1.1" 
+	xmlns:soap11="http://schemas.xmlsoap.org/soap/" 
+	xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 	
+	xmlns:sos="http://www.opengis.net/sos/2.0"	
+	xmlns:swe="http://www.opengis.net/swe/2.0"	
+	xmlns:swes="http://www.opengis.net/swes/2.0"	
+	xmlns:wsa="http://www.w3.org/2005/08/addressing"	
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:parsers="http://www.occamlab.com/te/parsers"
+>
+	<ctl:suite name="sos:suite">
+		<ctl:title>SOS 2.0 Compliance Test Suite</ctl:title>
+		<ctl:description>Verifies that an SOS 2.0 implementation complies with a given conformance class.</ctl:description>
+		<ctl:link></ctl:link>		
+		<ctl:starting-test>sos:Main</ctl:starting-test>
+	</ctl:suite>
+
+	<ctl:test name="sos:Main">
+		<ctl:assertion>The IUT satisfies all applicable assertions.</ctl:assertion>
+		<ctl:code>
+			<!-- User Input Form -->
+			<xsl:variable name="form-values">
+				<ctl:form height="750" width="1024">
+					<body>
+						<h2 align="center">Compliance test suite for Sensor Observation Service (SOS) 2.0</h2>
+						<h3 align="center">Service metadata and test options</h3>
+						<p>Please provide a URL from which a capabilities document can be retrieved. </p>
+						<p>Modify the URL template below to specify the location of an OGC SOS implementation under test.</p>	
+						<blockquote>
+							<table border="1" padding="4" bgcolor="#00ffff" align="center">
+								<tr>
+									<td align="left">Service URL:</td>                        
+									<td align="center">
+										<input name="service-url" size="128" 
+										type="text" 
+										value=""/>
+									</td>
+								</tr>				
+							</table>
+						</blockquote>
+						<p>Please select how tho send this request.</p>
+						<blockquote>
+							<table border="1" padding="4" bgcolor="#00ffff" align="center">
+								<tr>
+									<td><input type="radio" name="request-via" checked="true" value="GET">HTTP Get</input></td>
+									<td><input type="radio" name="request-via" value="POST">HTTP Post</input></td>
+								</tr>				
+							</table>						
+						</blockquote>
+						<p>Please select whether to run all tests or just selected tests.</p>
+						<blockquote>
+							<table border="1" padding="4" bgcolor="#00ffff" align="center">
+								<tr>
+									<td><input type="radio" name="which-tests" checked="true" value="all">Run all tests</input></td>
+									<td><input type="radio" name="which-tests" value="selected">Run selected tests</input></td>
+								</tr>				
+							</table>						
+						</blockquote>
+						<p>If you want to run selected tests, please select the checkboxes for the tests you want to run.</p>
+						<blockquote>
+							<table border="1" padding="4" bgcolor="#00ffff" align="center">
+								<tr><th colspan="4" align="left"><input type="checkbox" name="01">01.OWS Main</input></th></tr>
+								<tr>
+									<td><input type="checkbox" name="0101">01.01.OWS.ContentType.1</input></td>
+									<td><input type="checkbox" name="0102">01.02.OWS.GetCapabilities-Exceptions.2</input></td>
+									<td><input type="checkbox" name="0103">01.03.OWS.GetCapabilities-UpdateSequence.1</input></td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" name="0104">01.04.OWS.GetCapabilities-Exceptions.5</input></td>
+									<td><input type="checkbox" name="0105">01.05.OWS.CaseInsensitiveKvpNames.1</input></td>
+									<td><input type="checkbox" name="0106">01.06.OWS.GetCapabilities-AcceptVersions.1</input></td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" name="0107">01.07.OWS.GetCapabilities-AcceptVersions.2</input></td>
+									<td><input type="checkbox" name="0108">01.08.OWS.GetCapabilities-AcceptVersions.3</input></td>
+									<td><input type="checkbox" name="0109">01.09.OWS.GetCapabilities-Sections.1</input></td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" name="0110">01.10.OWS.GetCapabilities-Sections.2</input></td>
+									<td><input type="checkbox" name="0111">01.11.OWS.GetCapabilities-AcceptFormats.1</input></td>
+									<td>--</td>
+								</tr>
+
+								<tr><th colspan="4" align="left"><input type="checkbox" name="02">02.SOS General Main</input></th></tr>
+								<tr>
+									<td><input type="checkbox" name="0201">02.01.SOS.General-InvalidRequest.1</input></td>
+									<td>--</td>
+									<td>--</td>
+								</tr>
+								<tr><th colspan="4" align="left"><input type="checkbox" name="03">03.SOS Core: Get Capabilities</input></th></tr>
+								<tr>
+									<td><input type="checkbox" name="0301">03.01.KVPRequestParameterHandling</input></td>
+									<td>--</td>
+									<td>--</td>
+								</tr>
+								<tr><th colspan="4" align="left"><input type="checkbox" name="04">04.SOS Core: DescribeSensor</input></th></tr>
+								<tr><th colspan="4" align="left"><input type="checkbox" name="05">05.SOS Core: GetObservation</input></th></tr>
+								<tr><th colspan="4" align="left"><input type="checkbox" name="06">06.SOS enhancedOperations: GetFeatureOfInterest</input></th></tr>
+								<tr><th colspan="4" align="left"><input type="checkbox" name="07">07.SOS enhancedOperations: GetObservationById</input></th></tr>
+								<tr><th colspan="4" align="left"><input type="checkbox" name="08">08.SOS Transactional: InsertionCapabilities</input></th></tr>
+								<tr><th colspan="4" align="left"><input type="checkbox" name="09">09.SOS Transactional: InsertSensor</input></th></tr>
+								<tr><th colspan="4" align="left"><input type="checkbox" name="10">10.SOS Transactional: DeleteSensor</input></th></tr>
+								<tr><th colspan="4" align="left"><input type="checkbox" name="11">11.SOS Transactional: InsertObservation</input></th></tr>
+								<tr><th colspan="4" align="left"><input type="checkbox" name="12">12.SOS resultHandling: InsertResultTemplate</input></th></tr>
+								<tr><th colspan="4" align="left"><input type="checkbox" name="13">13.SOS resultHandling: InsertResult</input></th></tr>
+								<tr><th colspan="4" align="left"><input type="checkbox" name="14">14.SOS resultRetrieval: GetResultTemplate</input></th></tr>
+								<tr><th colspan="4" align="left"><input type="checkbox" name="15">15.SOS resultRetrieval: GetResult</input></th></tr>
+							</table>						
+						</blockquote>
+
+						<p>Please press the "Start" button to start testing.</p>
+						<div align="center">
+							<input type="submit" value="Start"/>						
+						</div>
+					</body>
+				</ctl:form>
+			</xsl:variable>
+
+			<!-- Get user input, message user options -->	
+			<xsl:variable name="capabilities-url" select="$form-values/values/value[@key='service-url']"/>
+			<ctl:message select="concat('capabilities-url: ',$capabilities-url)"/>
+			<xsl:variable name="request-via" select="$form-values/values/value[@key='request-via']"/>
+			<ctl:message select="concat('request-via: ',$request-via)"/>
+			<xsl:variable name="which-tests" select="$form-values/values/value[@key='which-tests']"/>
+			<ctl:message select="concat('which tests: ',$which-tests)"/>
+
+			<!-- Get capabilities, find url and method(GET or POST) for all operations -->
+			<xsl:variable name="user-capabilities">
+				<xsl:if test="($request-via eq 'GET')">
+					<ctl:request>
+						<ctl:url>
+							<xsl:value-of select="$capabilities-url"/>
+						</ctl:url>
+						<ctl:method>get</ctl:method>
+						<ctl:param name="request">GetCapabilities</ctl:param>
+					</ctl:request>
+				</xsl:if>
+				<xsl:if test="($request-via eq 'POST')">
+					<ctl:request>
+						<ctl:url>
+							<xsl:value-of select="$capabilities-url" />
+						</ctl:url>
+						<ctl:method>post</ctl:method>
+						<ctl:body>
+							<sos:GetCapabilities service="SOS" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+								xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+								http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"/>
+						</ctl:body>
+					</ctl:request>
+				</xsl:if>
+			</xsl:variable>
+			<xsl:choose>
+				<xsl:when test="not($user-capabilities/*)">
+					<ctl:message>FAILURE: Missing or invalid response entity.</ctl:message>
+					<ctl:fail/>
+				</xsl:when>
+				<xsl:otherwise>
+					<!-- Set Operations's URL -->
+					<xsl:variable name="IsGetCapabilities-GET" select="count($user-capabilities//ows:Operation[@name='GetCapabilities']//ows:Get) > 0" />
+					<xsl:variable name="GetCapabilities-URL">
+						<xsl:if test="$IsGetCapabilities-GET">
+							<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetCapabilities']//ows:Get/@xlink:href"/>
+						</xsl:if>
+						<xsl:if test="not($IsGetCapabilities-GET)">
+							<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetCapabilities']//ows:Post/@xlink:href"/>
+						</xsl:if>
+					</xsl:variable>
+					<xsl:variable name="IsDescribeSensor-GET" select="count($user-capabilities//ows:Operation[@name='DescribeSensor']//ows:Get) > 0" />
+					<xsl:variable name="DescribeSensor-URL">
+						<xsl:if test="$IsDescribeSensor-GET">
+							<xsl:value-of select="$user-capabilities//ows:Operation[@name='DescribeSensor']//ows:Get/@xlink:href"/>
+						</xsl:if>
+						<xsl:if test="not($IsDescribeSensor-GET)">
+							<xsl:value-of select="$user-capabilities//ows:Operation[@name='DescribeSensor']//ows:Post/@xlink:href"/>
+						</xsl:if>
+					</xsl:variable>
+					<xsl:variable name="IsGetObservation-GET" select="count($user-capabilities//ows:Operation[@name='GetObservation']//ows:Get) > 0" />
+					<xsl:variable name="GetObservation-URL">
+						<xsl:if test="$IsGetObservation-GET">
+							<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetObservation']//ows:Get/@xlink:href"/>
+						</xsl:if>
+						<xsl:if test="not($IsGetObservation-GET)">
+							<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetObservation']//ows:Post/@xlink:href"/>
+						</xsl:if>
+					</xsl:variable>
+
+					<!-- Set selected tests.-->
+					<xsl:variable name="t01" select="$form-values/values/value[@key='01']"/>
+					<xsl:variable name="t0101" select="$form-values/values/value[@key='0101']"/>
+					<xsl:variable name="test0101" select="($which-tests eq 'all' or $t01 eq 'on' or $t0101 eq 'on' )"/>
+					<xsl:variable name="t0102" select="$form-values/values/value[@key='0102']"/>
+					<xsl:variable name="test0102" select="($which-tests eq 'all' or $t01 eq 'on' or $t0102 eq 'on' )"/>
+					<xsl:variable name="t0103" select="$form-values/values/value[@key='0103']"/>
+					<xsl:variable name="test0103" select="($which-tests eq 'all' or $t01 eq 'on' or $t0103 eq 'on' )"/>
+					<xsl:variable name="t0104" select="$form-values/values/value[@key='0104']"/>
+					<xsl:variable name="test0104" select="($which-tests eq 'all' or $t01 eq 'on' or $t0104 eq 'on' )"/>
+					<xsl:variable name="t0105" select="$form-values/values/value[@key='0105']"/>
+					<xsl:variable name="test0105" select="($which-tests eq 'all' or $t01 eq 'on' or $t0105 eq 'on' )"/>
+					<xsl:variable name="t0106" select="$form-values/values/value[@key='0106']"/>
+					<xsl:variable name="test0106" select="($which-tests eq 'all' or $t01 eq 'on' or $t0106 eq 'on' )"/>
+					<xsl:variable name="t0107" select="$form-values/values/value[@key='0107']"/>
+					<xsl:variable name="test0107" select="($which-tests eq 'all' or $t01 eq 'on' or $t0107 eq 'on' )"/>
+					<xsl:variable name="t0108" select="$form-values/values/value[@key='0108']"/>
+					<xsl:variable name="test0108" select="($which-tests eq 'all' or $t01 eq 'on' or $t0108 eq 'on' )"/>
+					<xsl:variable name="t0109" select="$form-values/values/value[@key='0109']"/>
+					<xsl:variable name="test0109" select="($which-tests eq 'all' or $t01 eq 'on' or $t0109 eq 'on' )"/>
+					<xsl:variable name="t0110" select="$form-values/values/value[@key='0110']"/>
+					<xsl:variable name="test0110" select="($which-tests eq 'all' or $t01 eq 'on' or $t0110 eq 'on' )"/>
+					<xsl:variable name="t0111" select="$form-values/values/value[@key='0111']"/>
+					<xsl:variable name="test0111" select="($which-tests eq 'all' or $t01 eq 'on' or $t0111 eq 'on' )"/>
+					<xsl:variable name="test01" select="$test0101 or $test0102 or $test0103 or $test0104 or $test0105 or $test0106 or $test0107 or $test0108 or $test0109 or $test0110 or $test0111"/><!-- all test in 01-->
+					
+					<xsl:variable name="t02" select="$form-values/values/value[@key='02']"/>
+					<xsl:variable name="t0201" select="$form-values/values/value[@key='0201']"/>
+					<xsl:variable name="test0201" select="($which-tests eq 'all' or $t02 eq 'on' or $t0201 eq 'on')"/>
+					<xsl:variable name="test02" select="$test0201"/><!-- all test in 02-->
+
+					<xsl:variable name="t03" select="$form-values/values/value[@key='03']"/>
+					<xsl:variable name="t0301" select="$form-values/values/value[@key='0301']"/>
+					<xsl:variable name="test0301" select="($which-tests eq 'all' or $t03 eq 'on' or $t0301 eq 'on')"/>
+					<xsl:variable name="test03" select="$test0301"/><!-- all test in 03-->
+
+					<xsl:variable name="test04" select="'1' eq '2'"/><!-- all test in 04-->
+					<xsl:variable name="test05" select="'1' eq '2'"/><!-- all test in 05-->
+					<xsl:variable name="test06" select="'1' eq '2'"/><!-- all test in 06-->
+					<xsl:variable name="test07" select="'1' eq '2'"/><!-- all test in 07-->
+					<xsl:variable name="test08" select="'1' eq '2'"/><!-- all test in 08-->
+					<xsl:variable name="test09" select="'1' eq '2'"/><!-- all test in 09-->
+					<xsl:variable name="test10" select="'1' eq '2'"/><!-- all test in 10-->
+					<xsl:variable name="test11" select="'1' eq '2'"/><!-- all test in 11-->
+					<xsl:variable name="test12" select="'1' eq '2'"/><!-- all test in 12-->
+					<xsl:variable name="test13" select="'1' eq '2'"/><!-- all test in 13-->
+					<xsl:variable name="test14" select="'1' eq '2'"/><!-- all test in 14-->
+					<xsl:variable name="test15" select="'1' eq '2'"/><!-- all test in 15-->
+					
+					
+					<!-- Show message about selected test.  -->
+					<ctl:message select="concat('run 01.OWS Main: ',$test01)"/>
+					<ctl:message select="concat('run 01.01.OWS.ContentType.1: ',$test0101)"/>
+					<ctl:message select="concat('run 01.02.OWS.GetCapabilities-Exceptions.2: ',$test0102)"/>
+					<ctl:message select="concat('run 01.03.OWS.GetCapabilities-UpdateSequence.1: ',$test0103)"/>
+					<ctl:message select="concat('run 01.04.OWS.GetCapabilities-Exceptions.5: ',$test0104)"/>
+					<ctl:message select="concat('run 01.05.OWS.CaseInsensitiveKvpNames.1: ',$test0105)"/>
+					<ctl:message select="concat('run 01.06.OWS.GetCapabilities-AcceptVersions.1: ',$test0106)"/>
+					<ctl:message select="concat('run 01.07.OWS.GetCapabilities-AcceptVersions.2: ',$test0107)"/>
+					<ctl:message select="concat('run 01.08.OWS.GetCapabilities-AcceptVersions.3: ',$test0108)"/>
+					<ctl:message select="concat('run 01.09.OWS.GetCapabilities-Sections.1: ',$test0109)"/>
+					<ctl:message select="concat('run 01.10.OWS.GetCapabilities-Sections.2: ',$test0110)"/>
+					<ctl:message select="concat('run 01.11.OWS.GetCapabilities-AcceptFormats.1: ',$test0111)"/>
+					
+					<ctl:message select="concat('run 02.SOS General Main: ',$test02)"/>
+					<ctl:message select="concat('run 02.01.SOS.General-InvalidRequest.1: ',$test0201)"/>
+					
+					<ctl:message select="concat('run 03.SOS Core: Get Capabilities: ',$test03)"/>
+					<ctl:message select="concat('run 03.01.KVPRequestParameterHandling: ',$test0301)"/>
+					
+					<ctl:message select="concat('run 04.SOS Core: DescribeSensor: ',$test04)"/>
+					<ctl:message select="concat('run 05.SOS Core: GetObservation: ',$test05)"/>
+					<ctl:message select="concat('run 06.SOS enhancedOperations: GetFeatureOfInterest: ',$test06)"/>
+					<ctl:message select="concat('run 07.SOS enhancedOperations: GetObservationById: ',$test07)"/>
+					<ctl:message select="concat('run 08.SOS Transactional: InsertionCapabilities: ',$test08)"/>
+					<ctl:message select="concat('run 09.SOS Transactional: InsertSensor: ',$test09)"/>
+					<ctl:message select="concat('run 10.SOS Transactional: DeleteSensor: ',$test10)"/>
+					<ctl:message select="concat('run 11.SOS Transactional: InsertObservation: ',$test11)"/>
+					<ctl:message select="concat('run 12.SOS resultHandling: InsertResultTemplate: ',$test12)"/>
+					<ctl:message select="concat('run 13.SOS resultHandling: InsertResult: ',$test13)"/>
+					<ctl:message select="concat('run 14.SOS resultRetrieval: GetResultTemplate: ',$test14)"/>
+					<ctl:message select="concat('run 15.SOS resultRetrieval: GetResult: ',$test15)"/>
+					
+					<!-- set other "global" variables -->			
+					<xsl:variable name="ogc.schema.root" select="'xsd/ogc/'"/>
+					<xsl:variable name="sos.schema.root" select="$ogc.schema.root"/>
+
+					<xsl:variable name="sos.version" select="'2.0.0'"/>		
+					<xsl:variable name="ows.version" select="'1.1.0'"/>
+					<xsl:variable name="exceptionReportSchema" select="sosFunctions:exceptionReportSchemaPath($ogc.schema.root, $ows.version)"/>
+
+
+					<!-- 分類測試 -->
+					<xsl:if test="$test01">
+						<ctl:message>***************************</ctl:message>
+						<ctl:message>Running OWS Common Tests...</ctl:message>
+						<ctl:message>***************************</ctl:message>
+						<ctl:call-test name="owsTests:ows-main">
+							<ctl:with-param name="serviceURL" select="$GetCapabilities-URL"/>
+							<ctl:with-param name="isGET" select="$IsGetCapabilities-GET"/>
+							<ctl:with-param name="serviceType" select="string('SOS')"/>
+							<ctl:with-param name="serviceVersion" select="$sos.version" />
+							<ctl:with-param name="capabilitiesRootElementName" select="string('Capabilities')" />
+							<ctl:with-param name="capabilitiesResponseSchemaLocation" select="sosFunctions:schemaPath($sos.schema.root, $sos.version,'sos', 'sosGetCapabilities.xsd')"/>
+							<ctl:with-param name="capabilitiesResponseSchemaType" select="string('resource')" />
+							<ctl:with-param name="capabilitiesResponseContentType" select="string('text/xml')" />
+							<ctl:with-param name="exceptionReportSchemaLocation" select="$exceptionReportSchema"/>
+							<ctl:with-param name="exceptionReportSchemaType" select="string('resource')" />
+							<ctl:with-param name="test0101" select="$test0101"/>
+							<ctl:with-param name="test0102" select="$test0102"/>
+							<ctl:with-param name="test0103" select="$test0103"/>
+							<ctl:with-param name="test0104" select="$test0104"/>
+							<ctl:with-param name="test0105" select="$test0105"/>
+							<ctl:with-param name="test0106" select="$test0106"/>
+							<ctl:with-param name="test0107" select="$test0107"/>
+							<ctl:with-param name="test0108" select="$test0108"/>
+							<ctl:with-param name="test0109" select="$test0109"/>
+							<ctl:with-param name="test0110" select="$test0110"/>
+							<ctl:with-param name="test0111" select="$test0111"/>
+						</ctl:call-test>
+					</xsl:if>
+
+					<xsl:if test="$test02">
+						<ctl:message>****************************</ctl:message>
+						<ctl:message>Running General SOS Tests...</ctl:message>
+						<ctl:message>****************************</ctl:message>
+						<ctl:call-test name="sos:general-main">
+							<ctl:with-param name="serviceURL" select="$GetCapabilities-URL" />
+							<ctl:with-param name="isGET" select="$IsGetCapabilities-GET"/>
+							<ctl:with-param name="exceptionReportSchema" select="$exceptionReportSchema" />
+							<ctl:with-param name="test0201" select="$test0201"/>
+						</ctl:call-test>			
+					</xsl:if>
+
+					<xsl:if test="$test03">
+						<ctl:message>****************************</ctl:message>
+						<ctl:message>Running test03 Tests...</ctl:message>
+						<ctl:message>****************************</ctl:message>
+					</xsl:if>
+					
+					<xsl:if test="$test04">
+						<ctl:message>****************************</ctl:message>
+						<ctl:message>Running test04 Tests...</ctl:message>
+						<ctl:message>****************************</ctl:message>
+					</xsl:if>
+					
+					<xsl:if test="$test05">
+						<ctl:message>****************************</ctl:message>
+						<ctl:message>Running test05 Tests...</ctl:message>
+						<ctl:message>****************************</ctl:message>
+					</xsl:if>
+					
+					<xsl:if test="$test06">
+						<ctl:message>****************************</ctl:message>
+						<ctl:message>Running test06 Tests...</ctl:message>
+						<ctl:message>****************************</ctl:message>
+					</xsl:if>
+					
+					<xsl:if test="$test07">
+						<ctl:message>****************************</ctl:message>
+						<ctl:message>Running test07 Tests...</ctl:message>
+						<ctl:message>****************************</ctl:message>
+					</xsl:if>
+					
+					<xsl:if test="$test08">
+						<ctl:message>****************************</ctl:message>
+						<ctl:message>Running test08 Tests...</ctl:message>
+						<ctl:message>****************************</ctl:message>
+					</xsl:if>
+					
+					<xsl:if test="$test09">
+						<ctl:message>****************************</ctl:message>
+						<ctl:message>Running test09 Tests...</ctl:message>
+						<ctl:message>****************************</ctl:message>
+					</xsl:if>
+					
+					<xsl:if test="$test10">
+						<ctl:message>****************************</ctl:message>
+						<ctl:message>Running test10 Tests...</ctl:message>
+						<ctl:message>****************************</ctl:message>
+					</xsl:if>
+					
+					<xsl:if test="$test11">
+						<ctl:message>****************************</ctl:message>
+						<ctl:message>Running test11 Tests...</ctl:message>
+						<ctl:message>****************************</ctl:message>
+					</xsl:if>
+					
+					<xsl:if test="$test12">
+						<ctl:message>****************************</ctl:message>
+						<ctl:message>Running test12 Tests...</ctl:message>
+						<ctl:message>****************************</ctl:message>
+					</xsl:if>
+					
+					<xsl:if test="$test13">
+						<ctl:message>****************************</ctl:message>
+						<ctl:message>Running test13 Tests...</ctl:message>
+						<ctl:message>****************************</ctl:message>
+					</xsl:if>
+					
+					<xsl:if test="$test14">
+						<ctl:message>****************************</ctl:message>
+						<ctl:message>Running test14 Tests...</ctl:message>
+						<ctl:message>****************************</ctl:message>
+					</xsl:if>
+					
+					<xsl:if test="$test15">
+						<ctl:message>****************************</ctl:message>
+						<ctl:message>Running test15 Tests...</ctl:message>
+						<ctl:message>****************************</ctl:message>
+					</xsl:if>
+				</xsl:otherwise>
+			</xsl:choose>
+		</ctl:code>
+	</ctl:test>
+
+	<ctl:package>
+		<ctl:test name="sos:general-main">
+			<ctl:param name="serviceURL" />
+			<ctl:param name="isGET" />
+			<ctl:param name="exceptionReportSchema" />
+			<ctl:param name="test0201" />
+			<ctl:assertion>All assertions for "general" conformance are satisfied.</ctl:assertion>
+			<ctl:comment>Test driver for the general module.</ctl:comment>
+			<ctl:code>
+				<ctl:message select="concat('run 02.01.SOS.General-InvalidRequest.1: ',$test0201)"/>
+				<xsl:if test="$test0201 eq 'true'">
+					<ctl:message select="'******************** test0201 sos:general-SOS.General-InvalidRequest.1 ********************'"/>
+					<ctl:call-test name="sos:general-SOS.General-InvalidRequest.1">
+						<ctl:with-param name="serviceURL" select="$serviceURL" />
+						<ctl:with-param name="isGET" select="$isGET"/>
+							<ctl:with-param name="exceptionReportSchema" select="$exceptionReportSchema" />
+					</ctl:call-test>
+				</xsl:if>
+			</ctl:code>
+		</ctl:test>
+		<ctl:test name="sos:general-SOS.General-InvalidRequest.1">
+			<ctl:param name="serviceURL" />
+			<ctl:param name="isGET" />
+			<ctl:param name="exceptionReportSchema" />
+			<ctl:assertion>Sending a request that is non-conformant to a schema associated with an SOS operation causes the server to return a valid error report message with an exceptionCode value of MissingParameterValue.</ctl:assertion>
+			<ctl:comment>Send several test documents that are invalid according to the schemas associated with some of the SOS operations (i.e. the mandatory operations). Pass if the service returns a valid exception message with an exceptionCode value of InvalidParamterValue; fail otherwise.</ctl:comment>
+			<ctl:link title="Verify that an invalid request produces an appropriate response from the server.">docs/sos/1.0/SOS 1.0 ATS.html#SOS.General-InvalidRequest</ctl:link>
+			<ctl:code>
+				<!--
+                    1.)  Issue several invalid request documents to the service.
+                    2.)  Validate the response against the ExceptionReport schema.
+                    3.)  If the response validates, then check that the exceptionCode value is "MissingParameterValue", not "InvalidRequest" (which is not specified as a valid exception code by the SOS spec)
+                -->
+				<ctl:message>Issuing an invalid request to:  <xsl:value-of select="$serviceURL" /></ctl:message>		     
+				<ctl:message select="'The body of the request will be &quot;test&quot;'"/>
+				<xsl:variable name="invalidRequestResponse">
+					<ctl:request>
+						<ctl:url>
+							<xsl:value-of select="$serviceURL" />
+						</ctl:url>
+						<ctl:method>post</ctl:method>
+						<ctl:body>test</ctl:body>
+						<ctl:call-function name="sosFunctions:xmlValidatingParser">	
+							<ctl:with-param name="schemaFile" select="$exceptionReportSchema"/>
+						</ctl:call-function>
+					</ctl:request>
+				</xsl:variable>        
+				<xsl:choose>
+					<xsl:when test="not($invalidRequestResponse/*)">
+						<ctl:message>FAILURE:  The server did not return a response to an invalid request or the response from the server was not a valid exception report.  The response from the server was:  "<xsl:copy-of select="$invalidRequestResponse/*" />"</ctl:message>
+						<ctl:message select="concat('Schema file: ', $exceptionReportSchema)"/>
+						<ctl:fail />
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>The response was <xsl:value-of select="sosFunctions:getExceptionInfo($invalidRequestResponse)" /></ctl:message>
+						<ctl:message>Checking the validity of the response to an invalid request.</ctl:message>
+						<xsl:variable name="isCorrect">
+							<ctl:call-function name="sosFunctions:checkExceptionReport">
+								<ctl:with-param name="exceptionReport" select="$invalidRequestResponse" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+								<ctl:with-param name="locatorToCheck" select="string('*')" />
+							</ctl:call-function>
+						</xsl:variable>
+						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
+						<xsl:if test="not(xsd:boolean($isCorrect))">
+							<ctl:message>FAILURE:  The response to an invalid request was expected to be an exception report with an exceptionCode of "MissingParameterValue" and a locator value containing the validation issue.  The returned exception report was:  "<xsl:value-of select="$invalidRequestResponse/*" />"</ctl:message>
+							<ctl:message select="concat('Returned exception code was: &quot;', sosFunctions:exceptionCode($invalidRequestResponse), '&quot;')"/>
+							<ctl:message select="'Expected exception code was: &quot;MissingParameterValue&quot;'"/>
+							<ctl:fail />
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</ctl:code>
+		</ctl:test>
+	</ctl:package>
+
+
+	<ctl:package>
+	</ctl:package>
+	
+	<!-- ============= -->
+	<!--   Functions   -->
+	<!-- ============= -->
+	<ctl:function name="sosFunctions:exceptionReportSchemaPath">
+        <ctl:param name="schemaRoot">The location of the schemas</ctl:param>
+		<ctl:param name="owsVersion">The numeric version of the schema</ctl:param>
+		<ctl:code>			
+			<xsl:value-of select="sosFunctions:schemaPath($schemaRoot, $owsVersion, 'ows', 'owsExceptionReport.xsd')"/>
+		</ctl:code>
+	</ctl:function>
+
+	<ctl:function name="sosFunctions:schemaPath">
+        <ctl:param name="schemaRoot">The location of the schemas</ctl:param>
+		<ctl:param name="version">The numeric version of the schema</ctl:param>
+		<ctl:param name="encoding">The name of the service or encoding to be used</ctl:param>
+		<ctl:param name="filename">Filename of schema file</ctl:param>	
+		<ctl:code>			
+			<xsl:value-of select="concat($schemaRoot, $encoding, '/', $version, '/', $filename)"/>
+		</ctl:code>
+	</ctl:function> 
+
+	<ctl:function name="sosFunctions:xmlValidatingParser">
+        <ctl:param name="schemaFile">schemaFile</ctl:param>
+		<ctl:description>Standard CTL XMLValidatingParser</ctl:description>
+        <ctl:code>						
+			<xsl:choose>
+				<xsl:when test="starts-with($schemaFile,'http')">
+					<parsers:XMLValidatingParser ignoreErrors="false">
+						<parsers:schema type="resource">xsd/w3c/xml.xsd</parsers:schema>
+						<xsl:if test="$schemaFile='xsd/ogc/om/1.0.0/om.xsd'">
+							<parsers:schema type="resource">xsd/ogc/sampling/1.0.0/sampling.xsd</parsers:schema>
+						</xsl:if>
+						<parsers:schemas>
+							<parsers:schema type="resource">
+								<xsl:value-of select="$schemaFile"/>								
+							</parsers:schema>							
+							<parsers:schema type="resource">xsd/ogc/ows/1.1.0/owsExceptionReport.xsd</parsers:schema>	
+						</parsers:schemas>
+					</parsers:XMLValidatingParser>	
+				</xsl:when>
+				<xsl:otherwise>
+					<parsers:XMLValidatingParser ignoreErrors="false">
+						<parsers:schemas>
+							<parsers:schema type="resource">xsd/w3c/xml.xsd</parsers:schema>						
+							<parsers:schema type="resource">
+								<xsl:value-of select="$schemaFile"/>
+							</parsers:schema>						
+						</parsers:schemas>
+					</parsers:XMLValidatingParser>
+				</xsl:otherwise>
+			</xsl:choose>				
+        </ctl:code>
+    </ctl:function>
+
+	<ctl:function name="sosFunctions:getExceptionInfo">
+        <ctl:param name="exceptionReport">The exception report</ctl:param>
+        <ctl:return>The Exception Code and Locator of an exception report</ctl:return>
+        <ctl:code>
+            <xsl:variable name="exceptionElement" select="$exceptionReport//ows:ExceptionReport/ows:Exception" />
+            <xsl:variable name="exceptionCodeValue" select="$exceptionElement/@exceptionCode" />
+            <xsl:variable name="locatorValue" select="$exceptionElement/@locator" />
+            <xsl:value-of select="concat('Exception Report (exceptionCode, locator):  ',$exceptionCodeValue,',',$locatorValue)" />
+        </ctl:code>
+    </ctl:function>
+
+    <ctl:function name="sosFunctions:checkExceptionReport">
+        <ctl:param name="exceptionReport">The exception report to check</ctl:param>
+        <ctl:param name="exceptionCodeToCheck">The exceptionCode to check</ctl:param>
+        <ctl:param name="locatorToCheck">The locator to check (a * can be provided to indicate that any locator value is allowed)</ctl:param>
+        <ctl:return>True/false depending on whether or not the exception report is valid</ctl:return>
+        <ctl:description></ctl:description>
+        <ctl:code>
+            <xsl:variable name="exceptionElement" select="$exceptionReport//ows:ExceptionReport/ows:Exception" />
+            <xsl:variable name="exceptionCodeValue" select="$exceptionElement/@exceptionCode" />
+            <xsl:variable name="locatorValue" select="$exceptionElement/@locator" />
+            <xsl:choose>
+                <xsl:when test="$locatorToCheck='*'">
+                    <xsl:value-of select="($exceptionCodeToCheck=$exceptionCodeValue)" />
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="($exceptionCodeToCheck=$exceptionCodeValue) and (contains(lower-case(string($locatorValue)), lower-case($locatorToCheck)))" />
+                </xsl:otherwise>
+            </xsl:choose>
+        </ctl:code>
+    </ctl:function>
+
+	<ctl:function name="sosFunctions:exceptionCode">
+		<ctl:param name="exceptionResponse">The exception repsonse</ctl:param>
+		<ctl:description>Return the @exceptionCode attribute of an ows:ExceptionReport </ctl:description>
+		<ctl:code>
+			<xsl:variable name="exceptionElement" select="sosFunctions:exceptionElement($exceptionResponse)"/>
+			<xsl:value-of select="$exceptionElement/@exceptionCode" />
+		</ctl:code>
+	</ctl:function>
+
+    <ctl:function name="sosFunctions:xmlValidatingParser">
+        <ctl:param name="schemaRoot">The location of the schemas</ctl:param>
+		<ctl:param name="version">The numeric version of the schema</ctl:param>
+		<ctl:param name="encoding">The name of the service or encoding to be used</ctl:param>
+		<ctl:param name="filename">Filenam of schema file</ctl:param>
+		<ctl:description>Standard CTL XMLValidatingParser</ctl:description>
+        <ctl:code>				
+			<xsl:variable name="schemaFile" select="sosFunctions:schemaPath($schemaRoot, $version, $encoding, $filename)"/>
+			<xsl:copy-of select="sosFunctions:xmlValidatingParser($schemaFile)"/>
+        </ctl:code>
+    </ctl:function>
+
+	<ctl:function name="sosFunctions:exceptionElement">
+		<ctl:param name="exceptionResponse">The exception repsonse</ctl:param>
+		<ctl:description>Return the Exception element of an ows:ExceptionReport </ctl:description>
+		<ctl:code>
+			<xsl:copy-of select="$exceptionResponse//ows:ExceptionReport/ows:Exception" />
+		</ctl:code>
+	</ctl:function>
+
+</ctl:package>
