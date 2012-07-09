@@ -1,0 +1,8 @@
+SOS 1.0.0 Test Suite Release Notes
+
+Changes included in latest revision:
+
+2012-05-30 (rocky):
+- tag r0 
+
+
