@@ -47,11 +47,6 @@
 		<ctl:comment>GetCapabilities by GET or POST.  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root element matches the provided root element.</ctl:comment>
 		<ctl:link>OWS.GetCapabilities</ctl:link>
 		<ctl:code>
-			<ctl:message select="concat('isGET: ',$isGET)"/>
-			<ctl:message select="concat('ServiceURL: ',$serviceURL)"/>
-			<ctl:message select="concat('serviceType: ',$serviceType)"/>
-			<ctl:message select="concat('capabilitiesResponseSchemaType: ',$capabilitiesResponseSchemaType)"/>
-			<ctl:message select="concat('capabilitiesResponseSchemaLocation: ',$capabilitiesResponseSchemaLocation)"/>
 			<ctl:message>**********************************************************************</ctl:message>
 			<ctl:message>GetCapabilities by GET or POST.  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root element matches the provided root element.</ctl:message>
 			<xsl:variable name="request1">
@@ -115,7 +110,7 @@
 							<xsl:variable name="capabilitiesDocument">
 								<xsl:copy-of select="$request1" />
 							</xsl:variable>
-							<xsl:if test="$test0101">
+							<xsl:if test="$test0101 eq 'true'">
 								<!--Content-type-->
 								<ctl:message>**********************************************************************</ctl:message>
 								<ctl:message select="''"/>
@@ -129,7 +124,7 @@
 								</ctl:call-test>
 							</xsl:if>
 							<!--Exceptions-->
-							<xsl:if test="$test0102">
+							<xsl:if test="$test0102 eq 'true'">
 								<!--Invalid request parameter value-->
 								<ctl:message>**********************************************************************</ctl:message>
 								<ctl:message select="''"/>
@@ -141,7 +136,7 @@
 									<ctl:with-param name="exceptionReportSchemaType" select="$exceptionReportSchemaType" />
 								</ctl:call-test>
 							</xsl:if>
-							<xsl:if test="$test0103">
+							<xsl:if test="$test0103 eq 'true'">
 								<!--Invalid update sequence-->
 								<xsl:if test="not(string($capabilitiesDocument//@updateSequence)='')">
 									<ctl:message>**********************************************************************</ctl:message>
@@ -157,7 +152,7 @@
 									</ctl:call-test>
 								</xsl:if>		
 							</xsl:if>
-							<xsl:if test="$test0104">
+							<xsl:if test="$test0104 eq 'true'">
 								<!--An error occurs that prevents successful request processing-->
 								<ctl:message>**********************************************************************</ctl:message>
 								<ctl:message select="''"/>
@@ -170,7 +165,7 @@
 									<ctl:with-param name="exceptionReportSchemaType" select="$exceptionReportSchemaType" />
 								</ctl:call-test>
 							</xsl:if>
-							<xsl:if test="$test0105">
+							<xsl:if test="$test0105 eq 'true'">
 								<!--Case insensitive KVP names-->
 								<ctl:message>**********************************************************************</ctl:message>
 								<ctl:message select="''"/>
@@ -184,7 +179,7 @@
 									<ctl:with-param name="rootElementName" select="$capabilitiesRootElementName" />
 								</ctl:call-test>
 							</xsl:if>
-							<xsl:if test="$test0106">
+							<xsl:if test="$test0106 eq 'true'">
 								<!--AcceptVersions tests-->
 								<ctl:message>**********************************************************************</ctl:message>
 								<ctl:message select="''"/>
@@ -198,7 +193,7 @@
 									<ctl:with-param name="rootElementName" select="$capabilitiesRootElementName"/>
 								</ctl:call-test>
 							</xsl:if>
-							<xsl:if test="$test0107">
+							<xsl:if test="$test0107 eq 'true'">
 								<ctl:message>**********************************************************************</ctl:message>
 								<ctl:message select="''"/>
 								<ctl:call-test name="owsTests:ows-OWS.GetCapabilities-AcceptVersions.2">
@@ -212,7 +207,7 @@
 									<ctl:with-param name="rootElementName" select="$capabilitiesRootElementName"/>
 								</ctl:call-test>
 							</xsl:if>
-							<xsl:if test="$test0108">
+							<xsl:if test="$test0108 eq 'true'">
 								<ctl:message>**********************************************************************</ctl:message>
 								<ctl:message select="''"/>
 								<ctl:call-test name="owsTests:ows-OWS.GetCapabilities-AcceptVersions.3">
@@ -226,7 +221,7 @@
 							</xsl:if>
 							<!-- run tests for optional capabilities that are implemented -->           
 							<xsl:if test="$capabilitiesDocument//ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:Parameter[lower-case(@name)='sections']">
-								<xsl:if test="$test0109">
+								<xsl:if test="$test0109 eq 'true'">
 									<ctl:message>**********************************************************************</ctl:message>
 									<ctl:message select="''"/>
 									<ctl:message>Sections parameter is supported for GetCapabilities requests.  Running Sections tests...</ctl:message>
@@ -240,7 +235,7 @@
 									</ctl:call-test>
 									<ctl:message>**********************************************************************</ctl:message>
 								</xsl:if>
-								<xsl:if test="$test0110">
+								<xsl:if test="$test0110 eq 'true'">
 									<ctl:message select="''"/>
 									<ctl:call-test name="owsTests:ows-OWS.GetCapabilities-Sections.2">
 										<ctl:with-param name="serviceURL" select="$serviceURL"/>
@@ -252,7 +247,7 @@
 									</ctl:call-test>
 								</xsl:if>
 							</xsl:if>
-							<xsl:if test="$test0111">
+							<xsl:if test="$test0111 eq 'true'">
 								<xsl:if test="$capabilitiesDocument//ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:Parameter[lower-case(@name)='acceptformats']">
 									<ctl:message>**********************************************************************</ctl:message>
 									<ctl:message select="''"/>
@@ -295,7 +290,6 @@
 								<xsl:value-of select="$serviceURL"/>
 							</ctl:url>
 							<ctl:method>get</ctl:method>
-							<ctl:param name="service"><xsl:value-of select="$serviceType" /></ctl:param>
 							<ctl:param name="request">GetCapabilities</ctl:param>
 							<parsers:HTTPParser/>
 						</ctl:request>
@@ -307,7 +301,7 @@
 							</ctl:url>
 							<ctl:method>post</ctl:method>
 							<ctl:body>
-								<sos:GetCapabilities service="SOS" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+								<sos:GetCapabilities xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
 									http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"/>
 							</ctl:body>
@@ -931,8 +925,8 @@
 								<parsers:schemas>
 									<parsers:schema type="resource">xsd/w3c/xml.xsd</parsers:schema>
 									<parsers:schema>
-										<xsl:attribute name="type"><xsl:value-of select="$responseSchemaType" /></xsl:attribute>
-										<xsl:value-of select="$responseSchemaLocation" />
+										<xsl:attribute name="type"><xsl:value-of select="$exceptionReportSchemaType" /></xsl:attribute>
+										<xsl:value-of select="$exceptionReportSchemaLocation" />
 									</parsers:schema>
 								</parsers:schemas>
 							</parsers:XMLValidatingParser>
@@ -1074,7 +1068,6 @@
 		<ctl:link>OGC 05-008c1, 7.3.3, p.17</ctl:link>
 		<ctl:code>
 			<ctl:message>Pass if the response is schema valid and includes only the requested optional elements.</ctl:message>
-			<ctl:message select="concat('Service parameter: ', $serviceType)"/>
 			<ctl:message select="concat('Version parameter: ', $serviceVersion)"/>
 			<ctl:message select="concat('Sections parameter: ', 'ServiceIdentification,OperationsMetadata')"/>			
 			<xsl:variable name="response">
@@ -1085,7 +1078,6 @@
 								<xsl:value-of select="$serviceURL"/>
 							</ctl:url>
 							<ctl:method>get</ctl:method>
-							<ctl:param name="service"><xsl:value-of select="$serviceType" /></ctl:param>
 							<ctl:param name="request">GetCapabilities</ctl:param>
 							<ctl:param name="sections">ServiceIdentification,OperationsMetadata</ctl:param>
 							<parsers:XMLValidatingParser>
@@ -1106,7 +1098,7 @@
 							</ctl:url>
 							<ctl:method>post</ctl:method>
 							<ctl:body>
-								<sos:GetCapabilities service="SOS" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+								<sos:GetCapabilities xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
 									http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd" >
 									<ows:Sections>
@@ -1223,7 +1215,6 @@
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:message>OK</ctl:message>
-						<ctl:message></ctl:message>
 					</xsl:otherwise>
 				</xsl:choose>
 
