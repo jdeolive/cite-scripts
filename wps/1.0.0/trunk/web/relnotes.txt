@@ -1,0 +1,6 @@
+WPS 1.0.0 Test Suite Release Notes
+
+Summary of Changes
+
+=== Changes included in R0 ===
+- ...
