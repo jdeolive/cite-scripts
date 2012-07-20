@@ -4,8 +4,8 @@ Summary of Changes
 
 === Changes included in R10 ===
 2012-07-18
-- Update test suite for new xlink policy
-- Fixed handling for WFS 2.0.0 enabled instances
+4635 - Update test suite for new xlink policy
+4649 - Fixed handling for WFS 2.0.0 enabled instances
 
 === Changes included in R9 ===
 2012-04-05
