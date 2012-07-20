@@ -15,5 +15,8 @@
 	</suite>
 	<source>ctl</source>
 	<web>web</web>
+	<revision>
+		<name>r0</name>
+	</revision>
 </config>
 
