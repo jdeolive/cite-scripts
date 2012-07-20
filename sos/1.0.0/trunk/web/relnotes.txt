@@ -2,7 +2,10 @@ SOS 1.0.0 Test Suite Release Notes
 
 Changes included in latest revision:
 
-Revision r3 2012-04-05
+Revision r4 2012-07-20 (rocky)
+- Update test suite for new xlink policy
+
+Revision r3 2012-04-05 (rocky)
 
 - modified type="resource"
 - added  sensorML schema
