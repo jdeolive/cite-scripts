@@ -1,5 +1,8 @@
 SPS 1.0 Test Suite Release Notes
 
+Revision r2 2012-07-20 (rocky)
+- Update test suite for new xlink policy
+
 ----r1 -----------
 
 2011-12-01 (lbermudez) 
