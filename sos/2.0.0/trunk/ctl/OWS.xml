@@ -22,6 +22,7 @@
 	<ctl:test name="owsTests:ows-main">
 		<ctl:param name="serviceURL">The URL of the service being tested</ctl:param>
 		<ctl:param name="isGET">Test From HTTP-GET or HTTP-POST</ctl:param>
+		<ctl:param name="isSOAP">Test From HTTP-POST with SOAP-Binding</ctl:param>
 		<ctl:param name="serviceType">The OGC identifier for the type of service being tested (i.e. SPS)</ctl:param>
 		<ctl:param name="serviceVersion">The version of the service being tested</ctl:param>
 		<ctl:param name="capabilitiesRootElementName">The name of the root element of a Capabilities document returned by this service (i.e. Capabilities, WFS_Capabilities, etc.)</ctl:param>
@@ -70,6 +71,29 @@
 							</parsers:XMLValidatingParser>
 						</ctl:request>
 					</xsl:when>
+					<xsl:when test="($isSOAP)">
+						<ctl:soap-request version="1.2" charset="UTF-8">
+							<ctl:url>
+								<xsl:value-of select="$capabilities-url"/>
+							</ctl:url>
+							<ctl:body>
+								<sos:GetCapabilities service="SOS" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+									http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" ></sps:GetCapabilities>
+							</ctl:body>
+							<parsers:SOAPParser return="content">
+								<parsers:XMLValidatingParser>
+									<parsers:schemas>
+										<parsers:schema>
+											<xsl:attribute name="type"><xsl:value-of select="$capabilitiesResponseSchemaType" /></xsl:attribute>
+											<xsl:value-of select="$capabilitiesResponseSchemaLocation" />
+										</parsers:schema>
+									</parsers:schemas>
+								</parsers:XMLValidatingParser>
+							</parsers:SOAPParser>
+						</ctl:soap-request>
+					</xsl:when>
 					<xsl:otherwise>
 						<ctl:request>
 							<ctl:url>
@@ -117,6 +141,7 @@
 								<ctl:call-test name="owsTests:ows-OWS.ContentType.1">
 									<ctl:with-param name="serviceURL" select="$serviceURL"/>
 									<ctl:with-param name="isGET" select="$isGET"/>
+									<ctl:with-param name="isSOAP" select="$isSOAP"/>
 									<ctl:with-param name="serviceType" select="$serviceType"/>
 									<ctl:with-param name="serviceVersion" select="$serviceVersion"/>
 									<ctl:with-param name="rootElementName" select="$capabilitiesRootElementName" />
@@ -131,6 +156,7 @@
 								<ctl:call-test name="owsTests:ows-OWS.GetCapabilities-Exceptions.2">
 									<ctl:with-param name="serviceURL" select="$serviceURL"/>
 									<ctl:with-param name="isGET" select="$isGET"/>
+									<ctl:with-param name="isSOAP" select="$isSOAP"/>
 									<ctl:with-param name="serviceVersion" select="$serviceVersion" />
 									<ctl:with-param name="exceptionReportSchemaLocation" select="$exceptionReportSchemaLocation" />
 									<ctl:with-param name="exceptionReportSchemaType" select="$exceptionReportSchemaType" />
@@ -145,7 +171,8 @@
 									<ctl:call-test name="owsTests:ows-OWS.GetCapabilities-UpdateSequence.1">
 										<ctl:with-param name="serviceURL" select="$serviceURL"/>
 										<ctl:with-param name="isGET" select="$isGET"/>
-									<ctl:with-param name="serviceType" select="$serviceType" />
+										<ctl:with-param name="isSOAP" select="$isSOAP"/>
+										<ctl:with-param name="serviceType" select="$serviceType" />
 										<ctl:with-param name="serviceVersion" select="$serviceVersion" />
 										<ctl:with-param name="exceptionReportSchemaLocation" select="$exceptionReportSchemaLocation" />
 										<ctl:with-param name="exceptionReportSchemaType" select="$exceptionReportSchemaType" />	  
@@ -159,6 +186,7 @@
 								<ctl:call-test name="owsTests:ows-OWS.GetCapabilities-Exceptions.5">
 									<ctl:with-param name="serviceURL" select="$serviceURL"/>
 									<ctl:with-param name="isGET" select="$isGET"/>
+									<ctl:with-param name="isSOAP" select="$isSOAP"/>
 									<ctl:with-param name="serviceType" select="$serviceType" />
 									<ctl:with-param name="serviceVersion" select="$serviceVersion" />
 									<ctl:with-param name="exceptionReportSchemaLocation" select="$exceptionReportSchemaLocation" />
@@ -172,6 +200,7 @@
 								<ctl:call-test name="owsTests:ows-OWS.CaseInsensitiveKvpNames.1">
 									<ctl:with-param name="serviceURL" select="$serviceURL"/>
 									<ctl:with-param name="isGET" select="$isGET"/>
+									<ctl:with-param name="isSOAP" select="$isSOAP"/>
 									<ctl:with-param name="serviceType" select="$serviceType" />
 									<ctl:with-param name="serviceVersion" select="$serviceVersion" />
 									<ctl:with-param name="responseSchemaLocation" select="$capabilitiesResponseSchemaLocation" />
@@ -186,6 +215,7 @@
 								<ctl:call-test name="owsTests:ows-OWS.GetCapabilities-AcceptVersions.1">
 									<ctl:with-param name="serviceURL" select="$serviceURL"/>
 									<ctl:with-param name="isGET" select="$isGET"/>
+									<ctl:with-param name="isSOAP" select="$isSOAP"/>
 									<ctl:with-param name="serviceType" select="$serviceType" />
 									<ctl:with-param name="serviceVersion" select="$serviceVersion" />
 									<ctl:with-param name="responseSchemaLocation" select="$capabilitiesResponseSchemaLocation" />
@@ -199,6 +229,7 @@
 								<ctl:call-test name="owsTests:ows-OWS.GetCapabilities-AcceptVersions.2">
 									<ctl:with-param name="serviceURL" select="$serviceURL"/>
 									<ctl:with-param name="isGET" select="$isGET"/>
+									<ctl:with-param name="isSOAP" select="$isSOAP"/>
 									<ctl:with-param name="serviceType" select="$serviceType"/>
 									<ctl:with-param name="serviceVersion" select="$serviceVersion"/>
 									<ctl:with-param name="acceptVersions" select="string('2.0.0')"/>
@@ -213,6 +244,7 @@
 								<ctl:call-test name="owsTests:ows-OWS.GetCapabilities-AcceptVersions.3">
 									<ctl:with-param name="serviceURL" select="$serviceURL"/>
 									<ctl:with-param name="isGET" select="$isGET"/>
+									<ctl:with-param name="isSOAP" select="$isSOAP"/>
 									<ctl:with-param name="serviceType" select="$serviceType"/>
 									<ctl:with-param name="serviceVersion" select="$serviceVersion"/>
 									<ctl:with-param name="exceptionReportSchemaLocation" select="$exceptionReportSchemaLocation"/>
@@ -228,7 +260,8 @@
 									<ctl:call-test name="owsTests:ows-OWS.GetCapabilities-Sections.1">
 										<ctl:with-param name="serviceURL" select="$serviceURL"/>
 										<ctl:with-param name="isGET" select="$isGET"/>
-									<ctl:with-param name="serviceType" select="$serviceType" />
+										<ctl:with-param name="isSOAP" select="$isSOAP"/>
+										<ctl:with-param name="serviceType" select="$serviceType" />
 										<ctl:with-param name="serviceVersion" select="$serviceVersion" />
 										<ctl:with-param name="responseSchemaLocation" select="$capabilitiesResponseSchemaLocation" />
 										<ctl:with-param name="responseSchemaType" select="$capabilitiesResponseSchemaType" />
@@ -240,6 +273,7 @@
 									<ctl:call-test name="owsTests:ows-OWS.GetCapabilities-Sections.2">
 										<ctl:with-param name="serviceURL" select="$serviceURL"/>
 										<ctl:with-param name="isGET" select="$isGET"/>
+										<ctl:with-param name="isSOAP" select="$isSOAP"/>
 										<ctl:with-param name="serviceType" select="$serviceType" />
 										<ctl:with-param name="serviceVersion" select="$serviceVersion" />
 										<ctl:with-param name="responseSchemaLocation" select="$capabilitiesResponseSchemaLocation" />
@@ -255,6 +289,7 @@
 									<ctl:call-test name="owsTests:ows-OWS.GetCapabilities-AcceptFormats.1">
 										<ctl:with-param name="serviceURL" select="$serviceURL"/>
 										<ctl:with-param name="isGET" select="$isGET"/>
+										<ctl:with-param name="isSOAP" select="$isSOAP"/>
 										<ctl:with-param name="serviceType" select="$serviceType" />
 										<ctl:with-param name="formats" select="$capabilitiesDocument//ows:Operation[@name='GetCapabilities']/ows:Parameter[lower-case(@name)='acceptformats']"/>
 									</ctl:call-test>
@@ -272,6 +307,7 @@
 	<ctl:test name="owsTests:ows-OWS.ContentType.1">
 		<ctl:param name="serviceURL"/>
 		<ctl:param name="isGET" />
+		<ctl:param name="isSOAP" />
 		<ctl:param name="serviceType" />
 		<ctl:param name="serviceVersion" />
 		<ctl:param name="rootElementName" />
@@ -293,6 +329,20 @@
 							<ctl:param name="request">GetCapabilities</ctl:param>
 							<parsers:HTTPParser/>
 						</ctl:request>
+					</xsl:when>
+					<xsl:when test="($isSOAP)">
+						<ctl:soap-request version="1.2" charset="UTF-8">
+							<ctl:url>
+								<xsl:value-of select="$serviceURL"/>
+							</ctl:url>
+							<ctl:body>
+								<sos:GetCapabilities service="SOS" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+									http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" ></sps:GetCapabilities>
+							</ctl:body>
+							<parsers:HTTPParser/>
+						</ctl:soap-request>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:request>
@@ -344,6 +394,7 @@
 	<ctl:test name="owsTests:ows-OWS.GetCapabilities-Exceptions.2">
 		<ctl:param name="serviceURL"/>
 		<ctl:param name="isGET" />
+		<ctl:param name="isSOAP" />
 		<ctl:param name="serviceVersion" />
 		<ctl:param name="exceptionReportSchemaLocation" />
 		<ctl:param name="exceptionReportSchemaType" />
@@ -374,6 +425,29 @@
 								</parsers:schemas>
 							</parsers:XMLValidatingParser>
 						</ctl:request>
+					</xsl:when>
+					<xsl:when test="($isSOAP)">
+						<ctl:soap-request version="1.2" charset="UTF-8">
+							<ctl:url>
+								<xsl:value-of select="$serviceURL"/>
+							</ctl:url>
+							<ctl:body>
+								<sos:GetCapabilities service="ASDF" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+									http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" ></sps:GetCapabilities>
+							</ctl:body>
+							<parsers:SOAPParser return="content">
+								<parsers:XMLValidatingParser>
+									<parsers:schemas>
+										<parsers:schema>
+											<xsl:attribute name="type"><xsl:value-of select="$exceptionReportSchemaType" /></xsl:attribute>
+											<xsl:value-of select="$exceptionReportSchemaLocation" />
+										</parsers:schema>
+									</parsers:schemas>
+								</parsers:XMLValidatingParser>
+							</parsers:SOAPParser>
+						</ctl:soap-request>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:request>
@@ -428,6 +502,7 @@
 	<ctl:test name="owsTests:ows-OWS.GetCapabilities-UpdateSequence.1">
 		<ctl:param name="serviceURL"/>
 		<ctl:param name="isGET" />
+		<ctl:param name="isSOAP" />
 		<ctl:param name="serviceType" />
 		<ctl:param name="serviceVersion" />
 		<ctl:param name="exceptionReportSchemaLocation" />
@@ -461,6 +536,29 @@
 								</parsers:schemas>
 							</parsers:XMLValidatingParser>
 						</ctl:request>
+					</xsl:when>
+					<xsl:when test="($isSOAP)">
+						<ctl:soap-request version="1.2" charset="UTF-8">
+							<ctl:url>
+								<xsl:value-of select="$serviceURL"/>
+							</ctl:url>
+							<ctl:body>
+								<sos:GetCapabilities service="SOS" updateSequence="9999999999" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+									http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" ></sps:GetCapabilities>
+							</ctl:body>
+							<parsers:SOAPParser return="content">
+								<parsers:XMLValidatingParser>
+									<parsers:schemas>
+										<parsers:schema>
+											<xsl:attribute name="type"><xsl:value-of select="$exceptionReportSchemaType" /></xsl:attribute>
+											<xsl:value-of select="$exceptionReportSchemaLocation" />
+										</parsers:schema>
+									</parsers:schemas>
+								</parsers:XMLValidatingParser>
+							</parsers:SOAPParser>
+						</ctl:soap-request>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:request>
@@ -516,6 +614,7 @@
 	<ctl:test name="owsTests:ows-OWS.GetCapabilities-Exceptions.5">
 		<ctl:param name="serviceURL"/>
 		<ctl:param name="isGET" />
+		<ctl:param name="isSOAP" />
 		<ctl:param name="serviceType" />
 		<ctl:param name="serviceVersion" />
 		<ctl:param name="exceptionReportSchemaLocation" />
@@ -589,6 +688,7 @@
 	<ctl:test name="owsTests:ows-OWS.CaseInsensitiveKvpNames.1">
 		<ctl:param name="serviceURL"/>
 		<ctl:param name="isGET" />
+		<ctl:param name="isSOAP" />
 		<ctl:param name="serviceType" />
 		<ctl:param name="serviceVersion" />
 		<ctl:param name="responseSchemaLocation" />
@@ -698,6 +798,7 @@
 	<ctl:test name="owsTests:ows-OWS.GetCapabilities-AcceptVersions.1">
 		<ctl:param name="serviceURL"/>
 		<ctl:param name="isGET" />
+		<ctl:param name="isSOAP" />
 		<ctl:param name="serviceType" />
 		<ctl:param name="serviceVersion" />
 		<ctl:param name="responseSchemaLocation" />
@@ -729,6 +830,29 @@
 								</parsers:schemas>
 							</parsers:XMLValidatingParser>
 						</ctl:request>
+					</xsl:when>
+					<xsl:when test="($isSOAP)">
+						<ctl:soap-request version="1.2" charset="UTF-8">
+							<ctl:url>
+								<xsl:value-of select="$serviceURL"/>
+							</ctl:url>
+							<ctl:body>
+								<sos:GetCapabilities service="SOS" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+									http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" ></sps:GetCapabilities>
+							</ctl:body>
+							<parsers:SOAPParser return="content">
+								<parsers:XMLValidatingParser>
+									<parsers:schemas>
+										<parsers:schema>
+											<xsl:attribute name="type"><xsl:value-of select="$responseSchemaType" /></xsl:attribute>
+											<xsl:value-of select="$responseSchemaLocation" />
+										</parsers:schema>
+									</parsers:schemas>
+								</parsers:XMLValidatingParser>
+							</parsers:SOAPParser>
+						</ctl:soap-request>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:request>
@@ -782,6 +906,7 @@
 	<ctl:test name="owsTests:ows-OWS.GetCapabilities-AcceptVersions.2">
 		<ctl:param name="serviceURL"/>
 		<ctl:param name="isGET" />
+		<ctl:param name="isSOAP" />
 		<ctl:param name="serviceType" />
 		<ctl:param name="serviceVersion" />
 		<ctl:param name="acceptVersions" />
@@ -815,6 +940,33 @@
 								</parsers:schemas>
 							</parsers:XMLValidatingParser>
 						</ctl:request>
+					</xsl:when>
+					<xsl:when test="($isSOAP)">
+						<ctl:soap-request version="1.2" charset="UTF-8">
+							<ctl:url>
+								<xsl:value-of select="$serviceURL"/>
+							</ctl:url>
+							<ctl:body>
+								<sos:GetCapabilities service="SOS" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+									http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+									<ows:AcceptVersions>
+										<ows:Version>2.0.0</ows:Version>
+									</ows:AcceptVersions>
+								</sos:GetCapabilities>
+							</ctl:body>
+							<parsers:SOAPParser return="content">
+								<parsers:XMLValidatingParser>
+									<parsers:schemas>
+										<parsers:schema>
+											<xsl:attribute name="type"><xsl:value-of select="$responseSchemaType" /></xsl:attribute>
+											<xsl:value-of select="$responseSchemaLocation" />
+										</parsers:schema>
+									</parsers:schemas>
+								</parsers:XMLValidatingParser>
+							</parsers:SOAPParser>
+						</ctl:soap-request>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:request>
@@ -874,6 +1026,7 @@
 	<ctl:test name="owsTests:ows-OWS.GetCapabilities-AcceptVersions.3">
 		<ctl:param name="serviceURL"/>
 		<ctl:param name="isGET" />
+		<ctl:param name="isSOAP" />
 		<ctl:param name="serviceType" />
 		<ctl:param name="serviceVersion" />
 		<ctl:param name="exceptionReportSchemaLocation" />
@@ -905,6 +1058,33 @@
 								</parsers:schemas>
 							</parsers:XMLValidatingParser>
 						</ctl:request>
+					</xsl:when>
+					<xsl:when test="($isSOAP)">
+						<ctl:soap-request version="1.2" charset="UTF-8">
+							<ctl:url>
+								<xsl:value-of select="$serviceURL"/>
+							</ctl:url>
+							<ctl:body>
+								<sos:GetCapabilities service="SOS" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+									http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+									<ows:AcceptVersions>
+										<ows:Version>2000-01-01</ows:Version>
+									</ows:AcceptVersions>
+								</sos:GetCapabilities>
+							</ctl:body>
+							<parsers:SOAPParser return="content">
+								<parsers:XMLValidatingParser>
+									<parsers:schemas>
+										<parsers:schema>
+											<xsl:attribute name="type"><xsl:value-of select="$exceptionReportSchemaType" /></xsl:attribute>
+											<xsl:value-of select="$exceptionReportSchemaLocation" />
+										</parsers:schema>
+									</parsers:schemas>
+								</parsers:XMLValidatingParser>
+							</parsers:SOAPParser>
+						</ctl:soap-request>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:request>
@@ -961,6 +1141,7 @@
 	<ctl:test name="owsTests:ows-OWS.GetCapabilities-Sections.1">
 		<ctl:param name="serviceURL"/>
 		<ctl:param name="isGET" />
+		<ctl:param name="isSOAP" />
 		<ctl:param name="serviceType" />
 		<ctl:param name="serviceVersion" />
 		<ctl:param name="responseSchemaLocation" />
@@ -998,6 +1179,33 @@
 								</parsers:schemas>
 							</parsers:XMLValidatingParser>
 						</ctl:request>
+					</xsl:when>
+					<xsl:when test="($isSOAP)">
+						<ctl:soap-request version="1.2" charset="UTF-8">
+							<ctl:url>
+								<xsl:value-of select="$serviceURL"/>
+							</ctl:url>
+							<ctl:body>
+								<sos:GetCapabilities service="SOS" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+									http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+									<ows:Sections>
+										<ows:Section></ows:Section>
+									</ows:Sections>
+								</sos:GetCapabilities>
+							</ctl:body>
+							<parsers:SOAPParser return="content">
+								<parsers:XMLValidatingParser>
+									<parsers:schemas>
+										<parsers:schema>
+											<xsl:attribute name="type"><xsl:value-of select="$responseSchemaType" /></xsl:attribute>
+											<xsl:value-of select="$responseSchemaLocation" />
+										</parsers:schema>
+									</parsers:schemas>
+								</parsers:XMLValidatingParser>
+							</parsers:SOAPParser>
+						</ctl:soap-request>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:request>
@@ -1051,6 +1259,7 @@
 	<ctl:test name="owsTests:ows-OWS.GetCapabilities-Sections.2">
 		<ctl:param name="serviceURL"/>
 		<ctl:param name="isGET" />
+		<ctl:param name="isSOAP" />
 		<ctl:param name="serviceType" />
 		<ctl:param name="serviceVersion" />
 		<ctl:param name="responseSchemaLocation" />
@@ -1090,6 +1299,33 @@
 								</parsers:schemas>
 							</parsers:XMLValidatingParser>
 						</ctl:request>
+					</xsl:when>
+					<xsl:when test="($isSOAP)">
+						<ctl:soap-request version="1.2" charset="UTF-8">
+							<ctl:url>
+								<xsl:value-of select="$serviceURL"/>
+							</ctl:url>
+							<ctl:body>
+								<sos:GetCapabilities xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+									http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+									<ows:Sections>
+										<ows:Section>ServiceIdentification,OperationsMetadata</ows:Section>
+									</ows:Sections>
+								</sos:GetCapabilities>
+							</ctl:body>
+							<parsers:SOAPParser return="content">
+								<parsers:XMLValidatingParser>
+									<parsers:schemas>
+										<parsers:schema>
+											<xsl:attribute name="type"><xsl:value-of select="$responseSchemaType" /></xsl:attribute>
+											<xsl:value-of select="$responseSchemaLocation" />
+										</parsers:schema>
+									</parsers:schemas>
+								</parsers:XMLValidatingParser>
+							</parsers:SOAPParser>
+						</ctl:soap-request>
 					</xsl:when>
 					<xsl:otherwise>
 						<ctl:request>
@@ -1146,6 +1382,7 @@
 	<ctl:test name="owsTests:ows-OWS.GetCapabilities-AcceptFormats.1">
 		<ctl:param name="serviceURL"/>
 		<ctl:param name="isGET" />
+		<ctl:param name="isSOAP" />
 		<ctl:param name="serviceType" />
 		<ctl:param name="formats"/>
 		<ctl:assertion>
@@ -1176,6 +1413,28 @@
 									</parsers:parse>
 								</parsers:HTTPParser>
 							</ctl:request>
+						</xsl:when>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>
+									<sos:GetCapabilities xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<AcceptFormats>
+											<OutputFormat><xsl:value-of select="$format"/></OutputFormat>
+										</AcceptFormats>
+									</sos:GetCapabilities>
+								</ctl:body>
+								<parsers:HTTPParser>
+										<parsers:parse>
+											<parsers:NullParser/>
+										</parsers:parse>
+									</parsers:HTTPParser>
+							</ctl:soap-request>
 						</xsl:when>
 						<xsl:otherwise>
 							<ctl:request>

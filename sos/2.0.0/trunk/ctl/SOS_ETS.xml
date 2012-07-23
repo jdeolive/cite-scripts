@@ -55,6 +55,7 @@
 								<tr>
 									<td><input type="radio" name="request-via" checked="true" value="GET">HTTP Get</input></td>
 									<td><input type="radio" name="request-via" value="POST">HTTP Post</input></td>
+									<td><input type="radio" name="request-via" value="SOAP">SOAP Binding</input></td>
 								</tr>				
 							</table>						
 						</blockquote>
@@ -144,7 +145,8 @@
 			<ctl:message select="concat('request-via: ',$request-via)"/>
 			<xsl:variable name="which-tests" select="$form-values/values/value[@key='which-tests']"/>
 			<ctl:message select="concat('which tests: ',$which-tests)"/>
-
+			<xsl:variable name="isSOAP" select="($request-via eq 'SOAP')"/>
+			<ctl:message select="concat('Is SOAP Binding: ',$isSOAPBinding)"/>
 			<!-- Get capabilities, find url and method(GET or POST) for all operations -->
 			<xsl:variable name="user-capabilities">
 				<xsl:if test="($request-via eq 'GET')">
@@ -168,6 +170,20 @@
 								http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"/>
 						</ctl:body>
 					</ctl:request>
+				</xsl:if>
+				<xsl:if test="($request-via eq 'SOAP')">
+					<ctl:soap-request version="1.2" charset="UTF-8">
+						<ctl:url>
+							<xsl:value-of select="$capabilities-url"/>
+						</ctl:url>
+						<ctl:body>
+							<sps:GetCapabilities service="SOS" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+								xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+								http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+								xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" ></sps:GetCapabilities>
+						</ctl:body>
+						<ctl:call-function name="sosFunctions:validateGetCapabilitiesResponseSOAP" />
+					</ctl:soap-request>
 				</xsl:if>
 			</xsl:variable>
 			<xsl:choose>
@@ -337,6 +353,7 @@
 						<ctl:call-test name="owsTests:ows-main">
 							<ctl:with-param name="serviceURL" select="$GetCapabilities-URL"/>
 							<ctl:with-param name="isGET" select="$IsGetCapabilities-GET"/>
+							<ctl:with-param name="isSOAP" select="$isSOAP"/>
 							<ctl:with-param name="serviceType" select="string('SOS')"/>
 							<ctl:with-param name="serviceVersion" select="$sos.version" />
 							<ctl:with-param name="capabilitiesRootElementName" select="string('Capabilities')" />
@@ -366,6 +383,7 @@
 						<ctl:call-test name="sos:general-main">
 							<ctl:with-param name="serviceURL" select="$GetCapabilities-URL" />
 							<ctl:with-param name="isGET" select="$IsGetCapabilities-GET"/>
+							<ctl:with-param name="isSOAP" select="$isSOAP"/>
 							<ctl:with-param name="exceptionReportSchema" select="$exceptionReportSchema" />
 							<ctl:with-param name="test0201" select="$test0201"/>
 						</ctl:call-test>			
@@ -378,6 +396,7 @@
 						<ctl:call-test name="sos:GetCapabilities-Test">
 							<ctl:with-param name="serviceURL" select="$GetCapabilities-URL"/>
 							<ctl:with-param name="isGET" select="$IsGetCapabilities-GET"/>
+							<ctl:with-param name="isSOAP" select="$isSOAP"/>
 							<ctl:with-param name="serviceType" select="string('SOS')"/>
 							<ctl:with-param name="serviceVersion" select="$sos.version" />
 							<ctl:with-param name="capabilitiesRootElementName" select="string('Capabilities')" />
@@ -467,6 +486,7 @@
 		<ctl:test name="sos:general-main">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isGET" />
+			<ctl:param name="isSOAP" />
 			<ctl:param name="exceptionReportSchema" />
 			<ctl:param name="test0201" />
 			<ctl:assertion>All assertions for "general" conformance are satisfied.</ctl:assertion>
@@ -478,7 +498,8 @@
 					<ctl:call-test name="sos:general-SOS.General-InvalidRequest.1">
 						<ctl:with-param name="serviceURL" select="$serviceURL" />
 						<ctl:with-param name="isGET" select="$isGET"/>
-							<ctl:with-param name="exceptionReportSchema" select="$exceptionReportSchema" />
+						<ctl:with-param name="isSOAP" select="$isSOAP"/>
+						<ctl:with-param name="exceptionReportSchema" select="$exceptionReportSchema" />
 					</ctl:call-test>
 				</xsl:if>
 			</ctl:code>
@@ -486,6 +507,7 @@
 		<ctl:test name="sos:general-SOS.General-InvalidRequest.1">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isGET" />
+			<ctl:param name="isSOAP" />
 			<ctl:param name="exceptionReportSchema" />
 			<ctl:assertion>Sending a request that is non-conformant to a schema associated with an SOS operation causes the server to return a valid error report message with an exceptionCode value of MissingParameterValue.</ctl:assertion>
 			<ctl:comment>Send several test documents that are invalid according to the schemas associated with some of the SOS operations (i.e. the mandatory operations). Pass if the service returns a valid exception message with an exceptionCode value of InvalidParamterValue; fail otherwise.</ctl:comment>
@@ -499,16 +521,39 @@
 				<ctl:message>Issuing an invalid request to:  <xsl:value-of select="$serviceURL" /></ctl:message>		     
 				<ctl:message select="'The body of the request will be &quot;test&quot;'"/>
 				<xsl:variable name="invalidRequestResponse">
-					<ctl:request>
-						<ctl:url>
-							<xsl:value-of select="$serviceURL" />
-						</ctl:url>
-						<ctl:method>post</ctl:method>
-						<ctl:body>test</ctl:body>
-						<ctl:call-function name="sosFunctions:xmlValidatingParser">	
-							<ctl:with-param name="schemaFile" select="$exceptionReportSchema"/>
-						</ctl:call-function>
-					</ctl:request>
+					<xsl:choose>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>test</ctl:body>
+								<parsers:SOAPParser return="content">
+									<parsers:XMLValidatingParser>
+										<parsers:schemas>
+											<parsers:schema>
+												<xsl:attribute name="type"><xsl:value-of select="'resource'" /></xsl:attribute>
+												<xsl:value-of select="$exceptionReportSchema" />
+											</parsers:schema>
+										</parsers:schemas>
+									</parsers:XMLValidatingParser>
+								</parsers:SOAPParser>
+							</ctl:soap-request>
+						</xsl:when>
+						<xsl:otherwise>
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL" />
+								</ctl:url>
+								<ctl:method>post</ctl:method>
+								<ctl:body>test</ctl:body>
+								<ctl:call-function name="sosFunctions:xmlValidatingParser">	
+									<ctl:with-param name="schemaFile" select="$exceptionReportSchema"/>
+								</ctl:call-function>
+							</ctl:request>
+						</xsl:otherwise>
+					</xsl:choose>
+					
 				</xsl:variable>        
 				<xsl:choose>
 					<xsl:when test="not($invalidRequestResponse/*)">
@@ -545,6 +590,7 @@
 		<ctl:test name="sos:GetCapabilities-Test">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isGET" />
+			<ctl:param name="isSOAP" />
 			<ctl:param name="serviceType" />
 			<ctl:param name="serviceVersion" />
 			<ctl:param name="capabilitiesRootElementName" />
@@ -584,6 +630,29 @@
 								</parsers:XMLValidatingParser>
 							</ctl:request>
 						</xsl:when>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>
+									<sos:GetCapabilities xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" ></sps:GetCapabilities>
+								</ctl:body>
+								<parsers:SOAPParser return="content">
+									<parsers:XMLValidatingParser>
+										<parsers:schemas>
+											<parsers:schema>
+												<xsl:attribute name="type"><xsl:value-of select="$capabilitiesResponseSchemaType" /></xsl:attribute>
+												<xsl:value-of select="$capabilitiesResponseSchemaLocation" />
+											</parsers:schema>
+										</parsers:schemas>
+									</parsers:XMLValidatingParser>
+								</parsers:SOAPParser>
+							</ctl:soap-request>
+						</xsl:when>
 						<xsl:otherwise>
 							<ctl:request>
 								<ctl:url>
@@ -620,6 +689,7 @@
 							<ctl:call-test name="sos:CorrectServiceParameter">
 								<ctl:with-param name="serviceURL" select="$serviceURL" />
 								<ctl:with-param name="isGET" select="$isGET"/>
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="capabilitiesRootElementName" select="$capabilitiesRootElementName" />
 								<ctl:with-param name="capabilitiesResponseSchemaLocation" select="$capabilitiesResponseSchemaLocation" />
 								<ctl:with-param name="capabilitiesResponseSchemaType" select="$capabilitiesResponseSchemaType" />
@@ -631,6 +701,7 @@
 							<ctl:call-test name="sos:OperationMetadataMandatory">
 								<ctl:with-param name="serviceURL" select="$serviceURL" />
 								<ctl:with-param name="isGET" select="$isGET"/>
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="CapabilitiesResponse" select="$CapabilitiesResponse" />
 							</ctl:call-test>
 						</xsl:if>
@@ -640,6 +711,7 @@
 							<ctl:call-test name="sos:RequiredSectionsInCapabilities">
 								<ctl:with-param name="serviceURL" select="$serviceURL" />
 								<ctl:with-param name="isGET" select="$isGET"/>
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="CapabilitiesResponse" select="$CapabilitiesResponse" />
 							</ctl:call-test>
 						</xsl:if>
@@ -649,6 +721,7 @@
 							<ctl:call-test name="sos:WrongSectionParameter">
 								<ctl:with-param name="serviceURL" select="$serviceURL" />
 								<ctl:with-param name="isGET" select="$isGET"/>
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="capabilitiesRootElementName" select="$capabilitiesRootElementName" />
 								<ctl:with-param name="capabilitiesResponseSchemaLocation" select="$capabilitiesResponseSchemaLocation" />
 								<ctl:with-param name="capabilitiesResponseSchemaType" select="$capabilitiesResponseSchemaType" />
@@ -660,6 +733,7 @@
 							<ctl:call-test name="sos:BBOX">
 								<ctl:with-param name="serviceURL" select="$serviceURL" />
 								<ctl:with-param name="isGET" select="$isGET"/>
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="CapabilitiesResponse" select="$CapabilitiesResponse" />
 							</ctl:call-test>
 						</xsl:if>
@@ -669,6 +743,7 @@
 							<ctl:call-test name="sos:OperatorDuringAndTEquals">
 								<ctl:with-param name="serviceURL" select="$serviceURL" />
 								<ctl:with-param name="isGET" select="$isGET"/>
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="CapabilitiesResponse" select="$CapabilitiesResponse" />
 							</ctl:call-test>
 						</xsl:if>
@@ -678,6 +753,7 @@
 							<ctl:call-test name="sos:ParametersInObservationOffering">
 								<ctl:with-param name="serviceURL" select="$serviceURL" />
 								<ctl:with-param name="isGET" select="$isGET"/>
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="CapabilitiesResponse" select="$CapabilitiesResponse" />
 							</ctl:call-test>
 						</xsl:if>
@@ -687,6 +763,7 @@
 							<ctl:call-test name="sos:ResponseFormat">
 								<ctl:with-param name="serviceURL" select="$serviceURL" />
 								<ctl:with-param name="isGET" select="$isGET"/>
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="CapabilitiesResponse" select="$CapabilitiesResponse" />
 							</ctl:call-test>
 						</xsl:if>
@@ -699,6 +776,7 @@
 		<ctl:test name="sos:CorrectServiceParameter">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isGET" />
+			<ctl:param name="isSOAP" />
 			<ctl:param name="capabilitiesRootElementName" />
 			<ctl:param name="capabilitiesResponseSchemaLocation" />
 			<ctl:param name="capabilitiesResponseSchemaType" />
@@ -732,6 +810,29 @@
 									</parsers:schemas>
 								</parsers:XMLValidatingParser>
 							</ctl:request>
+						</xsl:when>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>
+									<sos:GetCapabilities service="SOS" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" ></sps:GetCapabilities>
+								</ctl:body>
+								<parsers:SOAPParser return="content">
+									<parsers:XMLValidatingParser>
+										<parsers:schemas>
+											<parsers:schema>
+												<xsl:attribute name="type"><xsl:value-of select="$capabilitiesResponseSchemaType" /></xsl:attribute>
+												<xsl:value-of select="$capabilitiesResponseSchemaLocation" />
+											</parsers:schema>
+										</parsers:schemas>
+									</parsers:XMLValidatingParser>
+								</parsers:SOAPParser>
+							</ctl:soap-request>
 						</xsl:when>
 						<xsl:otherwise>
 							<ctl:request>
@@ -782,6 +883,7 @@
 		<ctl:test name="sos:OperationMetadataMandatory">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isGET" />
+			<ctl:param name="isSOAP" />
 			<ctl:param name="CapabilitiesResponse" />
 			<ctl:assertion>There are three operations ,GetCapabilities DescribeSensor and GetObservation, in OperationMetadata in the Capabilities.</ctl:assertion>
 			<ctl:comment>Pass if there are at least three operations in OperationMetadata Sections in the Capabilities.</ctl:comment>
@@ -813,6 +915,7 @@
 		<ctl:test name="sos:RequiredSectionsInCapabilities">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isGET" />
+			<ctl:param name="isSOAP" />
 			<ctl:param name="CapabilitiesResponse" />
 			<ctl:assertion>There are required sections,ServiceIdentification ServiceProvider OperationMetadata filter_Capabilities and contents in the Capabilities.</ctl:assertion>
 			<ctl:comment>Pass if there are at least required sections in the Capabilities.</ctl:comment>
@@ -854,6 +957,7 @@
 		<ctl:test name="sos:WrongSectionParameter">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isGET" />
+			<ctl:param name="isSOAP" />
 			<ctl:param name="capabilitiesRootElementName" />
 			<ctl:param name="capabilitiesResponseSchemaLocation" />
 			<ctl:param name="capabilitiesResponseSchemaType" />
@@ -885,6 +989,33 @@
 									</parsers:schemas>
 								</parsers:XMLValidatingParser>
 							</ctl:request>
+						</xsl:when>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>
+									<sos:GetCapabilities xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<ows:Sections>
+											<ows:Section>WrongSections</ows:Section>
+										</ows:Sections>
+									</sos:GetCapabilities>
+								</ctl:body>
+								<parsers:SOAPParser return="content">
+									<parsers:XMLValidatingParser>
+										<parsers:schemas>
+											<parsers:schema>
+												<xsl:attribute name="type"><xsl:value-of select="$capabilitiesResponseSchemaType" /></xsl:attribute>
+												<xsl:value-of select="$capabilitiesResponseSchemaLocation" />
+											</parsers:schema>
+										</parsers:schemas>
+									</parsers:XMLValidatingParser>
+								</parsers:SOAPParser>
+							</ctl:soap-request>
 						</xsl:when>
 						<xsl:otherwise>
 							<ctl:request>
@@ -960,6 +1091,7 @@
 		<ctl:test name="sos:BBOX">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isGET" />
+			<ctl:param name="isSOAP" />
 			<ctl:param name="CapabilitiesResponse" />
 			<ctl:assertion>
 			The spatial operator BBOX is listed in the
@@ -986,6 +1118,7 @@
 		<ctl:test name="sos:OperatorDuringAndTEquals">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isGET" />
+			<ctl:param name="isSOAP" />
 			<ctl:param name="CapabilitiesResponse" />
 			<ctl:assertion>
 			The During and TEquals TemporalOperators are listed in the
@@ -1027,6 +1160,7 @@
 		<ctl:test name="sos:ParametersInObservationOffering">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isGET" />
+			<ctl:param name="isSOAP" />
 			<ctl:param name="CapabilitiesResponse" />
 			<ctl:assertion>
 			Every elements in each observationOffering occur specified times.
@@ -1104,6 +1238,7 @@
 		<ctl:test name="sos:ResponseFormat">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isGET" />
+			<ctl:param name="isSOAP" />
 			<ctl:param name="CapabilitiesResponse" />
 			<ctl:assertion>
 			The responseFormat element which value is "http://www.opengis.net/om/2.0" is listed in the
@@ -1295,7 +1430,61 @@
 			<xsl:copy-of select="$exceptionResponse//ows:ExceptionReport/ows:Exception" />
 		</ctl:code>
 	</ctl:function>
-
+	
+    <ctl:function name="sosFunctions:validateGetCapabilitiesResponseSOAP">
+        <ctl:return>The GetCapabilitiesResponse document if it's valid</ctl:return>
+        <ctl:description>Validates a GetCapabilitiesResponse document according to its schema</ctl:description>
+        <ctl:code>
+			<parsers:SOAPParser return="content">
+				<parsers:XMLValidatingParser>
+					<parsers:schemas>
+						<parsers:schema type="resource">
+							<xsl:value-of select="sosFunctions:getSchemaLocation(string('sosGetCapabilities.xsd'))" />
+						</parsers:schema>
+						<parsers:schema type="resource">
+							<xsl:value-of select="sosFunctions:getSchemaLocation(string('owsExceptionReport.xsd'))" />
+						</parsers:schema>
+					</parsers:schemas>
+				</parsers:XMLValidatingParser>
+			</parsers:SOAPParser>
+        </ctl:code>
+    </ctl:function>
+	
+	<ctl:function name="sosFunctions:getSchemaLocation">
+        <ctl:param name="schemaName">The name of the schema file for which the full path will be returned</ctl:param>
+        <ctl:return>The full schema path</ctl:return>
+        <ctl:description>Based on the provided schema name, this function returns the full URL to the schema document</ctl:description>
+        <ctl:code>
+            <xsl:variable name="schemaLocation" select="string('xsd/ogc/')" />
+            <xsl:variable name="sosSchemaLocation" select="concat($schemaLocation,'sos/2.0.0/')" />
+			<xsl:variable name="swesSchemaLocation" select="concat($schemaLocation,'swes/2.0/')" />
+            <xsl:variable name="owsSchemaLocation" select="concat($schemaLocation,'ows/1.1.0/')" />
+            <xsl:variable name="sensorMLSchemaLocation" select="concat($schemaLocation,'sensorML/1.0.1/')" />
+            <xsl:variable name="tmlSchemaLocation" select="concat($schemaLocation,'tml/1.0.0/')" />
+            <xsl:choose>
+                <xsl:when test="starts-with($schemaName,'sos')">
+                    <xsl:value-of select="concat($sosSchemaLocation,$schemaName)" />
+                </xsl:when>
+                <xsl:when test="starts-with($schemaName,'swes')">
+                    <xsl:value-of select="concat($swesSchemaLocation,$schemaName)" />
+                </xsl:when>
+                <xsl:when test="starts-with($schemaName,'ows')">
+                    <xsl:value-of select="concat($owsSchemaLocation,$schemaName)" />
+                </xsl:when>
+                <xsl:when test="starts-with($schemaName,'sensorML')">
+                    <xsl:value-of select="concat($sensorMLSchemaLocation,$schemaName)" />
+                </xsl:when>
+                <xsl:when test="starts-with($schemaName,'tml')">
+                    <xsl:value-of select="concat($tmlSchemaLocation,$schemaName)" />
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$schemaLocation" />
+                </xsl:otherwise>
+            </xsl:choose>
+        </ctl:code>
+    </ctl:function>
+	
+	
 	</ctl:package>
 
 </ctl:package>
