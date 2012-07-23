@@ -1,7 +1,7 @@
 WFS 1.0.0 Test Suite Release Notes
 
-Changes included in this revision:
-
+=== Changes included in R4 ===
+- updated description of the test (index.html), linked to executie summary (execsummary.html) and test requirements (testreq.html)
 
 === Changes included in R3 ===
 
