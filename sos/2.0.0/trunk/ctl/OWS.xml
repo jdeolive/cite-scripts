@@ -23,7 +23,7 @@
 		<ctl:param name="serviceURL">The URL of the service being tested</ctl:param>
 		<ctl:param name="isGET">Test From HTTP-GET or HTTP-POST</ctl:param>
 		<ctl:param name="isSOAP">Test From HTTP-POST with SOAP-Binding</ctl:param>
-		<ctl:param name="serviceType">The OGC identifier for the type of service being tested (i.e. SPS)</ctl:param>
+		<ctl:param name="serviceType">The OGC identifier for the type of service being tested (i.e. sos)</ctl:param>
 		<ctl:param name="serviceVersion">The version of the service being tested</ctl:param>
 		<ctl:param name="capabilitiesRootElementName">The name of the root element of a Capabilities document returned by this service (i.e. Capabilities, WFS_Capabilities, etc.)</ctl:param>
 		<ctl:param name="capabilitiesResponseSchemaLocation">The location of the Capabilities schema for the service being tested</ctl:param>
@@ -80,7 +80,7 @@
 								<sos:GetCapabilities service="SOS" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
 									http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
-									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" ></sps:GetCapabilities>
+									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" ></sos:GetCapabilities>
 							</ctl:body>
 							<parsers:SOAPParser return="content">
 								<parsers:XMLValidatingParser>
@@ -339,7 +339,7 @@
 								<sos:GetCapabilities service="SOS" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
 									http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
-									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" ></sps:GetCapabilities>
+									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" ></sos:GetCapabilities>
 							</ctl:body>
 							<parsers:HTTPParser/>
 						</ctl:soap-request>
@@ -435,7 +435,7 @@
 								<sos:GetCapabilities service="ASDF" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
 									http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
-									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" ></sps:GetCapabilities>
+									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" ></sos:GetCapabilities>
 							</ctl:body>
 							<parsers:SOAPParser return="content">
 								<parsers:XMLValidatingParser>
@@ -546,7 +546,7 @@
 								<sos:GetCapabilities service="SOS" updateSequence="9999999999" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
 									http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
-									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" ></sps:GetCapabilities>
+									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" ></sos:GetCapabilities>
 							</ctl:body>
 							<parsers:SOAPParser return="content">
 								<parsers:XMLValidatingParser>
@@ -840,7 +840,7 @@
 								<sos:GetCapabilities service="SOS" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
 									http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
-									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" ></sps:GetCapabilities>
+									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" ></sos:GetCapabilities>
 							</ctl:body>
 							<parsers:SOAPParser return="content">
 								<parsers:XMLValidatingParser>
@@ -1533,7 +1533,7 @@
 	</ctl:function>
 
 	<ctl:function name="owsFunctions:isValidMIMETypeFormat">
-		<ctl:param name="responseFormat">The respsonseFormat to validate</ctl:param>
+		<ctl:param name="responseFormat">The resosonseFormat to validate</ctl:param>
 		<ctl:return>True/False depending on whether the input is a valid MIME type based on ows:owsCommon.xsd</ctl:return>
 		<ctl:description>Determines if a definition URN is valid</ctl:description>
 		<ctl:code>		
