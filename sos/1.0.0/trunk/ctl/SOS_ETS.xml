@@ -48,7 +48,7 @@
 									<td align="center">
 										<input name="service-url" size="128" 
 										type="text" 
-										value="http://sdftest.ndbc.noaa.gov/sos/server.php"/>
+										value="http://sensorweb.demo.52north.org/52nSOSv3.2.1/sos"/>
 									</td>
 								</tr>				
 							</table>
