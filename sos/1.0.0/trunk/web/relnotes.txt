@@ -2,6 +2,10 @@ SOS 1.0.0 Test Suite Release Notes
 
 Changes included in latest revision:
 
+Revision r5 2012-07-20 (rocky)
+- The default getCapabilities URL in the form test change to be "http://sensorweb.demo.52north.org/52nSOSv3.2.1/sos".
+
+
 Revision r4 2012-07-20 (rocky)
 - Update test suite for new xlink policy
 
