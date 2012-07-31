@@ -1,7 +1,10 @@
 WCS 1.0.0 Test Suite Release Notes
 
 
-Changes included in latest revision:
+=== Changes included in r3 ===
+2012-06-25 
+- added correct xlink schema
+- changed for new xlink policy
 
 === Changes included in r2 ===
 
