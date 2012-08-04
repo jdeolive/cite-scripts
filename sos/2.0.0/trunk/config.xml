@@ -9,7 +9,7 @@
 		<name>2.0.0</name>
 	</version>
 	<revision>
-		<name>r1</name>
+		<name>r0</name>
 	</revision>
 	<suite>
 		<namespace-uri>http://www.opengis.net/sos/2.0</namespace-uri>

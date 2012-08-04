@@ -1,11 +1,13 @@
-SOS 1.0.0 Test Suite Release Notes
+SOS 2.0 Test Suite Release Notes
 
 Changes included in latest revision:
 
-Revision r1 2012-07-20 (rocky)
-- Update test suite for new xlink policy
 
-2012-05-30 (rocky):
-- tag r0 
+2012-07-25
+	DescribeSensor test scripts updated.
+
+2012-07-16
+	GetCapabilities & OWS test scripts updated.
+
 
 
