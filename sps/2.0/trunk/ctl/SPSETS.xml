@@ -1212,8 +1212,8 @@
 		<ctl:test name="sps:core-SPS.GetCapabilities-PostRequestNullService.1">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request with null parameter "service",and the response must be a valid exception with code "InvalidParameterValue" and locator "service". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "service"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request with null parameter "service",and the response must be a valid exception with code "MissingParameterValue" and locator "service". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "MissingParameterValue" and locator is "service"; fail otherwise.</ctl:comment>
 			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<xsl:variable name="getCapabilitiesResponse">
@@ -1267,7 +1267,7 @@
 							<xsl:variable name="isCorrect">
 								<ctl:call-function name="spsFunctions:checkExceptionReport">
 									<ctl:with-param name="exceptionReport" select="$getCapabilitiesResponse" />
-									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 									<ctl:with-param name="locatorToCheck" select="string('service')" />
 									<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 								</ctl:call-function>
@@ -1275,7 +1275,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetCapabilities request with null service parameter specified.</ctl:message>  
-								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "service".</ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "service".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -1418,8 +1418,8 @@
 		<ctl:test name="sps:core-SPS.GetCapabilities-PostRequestNullVersion.1">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request with null parameter "acceptVersions",and the response must be a valid exception with code "InvalidParameterValue" and locator "acceptVersions". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "acceptVersions"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request with null element "acceptVersions",and the response must be a valid exception with code "MissingParameterValue" and locator "acceptVersions". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "MissingParameterValue" and locator is "acceptVersions"; fail otherwise.</ctl:comment>
 			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<xsl:variable name="getCapabilitiesResponse">
@@ -1430,11 +1430,16 @@
 							</ctl:url> 
 							<ctl:method>post</ctl:method>
 							<ctl:body>
-								<sps:GetCapabilities acceptVersions=""
+								<sps:GetCapabilities
+									xmlns:ows="http://www.opengis.net/ows/1.1"
 									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 									xmlns:sps="http://www.opengis.net/sps/2.0" 
-									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></sps:GetCapabilities>
+									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+									<ows:AcceptVersions>
+										<ows:Version></ows:Version>
+									</ows:AcceptVersions>
+								</sps:GetCapabilities>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateExceptionReportSOAP" />
 						</ctl:soap-request>
@@ -1446,11 +1451,16 @@
 							</ctl:url>
 							<ctl:method>post</ctl:method>
 							<ctl:body>
-								<sps:GetCapabilities acceptVersions=""
+								<sps:GetCapabilities 
+									xmlns:ows="http://www.opengis.net/ows/1.1"
 									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 									xmlns:sps="http://www.opengis.net/sps/2.0" 
-									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></sps:GetCapabilities>
+									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+									<ows:AcceptVersions>
+										<ows:Version></ows:Version>
+									</ows:AcceptVersions>
+								</sps:GetCapabilities>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateExceptionReport" />
 						</ctl:request>
@@ -1473,7 +1483,7 @@
 							<xsl:variable name="isCorrect">
 								<ctl:call-function name="spsFunctions:checkExceptionReport">
 									<ctl:with-param name="exceptionReport" select="$getCapabilitiesResponse" />
-									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 									<ctl:with-param name="locatorToCheck" select="string('acceptVersions')" />
 									<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 								</ctl:call-function>
@@ -1481,7 +1491,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetCapabilities request with null acceptVersions parameter specified.</ctl:message>  
-								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "acceptVersions".</ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "acceptVersions".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -1503,11 +1513,15 @@
 								<xsl:value-of select="$serviceURL"/>
 							</ctl:url> 
 							<ctl:body>
-								<sps:GetCapabilities acceptVersions="999"
+								<sps:GetCapabilities 
 									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 									xmlns:sps="http://www.opengis.net/sps/2.0" 
-									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></sps:GetCapabilities>
+									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+									<ows:AcceptVersions>
+										<ows:Version>999</ows:Version>
+									</ows:AcceptVersions>
+								</sps:GetCapabilities>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateExceptionReportSOAP" />
 						</ctl:soap-request>
@@ -1519,11 +1533,15 @@
 							</ctl:url>
 							<ctl:method>post</ctl:method>
 							<ctl:body>
-								<sps:GetCapabilities acceptVersions="999"
+								<sps:GetCapabilities
 									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 									xmlns:sps="http://www.opengis.net/sps/2.0" 
-									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></sps:GetCapabilities>
+									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+									<ows:AcceptVersions>
+										<ows:Version>999</ows:Version>
+									</ows:AcceptVersions>
+								</sps:GetCapabilities>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateExceptionReport" />
 						</ctl:request>
@@ -1739,8 +1757,8 @@
 			<ctl:param name="DescribeSensor_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request without parameter "service",and the response must be a valid exception with code "MissingParameterValue" and locator "service". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "MissingParameterValue" and locator is "service"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request without parameter "service",and the response must be a valid exception with code "InvalidRequest" and locator "service". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "service"; fail otherwise.</ctl:comment>
 			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- get a valid procedure-->
@@ -1796,7 +1814,7 @@
 							<xsl:variable name="isCorrect">
 								<ctl:call-function name="spsFunctions:checkExceptionReport">
 									<ctl:with-param name="exceptionReport" select="$describeSensorResponse" />
-									<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
 									<ctl:with-param name="locatorToCheck" select="string('service')" />
 									<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 								</ctl:call-function>
@@ -1804,7 +1822,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with no service parameter specified. </ctl:message>
-								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "service".</ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "service".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -1816,8 +1834,8 @@
 			<ctl:param name="DescribeSensor_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request with null parameter "service",and the response must be a valid exception with code "InvalidParameterValue" and locator "service". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "service"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request with null parameter "service",and the response must be a valid exception with code "MissingParameterValue" and locator "service". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "MissingParameterValue" and locator is "service"; fail otherwise.</ctl:comment>
 			<ctl:link title="Verify that the server handles no service parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestNullService</ctl:link>
 			<ctl:code>
 				<!-- 取得一個 procedure-->
@@ -1873,7 +1891,7 @@
 							<xsl:variable name="isCorrect">
 								<ctl:call-function name="spsFunctions:checkExceptionReport">
 									<ctl:with-param name="exceptionReport" select="$describeSensorResponse" />
-									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 									<ctl:with-param name="locatorToCheck" select="string('service')" />
 									<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 								</ctl:call-function>
@@ -1881,7 +1899,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with null service parameter specified.  </ctl:message>
-								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "service".</ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "service".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -1893,7 +1911,7 @@
 			<ctl:param name="DescribeSensor_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request with invalid parameter "procedure",and the response must be a valid exception with code "InvalidParameterValue" and locator "service". </ctl:assertion>
+			<ctl:assertion>Send a request with invalid parameter "service",and the response must be a valid exception with code "InvalidParameterValue" and locator "service". </ctl:assertion>
 			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "service"; fail otherwise.</ctl:comment>
 			<ctl:link title="Verify that the server handles no procedure parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestInvalidService</ctl:link>
 			<ctl:code>
@@ -1970,8 +1988,8 @@
 			<ctl:param name="DescribeSensor_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request without parameter "version",and the response must be a valid exception with code "MissingParameterValue" and locator "version". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "MissingParameterValue" and locator is "version"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request without parameter "version",and the response must be a valid exception with code "InvalidRequest" and locator "version". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "version"; fail otherwise.</ctl:comment>
 			<ctl:link title="Verify that the server handles no version parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestNoVersion</ctl:link>
 			<ctl:code>
 				<!-- 取得一個 procedure-->
@@ -2027,7 +2045,7 @@
 							<xsl:variable name="isCorrect">
 								<ctl:call-function name="spsFunctions:checkExceptionReport">
 									<ctl:with-param name="exceptionReport" select="$describeSensorResponse" />
-									<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
 									<ctl:with-param name="locatorToCheck" select="string('version')" />
 									<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 								</ctl:call-function>
@@ -2035,7 +2053,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with no version parameter specified.</ctl:message>  
-								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "version".</ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "version".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -2047,8 +2065,8 @@
 			<ctl:param name="DescribeSensor_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request with null parameter "version",and the response must be a valid exception with code "InvalidParameterValue" and locator "version". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "version"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request with null parameter "version",and the response must be a valid exception with code "MissingParameterValue" and locator "version". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "MissingParameterValue" and locator is "version"; fail otherwise.</ctl:comment>
 			<ctl:link title="Verify that the server handles null version parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestNullVersion</ctl:link>
 			<ctl:code>
 				<!-- 取得一個 procedure-->
@@ -2104,7 +2122,7 @@
 							<xsl:variable name="isCorrect">
 								<ctl:call-function name="spsFunctions:checkExceptionReport">
 									<ctl:with-param name="exceptionReport" select="$describeSensorResponse" />
-									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 									<ctl:with-param name="locatorToCheck" select="string('version')" />
 									<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 								</ctl:call-function>
@@ -2112,7 +2130,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with null version parameter specified. </ctl:message> 
-								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "version".</ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "version".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -2201,8 +2219,8 @@
 			<ctl:param name="DescribeSensor_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request without parameter "procedure",and the response must be a valid exception with code "MissingParameterValue" and locator "procedure". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "MissingParameterValue" and locator is "procedure"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request without parameter "procedure",and the response must be a valid exception with code "InvalidRequest" and locator "procedure". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "procedure"; fail otherwise.</ctl:comment>
 			<ctl:link title="Verify that the server handles no procedure parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestNoProcedure</ctl:link>
 			<ctl:code>
 				<!-- get procedureDescriptionFormat value first-->
@@ -2254,7 +2272,7 @@
 							<xsl:variable name="isCorrect">
 								<ctl:call-function name="spsFunctions:checkExceptionReport">
 									<ctl:with-param name="exceptionReport" select="$describeSensorResponse" />
-									<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
 									<ctl:with-param name="locatorToCheck" select="string('procedure')" />
 									<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 								</ctl:call-function>
@@ -2262,7 +2280,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with no procedure parameter specified.  </ctl:message>
-								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "procedure".</ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "procedure".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -2274,8 +2292,8 @@
 			<ctl:param name="DescribeSensor_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request with null parameter "procedure",and the response must be a valid exception with code "InvalidParameterValue" and locator "procedure". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "procedure"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request with null parameter "procedure",and the response must be a valid exception with code "MissingParameterValue" and locator "procedure". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "MissingParameterValue" and locator is "procedure"; fail otherwise.</ctl:comment>
 			<ctl:link title="Verify that the server handles null procedure parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestNullProcedure</ctl:link>
 			<ctl:code>
 				<!-- set a invalid procedure -->
@@ -2331,7 +2349,7 @@
 							<xsl:variable name="isCorrect">
 								<ctl:call-function name="spsFunctions:checkExceptionReport">
 									<ctl:with-param name="exceptionReport" select="$describeSensorResponse" />
-									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 									<ctl:with-param name="locatorToCheck" select="string('procedure')" />
 									<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 								</ctl:call-function>
@@ -2339,7 +2357,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with null procedure parameter specified.</ctl:message>  
-								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "procedure".</ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "procedure".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -2428,8 +2446,8 @@
 			<ctl:param name="DescribeSensor_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request without parameter "ProcedureDescriptionFormat",and the response must be a valid exception with code "MissingParameterValue" and locator "ProcedureDescriptionFormat". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "MissingParameterValue" and locator is "ProcedureDescriptionFormat"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request without parameter "ProcedureDescriptionFormat",and the response must be a valid exception with code "InvalidRequest " and locator "ProcedureDescriptionFormat". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidRequest " and locator is "ProcedureDescriptionFormat"; fail otherwise.</ctl:comment>
 			<ctl:link title="Verify that the server handles no ProcedureDescriptionFormat parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestNoProcedureDescriptionFormat</ctl:link>
 			<ctl:code>
 				<!-- 取得一個 procedure-->
@@ -2481,7 +2499,7 @@
 							<xsl:variable name="isCorrect">
 								<ctl:call-function name="spsFunctions:checkExceptionReport">
 									<ctl:with-param name="exceptionReport" select="$describeSensorResponse" />
-									<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest ')" />
 									<ctl:with-param name="locatorToCheck" select="string('procedureDescriptionFormat')" />
 									<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 								</ctl:call-function>
@@ -2489,7 +2507,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with no procedureDescriptionFormat parameter specified. </ctl:message> 
-								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "procedureDescriptionFormat".</ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest " and a locator of "procedureDescriptionFormat".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -2501,8 +2519,8 @@
 			<ctl:param name="DescribeSensor_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request with null parameter "ProcedureDescriptionFormat",and the response must be a valid exception with code "InvalidParameterValue" and locator "ProcedureDescriptionFormat". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "ProcedureDescriptionFormat"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request with null parameter "ProcedureDescriptionFormat",and the response must be a valid exception with code "MissingParameterValue" and locator "ProcedureDescriptionFormat". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "MissingParameterValue" and locator is "ProcedureDescriptionFormat"; fail otherwise.</ctl:comment>
 			<ctl:link title="Verify that the server handles null ProcedureDescriptionFormat parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestNullProcedureDescriptionFormat</ctl:link>
 			<ctl:code>
 				<!--  get procedure value first -->
@@ -2558,7 +2576,7 @@
 							<xsl:variable name="isCorrect">
 								<ctl:call-function name="spsFunctions:checkExceptionReport">
 									<ctl:with-param name="exceptionReport" select="$describeSensorResponse" />
-									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 									<ctl:with-param name="locatorToCheck" select="string('procedureDescriptionFormat')" />
 									<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 								</ctl:call-function>
@@ -2566,7 +2584,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with null ProcedureDescriptionFormat parameter specified.  </ctl:message>
-								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "procedureDescriptionFormat".</ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "procedureDescriptionFormat".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -2655,8 +2673,8 @@
 			<ctl:param name="DescribeSensor_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request with invalid parameter "validTime" value "123",and the response must be a valid exception with code "OptionNotSupported" and locator "validTime". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "OptionNotSupported" and locator is "validTime"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request with invalid parameter "validTime" value "123",and the response must be a valid exception with code "InvalidRequest" and locator "validTime". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "validTime"; fail otherwise.</ctl:comment>
 			<ctl:link title="Verify that the server handles invalid validTime parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestInvalidvalidTime</ctl:link>
 			<ctl:code>
 				<!-- get procedure value-->
@@ -2716,7 +2734,7 @@
 							<xsl:variable name="isCorrect">
 								<ctl:call-function name="spsFunctions:checkExceptionReport">
 									<ctl:with-param name="exceptionReport" select="$describeSensorResponse" />
-									<ctl:with-param name="exceptionCodeToCheck" select="string('OptionNotSupported')" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
 									<ctl:with-param name="locatorToCheck" select="string('validTime')" />
 									<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 								</ctl:call-function>
@@ -2724,7 +2742,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with invalid validTime parameter specified. </ctl:message> 
-								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "OptionNotSupported" and a locator of "validTime".</ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "validTime".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -2900,14 +2918,14 @@
 			<ctl:param name="DescribeTasking_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no service value is supplied in the request.</ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid error report message with an exceptionCode parameter of MissingParameterValue and a locator of service; fail otherwise.</ctl:comment>
+			<ctl:assertion>The server returns a valid error report message with a value of InvalidRequest for the exceptionCode parameter when no service value is supplied in the request.</ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid error report message with an exceptionCode parameter of InvalidRequest and a locator of service; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!--PUT TEST CODE HERE-->
 				<!--
 				1.)  HTTP POST DescribeTasking request with an empty sensorID.
 				2.)  Validate response against ExceptionReport schema.
-				3.)  If response validates, then check that the exceptionCode parameter is "MissingParameterValue".
+				3.)  If response validates, then check that the exceptionCode parameter is "InvalidRequest".
 				-->
 				<!-- 取得一個 procedure-->
 				<xsl:variable name="procedure" select="$getCapabilitiesResponse//sps:contents//swes:procedure" />
@@ -2958,14 +2976,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$describeTaskingResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
 								<ctl:with-param name="locatorToCheck" select="string('service')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of MissingParameterValue and a locator of service.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidRequest and a locator of service.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -2976,14 +2994,14 @@
 			<ctl:param name="DescribeTasking_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when null service value is supplied in the request.</ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid error report message with an exceptionCode parameter of InvalidParameterValue and a locator of service; fail otherwise.</ctl:comment>
+			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when null service value is supplied in the request.</ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid error report message with an exceptionCode parameter of MissingParameterValue and a locator of service; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!--PUT TEST CODE HERE-->
 				<!--
 				1.)  HTTP POST DescribeTasking request with an empty service.
 				2.)  Validate response against ExceptionReport schema.
-				3.)  If response validates, then check that the exceptionCode parameter is "InvalidParameterValue".
+				3.)  If response validates, then check that the exceptionCode parameter is "MissingParameterValue".
 				-->
 				<!-- 取得一個 procedure-->
 				<xsl:variable name="procedure" select="$getCapabilitiesResponse//sps:contents//swes:procedure" />
@@ -3034,14 +3052,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$describeTaskingResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 								<ctl:with-param name="locatorToCheck" select="string('service')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of service.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of MissingParameterValue and a locator of service.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -3128,14 +3146,14 @@
 			<ctl:param name="DescribeTasking_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no version value is supplied in the request.</ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid error report message with an exceptionCode parameter of MissingParameterValue; fail otherwise.</ctl:comment>
+			<ctl:assertion>The server returns a valid error report message with a value of InvalidRequest for the exceptionCode parameter when no version value is supplied in the request.</ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid error report message with an exceptionCode parameter of InvalidRequest; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!--PUT TEST CODE HERE-->
 				<!--
 				1.)  HTTP POST DescribeTasking request with an empty sensorID.
 				2.)  Validate response against ExceptionReport schema.
-				3.)  If response validates, then check that the exceptionCode parameter is "MissingParameterValue".
+				3.)  If response validates, then check that the exceptionCode parameter is "InvalidRequest".
 				-->
 				<!-- 取得一個 procedure-->
 				<xsl:variable name="procedure" select="$getCapabilitiesResponse//sps:contents//swes:procedure" />
@@ -3186,14 +3204,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$describeTaskingResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
 								<ctl:with-param name="locatorToCheck" select="string('version')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of MissingParameterValue and a locator of version.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidRequest and a locator of version.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -3204,14 +3222,14 @@
 			<ctl:param name="DescribeTasking_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when null version value is supplied in the request.</ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid error report message with an exceptionCode parameter of InvalidParameterValue; fail otherwise.</ctl:comment>
+			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when null version value is supplied in the request.</ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid error report message with an exceptionCode parameter of MissingParameterValue; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!--PUT TEST CODE HERE-->
 				<!--
 				1.)  HTTP POST DescribeTasking request with an empty sensorID.
 				2.)  Validate response against ExceptionReport schema.
-				3.)  If response validates, then check that the exceptionCode parameter is "InvalidParameterValue".
+				3.)  If response validates, then check that the exceptionCode parameter is "MissingParameterValue".
 				-->
 				<!-- 取得一個 procedure-->
 				<xsl:variable name="procedure" select="$getCapabilitiesResponse//sps:contents//swes:procedure" />
@@ -3262,14 +3280,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$describeTaskingResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 								<ctl:with-param name="locatorToCheck" select="string('version')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of version.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of MissingParameterValue and a locator of version.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -3355,14 +3373,14 @@
 		<ctl:test name="sps:core-SPS.DescribeTasking-RequestNoProcedure.1">
 			<ctl:param name="DescribeTasking_URL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no procedure value is supplied in the request.</ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid error report message with an exceptionCode parameter of MissingParameterValue; fail otherwise.</ctl:comment>
+			<ctl:assertion>The server returns a valid error report message with a value of InvalidRequest for the exceptionCode parameter when no procedure value is supplied in the request.</ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid error report message with an exceptionCode parameter of InvalidRequest; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!--PUT TEST CODE HERE-->
 				<!--
 				1.)  HTTP POST DescribeTasking request with an empty sensorID.
 				2.)  Validate response against ExceptionReport schema.
-				3.)  If response validates, then check that the exceptionCode parameter is "MissingParameterValue".
+				3.)  If response validates, then check that the exceptionCode parameter is "InvalidRequest".
 				-->
 				<ctl:message>Sending a DescribeTasking request without procedure parameter...</ctl:message>
 				<xsl:variable name="describeTaskingResponse">
@@ -3408,14 +3426,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$describeTaskingResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
 								<ctl:with-param name="locatorToCheck" select="string('procedure')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of procedure.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidRequest and a locator of procedure.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -3425,14 +3443,14 @@
 		<ctl:test name="sps:core-SPS.DescribeTasking-RequestNullProcedure.1">
 			<ctl:param name="DescribeTasking_URL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when Invalid procedure value is supplied in the request.</ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid error report message with an exceptionCode parameter of InvalidParameterValue; fail otherwise.</ctl:comment>
+			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when Invalid procedure value is supplied in the request.</ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid error report message with an exceptionCode parameter of MissingParameterValue; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!--PUT TEST CODE HERE-->
 				<!--
 				1.)  HTTP POST DescribeTasking request with an empty sensorID.
 				2.)  Validate response against ExceptionReport schema.
-				3.)  If response validates, then check that the exceptionCode parameter is "InvalidParameterValue".
+				3.)  If response validates, then check that the exceptionCode parameter is "MissingParameterValue".
 				-->
 				<ctl:message>Sending a DescribeTasking request with a null procedure...</ctl:message>
 				<xsl:variable name="describeTaskingResponse">
@@ -3480,14 +3498,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$describeTaskingResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 								<ctl:with-param name="locatorToCheck" select="string('procedure')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of procedure.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of MissingParameterValue and a locator of procedure.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -3810,7 +3828,7 @@
 			<ctl:param name="TaskingParameters" />
 			<ctl:param name="Submit_URL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no service value is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of InvalidRequest for the exceptionCode parameter when no service value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create Submit request without procedure -->
@@ -3862,14 +3880,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$submitResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
 								<ctl:with-param name="locatorToCheck" select="string('service')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of service.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidRequest and a locator of service.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -3881,7 +3899,7 @@
 			<ctl:param name="TaskingParameters" />
 			<ctl:param name="Submit_URL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when null service value is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when null service value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create Submit request with invalid procedure -->
@@ -3933,14 +3951,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$submitResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 								<ctl:with-param name="locatorToCheck" select="string('service')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of service.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of MissingParameterValue and a locator of service.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -4023,7 +4041,7 @@
 			<ctl:param name="TaskingParameters" />
 			<ctl:param name="Submit_URL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no procedure value is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of InvalidRequest for the exceptionCode parameter when no procedure value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create Submit request without procedure -->
@@ -4075,14 +4093,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$submitResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
 								<ctl:with-param name="locatorToCheck" select="string('version')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of procedure.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidRequest and a locator of procedure.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -4094,7 +4112,7 @@
 			<ctl:param name="TaskingParameters" />
 			<ctl:param name="Submit_URL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid procedure value is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when invalid procedure value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create Submit request with invalid procedure -->
@@ -4146,14 +4164,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$submitResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 								<ctl:with-param name="locatorToCheck" select="string('version')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of procedure.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of MissingParameterValue and a locator of procedure.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -4235,7 +4253,7 @@
 			<ctl:param name="TaskingParameters" />
 			<ctl:param name="Submit_URL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no procedure value is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of InvalidRequest for the exceptionCode parameter when no procedure value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create Submit request without procedure -->
@@ -4285,14 +4303,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$submitResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
 								<ctl:with-param name="locatorToCheck" select="string('procedure')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of procedure.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidRequest and a locator of procedure.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -4303,7 +4321,7 @@
 			<ctl:param name="TaskingParameters" />
 			<ctl:param name="Submit_URL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid procedure value is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when invalid procedure value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create Submit request with invalid procedure -->
@@ -4355,14 +4373,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$submitResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 								<ctl:with-param name="locatorToCheck" select="string('procedure')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of procedure.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of MissingParameterValue and a locator of procedure.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -4443,7 +4461,7 @@
 			<ctl:param name="procedure" />
 			<ctl:param name="Submit_URL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no TaskingParameters value is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of InvalidRequest for the exceptionCode parameter when no TaskingParameters value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create Submit request without procedure -->
@@ -4493,14 +4511,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$submitResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
 								<ctl:with-param name="locatorToCheck" select="string('TaskingParameters')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of TaskingParameters.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidRequest and a locator of TaskingParameters.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -4511,7 +4529,7 @@
 			<ctl:param name="procedure" />
 			<ctl:param name="Submit_URL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid taskingParameters value is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when invalid taskingParameters value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create Submit request with invalid procedure -->
@@ -4563,14 +4581,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$submitResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 								<ctl:with-param name="locatorToCheck" select="string('taskingParameters')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of taskingParameters.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of MissingParameterValue and a locator of taskingParameters.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -4992,7 +5010,7 @@
 			<ctl:param name="GetStatus_URL" />
 			<ctl:param name="task" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no Task value is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of InvalidRequest for the exceptionCode parameter when no Task value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create GetStatus request without task -->
@@ -5042,14 +5060,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$GetStatusResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
 								<ctl:with-param name="locatorToCheck" select="string('service')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of task.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidRequest and a locator of task.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -5060,7 +5078,7 @@
 			<ctl:param name="GetStatus_URL" />
 			<ctl:param name="task" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid task value is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when invalid task value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create GetStatus request with invalid procedure -->
@@ -5110,14 +5128,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$GetStatusResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 								<ctl:with-param name="locatorToCheck" select="string('service')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of task.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of MissingParameterValue and a locator of task.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -5196,7 +5214,7 @@
 			<ctl:param name="GetStatus_URL" />
 			<ctl:param name="task" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no version value is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of InvalidRequest for the exceptionCode parameter when no version value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create GetStatus request without task -->
@@ -5246,14 +5264,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$GetStatusResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
 								<ctl:with-param name="locatorToCheck" select="string('version')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of version.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidRequest and a locator of version.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -5264,7 +5282,7 @@
 			<ctl:param name="GetStatus_URL" />
 			<ctl:param name="task" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when null version value is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when null version value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create GetStatus request with invalid procedure -->
@@ -5314,14 +5332,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$GetStatusResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 								<ctl:with-param name="locatorToCheck" select="string('version')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of version.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of MissingParameterValue and a locator of version.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -5399,7 +5417,7 @@
 		<ctl:test name="sps:core-SPS.GetStatus-RequestNoTask.1">
 			<ctl:param name="GetStatus_URL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no Task value is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of InvalidRequest for the exceptionCode parameter when no Task value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create GetStatus request without task -->
@@ -5447,14 +5465,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$GetStatusResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
 								<ctl:with-param name="locatorToCheck" select="string('task')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of task.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidRequest and a locator of task.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -5464,7 +5482,7 @@
 		<ctl:test name="sps:core-SPS.GetStatus-RequestNullTask.1">
 			<ctl:param name="GetStatus_URL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid task value is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when invalid task value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create Submit request with invalid procedure -->
@@ -5514,14 +5532,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$GetStatusResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 								<ctl:with-param name="locatorToCheck" select="string('task')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of task.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of MissingParameterValue and a locator of task.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -5906,7 +5924,7 @@
 			<ctl:param name="GetTask_URL" />
 			<ctl:param name="task" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no service value is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of InvalidRequest for the exceptionCode parameter when no service value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create GetTask request without service -->
@@ -5956,14 +5974,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$GetTaskResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
 								<ctl:with-param name="locatorToCheck" select="string('service')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of service.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidRequest and a locator of service.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -5974,7 +5992,7 @@
 			<ctl:param name="GetTask_URL" />
 			<ctl:param name="task" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid service value is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when invalid service value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create GetTask request with null service -->
@@ -6024,14 +6042,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$GetTaskResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 								<ctl:with-param name="locatorToCheck" select="string('service')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of service.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of MissingParameterValue and a locator of service.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -6110,7 +6128,7 @@
 			<ctl:param name="GetTask_URL" />
 			<ctl:param name="task" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no version value is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of InvalidRequest for the exceptionCode parameter when no version value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create GetStatus request without version -->
@@ -6160,14 +6178,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$GetTaskResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
 								<ctl:with-param name="locatorToCheck" select="string('version')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of version.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidRequest and a locator of version.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -6178,7 +6196,7 @@
 			<ctl:param name="GetTask_URL" />
 			<ctl:param name="task" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when null version value is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when null version value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create GetTask request with null version -->
@@ -6228,14 +6246,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$GetTaskResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 								<ctl:with-param name="locatorToCheck" select="string('version')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of version.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of MissingParameterValue and a locator of version.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -6313,7 +6331,7 @@
 		<ctl:test name="sps:core-SPS.GetTask-RequestNoTask.1">
 			<ctl:param name="GetTask_URL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no Task value is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of InvalidRequest for the exceptionCode parameter when no Task value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create GetStatus request without task -->
@@ -6361,14 +6379,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$GetTaskResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
 								<ctl:with-param name="locatorToCheck" select="string('task')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of task.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidRequest and a locator of task.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -6378,7 +6396,7 @@
 		<ctl:test name="sps:core-SPS.GetTask-RequestNullTask.1">
 			<ctl:param name="GetTask_URL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid task value is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when invalid task value is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create Submit request with invalid procedure -->
@@ -6428,14 +6446,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$GetTaskResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 								<ctl:with-param name="locatorToCheck" select="string('task')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of task.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of MissingParameterValue and a locator of task.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -6724,7 +6742,7 @@
 			<ctl:param name="DescribeResultAccess_URL" />
 			<ctl:param name="procedure" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no service is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of InvalidRequest for the exceptionCode parameter when no service is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create DescribeResultAccess request without procedure and without service-->
@@ -6778,14 +6796,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$DescribeResultAccessResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
 								<ctl:with-param name="locatorToCheck" select="string('service')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of procedure.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidRequest and a locator of procedure.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -6796,7 +6814,7 @@
 			<ctl:param name="DescribeResultAccess_URL" />
 			<ctl:param name="procedure" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when null service value (empty) is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when null service value (empty) is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create DescribeResultAccess request with null service -->
@@ -6850,14 +6868,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$DescribeResultAccessResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 								<ctl:with-param name="locatorToCheck" select="string('service')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of service.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of MissingParameterValue and a locator of service.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -6940,7 +6958,7 @@
 			<ctl:param name="DescribeResultAccess_URL" />
 			<ctl:param name="procedure" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no version is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of InvalidRequest for the exceptionCode parameter when no version is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create DescribeResultAccess request without procedure and without task-->
@@ -6994,14 +7012,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$DescribeResultAccessResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
 								<ctl:with-param name="locatorToCheck" select="string('version')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of MissingParameterValue and a locator of version.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidRequest and a locator of version.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -7012,7 +7030,7 @@
 			<ctl:param name="DescribeResultAccess_URL" />
 			<ctl:param name="procedure" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when null version value (empty) is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when null version value (empty) is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create DescribeResultAccess request with invalid target -->
@@ -7066,14 +7084,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$DescribeResultAccessResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 								<ctl:with-param name="locatorToCheck" select="string('version')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of version.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of MissingParameterValue and a locator of version.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -7155,7 +7173,7 @@
 		<ctl:test name="sps:core-SPS.DescribeResultAccess-RequestNoTarget.1">
 			<ctl:param name="DescribeResultAccess_URL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when no Target is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of InvalidRequest for the exceptionCode parameter when no Target is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create DescribeResultAccess request without procedure and without task-->
@@ -7203,14 +7221,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$DescribeResultAccessResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
 								<ctl:with-param name="locatorToCheck" select="string('target')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of procedure.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidRequest and a locator of procedure.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -7220,7 +7238,7 @@
 		<ctl:test name="sps:core-SPS.DescribeResultAccess-RequestNullTarget.1">
 			<ctl:param name="DescribeResultAccess_URL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>The server returns a valid error report message with a value of InvalidParameterValue for the exceptionCode parameter when invalid target value (empty) is supplied in the request.</ctl:assertion>
+			<ctl:assertion>The server returns a valid error report message with a value of MissingParameterValue for the exceptionCode parameter when invalid target value (empty) is supplied in the request.</ctl:assertion>
 			<ctl:comment>Pass if the server return a valid Exception response; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create DescribeResultAccess request with invalid target -->
@@ -7270,14 +7288,14 @@
 						<xsl:variable name="isCorrect">
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$DescribeResultAccessResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 								<ctl:with-param name="locatorToCheck" select="string('target')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of target.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of MissingParameterValue and a locator of target.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
