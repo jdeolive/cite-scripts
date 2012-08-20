@@ -1150,7 +1150,7 @@
 					</xsl:choose>	
 				</xsl:for-each>
 			</xsl:variable>
-			<xsl:value-of select="concat('{',substring-after($returnvalue,','),'}')" />
+			<xsl:value-of select="substring-after($returnvalue,',')" />
         </ctl:code>
     </ctl:function>
 	
