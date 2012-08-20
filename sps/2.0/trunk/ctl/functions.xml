@@ -1115,4 +1115,43 @@
         </ctl:code>
     </ctl:function>
 
+	<ctl:function name="spsFunctions:ConcatSubmitValues"><!-- 組出submit需要的values字串 -->
+        <ctl:param name="taskingParameters"></ctl:param>
+        <ctl:return>A valid taskingParameters values.</ctl:return>
+        <ctl:description></ctl:description>
+        <ctl:code>
+			<xsl:variable name="returnvalue">
+				<xsl:variable name="firstfield" select="$taskingParameters//swe:field" />
+				<xsl:for-each select="$taskingParameters//swe:field">
+					<xsl:variable name="thisfield" select="." />
+					<xsl:value-of select="string(',')" />
+					<xsl:choose>
+						<!-- if optional=true; return empty string. -->
+						<xsl:when test="count($thisfield/*[@optional='true'])>0">
+							<xsl:value-of select="string(' ')" />
+						</xsl:when>
+						<!-- if Boolean element given;return true -->
+						<xsl:when test="count($thisfield/swe:Boolean)>0">
+							<xsl:value-of select="string('true')" />
+						</xsl:when>
+						<!-- if AllowedTokens/value given;return first value -->
+						<xsl:when test="count($thisfield//swe:AllowedTokens/swe:value)>0">
+							<xsl:value-of select="$thisfield//swe:AllowedTokens/swe:value" />
+						</xsl:when>
+						<!-- if Vector element given;return lat and long -->
+						<xsl:when test="count($thisfield/swe:Vector)>0">
+							<xsl:value-of select="substring-before($thisfield/swe:Vector/swe:coordinate[1]//swe:AllowedValues/swe:interval, ' ')" />
+							<xsl:value-of select="string(' ')" />
+							<xsl:value-of select="substring-before($thisfield/swe:Vector/swe:coordinate[2]//swe:AllowedValues/swe:interval, ' ')" />
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="string(' ')" />
+						</xsl:otherwise>
+					</xsl:choose>	
+				</xsl:for-each>
+			</xsl:variable>
+			<xsl:value-of select="concat('{',substring-after($returnvalue,','),'}')" />
+        </ctl:code>
+    </ctl:function>
+	
 </ctl:package>

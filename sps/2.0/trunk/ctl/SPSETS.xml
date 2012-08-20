@@ -1595,11 +1595,15 @@
 								<xsl:value-of select="$serviceURL"/>
 							</ctl:url>
 							<ctl:body>
-								<sps:GetCapabilities service="SPS" acceptVersions="2.0.0"
+								<sps:GetCapabilities service="SPS"
 									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 									xmlns:sps="http://www.opengis.net/sps/2.0" 
-									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></sps:GetCapabilities>
+									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+									<ows:AcceptVersions>
+										<ows:Version>2.0.0</ows:Version>
+									</ows:AcceptVersions>
+								</sps:GetCapabilities>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateGetCapabilitiesResponseSOAP" />
 						</ctl:soap-request>
@@ -1611,11 +1615,15 @@
 							</ctl:url>
 							<ctl:method>post</ctl:method>
 							<ctl:body>
-								<sps:GetCapabilities service="SPS" acceptVersions="2.0.0"
+								<sps:GetCapabilities service="SPS"
 									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" 
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" 
 									xmlns:sps="http://www.opengis.net/sps/2.0" 
-									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></sps:GetCapabilities>
+									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+									<ows:AcceptVersions>
+										<ows:Version>2.0.0</ows:Version>
+									</ows:AcceptVersions>
+								</sps:GetCapabilities>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateGetCapabilitiesResponse" />
 						</ctl:request>
@@ -3712,7 +3720,7 @@
 						</ctl:request>
 					</xsl:if>
 				</xsl:variable>
-				<xsl:variable name="TaskingParameters" select="$describeTaskingResponse//sps:DescribeTaskingResponse/sps:taskingParameters" />
+				<xsl:variable name="TaskingParameters" select="spsFunctions:ConcatSubmitValues($describeTaskingResponse//sps:DescribeTaskingResponse/sps:taskingParameters)" />
 				
 				<!-- get a Submit_URL -->
 				<ctl:message>Submit URL:  <xsl:value-of select="$Submit_URL" /></ctl:message>
@@ -3842,7 +3850,14 @@
 							<ctl:body>
 								<sps:Submit version="2.0.0" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 									<sps:procedure><xsl:value-of select="$procedure" /></sps:procedure>
-									<sps:taskingParameters><xsl:value-of select="$TaskingParameters" /></sps:taskingParameters>
+									<sps:taskingParameters>
+										<sps:ParameterData>
+											<sps:encoding>
+												<swe:TextEncoding tokenSeparator="," blockSeparator=";"/>
+											</sps:encoding>
+											<sps:values><xsl:value-of select="$TaskingParameters" /></sps:values>
+										</sps:ParameterData>
+									</sps:taskingParameters>
 								</sps:Submit>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateSubmitResponseSOAP" />
@@ -3857,7 +3872,14 @@
 							<ctl:body>
 								<sps:Submit version="2.0.0" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 									<sps:procedure><xsl:value-of select="$procedure" /></sps:procedure>
-									<sps:taskingParameters><xsl:value-of select="$TaskingParameters" /></sps:taskingParameters>
+									<sps:taskingParameters>
+										<sps:ParameterData>
+											<sps:encoding>
+												<swe:TextEncoding tokenSeparator="," blockSeparator=";"/>
+											</sps:encoding>
+											<sps:values><xsl:value-of select="$TaskingParameters" /></sps:values>
+										</sps:ParameterData>
+									</sps:taskingParameters>
 								</sps:Submit>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateSubmitResponse" />
@@ -3913,7 +3935,14 @@
 							<ctl:body>
 								<sps:Submit service="" version="2.0.0" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 									<sps:procedure><xsl:value-of select="$procedure" /></sps:procedure>
-									<sps:taskingParameters><xsl:value-of select="$TaskingParameters" /></sps:taskingParameters>
+									<sps:taskingParameters>
+										<sps:ParameterData>
+											<sps:encoding>
+												<swe:TextEncoding tokenSeparator="," blockSeparator=";"/>
+											</sps:encoding>
+											<sps:values><xsl:value-of select="$TaskingParameters" /></sps:values>
+										</sps:ParameterData>
+									</sps:taskingParameters>
 								</sps:Submit>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateSubmitResponseSOAP" />
@@ -3928,7 +3957,14 @@
 							<ctl:body>
 								<sps:Submit service="" version="2.0.0" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 									<sps:procedure><xsl:value-of select="$procedure" /></sps:procedure>
-									<sps:taskingParameters><xsl:value-of select="$TaskingParameters" /></sps:taskingParameters>
+									<sps:taskingParameters>
+										<sps:ParameterData>
+											<sps:encoding>
+												<swe:TextEncoding tokenSeparator="," blockSeparator=";"/>
+											</sps:encoding>
+											<sps:values><xsl:value-of select="$TaskingParameters" /></sps:values>
+										</sps:ParameterData>
+									</sps:taskingParameters>
 								</sps:Submit>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateSubmitResponse" />
@@ -3984,7 +4020,14 @@
 							<ctl:body>
 								<sps:Submit service="999" version="2.0.0" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 									<sps:procedure><xsl:value-of select="$procedure" /></sps:procedure>
-									<sps:taskingParameters><xsl:value-of select="$TaskingParameters" /></sps:taskingParameters>
+									<sps:taskingParameters>
+										<sps:ParameterData>
+											<sps:encoding>
+												<swe:TextEncoding tokenSeparator="," blockSeparator=";"/>
+											</sps:encoding>
+											<sps:values><xsl:value-of select="$TaskingParameters" /></sps:values>
+										</sps:ParameterData>
+									</sps:taskingParameters>
 								</sps:Submit>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateSubmitResponseSOAP" />
@@ -3999,7 +4042,14 @@
 							<ctl:body>
 								<sps:Submit service="999" version="2.0.0" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 									<sps:procedure><xsl:value-of select="$procedure" /></sps:procedure>
-									<sps:taskingParameters><xsl:value-of select="$TaskingParameters" /></sps:taskingParameters>
+									<sps:taskingParameters>
+										<sps:ParameterData>
+											<sps:encoding>
+												<swe:TextEncoding tokenSeparator="," blockSeparator=";"/>
+											</sps:encoding>
+											<sps:values><xsl:value-of select="$TaskingParameters" /></sps:values>
+										</sps:ParameterData>
+									</sps:taskingParameters>
 								</sps:Submit>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateSubmitResponse" />
@@ -4055,7 +4105,14 @@
 							<ctl:body>
 								<sps:Submit service="SPS" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 									<sps:procedure><xsl:value-of select="$procedure" /></sps:procedure>
-									<sps:taskingParameters><xsl:value-of select="$TaskingParameters" /></sps:taskingParameters>
+									<sps:taskingParameters>
+										<sps:ParameterData>
+											<sps:encoding>
+												<swe:TextEncoding tokenSeparator="," blockSeparator=";"/>
+											</sps:encoding>
+											<sps:values><xsl:value-of select="$TaskingParameters" /></sps:values>
+										</sps:ParameterData>
+									</sps:taskingParameters>
 								</sps:Submit>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateSubmitResponseSOAP" />
@@ -4070,7 +4127,14 @@
 							<ctl:body>
 								<sps:Submit service="SPS" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 									<sps:procedure><xsl:value-of select="$procedure" /></sps:procedure>
-									<sps:taskingParameters><xsl:value-of select="$TaskingParameters" /></sps:taskingParameters>
+									<sps:taskingParameters>
+										<sps:ParameterData>
+											<sps:encoding>
+												<swe:TextEncoding tokenSeparator="," blockSeparator=";"/>
+											</sps:encoding>
+											<sps:values><xsl:value-of select="$TaskingParameters" /></sps:values>
+										</sps:ParameterData>
+									</sps:taskingParameters>
 								</sps:Submit>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateSubmitResponse" />
@@ -4126,7 +4190,14 @@
 							<ctl:body>
 								<sps:Submit service="SPS" version="" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 									<sps:procedure><xsl:value-of select="$procedure" /></sps:procedure>
-									<sps:taskingParameters><xsl:value-of select="$TaskingParameters" /></sps:taskingParameters>
+									<sps:taskingParameters>
+										<sps:ParameterData>
+											<sps:encoding>
+												<swe:TextEncoding tokenSeparator="," blockSeparator=";"/>
+											</sps:encoding>
+											<sps:values><xsl:value-of select="$TaskingParameters" /></sps:values>
+										</sps:ParameterData>
+									</sps:taskingParameters>
 								</sps:Submit>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateSubmitResponseSOAP" />
@@ -4141,7 +4212,14 @@
 							<ctl:body>
 								<sps:Submit service="SPS" version="" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 									<sps:procedure><xsl:value-of select="$procedure" /></sps:procedure>
-									<sps:taskingParameters><xsl:value-of select="$TaskingParameters" /></sps:taskingParameters>
+									<sps:taskingParameters>
+										<sps:ParameterData>
+											<sps:encoding>
+												<swe:TextEncoding tokenSeparator="," blockSeparator=";"/>
+											</sps:encoding>
+											<sps:values><xsl:value-of select="$TaskingParameters" /></sps:values>
+										</sps:ParameterData>
+									</sps:taskingParameters>
 								</sps:Submit>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateSubmitResponse" />
@@ -4197,7 +4275,14 @@
 							<ctl:body>
 								<sps:Submit service="SPS" version="999" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 									<sps:procedure><xsl:value-of select="$procedure" /></sps:procedure>
-									<sps:taskingParameters><xsl:value-of select="$TaskingParameters" /></sps:taskingParameters>
+									<sps:taskingParameters>
+										<sps:ParameterData>
+											<sps:encoding>
+												<swe:TextEncoding tokenSeparator="," blockSeparator=";"/>
+											</sps:encoding>
+											<sps:values><xsl:value-of select="$TaskingParameters" /></sps:values>
+										</sps:ParameterData>
+									</sps:taskingParameters>
 								</sps:Submit>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateSubmitResponseSOAP" />
@@ -4212,7 +4297,14 @@
 							<ctl:body>
 								<sps:Submit service="SPS" version="999" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 									<sps:procedure><xsl:value-of select="$procedure" /></sps:procedure>
-									<sps:taskingParameters><xsl:value-of select="$TaskingParameters" /></sps:taskingParameters>
+									<sps:taskingParameters>
+										<sps:ParameterData>
+											<sps:encoding>
+												<swe:TextEncoding tokenSeparator="," blockSeparator=";"/>
+											</sps:encoding>
+											<sps:values><xsl:value-of select="$TaskingParameters" /></sps:values>
+										</sps:ParameterData>
+									</sps:taskingParameters>
 								</sps:Submit>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateSubmitResponse" />
@@ -4266,7 +4358,14 @@
 							</ctl:url> 
 							<ctl:body>
 								<sps:Submit service="SPS" version="2.0.0" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-									<sps:taskingParameters><xsl:value-of select="$TaskingParameters" /></sps:taskingParameters>
+									<sps:taskingParameters>
+										<sps:ParameterData>
+											<sps:encoding>
+												<swe:TextEncoding tokenSeparator="," blockSeparator=";"/>
+											</sps:encoding>
+											<sps:values><xsl:value-of select="$TaskingParameters" /></sps:values>
+										</sps:ParameterData>
+									</sps:taskingParameters>
 								</sps:Submit>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateSubmitResponseSOAP" />
@@ -4280,7 +4379,14 @@
 							<ctl:method>post</ctl:method>
 							<ctl:body>
 								<sps:Submit service="SPS" version="2.0.0" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-									<sps:taskingParameters><xsl:value-of select="$TaskingParameters" /></sps:taskingParameters>
+									<sps:taskingParameters>
+										<sps:ParameterData>
+											<sps:encoding>
+												<swe:TextEncoding tokenSeparator="," blockSeparator=";"/>
+											</sps:encoding>
+											<sps:values><xsl:value-of select="$TaskingParameters" /></sps:values>
+										</sps:ParameterData>
+									</sps:taskingParameters>
 								</sps:Submit>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateSubmitResponse" />
@@ -4335,7 +4441,14 @@
 							<ctl:body>
 								<sps:Submit service="SPS" version="2.0.0" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 									<sps:procedure><xsl:value-of select="string('')" /></sps:procedure>
-									<sps:taskingParameters><xsl:value-of select="$TaskingParameters" /></sps:taskingParameters>
+									<sps:taskingParameters>
+										<sps:ParameterData>
+											<sps:encoding>
+												<swe:TextEncoding tokenSeparator="," blockSeparator=";"/>
+											</sps:encoding>
+											<sps:values><xsl:value-of select="$TaskingParameters" /></sps:values>
+										</sps:ParameterData>
+									</sps:taskingParameters>
 								</sps:Submit>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateSubmitResponseSOAP" />
@@ -4350,7 +4463,14 @@
 							<ctl:body>
 								<sps:Submit service="SPS" version="2.0.0" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 									<sps:procedure><xsl:value-of select="string('')" /></sps:procedure>
-									<sps:taskingParameters><xsl:value-of select="$TaskingParameters" /></sps:taskingParameters>
+									<sps:taskingParameters>
+										<sps:ParameterData>
+											<sps:encoding>
+												<swe:TextEncoding tokenSeparator="," blockSeparator=";"/>
+											</sps:encoding>
+											<sps:values><xsl:value-of select="$TaskingParameters" /></sps:values>
+										</sps:ParameterData>
+									</sps:taskingParameters>
 								</sps:Submit>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateSubmitResponse" />
@@ -4405,7 +4525,14 @@
 							<ctl:body>
 								<sps:Submit service="SPS" version="2.0.0" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 									<sps:procedure><xsl:value-of select="current-dateTime()" /></sps:procedure>
-									<sps:taskingParameters><xsl:value-of select="$TaskingParameters" /></sps:taskingParameters>
+									<sps:taskingParameters>
+										<sps:ParameterData>
+											<sps:encoding>
+												<swe:TextEncoding tokenSeparator="," blockSeparator=";"/>
+											</sps:encoding>
+											<sps:values><xsl:value-of select="$TaskingParameters" /></sps:values>
+										</sps:ParameterData>
+									</sps:taskingParameters>
 								</sps:Submit>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateSubmitResponseSOAP" />
@@ -4423,9 +4550,9 @@
 									<sps:taskingParameters>
 										<sps:ParameterData>
 											<sps:encoding>
-												<swe:TextEncoding tokenSeparator="," blockSeparator="@@"/>
-											</sps:encoding> 
-											<sps:values>11111</sps:values>
+												<swe:TextEncoding tokenSeparator="," blockSeparator=";"/>
+											</sps:encoding>
+											<sps:values><xsl:value-of select="$TaskingParameters" /></sps:values>
 										</sps:ParameterData>
 									</sps:taskingParameters>
 								</sps:Submit>
@@ -4603,7 +4730,7 @@
 				</xsl:choose>
 			</ctl:code>
 		</ctl:test>
-		<ctl:test name="sps:core-SPS.Submit-RequestInvalidTaskingParameters.1">
+		<ctl:test name="sps:core-SPS.Submit-RequestInvalidTaskingParameters.1"><!-- skip this test because of error schema -->
 			<ctl:param name="procedure" />
 			<ctl:param name="Submit_URL" />
 			<ctl:param name="PostEncodingIsSOAP" />
@@ -4727,7 +4854,7 @@
 							<ctl:fail />
 						</xsl:when>
 						<xsl:otherwise>
-							<xsl:variable name="TaskingParameters" select="$describeTaskingResponse//sps:DescribeTaskingResponse/sps:taskingParameters" />
+							<xsl:variable name="TaskingParameters" select="spsFunctions:ConcatSubmitValues($describeTaskingResponse//sps:DescribeTaskingResponse/sps:taskingParameters)" />
 							<xsl:variable name="submitResponse">
 								<xsl:if test="$PostEncodingIsSOAP=string('true')">
 									<ctl:soap-request version="1.2" charset="UTF-8">
@@ -4737,7 +4864,14 @@
 										<ctl:body>
 											<sps:Submit service="SPS" version="2.0.0" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 												<sps:procedure><xsl:value-of select="$procedure" /></sps:procedure>
-												<sps:taskingParameters><xsl:value-of select="$TaskingParameters" /></sps:taskingParameters>
+												<sps:taskingParameters>
+													<sps:ParameterData>
+														<sps:encoding>
+															<swe:TextEncoding tokenSeparator="," blockSeparator=";"/>
+														</sps:encoding>
+														<sps:values><xsl:value-of select="$TaskingParameters" /></sps:values>
+													</sps:ParameterData>
+												</sps:taskingParameters>
 											</sps:Submit>
 										</ctl:body>
 										<ctl:call-function name="spsFunctions:validateSubmitResponseSOAP" />
@@ -4752,7 +4886,14 @@
 										<ctl:body>
 											<sps:Submit service="SPS" version="2.0.0" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 												<sps:procedure><xsl:value-of select="$procedure" /></sps:procedure>
-												<sps:taskingParameters><xsl:value-of select="$TaskingParameters" /></sps:taskingParameters>
+												<sps:taskingParameters>
+													<sps:ParameterData>
+														<sps:encoding>
+															<swe:TextEncoding tokenSeparator="," blockSeparator=";"/>
+														</sps:encoding>
+														<sps:values><xsl:value-of select="$TaskingParameters" /></sps:values>
+													</sps:ParameterData>
+												</sps:taskingParameters>
 											</sps:Submit>
 										</ctl:body>
 										<ctl:call-function name="spsFunctions:validateSubmitResponse" />
