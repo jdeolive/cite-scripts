@@ -5779,7 +5779,7 @@
 							<ctl:body>
 								<sps:GetStatus service="SPS" version="2.0.0" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 									<sps:task><xsl:value-of select="$task" /></sps:task>
-									<sps:since><xsl:value-of select="concat(1900-01-01T,substring-after(current-dateTime(),'T'))" /></sps:since> 
+									<sps:since><xsl:value-of select="concat('1900-01-01T',substring-after(current-dateTime(),'T'))" /></sps:since> 
 								</sps:GetStatus>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateGetStatusResponseSOAP" />
@@ -5794,7 +5794,7 @@
 							<ctl:body>
 								<sps:GetStatus service="SPS" version="2.0.0" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 									<sps:task><xsl:value-of select="$task" /></sps:task>
-									<sps:since><xsl:value-of select="current-dateTime()" /></sps:since> 
+									<sps:since><xsl:value-of select="concat('1900-01-01T',substring-after(current-dateTime(),'T'))" /></sps:since> 
 								</sps:GetStatus>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateGetStatusResponse" />
