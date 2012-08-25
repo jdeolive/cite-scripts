@@ -1767,7 +1767,7 @@
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
 			<ctl:assertion>Send a request without parameter "service",and the response must be a valid exception with code "InvalidRequest" and locator "service". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "service"; fail otherwise.</ctl:comment>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "Expected attribute: service in element DescribeSensor@http://www.opengis.net/swes/2.0"; fail otherwise.</ctl:comment>
 			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<!-- get a valid procedure-->
@@ -1997,8 +1997,8 @@
 			<ctl:param name="DescribeSensor_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request without parameter "version",and the response must be a valid exception with code "InvalidRequest" and locator "version". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "version"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request without parameter "version",and the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: version in element DescribeSensor@http://www.opengis.net/swes/2.0". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "Expected attribute: version in element DescribeSensor@http://www.opengis.net/swes/2.0"; fail otherwise.</ctl:comment>
 			<ctl:link title="Verify that the server handles no version parameter correctly.">docs/SPS%202.0%20ATS.html#SPS.DescribeSensor-RequestNoVersion</ctl:link>
 			<ctl:code>
 				<!-- get a procedure-->
