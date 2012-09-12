@@ -1141,7 +1141,7 @@
 						<!-- if Vector element given;return lat and long -->
 						<xsl:when test="count($thisfield/swe:Vector)>0">
 							<xsl:value-of select="substring-before($thisfield/swe:Vector/swe:coordinate[1]//swe:AllowedValues/swe:interval, ' ')" />
-							<xsl:value-of select="string(' ')" />
+							<xsl:value-of select="string(',')" />
 							<xsl:value-of select="substring-before($thisfield/swe:Vector/swe:coordinate[2]//swe:AllowedValues/swe:interval, ' ')" />
 						</xsl:when>
 						<xsl:otherwise>
