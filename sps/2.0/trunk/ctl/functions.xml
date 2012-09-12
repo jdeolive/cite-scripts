@@ -1128,7 +1128,7 @@
 					<xsl:choose>
 						<!-- if optional=true; return empty string. -->
 						<xsl:when test="count($thisfield/*[@optional='true'])>0">
-							<xsl:value-of select="string(' ')" />
+							<xsl:value-of select="string('N')" />
 						</xsl:when>
 						<!-- if Boolean element given;return true -->
 						<xsl:when test="count($thisfield/swe:Boolean)>0">
