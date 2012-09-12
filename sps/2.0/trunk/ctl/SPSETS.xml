@@ -4811,6 +4811,7 @@
 			<ctl:assertion>All Submit request with valid parameters have correct response.</ctl:assertion>
 			<ctl:comment>Pass if all Submit response are correct; fail otherwise.</ctl:comment>
 			<ctl:code>
+				
 				<!-- 
 					檢查每個 getCapabilities 的 offering 的 procedure
 					送出 describeTasking request取得 response 的 TaskingParameters 
@@ -4855,6 +4856,9 @@
 						</xsl:when>
 						<xsl:otherwise>
 							<xsl:variable name="TaskingParameters" select="spsFunctions:ConcatSubmitValues($describeTaskingResponse//sps:DescribeTaskingResponse/sps:taskingParameters)" />
+							<ctl:message>Sending Submit request with Submit_URL "<xsl:value-of select="$Submit_URL" />"</ctl:message>
+							<ctl:message>Sending Submit request with procedure "<xsl:value-of select="$procedure" />"</ctl:message>
+							<ctl:message>Sending Submit request with TaskingParameters "<xsl:value-of select="$TaskingParameters" />"</ctl:message>
 							<xsl:variable name="submitResponse">
 								<xsl:if test="$PostEncodingIsSOAP=string('true')">
 									<ctl:soap-request version="1.2" charset="UTF-8">
