@@ -204,6 +204,21 @@
 									<td><input type="checkbox" name="0618">06.18.RequestNormalRequest</input></td>
 								</tr>
 								<tr><th colspan="3" align="left"><input type="checkbox" name="07">07.SOS enhancedOperations: GetObservationById</input></th></tr>
+								<tr>
+									<td><input type="checkbox" name="0701">07.01.RequestNoService</input></td>
+									<td><input type="checkbox" name="0702">07.02.RequestNullService</input></td>
+									<td><input type="checkbox" name="0703">07.03.RequestInvalidService</input></td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" name="0704">07.04.RequestNoVersion</input></td>
+									<td><input type="checkbox" name="0705">07.05.RequestNullVersion</input></td>
+									<td><input type="checkbox" name="0706">07.06.RequestInvalidVersion</input></td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" name="0707">07.07.RequestNullobservation</input></td>
+									<td><input type="checkbox" name="0708">07.08.RequestInvalidobservation</input></td>
+									<td><input type="checkbox" name="0709">07.09.RequestValidRequest</input></td>
+								</tr>
 								<tr><th colspan="3" align="left"><input type="checkbox" name="08">08.SOS Transactional: InsertionCapabilities</input></th></tr>
 								<tr><th colspan="3" align="left"><input type="checkbox" name="09">09.SOS Transactional: InsertSensor</input></th></tr>
 								<tr><th colspan="3" align="left"><input type="checkbox" name="10">10.SOS Transactional: DeleteSensor</input></th></tr>
@@ -316,6 +331,17 @@
 						</xsl:if>
 						<xsl:if test="not($IsGetFeatureOfInterest-GET)">
 							<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetFeatureOfInterest']//ows:Post/@xlink:href"/>
+						</xsl:if>
+					</xsl:variable>
+					
+					<xsl:variable name="hasGetObservationById" select="count($user-capabilities//ows:Operation[@name='GetObservationById']) > 0" />
+					<xsl:variable name="IsGetObservationById-GET" select="count($user-capabilities//ows:Operation[@name='GetObservationById']//ows:Get) > 0" />
+					<xsl:variable name="GetObservationById-URL">
+						<xsl:if test="$IsGetObservationById-GET">
+							<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetObservationById']//ows:Get/@xlink:href"/>
+						</xsl:if>
+						<xsl:if test="not($IsGetObservationById-GET)">
+							<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetObservationById']//ows:Post/@xlink:href"/>
 						</xsl:if>
 					</xsl:variable>
 					
@@ -448,8 +474,8 @@
 					<xsl:variable name="test0603" select="($which-tests eq 'all' or $t06 eq 'on' or $t0603 eq 'on')"/>
 					<xsl:variable name="t0604" select="$form-values/values/value[@key='0604']"/>
 					<xsl:variable name="test0604" select="($which-tests eq 'all' or $t06 eq 'on' or $t0604 eq 'on')"/>
-					<xsl:variable name="t0606" select="$form-values/values/value[@key='0606']"/>
-					<xsl:variable name="test0606" select="($which-tests eq 'all' or $t06 eq 'on' or $t0606 eq 'on')"/>
+					<xsl:variable name="t0605" select="$form-values/values/value[@key='0605']"/>
+					<xsl:variable name="test0605" select="($which-tests eq 'all' or $t06 eq 'on' or $t0605 eq 'on')"/>
 					<xsl:variable name="t0606" select="$form-values/values/value[@key='0606']"/>
 					<xsl:variable name="test0606" select="($which-tests eq 'all' or $t06 eq 'on' or $t0606 eq 'on')"/>
 					<xsl:variable name="t0607" select="$form-values/values/value[@key='0607']"/>
@@ -472,7 +498,27 @@
 					<xsl:variable name="test0615" select="($which-tests eq 'all' or $t06 eq 'on' or $t0615 eq 'on')"/>
 					<xsl:variable name="test06" select="$test0601 or $test0602 or $test0603 or $test0604 or $test0605 or $test0606 or $test0607 or $test0608 or $test0609 or $test0610 or $test0611 or $test0612 or $test0613 or $test0614 or $test0615"/><!-- all test in 06-->
 
-					<xsl:variable name="test07" select="'1' eq '2'"/><!-- all test in 07-->
+					<xsl:variable name="t07" select="$form-values/values/value[@key='07']"/>
+					<xsl:variable name="t0701" select="$form-values/values/value[@key='0701']"/>
+					<xsl:variable name="test0701" select="($which-tests eq 'all' or $t07 eq 'on' or $t0701 eq 'on')"/>
+					<xsl:variable name="t0702" select="$form-values/values/value[@key='0702']"/>
+					<xsl:variable name="test0702" select="($which-tests eq 'all' or $t07 eq 'on' or $t0702 eq 'on')"/>
+					<xsl:variable name="t0703" select="$form-values/values/value[@key='0703']"/>
+					<xsl:variable name="test0703" select="($which-tests eq 'all' or $t07 eq 'on' or $t0703 eq 'on')"/>
+					<xsl:variable name="t0704" select="$form-values/values/value[@key='0704']"/>
+					<xsl:variable name="test0704" select="($which-tests eq 'all' or $t07 eq 'on' or $t0704 eq 'on')"/>
+					<xsl:variable name="t0705" select="$form-values/values/value[@key='0705']"/>
+					<xsl:variable name="test0705" select="($which-tests eq 'all' or $t07 eq 'on' or $t0705 eq 'on')"/>
+					<xsl:variable name="t0706" select="$form-values/values/value[@key='0706']"/>
+					<xsl:variable name="test0706" select="($which-tests eq 'all' or $t07 eq 'on' or $t0706 eq 'on')"/>
+					<xsl:variable name="t0707" select="$form-values/values/value[@key='0707']"/>
+					<xsl:variable name="test0707" select="($which-tests eq 'all' or $t07 eq 'on' or $t0707 eq 'on')"/>
+					<xsl:variable name="t0708" select="$form-values/values/value[@key='0708']"/>
+					<xsl:variable name="test0708" select="($which-tests eq 'all' or $t07 eq 'on' or $t0708 eq 'on')"/>
+					<xsl:variable name="t0709" select="$form-values/values/value[@key='0709']"/>
+					<xsl:variable name="test0709" select="($which-tests eq 'all' or $t07 eq 'on' or $t0709 eq 'on')"/>
+					<xsl:variable name="test07" select="$test0701 or $test0702 or $test0703 or $test0704 or $test0705 or $test0706 or $test0707 or $test0708 or $test0709"/><!-- all test in 07-->
+					
 					<xsl:variable name="test08" select="'1' eq '2'"/><!-- all test in 08-->
 					<xsl:variable name="test09" select="'1' eq '2'"/><!-- all test in 09-->
 					<xsl:variable name="test10" select="'1' eq '2'"/><!-- all test in 10-->
@@ -517,14 +563,11 @@
 					<ctl:message select="concat('run 04.04.RequestNoVersion: ',$test0404)"/>
 					<ctl:message select="concat('run 04.05.RequestNullVersion: ',$test0405)"/>
 					<ctl:message select="concat('run 04.06.RequestInvalidVersion: ',$test0406)"/>
-					<ctl:message select="concat('run 04.07.RequestNoProcedure: ',$test0407)"/>
-					<ctl:message select="concat('run 04.08.RequestNullProcedure: ',$test0408)"/>
-					<ctl:message select="concat('run 04.09.RequestInvalidProcedure: ',$test0409)"/>
-					<ctl:message select="concat('run 04.10.RequestNoProcedureDescriptionFormat: ',$test0410)"/>
-					<ctl:message select="concat('run 04.11.RequestNullProcedureDescriptionFormat: ',$test0411)"/>
-					<ctl:message select="concat('run 04.12.RequestInvalidProcedureDescriptionFormat: ',$test0412)"/>
-					<ctl:message select="concat('run 04.13.RequestNoValidTime: ',$test0413)"/>
-					<ctl:message select="concat('run 04.14.RequestValidRequest: ',$test0414)"/>
+					<ctl:message select="concat('run 04.07.RequestNullProcedure: ',$test0407)"/>
+					<ctl:message select="concat('run 04.08.RequestInvalidProcedure: ',$test0408)"/>
+					<ctl:message select="concat('run 04.09.RequestNullProcedureDescriptionFormat: ',$test0409)"/>
+					<ctl:message select="concat('run 04.10.RequestInvalidProcedureDescriptionFormat: ',$test0410)"/>
+					<ctl:message select="concat('run 04.11.RequestValidRequest: ',$test0411)"/>
 						
 					<ctl:message select="concat('run 05.SOS Core: GetObservation: ',$test05)"/>
 					<ctl:message select="concat('run 05.01.RequestNoService: ',$test0501)"/>
@@ -566,6 +609,15 @@
 					<ctl:message select="concat('run 06.15.RequestEmptyResponse: ',$test0615)"/>
 					
 					<ctl:message select="concat('run 07.SOS enhancedOperations: GetObservationById: ',$test07)"/>
+					<ctl:message select="concat('run 07.01.RequestNoService: ',$test0701)"/>
+					<ctl:message select="concat('run 07.02.RequestNullService: ',$test0702)"/>
+					<ctl:message select="concat('run 07.03.RequestInvalidService: ',$test0703)"/>
+					<ctl:message select="concat('run 07.04.RequestNoVersion: ',$test0704)"/>
+					<ctl:message select="concat('run 07.05.RequestNullVersion: ',$test0705)"/>
+					<ctl:message select="concat('run 07.06.RequestInvalidVersion: ',$test0706)"/>
+					<ctl:message select="concat('run 07.07.RequestNullobservation: ',$test0707)"/>
+					<ctl:message select="concat('run 07.08.RequestInvalidobservation: ',$test0708)"/>
+					<ctl:message select="concat('run 07.09.RequestValidRequest: ',$test0709)"/>
 					
 					<ctl:message select="concat('run 08.SOS Transactional: InsertionCapabilities: ',$test08)"/>
 					
@@ -770,6 +822,30 @@
 						<ctl:message>****************************</ctl:message>
 						<ctl:message>Running 07.SOS enhancedOperations: GetObservationById Tests...</ctl:message>
 						<ctl:message>****************************</ctl:message>
+						<ctl:call-test name="sos:GetObservationById-Test">
+							<ctl:with-param name="serviceURL" select="$GetObservationById-URL"/>
+							<ctl:with-param name="hasGOBI" select="$hasGetObservationById"/>
+							<ctl:with-param name="isGET" select="$IsGetObservationById-GET"/>
+							<ctl:with-param name="isSOAP" select="$isSOAP"/>
+							<ctl:with-param name="getCapabilitiesResponse" select="$user-capabilities" />
+							<ctl:with-param name="serviceType" select="string('SOS')"/>
+							<ctl:with-param name="serviceVersion" select="$sos.version" />
+							<ctl:with-param name="GetObservationByIdRootElementName" select="string('GetObservationByIdResponse')" />
+							<ctl:with-param name="GetObservationByIdResponseSchemaLocation" select="sosFunctions:schemaPath($sos.schema.root, $sos.version,'sos', 'sosGetObservationById.xsd')"/>
+							<ctl:with-param name="GetObservationByIdResponseSchemaType" select="string('resource')" />
+							<ctl:with-param name="GetObservationByIdResponseContentType" select="string('text/xml')" />
+							<ctl:with-param name="exceptionReportSchemaLocation" select="$exceptionReportSchema"/>
+							<ctl:with-param name="exceptionReportSchemaType" select="string('resource')" />
+							<ctl:with-param name="test0701" select="$test0701"/>
+							<ctl:with-param name="test0702" select="$test0702"/>
+							<ctl:with-param name="test0703" select="$test0703"/>
+							<ctl:with-param name="test0704" select="$test0704"/>
+							<ctl:with-param name="test0705" select="$test0705"/>
+							<ctl:with-param name="test0706" select="$test0706"/>
+							<ctl:with-param name="test0707" select="$test0707"/>
+							<ctl:with-param name="test0708" select="$test0708"/>
+							<ctl:with-param name="test0709" select="$test0709"/>
+						</ctl:call-test>
 					</xsl:if>
 					<xsl:if test="$test08">
 						<ctl:message>****************************</ctl:message>
@@ -1211,10 +1287,10 @@
 						<ctl:fail/>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:variable name="requestRoot" select="local-name-from-QName(node-name($request/*[1]))" />
+						<xsl:variable name="responseRoot" select="local-name-from-QName(node-name($request/*[1]))" />
 						<xsl:choose>
-							<xsl:when test="not($requestRoot=$capabilitiesRootElementName)">
-								<ctl:message>FAILURE:  The root element from the response to a GetCapabilities request "<xsl:value-of select="$requestRoot" />" does not match the expected root element of "<xsl:value-of select="$capabilitiesRootElementName" />"</ctl:message>
+							<xsl:when test="not($responseRoot=$capabilitiesRootElementName)">
+								<ctl:message>FAILURE:  The root element from the response to a GetCapabilities request "<xsl:value-of select="$responseRoot" />" does not match the expected root element of "<xsl:value-of select="$capabilitiesRootElementName" />"</ctl:message>
 								<ctl:fail />
 							</xsl:when>
 							<xsl:otherwise>
@@ -5687,8 +5763,9 @@
 										<ctl:with-param name="observableProperty" select="$observableProperty" />
 									</ctl:call-test>
 								</xsl:if>
-								<xsl:if test="$test0606 eq 'true'">
-									<ctl:message select="'******************** 06.06.RequestNullVersion ********************'"/>
+								<xsl:if test="$test0605 eq 'true'">
+									<ctl:message select="'******************** 06.05.RequestNullVersion ********************'"/>
+									<ctl:message select="'******************** 06.05.RequestNullVersion ********************'"/>
 									<ctl:call-test name="sos:GORequestNullVersion">
 										<ctl:with-param name="serviceURL" select="$serviceURL" />
 										<ctl:with-param name="isGET" select="$isGET"/>
@@ -7409,6 +7486,1031 @@
 
 	<!-- 07.SOS enhancedOperations: GetObservationById -->
 	<ctl:package>
+		<ctl:test name="sos:GetObservationById-Test">
+			<ctl:param name="serviceURL" />
+			<ctl:param name="hasGOBI" />
+			<ctl:param name="isGET" />
+			<ctl:param name="isSOAP" />
+			<ctl:param name="getCapabilitiesResponse" />
+			<ctl:param name="serviceType" />
+			<ctl:param name="serviceVersion" />
+			<ctl:param name="GetObservationByIdRootElementName" />
+			<ctl:param name="GetObservationByIdResponseSchemaLocation" />
+			<ctl:param name="GetObservationByIdResponseSchemaType" />
+			<ctl:param name="featureOfInterestResponseContentType" />
+			<ctl:param name="exceptionReportSchemaLocation" />
+			<ctl:param name="exceptionReportSchemaType" />
+			<ctl:param name="test0701" />
+			<ctl:param name="test0702" />
+			<ctl:param name="test0703" />
+			<ctl:param name="test0704" />
+			<ctl:param name="test0705" />
+			<ctl:param name="test0706" />
+			<ctl:param name="test0707" />
+			<ctl:param name="test0708" />
+			<ctl:param name="test0709" />
+			<ctl:assertion>Execute GetObservationById Test.</ctl:assertion>
+			<ctl:comment>Pass if all the subtest not fail; fail otherwise.</ctl:comment>
+			<ctl:code>
+				
+
+				<xsl:choose>
+					<xsl:when test="not($hasGOBI)">
+						<ctl:message>The server does not support the operation "GetObservationById", so skip this test.</ctl:message>
+					</xsl:when>
+					<xsl:otherwise>
+						<!-- get a valid observation //just use offering id....wait the response by SOS2 mailing list.-->
+						<xsl:variable name="observation" select="$getCapabilitiesResponse//sos:contents//swes:offering[1]//swes:identifier" />
+						<ctl:message>The observation was:  <xsl:value-of select="$observation" /></ctl:message>
+						<xsl:if test="$test0701 eq 'true'">
+							<ctl:message select="'******************** 07.01.RequestNoService ********************'"/>
+							<ctl:call-test name="sos:GOBIRequestNoService">
+								<ctl:with-param name="serviceURL" select="$serviceURL" />
+								<ctl:with-param name="isGET" select="$isGET"/>
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
+								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
+								<ctl:with-param name="GetObservationByIdRootElementName" select="$GetObservationByIdRootElementName" />
+								<ctl:with-param name="GetObservationByIdResponseSchemaLocation" select="$GetObservationByIdResponseSchemaLocation" />
+								<ctl:with-param name="GetObservationByIdResponseSchemaType" select="$GetObservationByIdResponseSchemaType" />
+								<ctl:with-param name="observation" select="$observation" />
+							</ctl:call-test>
+						</xsl:if>
+						<xsl:if test="$test0702 eq 'true'">
+							<ctl:message select="'******************** 07.02.RequestNullService ********************'"/>
+							<ctl:call-test name="sos:GOBIRequestNullService">
+								<ctl:with-param name="serviceURL" select="$serviceURL" />
+								<ctl:with-param name="isGET" select="$isGET"/>
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
+								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
+								<ctl:with-param name="GetObservationByIdRootElementName" select="$GetObservationByIdRootElementName" />
+								<ctl:with-param name="GetObservationByIdResponseSchemaLocation" select="$GetObservationByIdResponseSchemaLocation" />
+								<ctl:with-param name="GetObservationByIdResponseSchemaType" select="$GetObservationByIdResponseSchemaType" />
+								<ctl:with-param name="observation" select="$observation" />
+							</ctl:call-test>
+						</xsl:if>
+						<xsl:if test="$test0703 eq 'true'">
+							<ctl:message select="'******************** 07.03.RequestInvalidService ********************'"/>
+							<ctl:call-test name="sos:GOBIRequestInvalidService">
+								<ctl:with-param name="serviceURL" select="$serviceURL" />
+								<ctl:with-param name="isGET" select="$isGET"/>
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
+								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
+								<ctl:with-param name="GetObservationByIdRootElementName" select="$GetObservationByIdRootElementName" />
+								<ctl:with-param name="GetObservationByIdResponseSchemaLocation" select="$GetObservationByIdResponseSchemaLocation" />
+								<ctl:with-param name="GetObservationByIdResponseSchemaType" select="$GetObservationByIdResponseSchemaType" />
+								<ctl:with-param name="observation" select="$observation" />
+							</ctl:call-test>
+						</xsl:if>
+						<xsl:if test="$test0704 eq 'true'">
+							<ctl:message select="'******************** 07.04.RequestNoVersion ********************'"/>
+							<ctl:call-test name="sos:GOBIRequestNoVersion">
+								<ctl:with-param name="serviceURL" select="$serviceURL" />
+								<ctl:with-param name="isGET" select="$isGET"/>
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
+								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
+								<ctl:with-param name="GetObservationByIdRootElementName" select="$GetObservationByIdRootElementName" />
+								<ctl:with-param name="GetObservationByIdResponseSchemaLocation" select="$GetObservationByIdResponseSchemaLocation" />
+								<ctl:with-param name="GetObservationByIdResponseSchemaType" select="$GetObservationByIdResponseSchemaType" />
+								<ctl:with-param name="observation" select="$observation" />
+							</ctl:call-test>
+						</xsl:if>
+						<xsl:if test="$test0705 eq 'true'">
+							<ctl:message select="'******************** 07.05.RequestNullVersion ********************'"/>
+							<ctl:call-test name="sos:GORequestNullVersion">
+								<ctl:with-param name="serviceURL" select="$serviceURL" />
+								<ctl:with-param name="isGET" select="$isGET"/>
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
+								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
+								<ctl:with-param name="GetObservationByIdRootElementName" select="$GetObservationByIdRootElementName" />
+								<ctl:with-param name="GetObservationByIdResponseSchemaLocation" select="$GetObservationByIdResponseSchemaLocation" />
+								<ctl:with-param name="GetObservationByIdResponseSchemaType" select="$GetObservationByIdResponseSchemaType" />
+								<ctl:with-param name="observation" select="$observation" />
+							</ctl:call-test>
+						</xsl:if>
+						<xsl:if test="$test0706 eq 'true'">
+							<ctl:message select="'******************** 07.06.RequestInvalidVersion ********************'"/>
+							<ctl:call-test name="sos:GOBIRequestInvalidVersion">
+								<ctl:with-param name="serviceURL" select="$serviceURL" />
+								<ctl:with-param name="isGET" select="$isGET"/>
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
+								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
+								<ctl:with-param name="GetObservationByIdRootElementName" select="$GetObservationByIdRootElementName" />
+								<ctl:with-param name="GetObservationByIdResponseSchemaLocation" select="$GetObservationByIdResponseSchemaLocation" />
+								<ctl:with-param name="GetObservationByIdResponseSchemaType" select="$GetObservationByIdResponseSchemaType" />
+								<ctl:with-param name="observation" select="$observation" />
+							</ctl:call-test>
+						</xsl:if>
+						<xsl:if test="$test0707 eq 'true'">
+							<ctl:message select="'******************** 07.07.RequestNullobservation ********************'"/>
+							<ctl:call-test name="sos:GOBIRequestNullobservation">
+								<ctl:with-param name="serviceURL" select="$serviceURL" />
+								<ctl:with-param name="isGET" select="$isGET"/>
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
+								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
+								<ctl:with-param name="GetObservationByIdRootElementName" select="$GetObservationByIdRootElementName" />
+								<ctl:with-param name="GetObservationByIdResponseSchemaLocation" select="$GetObservationByIdResponseSchemaLocation" />
+								<ctl:with-param name="GetObservationByIdResponseSchemaType" select="$GetObservationByIdResponseSchemaType" />
+								<ctl:with-param name="observation" select="$observation" />
+							</ctl:call-test>
+						</xsl:if>
+						<xsl:if test="$test0708 eq 'true'">
+							<ctl:message select="'******************** 07.08.RequestInvalidobservation ********************'"/>
+							<ctl:call-test name="sos:GOBIRequestInvalidobservation">
+								<ctl:with-param name="serviceURL" select="$serviceURL" />
+								<ctl:with-param name="isGET" select="$isGET"/>
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
+								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
+								<ctl:with-param name="GetObservationByIdRootElementName" select="$GetObservationByIdRootElementName" />
+								<ctl:with-param name="GetObservationByIdResponseSchemaLocation" select="$GetObservationByIdResponseSchemaLocation" />
+								<ctl:with-param name="GetObservationByIdResponseSchemaType" select="$GetObservationByIdResponseSchemaType" />
+								<ctl:with-param name="observation" select="$observation" />
+							</ctl:call-test>
+						</xsl:if>
+						<xsl:if test="$test0709 eq 'true'">
+							<ctl:message select="'******************** 07.09.RequestValidRequest ********************'"/>
+							<ctl:call-test name="sos:GOBIRequestValidRequest">
+								<ctl:with-param name="serviceURL" select="$serviceURL" />
+								<ctl:with-param name="isGET" select="$isGET"/>
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
+								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
+								<ctl:with-param name="GetObservationByIdRootElementName" select="$GetObservationByIdRootElementName" />
+								<ctl:with-param name="GetObservationByIdResponseSchemaLocation" select="$GetObservationByIdResponseSchemaLocation" />
+								<ctl:with-param name="GetObservationByIdResponseSchemaType" select="$GetObservationByIdResponseSchemaType" />
+								<ctl:with-param name="observation" select="$observation" />
+							</ctl:call-test>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</ctl:code>
+		</ctl:test>
+
+		
+		<!-- 0701 Send GetObservationById request without parameter service ,the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: service in element GetObservationById@http://www.opengis.net/sos/2.0".. -->
+		<ctl:test name="sos:GOBIRequestNoService">
+			<ctl:param name="serviceURL" />
+			<ctl:param name="isGET" />
+			<ctl:param name="isSOAP" />
+			<ctl:param name="getCapabilitiesResponse" />
+			<ctl:param name="GetObservationByIdRootElementName" />
+			<ctl:param name="GetObservationByIdResponseSchemaLocation" />
+			<ctl:param name="GetObservationByIdResponseSchemaType" />
+			<ctl:param name="observation" />
+			<ctl:assertion>Send a request without parameter "service",and the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: service in element GetFeatureOfInterest@http://www.opengis.net/sos/2.0". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "Expected attribute: service in element GetFeatureOfInterest@http://www.opengis.net/sos/2.0"; fail otherwise.</ctl:comment>
+			<ctl:link title=""></ctl:link>
+			<ctl:code>
+				<!-- send request -->
+				<xsl:variable name="GetObservationByIdResponse">
+					<xsl:choose>
+						<xsl:when test="($isGET)">
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:method>get</ctl:method>
+								<ctl:param name="version">2.0.0</ctl:param>	
+								<ctl:param name="request">GetObservationById</ctl:param>
+								<ctl:param name="observation"><xsl:value-of select="$observation" /></ctl:param>									
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:when>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>
+									<sos:GetObservationById version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<sos:observation><xsl:value-of select="$observation" /></sos:observation>
+									</sos:GetObservationById>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReportSOAP" />
+							</ctl:soap-request>
+						</xsl:when>
+						<xsl:otherwise>
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL" />
+								</ctl:url>
+								<ctl:method>post</ctl:method>
+								<ctl:body>
+									<sos:GetObservationById version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd" >
+										<sos:observation><xsl:value-of select="$observation" /></sos:observation>
+									</sos:GetObservationById>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="not($GetObservationByIdResponse/*)">
+						<ctl:message>FAILURE:  The server did not return a response, or the response was not valid according to the GetObservationById response schema for "SOS" />.</ctl:message>
+						<ctl:fail/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:if test="$GetObservationByIdResponse/*">
+							<xsl:if test="$isSOAP=string('true')">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfoSOAP($GetObservationByIdResponse)" /></ctl:message>
+							</xsl:if>
+							<xsl:if test="not($isSOAP=string('true'))">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfo($GetObservationByIdResponse)" /></ctl:message>
+							</xsl:if>
+							<ctl:message>Checking the validity of the response to a GetObservationById request with no service parameter.</ctl:message>
+							<xsl:variable name="isCorrect">
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$GetObservationByIdResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
+									<ctl:with-param name="locatorToCheck" select="string('Expected attribute: service in element GetObservationById@http://www.opengis.net/sos/2.0')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
+							</xsl:variable>
+							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
+							<xsl:if test="not(xsd:boolean($isCorrect))">
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservationById request with no service parameter specified. </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: service in element GetObservationById@http://www.opengis.net/sos/2.0".</ctl:message>
+								<ctl:fail />
+							</xsl:if>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</ctl:code>
+		</ctl:test>
+
+		<!-- 0702 Send GetObservationById request with null parameter service ,the response must be a valid exception with code "MissingParameterValue" and locator "service".. -->
+		<ctl:test name="sos:GOBIRequestNullService">
+			<ctl:param name="serviceURL" />
+			<ctl:param name="isGET" />
+			<ctl:param name="isSOAP" />
+			<ctl:param name="getCapabilitiesResponse" />
+			<ctl:param name="GetObservationByIdRootElementName" />
+			<ctl:param name="GetObservationByIdResponseSchemaLocation" />
+			<ctl:param name="GetObservationByIdResponseSchemaType" />
+			<ctl:param name="observation" />
+			<ctl:assertion>Send a request with null parameter "service",and the response must be a valid exception with code "MissingParameterValue" and locator "service". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "MissingParameterValue" and locator is "service"; fail otherwise.</ctl:comment>
+			<ctl:link title=""></ctl:link>
+			<ctl:code>
+				<!-- send request -->
+				<xsl:variable name="GetObservationByIdResponse">
+					<xsl:choose>
+						<xsl:when test="($isGET)">
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:method>get</ctl:method>
+								<ctl:param name="service"></ctl:param>	
+								<ctl:param name="version">2.0.0</ctl:param>	
+								<ctl:param name="request">GetObservationById</ctl:param>	
+								<ctl:param name="observation"><xsl:value-of select="$observation" /></ctl:param>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:when>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>
+									<sos:GetObservationById service="" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<sos:observation><xsl:value-of select="$observation" /></sos:observation>
+									</sos:GetObservationById>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReportSOAP" />
+							</ctl:soap-request>
+						</xsl:when>
+						<xsl:otherwise>
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL" />
+								</ctl:url>
+								<ctl:method>post</ctl:method>
+								<ctl:body>
+									<sos:GetObservationById service="" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd" >
+										<sos:observation><xsl:value-of select="$observation" /></sos:observation>
+									</sos:GetObservationById>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="not($GetObservationByIdResponse/*)">
+						<ctl:message>FAILURE:  The server did not return a response, or the response was not valid according to the GetObservationById response schema for "SOS" />.</ctl:message>
+						<ctl:fail/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:if test="$GetObservationByIdResponse/*">
+							<xsl:if test="$isSOAP=string('true')">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfoSOAP($GetObservationByIdResponse)" /></ctl:message>
+							</xsl:if>
+							<xsl:if test="not($isSOAP=string('true'))">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfo($GetObservationByIdResponse)" /></ctl:message>
+							</xsl:if>
+							<ctl:message>Checking the validity of the response to a GetObservationById request with invalid service parameter.</ctl:message>
+							<xsl:variable name="isCorrect">
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$GetObservationByIdResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+									<ctl:with-param name="locatorToCheck" select="string('service')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
+							</xsl:variable>
+							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
+							<xsl:if test="not(xsd:boolean($isCorrect))">
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservationById request with null service parameter specified.  </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "service".</ctl:message>
+								<ctl:fail />
+							</xsl:if>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</ctl:code>
+		</ctl:test>
+
+		<!-- 0703 Send GetObservationById request with invalid parameter service ,the response must be a valid exception with code "InvalidParameterValue" and locator "service".. -->
+		<ctl:test name="sos:GOBIRequestInvalidService">
+			<ctl:param name="serviceURL" />
+			<ctl:param name="isGET" />
+			<ctl:param name="isSOAP" />
+			<ctl:param name="getCapabilitiesResponse" />
+			<ctl:param name="GetObservationByIdRootElementName" />
+			<ctl:param name="GetObservationByIdResponseSchemaLocation" />
+			<ctl:param name="GetObservationByIdResponseSchemaType" />
+			<ctl:param name="observation" />
+			<ctl:assertion>Send a request with invalid parameter "procedure",and the response must be a valid exception with code "InvalidParameterValue" and locator "service". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "service"; fail otherwise.</ctl:comment>
+			<ctl:link title=""></ctl:link>
+			<ctl:code>
+				<xsl:variable name="GetObservationByIdResponse">
+					<xsl:choose>
+						<xsl:when test="($isGET)">
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:method>get</ctl:method>
+								<ctl:param name="service">ASDF</ctl:param>	
+								<ctl:param name="version">2.0.0</ctl:param>	
+								<ctl:param name="request">GetObservationById</ctl:param>	
+								<ctl:param name="observation"><xsl:value-of select="$observation" /></ctl:param>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:when>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>
+									<sos:GetObservationById service="ASDF" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<sos:observation><xsl:value-of select="$observation" /></sos:observation>
+									</sos:GetObservationById>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReportSOAP" />
+							</ctl:soap-request>
+						</xsl:when>
+						<xsl:otherwise>
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL" />
+								</ctl:url>
+								<ctl:method>post</ctl:method>
+								<ctl:body>
+									<sos:GetObservationById service="ASDF" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd" >
+										<sos:observation><xsl:value-of select="$observation" /></sos:observation>
+									</sos:GetObservationById>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="not($GetObservationByIdResponse/*)">
+						<ctl:message>FAILURE:  The server did not return a response, or the response was not valid according to the GetObservationById response schema for "SOS" />.</ctl:message>
+						<ctl:fail/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:if test="$GetObservationByIdResponse/*">
+							<xsl:if test="$isSOAP=string('true')">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfoSOAP($GetObservationByIdResponse)" /></ctl:message>
+							</xsl:if>
+							<xsl:if test="not($isSOAP=string('true'))">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfo($GetObservationByIdResponse)" /></ctl:message>
+							</xsl:if>
+							<ctl:message>Checking the validity of the response to a GetObservationById request with invalid service parameter.</ctl:message>
+							<xsl:variable name="isCorrect">
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$GetObservationByIdResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+									<ctl:with-param name="locatorToCheck" select="string('service')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
+							</xsl:variable>
+							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
+							<xsl:if test="not(xsd:boolean($isCorrect))">
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservationById request with invalid service parameter specified.  </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "service".</ctl:message>
+								<ctl:fail />
+							</xsl:if>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</ctl:code>
+		</ctl:test>
+	
+		<!-- 0704 Send GetObservationById request without parameter version ,the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: version in element GetObservationById@http://www.opengis.net/sos/2.0".. -->
+		<ctl:test name="sos:GOBIRequestNoVersion">
+			<ctl:param name="serviceURL" />
+			<ctl:param name="isGET" />
+			<ctl:param name="isSOAP" />
+			<ctl:param name="getCapabilitiesResponse" />
+			<ctl:param name="GetObservationByIdRootElementName" />
+			<ctl:param name="GetObservationByIdResponseSchemaLocation" />
+			<ctl:param name="GetObservationByIdResponseSchemaType" />
+			<ctl:param name="observation" />
+			<ctl:assertion>Send a request without parameter "version",and the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: version in element GetObservationById@http://www.opengis.net/sos/2.0". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "Expected attribute: version in element GetObservationById@http://www.opengis.net/sos/2.0"; fail otherwise.</ctl:comment>
+			<ctl:link title=""></ctl:link>
+			<ctl:code>
+				<!-- send request -->
+				<xsl:variable name="GetObservationByIdResponse">
+					<xsl:choose>
+						<xsl:when test="($isGET)">
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:method>get</ctl:method>
+								<ctl:param name="service">SOS</ctl:param>	
+								<ctl:param name="request">GetObservationById</ctl:param>	
+								<ctl:param name="observation"><xsl:value-of select="$observation" /></ctl:param>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:when>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>
+									<sos:GetObservationById service="SOS" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<sos:observation><xsl:value-of select="$observation" /></sos:observation>
+									</sos:GetObservationById>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReportSOAP" />
+							</ctl:soap-request>
+						</xsl:when>
+						<xsl:otherwise>
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL" />
+								</ctl:url>
+								<ctl:method>post</ctl:method>
+								<ctl:body>
+									<sos:GetObservationById service="SOS" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd" >
+										<sos:observation><xsl:value-of select="$observation" /></sos:observation>
+									</sos:GetObservationById>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="not($GetObservationByIdResponse/*)">
+						<ctl:message>FAILURE:  The server did not return a response, or the response was not valid according to the GetObservationById response schema for "SOS" />.</ctl:message>
+						<ctl:fail/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:if test="$GetObservationByIdResponse/*">
+							<xsl:if test="$isSOAP=string('true')">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfoSOAP($GetObservationByIdResponse)" /></ctl:message>
+							</xsl:if>
+							<xsl:if test="not($isSOAP=string('true'))">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfo($GetObservationByIdResponse)" /></ctl:message>
+							</xsl:if>
+							<ctl:message>Checking the validity of the response to a GetObservationById request with no version parameter.</ctl:message>
+							<xsl:variable name="isCorrect">
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$GetObservationByIdResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
+									<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element GetObservationById@http://www.opengis.net/sos/2.0')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
+							</xsl:variable>
+							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
+							<xsl:if test="not(xsd:boolean($isCorrect))">
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservationById request with no version parameter specified.</ctl:message>  
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: version in element GetObservationById@http://www.opengis.net/sos/2.0".</ctl:message>
+								<ctl:fail />
+							</xsl:if>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</ctl:code>
+		</ctl:test>
+
+		<!-- 0705 Send GetObservationById request with null parameter version ,the response must be a valid exception with code "MissingParameterValue" and locator "version".. -->
+		<ctl:test name="sos:GOBIRequestNullVersion">
+			<ctl:param name="serviceURL" />
+			<ctl:param name="isGET" />
+			<ctl:param name="isSOAP" />
+			<ctl:param name="getCapabilitiesResponse" />
+			<ctl:param name="GetObservationByIdRootElementName" />
+			<ctl:param name="GetObservationByIdResponseSchemaLocation" />
+			<ctl:param name="GetObservationByIdResponseSchemaType" />
+			<ctl:param name="observation" />
+			<ctl:assertion>Send a request with null parameter "version",and the response must be a valid exception with code "MissingParameterValue" and locator "version". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "MissingParameterValue" and locator is "version"; fail otherwise.</ctl:comment>
+			<ctl:link title=""></ctl:link>
+			<ctl:code>
+				<!-- send request -->
+				<xsl:variable name="GetObservationByIdResponse">
+					<xsl:choose>
+						<xsl:when test="($isGET)">
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:method>get</ctl:method>
+								<ctl:param name="service">SOS</ctl:param>	
+								<ctl:param name="version"></ctl:param>	
+								<ctl:param name="request">GetObservationById</ctl:param>	
+								<ctl:param name="observation"><xsl:value-of select="$observation" /></ctl:param>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:when>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>
+									<sos:GetObservationById service="SOS" version="" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<sos:observation><xsl:value-of select="$observation" /></sos:observation>
+									</sos:GetObservationById>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReportSOAP" />
+							</ctl:soap-request>
+						</xsl:when>
+						<xsl:otherwise>
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL" />
+								</ctl:url>
+								<ctl:method>post</ctl:method>
+								<ctl:body>
+									<sos:GetObservationById service="SOS" version="" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd" >
+										<sos:observation><xsl:value-of select="$observation" /></sos:observation>
+									</sos:GetObservationById>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="not($GetObservationByIdResponse/*)">
+						<ctl:message>FAILURE:  The server did not return a response, or the response was not valid according to the GetObservationById response schema for "SOS" />.</ctl:message>
+						<ctl:fail/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:if test="$GetObservationByIdResponse/*">
+							<xsl:if test="$isSOAP=string('true')">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfoSOAP($GetObservationByIdResponse)" /></ctl:message>
+							</xsl:if>
+							<xsl:if test="not($isSOAP=string('true'))">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfo($GetObservationByIdResponse)" /></ctl:message>
+							</xsl:if>
+							<ctl:message>Checking the validity of the response to a GetObservationById request with invalid version parameter.</ctl:message>
+							<xsl:variable name="isCorrect">
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$GetObservationByIdResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+									<ctl:with-param name="locatorToCheck" select="string('version')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
+							</xsl:variable>
+							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
+							<xsl:if test="not(xsd:boolean($isCorrect))">
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservationById request with null version parameter specified. </ctl:message> 
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "version".</ctl:message>
+								<ctl:fail />
+							</xsl:if>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</ctl:code>
+		</ctl:test>
+
+		<!-- 0706 Send GetObservationById request with invalid parameter version ,the response must be a valid exception with code "InvalidParameterValue" and locator "version".. -->
+		<ctl:test name="sos:GOBIRequestInvalidVersion">
+			<ctl:param name="serviceURL" />
+			<ctl:param name="isGET" />
+			<ctl:param name="isSOAP" />
+			<ctl:param name="getCapabilitiesResponse" />
+			<ctl:param name="GetObservationByIdRootElementName" />
+			<ctl:param name="GetObservationByIdResponseSchemaLocation" />
+			<ctl:param name="GetObservationByIdResponseSchemaType" />
+			<ctl:param name="observation" />
+			<ctl:assertion>Send a request with invalid parameter "version",and the response must be a valid exception with code "InvalidParameterValue" and locator "version". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "version"; fail otherwise.</ctl:comment>
+			<ctl:link title=""></ctl:link>
+			<ctl:code>
+				<xsl:variable name="GetObservationByIdResponse">
+					<xsl:choose>
+						<xsl:when test="($isGET)">
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:method>get</ctl:method>
+								<ctl:param name="service">SOS</ctl:param>	
+								<ctl:param name="version">999</ctl:param>	
+								<ctl:param name="request">GetObservationById</ctl:param>	
+								<ctl:param name="observation"><xsl:value-of select="$observation" /></ctl:param>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:when>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>
+									<sos:GetObservationById service="SOS" version="999" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<sos:observation><xsl:value-of select="$observation" /></sos:observation>
+									</sos:GetObservationById>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReportSOAP" />
+							</ctl:soap-request>
+						</xsl:when>
+						<xsl:otherwise>
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL" />
+								</ctl:url>
+								<ctl:method>post</ctl:method>
+								<ctl:body>
+									<sos:GetObservationById service="SOS" version="999" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd" >
+										<sos:observation><xsl:value-of select="$observation" /></sos:observation>
+									</sos:GetObservationById>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="not($GetObservationByIdResponse/*)">
+						<ctl:message>FAILURE:  The server did not return a response, or the response was not valid according to the GetObservationById response schema for "SOS" />.</ctl:message>
+						<ctl:fail/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:if test="$GetObservationByIdResponse/*">
+							<xsl:if test="$isSOAP=string('true')">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfoSOAP($GetObservationByIdResponse)" /></ctl:message>
+							</xsl:if>
+							<xsl:if test="not($isSOAP=string('true'))">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfo($GetObservationByIdResponse)" /></ctl:message>
+							</xsl:if>
+							<ctl:message>Checking the validity of the response to a GetObservationById request with invalid version parameter.</ctl:message>
+							<xsl:variable name="isCorrect">
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$GetObservationByIdResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+									<ctl:with-param name="locatorToCheck" select="string('version')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
+							</xsl:variable>
+							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
+							<xsl:if test="not(xsd:boolean($isCorrect))">
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservationById request with invalid version parameter specified.  </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "version".</ctl:message>
+								<ctl:fail />
+							</xsl:if>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</ctl:code>
+		</ctl:test>
+
+		<!-- 0707 Send GetObservationById request with null Element observation ,the response must be a valid exception with code "MissingParameterValue" and locator "observation".. -->
+		<ctl:test name="sos:GOBIRequestNullobservation">
+			<ctl:param name="serviceURL" />
+			<ctl:param name="isGET" />
+			<ctl:param name="isSOAP" />
+			<ctl:param name="getCapabilitiesResponse" />
+			<ctl:param name="GetObservationByIdRootElementName" />
+			<ctl:param name="GetObservationByIdResponseSchemaLocation" />
+			<ctl:param name="GetObservationByIdResponseSchemaType" />
+			<ctl:param name="observation" />
+			<ctl:assertion>Send a request with null parameter "observation",and the response must be a valid exception with code "MissingParameterValue" and locator "observation". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "MissingParameterValue" and locator is "observation"; fail otherwise.</ctl:comment>
+			<ctl:link title=""></ctl:link>
+			<ctl:code>
+				<!-- send request -->
+				<xsl:variable name="GetObservationByIdResponse">
+					<xsl:choose>
+						<xsl:when test="($isGET)">
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:method>get</ctl:method>
+								<ctl:param name="service">SOS</ctl:param>	
+								<ctl:param name="version">2.0.0</ctl:param>	
+								<ctl:param name="request">GetObservationById</ctl:param>	
+								<ctl:param name="observation"></ctl:param>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:when>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>
+									<sos:GetObservationById service="SOS" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<sos:observation></sos:observation>
+									</sos:GetObservationById>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReportSOAP" />
+							</ctl:soap-request>
+						</xsl:when>
+						<xsl:otherwise>
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL" />
+								</ctl:url>
+								<ctl:method>post</ctl:method>
+								<ctl:body>
+									<sos:GetObservationById service="SOS" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd" >
+										<sos:observation></sos:observation>
+									</sos:GetObservationById>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="not($GetObservationByIdResponse/*)">
+						<ctl:message>FAILURE:  The server did not return a response, or the response was not valid according to the GetObservationById response schema for "SOS" />.</ctl:message>
+						<ctl:fail/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:if test="$GetObservationByIdResponse/*">
+							<xsl:if test="$isSOAP=string('true')">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfoSOAP($GetObservationByIdResponse)" /></ctl:message>
+							</xsl:if>
+							<xsl:if test="not($isSOAP=string('true'))">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfo($GetObservationByIdResponse)" /></ctl:message>
+							</xsl:if>
+							<ctl:message>Checking the validity of the response to a GetObservationById request with invalid observation parameter.</ctl:message>
+							<xsl:variable name="isCorrect">
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$GetObservationByIdResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+									<ctl:with-param name="locatorToCheck" select="string('observation')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
+							</xsl:variable>
+							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
+							<xsl:if test="not(xsd:boolean($isCorrect))">
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservation request with null observation parameter specified. </ctl:message> 
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "observation".</ctl:message>
+								<ctl:fail />
+							</xsl:if>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</ctl:code>
+		</ctl:test>
+
+		<!-- 0708 Send GetObservationById request with invalid Element observation ,the response must be an empty GetObservationByIdResponse. -->
+		<ctl:test name="sos:GOBIRequestInvalidobservation">
+			<ctl:param name="serviceURL" />
+			<ctl:param name="isGET" />
+			<ctl:param name="isSOAP" />
+			<ctl:param name="getCapabilitiesResponse" />
+			<ctl:param name="GetObservationByIdRootElementName" />
+			<ctl:param name="GetObservationByIdResponseSchemaLocation" />
+			<ctl:param name="GetObservationByIdResponseSchemaType" />
+			<ctl:param name="observation" />
+			<ctl:assertion>Send a request with invalid parameter "observation",and the response must be an empty GetObservationByIdResponse. </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid empty GetObservationByIdResponse; fail otherwise.</ctl:comment>
+			<ctl:link title=""></ctl:link>
+			<ctl:code>
+				<xsl:variable name="GetObservationByIdResponse">
+					<xsl:choose>
+						<xsl:when test="($isGET)">
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:method>get</ctl:method>
+								<ctl:param name="service">SOS</ctl:param>	
+								<ctl:param name="version">2.0.0</ctl:param>	
+								<ctl:param name="request">GetObservationById</ctl:param>	
+								<ctl:param name="observation"><xsl:value-of select="current-dateTime()" /></ctl:param>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:when>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>
+									<sos:GetObservationById service="SOS" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<sos:observation><xsl:value-of select="current-dateTime()" /></sos:observation>
+									</sos:GetObservationById>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReportSOAP" />
+							</ctl:soap-request>
+						</xsl:when>
+						<xsl:otherwise>
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL" />
+								</ctl:url>
+								<ctl:method>post</ctl:method>
+								<ctl:body>
+									<sos:GetObservationById service="SOS" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd" >
+										<sos:observation><xsl:value-of select="current-dateTime()" /></sos:observation>
+									</sos:GetObservationById>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="not($GetObservationByIdResponse/*)">
+						<ctl:message>FAILURE:  The server did not return a response, or the response was not valid according to the GetObservationById response schema for "SOS" />.</ctl:message>
+						<ctl:fail/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:if test="$GetObservationByIdResponse/*">
+							<!-- check the root is "sos:GetObservationByIdResponse" and empty context.-->
+							<xsl:variable name="responseRoot" select="local-name-from-QName(node-name($GetObservationByIdResponse/*[1]))" />
+							<xsl:choose>
+								<xsl:when test="not($responseRoot=$GetObservationByIdRootElementName)">
+									<ctl:message>FAILURE:  The root element from the response to a GetObservationById request "<xsl:value-of select="$responseRoot" />" does not match the expected root element of "<xsl:value-of select="$GetObservationByIdRootElementName" />"</ctl:message>
+									<ctl:fail />
+								</xsl:when>
+								<xsl:when test="$GetObservationByIdResponse/*[1]/*)">
+									<ctl:message>FAILURE:  An empty GetObservationByIdResponse should be returned if no observation was found matching one or more of the identifiers provided in the request.</ctl:message>
+									<ctl:fail />
+								</xsl:when>
+								<xsl:otherwise>
+									<ctl:message>Passed.</ctl:message>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</ctl:code>
+		</ctl:test>
+
+		<!-- 0709 Send valid GetObservationById request, the response must be a valid GetObservationByIdResponse. -->
+		<ctl:test name="sos:GOBIRequestValidRequest">
+			<ctl:param name="serviceURL" />
+			<ctl:param name="isGET" />
+			<ctl:param name="isSOAP" />
+			<ctl:param name="getCapabilitiesResponse" />
+			<ctl:param name="GetObservationByIdRootElementName" />
+			<ctl:param name="GetObservationByIdResponseSchemaLocation" />
+			<ctl:param name="GetObservationByIdResponseSchemaType" />
+			<ctl:param name="observation" />
+			<ctl:assertion>Send a valid request ,and there must be have a valid GetObservationByIdResponse returned. </ctl:assertion>
+			<ctl:comment>Pass if the observation listed in GetObservationByIdResponse are same to GetObservationById request; fail otherwise.</ctl:comment>
+			<ctl:link title=""></ctl:link>
+			<ctl:code>
+				<xsl:variable name="GetObservationByIdResponse">
+					<xsl:choose>
+						<xsl:when test="($isGET)">
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:method>get</ctl:method>
+								<ctl:param name="service">SOS</ctl:param>	
+								<ctl:param name="version">2.0.0</ctl:param>	
+								<ctl:param name="request">GetObservationById</ctl:param>	
+								<ctl:param name="observation"><xsl:value-of select="$observation" /></ctl:param>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:when>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>
+									<sos:GetObservationById service="SOS" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<sos:observation><xsl:value-of select="$observation" /></sos:observation>
+									</sos:GetObservationById>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReportSOAP" />
+							</ctl:soap-request>
+						</xsl:when>
+						<xsl:otherwise>
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL" />
+								</ctl:url>
+								<ctl:method>post</ctl:method>
+								<ctl:body>
+									<sos:GetObservationById service="SOS" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd" >
+										<sos:observation><xsl:value-of select="$observation" /></sos:observation>
+									</sos:GetObservationById>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="not($GetObservationByIdResponse/*)">
+						<ctl:message>FAILURE:  The server did not return a response, or the response was not valid according to the GetObservationById response schema for "SOS" />.</ctl:message>
+						<ctl:fail/>
+					</xsl:when>
+					<xsl:otherwise>
+						<!-- check the gml:identifier value is same to observation value in the request. -->
+						<xsl:if test="$GetObservationByIdResponse/*">
+							<!-- check the root is "sos:GetObservationByIdResponse" and empty context.-->
+							<xsl:variable name="responseRoot" select="local-name-from-QName(node-name($GetObservationByIdResponse/*[1]))" />
+							<xsl:variable name="gmlidentifier " select="$GetObservationByIdResponse/sos:GetObservationByIdResponse//gml:identifier" />
+							<xsl:choose>
+								<xsl:when test="not($responseRoot=$GetObservationByIdRootElementName)">
+									<ctl:message>FAILURE:  The root element from the response to a GetObservationById request "<xsl:value-of select="$responseRoot" />" does not match the expected root element of "<xsl:value-of select="$GetObservationByIdRootElementName" />"</ctl:message>
+									<ctl:fail />
+								</xsl:when>
+								<xsl:when test="not($gmlidentifier=$observation)">
+									<ctl:message>FAILURE: The gml:identifier values in response is not same to observation value in the request.</ctl:message>
+									<ctl:fail />
+								</xsl:when>
+								<xsl:otherwise>
+									<ctl:message>Passed.</ctl:message>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</ctl:code>
+		</ctl:test>
+
 	</ctl:package>
 
 	<!-- 08.SOS Transactional: InsertionCapabilities -->
