@@ -1,387 +1,661 @@
-<ctl:package
- xmlns:ctl="http://www.occamlab.com/ctl"
- xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
- xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
- xmlns:ows='http://www.opengis.net/ows/2.0'
- xmlns:gml='http://www.opengis.net/gml/3.2'
- xmlns:wcs='http://www.opengis.net/wcs/2.0'
- xmlns:ctlp="http://www.occamlab.com/te/parsers"
- xmlns:wcs2="http://www.opengis.net/wcs/2.0"
- xmlns:wcseo="http://www.opengis.net/wcseo/1.0"
- xmlns:sch="http://purl.oclc.org/dsdl/schematron"
- xmlns:xlink="http://www.w3.org/1999/xlink"
- xmlns:xs="http://www.w3.org/2001/XMLSchema"
->
-
-
-	<ctl:test name="wcseo:EO-data-model">
-   		<ctl:param name="url"/>
-	    	<ctl:param name="Capabilities"/>   		
-    		<ctl:assertion>Test EO data model.</ctl:assertion>
-    		<ctl:code>
-			<ctl:call-test name="wcseo:req1">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test>     
-			<ctl:call-test name="wcseo:req2">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 
-			<ctl:call-test name="wcseo:req3">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 
-			<ctl:call-test name="wcseo:req4">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 
-			<ctl:call-test name="wcseo:req5">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 
-			<ctl:call-test name="wcseo:req6">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test>     
-			<ctl:call-test name="wcseo:req7">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 
-			<ctl:call-test name="wcseo:req8">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 
-			<ctl:call-test name="wcseo:req9">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 
-			<ctl:call-test name="wcseo:req10">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 
-			<ctl:call-test name="wcseo:req11">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test>     
-			<ctl:call-test name="wcseo:req12">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 
-			<ctl:call-test name="wcseo:req13">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 
-			<ctl:call-test name="wcseo:req14">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 
-			<ctl:call-test name="wcseo:req15">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 
-			<ctl:call-test name="wcseo:req16">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test>     
-			<ctl:call-test name="wcseo:req17">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 
-			<ctl:call-test name="wcseo:req18">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 
-			<ctl:call-test name="wcseo:req19">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 
-			<ctl:call-test name="wcseo:req20">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 
-			<ctl:call-test name="wcseo:req21">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test>     
-			<ctl:call-test name="wcseo:req22">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 
-			<ctl:call-test name="wcseo:req23">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 
-			<ctl:call-test name="wcseo:req24">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 
-			<ctl:call-test name="wcseo:req25">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 	
-			<ctl:call-test name="wcseo:req26">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 
-			<ctl:call-test name="wcseo:req27">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 
-			<ctl:call-test name="wcseo:req28">
-				<ctl:with-param name="url" select="$url"/> 			
-				<ctl:with-param name="Capabilities" select="$Capabilities"/>      
-			</ctl:call-test> 			
-    		</ctl:code>
-  	</ctl:test>
-  	
-  	<ctl:test name="wcseo:req1">
-     		<ctl:param name="url"/> 	
-    		<ctl:param name="Capabilities"/>
-    		<ctl:assertion>Req1:</ctl:assertion>
-    		<ctl:code>
-                    <ctl:message>[MESSAGE] TBD.</ctl:message>
-    		</ctl:code>
-  	</ctl:test>
-  	
-  	<ctl:test name="wcseo:req2">
-     		<ctl:param name="url"/> 	
-    		<ctl:param name="Capabilities"/>
-    		<ctl:assertion>Req2:</ctl:assertion>
-    		<ctl:code>
-                    <ctl:message>[MESSAGE] TBD.</ctl:message>
-    		</ctl:code>
-  	</ctl:test>
-
-  	<ctl:test name="wcseo:req3">
-     		<ctl:param name="url"/> 	
-    		<ctl:param name="Capabilities"/>
-    		<ctl:assertion>Req3:</ctl:assertion>
-    		<ctl:code>
-                    <ctl:message>[MESSAGE] TBD.</ctl:message>
-    		</ctl:code>
-  	</ctl:test>
-  	
-  	<ctl:test name="wcseo:req4">
-     		<ctl:param name="url"/> 	
-    		<ctl:param name="Capabilities"/>
-    		<ctl:assertion>Req4:</ctl:assertion>
-    		<ctl:code>
-                    <ctl:message>[MESSAGE] TBD.</ctl:message>
-    		</ctl:code>
-  	</ctl:test>
-  	<ctl:test name="wcseo:req5">
-     		<ctl:param name="url"/> 	
-    		<ctl:param name="Capabilities"/>
-    		<ctl:assertion>Req5:</ctl:assertion>
-    		<ctl:code>
-                    <ctl:message>[MESSAGE] TBD.</ctl:message>
-    		</ctl:code>
-  	</ctl:test>
-  	
-  	<ctl:test name="wcseo:req6">
-     		<ctl:param name="url"/> 	
-    		<ctl:param name="Capabilities"/>
-    		<ctl:assertion>Req6:</ctl:assertion>
-    		<ctl:code>
-                    <ctl:message>[MESSAGE] TBD.</ctl:message>
-    		</ctl:code>
-  	</ctl:test>
- 
-   	<ctl:test name="wcseo:req7">
-      		<ctl:param name="url"/> 	
-     		<ctl:param name="Capabilities"/>
-     		<ctl:assertion>Req7:</ctl:assertion>
-     		<ctl:code>
-                     <ctl:message>[MESSAGE] TBD.</ctl:message>
-     		</ctl:code>
-   	</ctl:test>
-   	
-   	<ctl:test name="wcseo:req8">
-      		<ctl:param name="url"/> 	
-     		<ctl:param name="Capabilities"/>
-     		<ctl:assertion>Req8:</ctl:assertion>
-     		<ctl:code>
-                     <ctl:message>[MESSAGE] TBD.</ctl:message>
-     		</ctl:code>
-   	</ctl:test>
- 
-   	<ctl:test name="wcseo:req9">
-      		<ctl:param name="url"/> 	
-     		<ctl:param name="Capabilities"/>
-     		<ctl:assertion>Req9:</ctl:assertion>
-     		<ctl:code>
-                     <ctl:message>[MESSAGE] TBD.</ctl:message>
-     		</ctl:code>
-   	</ctl:test>
-   	
-   	<ctl:test name="wcseo:req10">
-      		<ctl:param name="url"/> 	
-     		<ctl:param name="Capabilities"/>
-     		<ctl:assertion>Req10:</ctl:assertion>
-     		<ctl:code>
-                     <ctl:message>[MESSAGE] TBD.</ctl:message>
-     		</ctl:code>
-   	</ctl:test>
- 
-   	<ctl:test name="wcseo:req11">
-      		<ctl:param name="url"/> 	
-     		<ctl:param name="Capabilities"/>
-     		<ctl:assertion>Req11:</ctl:assertion>
-     		<ctl:code>
-                     <ctl:message>[MESSAGE] TBD.</ctl:message>
-     		</ctl:code>
-   	</ctl:test>
-   	
-   	<ctl:test name="wcseo:req12">
-      		<ctl:param name="url"/> 	
-     		<ctl:param name="Capabilities"/>
-     		<ctl:assertion>Req12:</ctl:assertion>
-     		<ctl:code>
-                     <ctl:message>[MESSAGE] TBD.</ctl:message>
-     		</ctl:code>
-   	</ctl:test>
- 
-   	<ctl:test name="wcseo:req13">
-      		<ctl:param name="url"/> 	
-     		<ctl:param name="Capabilities"/>
-     		<ctl:assertion>Req13:</ctl:assertion>
-     		<ctl:code>
-                     <ctl:message>[MESSAGE] TBD.</ctl:message>
-     		</ctl:code>
-   	</ctl:test>
-   	
-   	<ctl:test name="wcseo:req14">
-      		<ctl:param name="url"/> 	
-     		<ctl:param name="Capabilities"/>
-     		<ctl:assertion>Req14:</ctl:assertion>
-     		<ctl:code>
-                     <ctl:message>[MESSAGE] TBD.</ctl:message>
-     		</ctl:code>
-   	</ctl:test>
- 
-   	<ctl:test name="wcseo:req15">
-      		<ctl:param name="url"/> 	
-     		<ctl:param name="Capabilities"/>
-     		<ctl:assertion>Req15:</ctl:assertion>
-     		<ctl:code>
-                     <ctl:message>[MESSAGE] TBD.</ctl:message>
-     		</ctl:code>
-   	</ctl:test>
-   	
-   	<ctl:test name="wcseo:req16">
-      		<ctl:param name="url"/> 	
-     		<ctl:param name="Capabilities"/>
-     		<ctl:assertion>Req16:</ctl:assertion>
-     		<ctl:code>
-                     <ctl:message>[MESSAGE] TBD.</ctl:message>
-     		</ctl:code>
-   	</ctl:test>
- 
-   	<ctl:test name="wcseo:req17">
-      		<ctl:param name="url"/> 	
-     		<ctl:param name="Capabilities"/>
-     		<ctl:assertion>Req17:</ctl:assertion>
-     		<ctl:code>
-                     <ctl:message>[MESSAGE] TBD.</ctl:message>
-     		</ctl:code>
-   	</ctl:test>
-   	
-   	<ctl:test name="wcseo:req18">
-      		<ctl:param name="url"/> 	
-     		<ctl:param name="Capabilities"/>
-     		<ctl:assertion>Req18:</ctl:assertion>
-     		<ctl:code>
-                     <ctl:message>[MESSAGE] TBD.</ctl:message>
-     		</ctl:code>
-   	</ctl:test>
- 
-   	<ctl:test name="wcseo:req19">
-      		<ctl:param name="url"/> 	
-     		<ctl:param name="Capabilities"/>
-     		<ctl:assertion>Req19:</ctl:assertion>
-     		<ctl:code>
-                     <ctl:message>[MESSAGE] TBD.</ctl:message>
-     		</ctl:code>
-   	</ctl:test>
-   	
-   	<ctl:test name="wcseo:req20">
-      		<ctl:param name="url"/> 	
-     		<ctl:param name="Capabilities"/>
-     		<ctl:assertion>Req20:</ctl:assertion>
-     		<ctl:code>
-                     <ctl:message>[MESSAGE] TBD.</ctl:message>
-     		</ctl:code>
-   	</ctl:test>
- 
-   	<ctl:test name="wcseo:req21">
-      		<ctl:param name="url"/> 	
-     		<ctl:param name="Capabilities"/>
-     		<ctl:assertion>Req21:</ctl:assertion>
-     		<ctl:code>
-                     <ctl:message>[MESSAGE] TBD.</ctl:message>
-     		</ctl:code>
-   	</ctl:test>
-   	
-   	<ctl:test name="wcseo:req22">
-      		<ctl:param name="url"/> 	
-     		<ctl:param name="Capabilities"/>
-     		<ctl:assertion>Req22:</ctl:assertion>
-     		<ctl:code>
-                     <ctl:message>[MESSAGE] TBD.</ctl:message>
-     		</ctl:code>
-   	</ctl:test>
- 
-   	<ctl:test name="wcseo:req23">
-      		<ctl:param name="url"/> 	
-     		<ctl:param name="Capabilities"/>
-     		<ctl:assertion>Req23:</ctl:assertion>
-     		<ctl:code>
-                     <ctl:message>[MESSAGE] TBD.</ctl:message>
-     		</ctl:code>
-   	</ctl:test>
-   	
-   	<ctl:test name="wcseo:req24">
-      		<ctl:param name="url"/> 	
-     		<ctl:param name="Capabilities"/>
-     		<ctl:assertion>Req24:</ctl:assertion>
-     		<ctl:code>
-                     <ctl:message>[MESSAGE] TBD.</ctl:message>
-     		</ctl:code>
-   	</ctl:test>
- 
-   	<ctl:test name="wcseo:req25">
-      		<ctl:param name="url"/> 	
-     		<ctl:param name="Capabilities"/>
-     		<ctl:assertion>Req25:</ctl:assertion>
-     		<ctl:code>
-                     <ctl:message>[MESSAGE] TBD.</ctl:message>
-     		</ctl:code>
-   	</ctl:test>
-   	
-   	<ctl:test name="wcseo:req26">
-      		<ctl:param name="url"/> 	
-     		<ctl:param name="Capabilities"/>
-     		<ctl:assertion>Req26:</ctl:assertion>
-     		<ctl:code>
-                     <ctl:message>[MESSAGE] TBD.</ctl:message>
-     		</ctl:code>
-   	</ctl:test>
-
-   	<ctl:test name="wcseo:req27">
-      		<ctl:param name="url"/> 	
-     		<ctl:param name="Capabilities"/>
-     		<ctl:assertion>Req27:</ctl:assertion>
-     		<ctl:code>
-                     <ctl:message>[MESSAGE] TBD.</ctl:message>
-     		</ctl:code>
-   	</ctl:test>
-   	
-   	<ctl:test name="wcseo:req28">
-      		<ctl:param name="url"/> 	
-     		<ctl:param name="Capabilities"/>
-     		<ctl:assertion>Req28:</ctl:assertion>
-     		<ctl:code>
-                     <ctl:message>[MESSAGE] TBD.</ctl:message>
-     		</ctl:code>
-   	</ctl:test> 
+<ctl:package xmlns:ctl="http://www.occamlab.com/ctl" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ows="http://www.opengis.net/ows/2.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:wcs="http://www.opengis.net/wcs/2.0" xmlns:ctlp="http://www.occamlab.com/te/parsers" xmlns:wcs2="http://www.opengis.net/wcs/2.0" xmlns:wcseo="http://www.opengis.net/wcseo/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<ctl:test name="wcseo:EO-Data-model">
+		<ctl:param name="url"/>
+		<ctl:assertion>Test the EO data model.</ctl:assertion>
+		<xsl:for-each select="$Capabilities//*[local-name()='CoverageSummary'][*[local-name()='CoverageSubtype']='ReferenceableDataset']/*[local-name()='CoverageId']|$Capabilities//*[local-name()='CoverageSummary'][*[local-name()='CoverageSubtype']='RectifiedDataset']/*[local-name()='CoverageId']|$Capabilities//*[local-name()='CoverageSummary'][*[local-name()='CoverageSubtype']='ReferenceableStitchedMosaic']/*[local-name()='CoverageId']|$Capabilities//*[local-name()='CoverageSummary'][*[local-name()='CoverageSubtype']='RectifiedStitchedMosaic']/*[local-name()='CoverageId']">
+			<xsl:variable name="describeeocoverage">
+				<ctl:request>
+					<ctl:url>
+						<xsl:value-of select="$url"/>
+					</ctl:url>
+					<ctl:param name="service">WCS</ctl:param>
+					<ctl:param name="VERSION">2.0.0</ctl:param>
+					<ctl:param name="request">DescribeCoverage</ctl:param>
+					<ctl:param name="CoverageId">
+						<xsl:value-of select="."/>
+					</ctl:param>
+					<ctl:method>get</ctl:method>
+					<parsers:XMLValidatingParser>
+						<parsers:schemas>
+							<parsers:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</parsers:schema>
+						</parsers:schemas>
+					</parsers:XMLValidatingParser>
+				</ctl:request>
+			</xsl:variable>
+			<xsl:choose>
+				<xsl:when test="string-length($describeeocoverage)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+				</xsl:when>
+				<xsl:otherwise>
+					<ctl:call-test name="wcseo:req1">
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+					<ctl:call-test name="wcseo:req9">
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:for-each>
+		<xsl:for-each select="$Capabilities//*[local-name()='CoverageSummary'][*[local-name()='CoverageSubtype']='ReferenceableDataset']/*[local-name()='CoverageId']|$Capabilities//*[local-name()='CoverageSummary'][*[local-name()='CoverageSubtype']='RectifiedDataset']/*[local-name()='CoverageId']">
+			<xsl:variable name="describeeocoverage">
+				<ctl:request>
+					<ctl:url>
+						<xsl:value-of select="$url"/>
+					</ctl:url>
+					<ctl:param name="service">WCS</ctl:param>
+					<ctl:param name="VERSION">2.0.0</ctl:param>
+					<ctl:param name="request">DescribeCoverage</ctl:param>
+					<ctl:param name="CoverageId">
+						<xsl:value-of select="."/>
+					</ctl:param>
+					<ctl:method>get</ctl:method>
+					<parsers:XMLValidatingParser>
+						<parsers:schemas>
+							<parsers:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</parsers:schema>
+						</parsers:schemas>
+					</parsers:XMLValidatingParser>
+				</ctl:request>
+			</xsl:variable>
+			<xsl:choose>
+				<xsl:when test="string-length($describeeocoverage)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+				</xsl:when>
+				<xsl:otherwise>
+					<ctl:call-test name="wcseo:req2">
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+					<ctl:call-test name="wcseo:req3">
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+					<ctl:call-test name="wcseo:req4">
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+					<ctl:call-test name="wcseo:req5">
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+					<ctl:call-test name="wcseo:req6">
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+					<ctl:call-test name="wcseo:req7">
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+					<ctl:call-test name="wcseo:req8">
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+					<ctl:call-test name="wcseo:req10">
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+					<ctl:call-test name="wcseo:req11">
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:for-each>
+		<xsl:for-each select="$Capabilities//*[local-name()='CoverageSummary'][*[local-name()='CoverageSubtype']='ReferenceableStitchedMosaic']/*[local-name()='CoverageId']|$Capabilities//*[local-name()='CoverageSummary'][*[local-name()='CoverageSubtype']='RectifiedStitchedMosaic']/*[local-name()='CoverageId']">
+			<xsl:variable name="describeeocoverage">
+				<ctl:request>
+					<ctl:url>
+						<xsl:value-of select="$url"/>
+					</ctl:url>
+					<ctl:param name="service">WCS</ctl:param>
+					<ctl:param name="VERSION">2.0.0</ctl:param>
+					<ctl:param name="request">DescribeCoverage</ctl:param>
+					<ctl:param name="CoverageId">
+						<xsl:value-of select="."/>
+					</ctl:param>
+					<ctl:method>get</ctl:method>
+					<parsers:XMLValidatingParser>
+						<parsers:schemas>
+							<parsers:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</parsers:schema>
+						</parsers:schemas>
+					</parsers:XMLValidatingParser>
+				</ctl:request>
+			</xsl:variable>
+			<xsl:choose>
+				<xsl:when test="string-length($describeeocoverage)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+				</xsl:when>
+				<xsl:otherwise>
+					<ctl:call-test name="wcseo:req14">
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+					<ctl:call-test name="wcseo:req15">
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+					<ctl:call-test name="wcseo:req16">
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+					<ctl:call-test name="wcseo:req17">
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+					<ctl:call-test name="wcseo:req18">
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+					<ctl:call-test name="wcseo:req22">
+					        <ctl:with-param name="url" select="$url"/>
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+					<ctl:call-test name="wcseo:req23">
+					        <ctl:with-param name="url" select="$url"/>
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+					<ctl:call-test name="wcseo:req24">
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+					<ctl:call-test name="wcseo:req25">
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:for-each>
+		<xsl:for-each select="$Capabilities//*[local-name()='CoverageSummary'][*[local-name()='CoverageSubtype']='ReferenceableStitchedMosaic']/*[local-name()='CoverageId']">
+			<xsl:variable name="describeeocoverage">
+				<ctl:request>
+					<ctl:url>
+						<xsl:value-of select="$url"/>
+					</ctl:url>
+					<ctl:param name="service">WCS</ctl:param>
+					<ctl:param name="VERSION">2.0.0</ctl:param>
+					<ctl:param name="request">DescribeCoverage</ctl:param>
+					<ctl:param name="CoverageId">
+						<xsl:value-of select="."/>
+					</ctl:param>
+					<ctl:method>get</ctl:method>
+					<parsers:XMLValidatingParser>
+						<parsers:schemas>
+							<parsers:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</parsers:schema>
+						</parsers:schemas>
+					</parsers:XMLValidatingParser>
+				</ctl:request>
+			</xsl:variable>
+			<xsl:choose>
+				<xsl:when test="string-length($describeeocoverage)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+				</xsl:when>
+				<xsl:otherwise>
+					<ctl:call-test name="wcseo:req12">
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+					<ctl:call-test name="wcseo:req21">
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:for-each>
+		<xsl:for-each select="$Capabilities//*[local-name()='CoverageSummary'][*[local-name()='CoverageSubtype']='RectifiedStitchedMosaic']/*[local-name()='CoverageId']">
+			<xsl:variable name="describeeocoverage">
+				<ctl:request>
+					<ctl:url>
+						<xsl:value-of select="$url"/>
+					</ctl:url>
+					<ctl:param name="service">WCS</ctl:param>
+					<ctl:param name="VERSION">2.0.0</ctl:param>
+					<ctl:param name="request">DescribeCoverage</ctl:param>
+					<ctl:param name="CoverageId">
+						<xsl:value-of select="."/>
+					</ctl:param>
+					<ctl:method>get</ctl:method>
+					<parsers:XMLValidatingParser>
+						<parsers:schemas>
+							<parsers:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</parsers:schema>
+						</parsers:schemas>
+					</parsers:XMLValidatingParser>
+				</ctl:request>
+			</xsl:variable>
+			<xsl:choose>
+				<xsl:when test="string-length($describeeocoverage)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+				</xsl:when>
+				<xsl:otherwise>
+					<ctl:call-test name="wcseo:req13">
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+					<ctl:call-test name="wcseo:req19">
+					        <ctl:with-param name="url" select="$url"/>
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+					<ctl:call-test name="wcseo:req20">
+					        <ctl:with-param name="url" select="$url"/>
+						<ctl:with-param name="response" select="$describeeocoverage"/>
+					</ctl:call-test>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:for-each>
+		<xsl:for-each select="$Capabilities//*[local-name()='DatasetSeriesSummary']/*[local-name()='DatasetSeriesId']">
+			<xsl:variable name="DescribeEOCoverageSet">
+				<ctl:request>
+					<ctl:url>
+						<xsl:value-of select="$url"/>
+					</ctl:url>
+					<ctl:method>get</ctl:method>
+					<ctl:param name="service">WCS</ctl:param>
+					<ctl:param name="VERSION">2.0.0</ctl:param>
+					<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
+					<ctl:param name="EOID">
+						<xsl:value-of select="."/>
+					</ctl:param>
+					<ctlp:XMLValidatingParser>
+						<ctlp:schemas>
+							<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+						</ctlp:schemas>
+					</ctlp:XMLValidatingParser>
+				</ctl:request>
+			</xsl:variable>
+			<xsl:choose>
+				<xsl:when test="string-length($DescribeEOCoverageSet)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+				</xsl:when>
+				<xsl:otherwise>
+					<ctl:call-test name="wcseo:req26">
+						<ctl:with-param name="response" select="$DescribeEOCoverageSet"/>
+					</ctl:call-test>
+					<ctl:call-test name="wcseo:req27">
+						<ctl:with-param name="response" select="$DescribeEOCoverageSet"/>
+					</ctl:call-test>
+					<ctl:call-test name="wcseo:req28">
+						<ctl:with-param name="response" select="$DescribeEOCoverageSet"/>
+					</ctl:call-test>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:for-each>
+	</ctl:test>
+	<ctl:test name="wcseo:req1">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req1:A WCSEO::EOMetadata instance shall conform to Table 2, Figure 2, Figure 3, and the XML schema being part of this standard.</ctl:assertion>
+		<ctl:code>
+			<xsl:if test="empty($response//*[local-name()='EOMetadata'])">
+				<ctl:message>[FAILURE] WCSEO::EOMetadata is not valid</ctl:message>
+				<ctl:fail/>
+			</xsl:if>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req2">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req2:The WCSEO::EOMetadata element of WCSEO::ReferenceableEOCoverage and WCS-EO::RectifiedEOCoverage instances shall contain an eop:EarthObservation/om:featureOfInterest/eop:Footprint element.</ctl:assertion>
+		<ctl:code>
+			<xsl:if test="empty($response//*[local-name()='EOMetadata']//*[local-name()='EarthObservation']/*[local-name()='featureOfInterest']/*[local-name()='Footprint'])">
+				<ctl:message>[FAILURE] eop:EarthObservation/om:featureOfInterest/eop:Footprint element is not available</ctl:message>
+				<ctl:fail/>
+			</xsl:if>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req3">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req3:WCSEO::ReferenceableEOCoverage and WCSEO::RectifiedEOCoverage instances shall conform to Figure 2, Figure 3, and the XML schema being part of this standard.</ctl:assertion>
+		<ctl:code>
+			<xsl:if test="string-length($response)=0">
+				<ctl:message>[FAILURE] WCSEO::ReferenceableEOCoverage or WCSEO::RectifiedEOCoverage is not valid</ctl:message>
+				<ctl:fail/>
+			</xsl:if>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req4">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req4:WCSEO::ReferenceableEOCoverage and WCSEO::RectifiedEOCoverage instances shall contain one metadata element of type WCSEO::EOMetadata.</ctl:assertion>
+		<ctl:code>
+			<xsl:if test="empty($response//*[local-name()='EOMetadata'])">
+				<ctl:message>[FAILURE] WCSEO::EOMetadata is not available</ctl:message>
+				<ctl:fail/>
+			</xsl:if>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req5">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req5:The WCSEO::EOMetadata element of WCSEO::ReferenceableEOCoverage and WCSEO::RectifiedEOCoverage instances shall contain an element eop:EarthObservation/eop:metadataProperty/eop:EarthObservationMetaData/eop:identifier whose first word is identical to the EO Coverage identifier.</ctl:assertion>
+		<ctl:code>
+			<xsl:if test="not(($response//*[local-name()='EOMetadata']/*[local-name()='EarthObservation']/*[local-name()='metaDataProperty']/*[local-name()='EarthObservationMetaData']/*[local-name()='identifier']=$response//*[local-name()='RectifiedDataset']/@*[local-name()='id']) or ($response//*[local-name()='EOMetadata']/*[local-name()='EarthObservation']/*[local-name()='metaDataProperty']/*[local-name()='EarthObservationMetaData']/*[local-name()='identifier']=$response//*[local-name()='ReferenceableDataset']/@*[local-name()='id']))">
+				<ctl:message>[FAILURE] eop:EarthObservation/eop:metadataProperty/eop:EarthObservationMetaData/eop:identifier is not valid</ctl:message>
+				<ctl:fail/>
+			</xsl:if>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req6">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req6:WCSEO::ReferenceableEOCoverage and WCSEO::RectifiedEOCoverage instances shall contain a gml:boundedBy element with a gml:Envelope containing an srsName attribute value identifying WGS84.</ctl:assertion>
+		<ctl:code>
+			<xsl:if test="empty($response//*[local-name()='boundedBy'])">
+				<ctl:message>[FAILURE] gml:boundedBy is not available</ctl:message>
+				<ctl:fail/>
+			</xsl:if>
+			<xsl:if test="empty($response//*[local-name()='boundedBy']/*[local-name()='Envelope'])">
+				<ctl:message>[FAILURE] gml:Envelope is not available</ctl:message>
+				<ctl:fail/>
+			</xsl:if>
+			<xsl:if test="empty($response//*[local-name()='boundedBy']/*[local-name()='Envelope']/@*[local-name()='srsName']) ">
+				<ctl:message>[FAILURE] gml:Envelope does not contain a valid srsName</ctl:message>
+				<ctl:fail/>
+			</xsl:if>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req7">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req7:In WCSEO::ReferenceableEOCoverage and WCSEO::RectifiedEOCoverage instances, all polygons listed in eop:EarthObservation/om:featureOfInterest/eop:Footprint element shall be contained in the bounding box of the gml:boundedBy element of the gml:Envelope.</ctl:assertion>
+		<ctl:code>
+			<xsl:choose>
+				<xsl:when test="empty($response//*[local-name()='boundedBy']/*[local-name()='Envelope']) or empty($response//*[local-name()='EarthObservation']/*[local-name()='featureOfInterest']/*[local-name()='Footprint']//*[local-name()='posList'])">
+					<ctl:message>[FAILURE] either gml:Envelope or the gml:posList in eop:EarthObservation/om:featureOfInterest/eop:Footprint is not valid</ctl:message>
+					<ctl:fail/>
+				</xsl:when>
+				<xsl:otherwise>
+					<ctl:call-test name="wcseo:contain">
+						<ctl:with-param name="index" select="number('1')"/>
+						<ctl:with-param name="low1" select="tokenize(normalize-space($response//*[local-name()='boundedBy']/*[local-name()='Envelope']/*[local-name()='lowerCorner']),' ')[1]"/>
+						<ctl:with-param name="low2" select="tokenize(normalize-space($response//*[local-name()='boundedBy']/*[local-name()='Envelope']/*[local-name()='lowerCorner']),' ')[2]"/>
+						<ctl:with-param name="high1" select="tokenize(normalize-space($response//*[local-name()='boundedBy']/*[local-name()='Envelope']/*[local-name()='upperCorner']),' ')[1]"/>
+						<ctl:with-param name="high2" select="tokenize(normalize-space($response//*[local-name()='boundedBy']/*[local-name()='Envelope']/*[local-name()='upperCorner']),' ')[2]"/>
+						<ctl:with-param name="pos" select="tokenize(normalize-space($response//*[local-name()='EarthObservation']/*[local-name()='featureOfInterest']/*[local-name()='Footprint']//*[local-name()='posList']),' ')[1]"/>
+						<ctl:with-param name="posList" select="tokenize(normalize-space($response//*[local-name()='EarthObservation']/*[local-name()='featureOfInterest']/*[local-name()='Footprint']//*[local-name()='posList']),' ')"/>
+					</ctl:call-test>
+				</xsl:otherwise>
+			</xsl:choose>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req8">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req8:The WCSEO::EOMetadata element of a WCSEO::ReferenceableEOCoverage or WCSEO::RectifiedEOCoverage instance shall contain elements eop:EarthObservation/om:phenomenonTime/gml:TimePeriod/gml:beginPosition and eop:EarthObservation/om:phenomenonTime/gml:TimePeriod/gml:endPosition where beginPosition ≤ endPosition.</ctl:assertion>
+		<ctl:code>
+			<xsl:if test="empty($response//*[local-name()='EarthObservation']/*[local-name()='phenomenonTime']/*[local-name()='TimePeriod']/*[local-name()='beginPosition'])">
+				<ctl:message>[FAILURE] the eop:EarthObservation/om:phenomenonTime/gml:TimePeriod/gml:beginPosition is not available </ctl:message>
+				<ctl:fail/>
+			</xsl:if>
+			<xsl:if test="empty($response//*[local-name()='EarthObservation']/*[local-name()='phenomenonTime']/*[local-name()='TimePeriod']/*[local-name()='endPosition'])">
+				<ctl:message>[FAILURE] the eop:EarthObservation/om:phenomenonTime/gml:TimePeriod/gml:endPosition is not available</ctl:message>
+				<ctl:fail/>
+			</xsl:if>
+			<xsl:if test="number(translate($response//*[local-name()='EarthObservation']/*[local-name()='phenomenonTime']/*[local-name()='TimePeriod']/*[local-name()='beginPosition'], '-WTZ:','0')) &gt; number(translate($response//*[local-name()='EarthObservation']/*[local-name()='phenomenonTime']/*[local-name()='TimePeriod']/*[local-name()='endPosition'], '-WTZ:','0'))">
+				<ctl:message>[FAILURE] beginPosition should not be greater than endPosition</ctl:message>
+				<ctl:fail/>
+			</xsl:if>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req9">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req9:For any given EO Coverage, its temporal validity values shall be expressed in ISO 8601.</ctl:assertion>
+		<ctl:code>
+			<ctl:message>[MESSAGE] Validated by gml xsd. Calendar and clock forms that support the representation of time in systems based on years, months, days, hours, minutes and seconds, in a notation following ISO 8601, are assembled by gml:CalDate</ctl:message>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req10">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req10:In WCSEO::ReferenceableEOCoverage and WCSEO::RectifiedEOCoverage instances, all cells whose locations are outside the EO Metadata footprint when both are evaluated in WGS84, shall contain some nil value as defined in the bounding EO Coverage’s range type.</ctl:assertion>
+		<ctl:code>
+			<ctl:message>[MESSAGE] TBD. Need the support of geometric operations</ctl:message>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req11">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req11:A WCSEO::ReferenceableDataset and a WCSEO::RectifiedDataset shall conform to Figure 2, Figure 3, and the XML schema being part of this standard.</ctl:assertion>
+		<ctl:code>
+			<xsl:if test="string-length($response)=0">
+				<ctl:message>[FAILURE] WCSEO::ReferenceableEOCoverage or WCSEO::RectifiedEOCoverage is not valid</ctl:message>
+				<ctl:fail/>
+			</xsl:if>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req12">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req12:WCSEO::ReferenceableStitchedMosaic instances shall conform to Figure 2, Figure 3, Table 3, Table 5, and the XML schema being part of this standard.</ctl:assertion>
+		<ctl:code>
+			<xsl:if test="string-length($response)=0">
+				<ctl:message>[FAILURE] WCSEO::ReferenceableStitchedMosaic is not valid</ctl:message>
+				<ctl:fail/>
+			</xsl:if>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req13">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req13:WCSEO::RectifiedStitchedMosaic instances shall conform to Figure 2, Figure 3, Table 4, Table 5, and the XML schema being part of this standard.</ctl:assertion>
+		<ctl:code>
+			<xsl:if test="string-length($response)=0">
+				<ctl:message>[FAILURE] WCSEO::RectifiedStitchedMosaic is not valid</ctl:message>
+				<ctl:fail/>
+			</xsl:if>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req14">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req14:In WCSEO::ReferenceableStitchedMosaic or WCSEO::RectifiedStitchedMosaic instance with at least one eop:EarthObservation/eop:metaDataProperty/eop:EarthObservationMetaData/eop:composedOf the set of these elements shall be equal to the set of dataset identifiers of the Stitched Mosaic.</ctl:assertion>
+		<ctl:code>
+			<xsl:choose>
+				<xsl:when test="empty($response//*[local-name()='EarthObservation']/*[local-name()='metaDataProperty']/*[local-name()='EarthObservationMetaData']/*[local-name()='composedOf'])">
+					<ctl:message>[MESSAGE] the eop:composedOf element is not present</ctl:message>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:for-each select="$response//*[local-name()='EarthObservation']/*[local-name()='metaDataProperty']/*[local-name()='EarthObservationMetaData']/*[local-name()='composedOf']/*[local-name()='identifier']">
+						<xsl:if test="empty(index-of($response//*[local-name()='datasets']/*[local-name()='dataset']/*[local-name()='CoverageId'], .))">
+							<ctl:message>[FAILURE] inconsistent identifier</ctl:message>
+							<ctl:fail/>
+						</xsl:if>
+					</xsl:for-each>
+				</xsl:otherwise>
+			</xsl:choose>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req15">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req15:For all Stitched Mosaics s referring to some Datasets d with an associated contributingFootprint, this contributingFootprint shall be geographically contained in the footprint of d.</ctl:assertion>
+		<ctl:code>
+			<xsl:for-each select="$response//*[local-name()='dataset']/*[local-name()='contributingFootprint']//*[local-name()='posList']">
+				<xsl:if test="empty(index-of($response//*[local-name()='featureOfInterest']/*[local-name()='Footprint']//*[local-name()='posList'], .))">
+					<ctl:message>[MESSAGE] TBD. Needs the support of geometric operation</ctl:message>
+				</xsl:if>
+			</xsl:for-each>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req16">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req16:For all Stitched Mosaics s referring to Datasets d1 and d2, with an associated contributingFootprint, the  contributingFootprints of the d1 and d2 references shall be pair-wise disjoint.</ctl:assertion>
+		<ctl:code>
+			<xsl:for-each select="$response//*[local-name()='dataset']/*[local-name()='contributingFootprint']//*[local-name()='posList']">
+				<ctl:message>[MESSAGE] TBD. Need the support of geometric operation</ctl:message>
+			</xsl:for-each>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req17">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req17:The footprint of a Stitched Mosaic shall be given by the union of the contributingFootprints of the Datasets this Stitched Mosaic refers to.</ctl:assertion>
+		<ctl:code>
+			<xsl:for-each select="$response//*[local-name()='dataset']">
+				<xsl:if test="empty(./*[local-name()='contributingFootprint'])">
+					<ctl:message>[FAILURE] the contributingFootprint is missing</ctl:message>
+				</xsl:if>
+			</xsl:for-each>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req18">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req18:For all Datasets d referred to by some Stitched Mosaics s, all cells of d as defined by the domain set of d shall be contained in the set of cells of s as defined by the domain set of s.</ctl:assertion>
+		<ctl:code>
+			<ctl:message>[MESSAGE] TBD. Need to derive contributingFootprint as the domain</ctl:message>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req19">
+		<ctl:param name="response"/>
+		<ctl:param name="url"/>
+		<ctl:assertion>Req19:All Datasets referred to by a Rectified Stitched Mosaic shall have identical values in the gml:offsetVector elements of their domain sets.</ctl:assertion>
+		<ctl:code>
+			<xsl:for-each select="$response//*[local-name()='dataset']/*[local-name()='CoverageId']">
+				<xsl:variable name="describeeocoverageset">
+					<ctl:request>
+						<ctl:url>
+							<xsl:value-of select="$url"/>
+						</ctl:url>
+						<ctl:param name="service">WCS</ctl:param>
+						<ctl:param name="VERSION">2.0.0</ctl:param>
+						<ctl:param name="request">describeeocoverageset</ctl:param>
+						<ctl:param name="eoid">
+							<xsl:value-of select="."/>
+						</ctl:param>
+						<ctl:method>get</ctl:method>
+						<parsers:XMLValidatingParser>
+							<parsers:schemas>
+								<parsers:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</parsers:schema>
+							</parsers:schemas>
+						</parsers:XMLValidatingParser>
+					</ctl:request>
+				</xsl:variable>
+				<xsl:if test="not(deep-equal($response//*[local-name()='domainSet']/*[local-name()='offsetVector'], $describeeocoverageset//*[local-name()='domainSet']/*[local-name()='offsetVector']))">
+					<ctl:message>[FAILURE] the  gml:offsetVector elements of the referred datasets are not identical</ctl:message>
+					<ctl:fail/>
+				</xsl:if>
+			</xsl:for-each>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req20">
+		<ctl:param name="response"/>
+		<ctl:param name="url"/>
+		<ctl:assertion>Req20:In a Rectified Stitched Mosaic instance, the value of the gml:offsetVector elements of the domain set shall be given by the corresponding values of the Rectified Datasets the Rectified Stitched Mosaic refers to.</ctl:assertion>
+		<ctl:code>
+			<xsl:for-each select="$response//*[local-name()='dataset']/*[local-name()='CoverageId']">
+				<xsl:variable name="describeeocoverageset">
+					<ctl:request>
+						<ctl:url>
+							<xsl:value-of select="$url"/>
+						</ctl:url>
+						<ctl:param name="service">WCS</ctl:param>
+						<ctl:param name="VERSION">2.0.0</ctl:param>
+						<ctl:param name="request">describeeocoverageset</ctl:param>
+						<ctl:param name="eoid">
+							<xsl:value-of select="."/>
+						</ctl:param>
+						<ctl:method>get</ctl:method>
+						<parsers:XMLValidatingParser>
+							<parsers:schemas>
+								<parsers:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</parsers:schema>
+							</parsers:schemas>
+						</parsers:XMLValidatingParser>
+					</ctl:request>
+				</xsl:variable>
+				<xsl:if test="not(deep-equal($response//*[local-name()='domainSet']/*[local-name()='offsetVector'], $describeeocoverageset//*[local-name()='domainSet']/*[local-name()='offsetVector']))">
+					<ctl:message>[FAILURE] the  gml:offsetVector elements of the domain of the Stitched Mosaic is not identical to the referred datasets</ctl:message>
+					<ctl:fail/>
+				</xsl:if>
+			</xsl:for-each>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req21">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req21:For any pair d1 and d2 of Datasets referred to by a given Stitched Mosaic, the set of point locations in the geographic overlap of the d1 and d2 domain set shall be identical.</ctl:assertion>
+		<ctl:code>
+			<xsl:for-each select="$response//*[local-name()='dataset']/*[local-name()='CoverageId']">
+				<ctl:message>[MESSAGE] TBD. Need the support of geometric operationn</ctl:message>
+			</xsl:for-each>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req22">
+		<ctl:param name="response"/>
+		<ctl:param name="url"/>
+		<ctl:assertion>Req22:For any given Stitched Mosaic, its temporal validity given by its eop:EarthObservation/om:phenomenonTime/gml:TimePeriod/gml:beginPosition and eop:EarthObservation/om:phenomenonTime/gml:TimePeriod/gml:endPosition elements in wcseo:EOMetadata shall be defined as the minimal time interval containing the temporal validities of all Datasets the Stitched Mosaic refers to.</ctl:assertion>
+		<ctl:code>
+			<xsl:choose>
+				<xsl:when test="count($response//*[local-name()='dataset']/*[local-name()='CoverageId'])=0">
+					<ctl:message>[FAILURE] no dateset is available</ctl:message>
+					<ctl:fail/>
+				</xsl:when>
+				<xsl:otherwise>
+					<ctl:call-test name="wcseo:minimal_time_interval">
+						<ctl:with-param name="url" select="$url"/>
+						<ctl:with-param name="index" select="number('1')"/>
+						<ctl:with-param name="low" select="number(translate($response//*[local-name()='EarthObservation']/*[local-name()='phenomenonTime']/*[local-name()='TimePeriod']/*[local-name()='beginPosition'], '-WTZ:','0'))"/>
+						<ctl:with-param name="high" select="number(translate($response//*[local-name()='EarthObservation']/*[local-name()='phenomenonTime']/*[local-name()='TimePeriod']/*[local-name()='endPosition'], '-WTZ:','0'))"/>
+						<ctl:with-param name="low_tmp" select="number(translate($response//*[local-name()='EarthObservation']/*[local-name()='phenomenonTime']/*[local-name()='TimePeriod']/*[local-name()='beginPosition'], '-WTZ:','0'))"/>
+						<ctl:with-param name="high_tmp" select="number(translate($response//*[local-name()='EarthObservation']/*[local-name()='phenomenonTime']/*[local-name()='TimePeriod']/*[local-name()='endPosition'], '-WTZ:','0'))"/>
+						<ctl:with-param name="count" select="count($response//*[local-name()='dataset']/*[local-name()='CoverageId'])"/>
+						<ctl:with-param name="datasets" select="$response//*[local-name()='dataset']/*[local-name()='CoverageId']"/>
+					</ctl:call-test>
+				</xsl:otherwise>
+			</xsl:choose>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req23">
+		<ctl:param name="url"/>
+		<ctl:param name="response"/>
+		<ctl:assertion>Req23:For all Datasets d some Stitched Mosaic s refers to the following shall hold: The range type of d is identical to the range type of s.</ctl:assertion>
+		<ctl:code>
+			<xsl:for-each select="$response//*[local-name()='dataset']/*[local-name()='CoverageId']">
+				<xsl:variable name="describeeocoverageset">
+					<ctl:request>
+						<ctl:url>
+							<xsl:value-of select="$url"/>
+						</ctl:url>
+						<ctl:param name="service">WCS</ctl:param>
+						<ctl:param name="VERSION">2.0.0</ctl:param>
+						<ctl:param name="request">describeeocoverageset</ctl:param>
+						<ctl:param name="eoid">
+							<xsl:value-of select="."/>
+						</ctl:param>
+						<ctl:method>get</ctl:method>
+						<parsers:XMLValidatingParser>
+							<parsers:schemas>
+								<parsers:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</parsers:schema>
+							</parsers:schemas>
+						</parsers:XMLValidatingParser>
+					</ctl:request>
+				</xsl:variable>
+				<xsl:if test="not(deep-equal($response//*[local-name()='rangeType'], $describeeocoverageset//*[local-name()='rangeType']))">
+					<ctl:message>[FAILURE] the rangeType of the Stitched Mosaic is not identical to the referred datasets</ctl:message>
+					<ctl:fail/>
+				</xsl:if>
+			</xsl:for-each>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req24">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req24:If the domain set of a Stitched Mosaic contains locations which are not inside any contributingFootprint of any Dataset the Stitched Mosaic refers to then the nil value set of that Stitched Mosaic shall not be empty.</ctl:assertion>
+		<ctl:code>
+			<xsl:for-each select="$response//*[local-name()='dataset']/*[local-name()='CoverageId']">
+				<ctl:message>[MESSAGE] TBD. Need the support of geometric operationn</ctl:message>
+			</xsl:for-each>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req25">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req25:For a Stitched Mosaic s its range values of cells with location p, expressed in any of the CRSs supported by s, shall be given as follows:- if p is located within the contributingFootprint of some Dataset d referred to by s then it is the range value of d at p;- if p is not located within the contributingFootprint of any Dataset d referred to by s then it is one of the range values contained in the nil value set of s.</ctl:assertion>
+		<ctl:code>
+			<xsl:for-each select="$response//*[local-name()='dataset']/*[local-name()='CoverageId']">
+				<ctl:message>[MESSAGE] TBD. Need the support of geometric operationn</ctl:message>
+			</xsl:for-each>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req26">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req26:A WCSEO::DatasetSeries shall conform to Figure 2, Figure 3, Table 6, and the XML schema being part of this standard</ctl:assertion>
+		<ctl:code>
+			<xsl:if test="string-length($response)=0">
+				<ctl:message>[FAILURE] WCSEO::DatasetSeries is not valid</ctl:message>
+				<ctl:fail/>
+			</xsl:if>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req27">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req27:The footprint of a Dataset Series instance shall enclose the union of the footprints of all Stitched Mosaics and Datasets the Dataset Series refers to, expressed in WGS84.</ctl:assertion>
+		<ctl:code>
+			<xsl:for-each select="$response//*[local-name()='dataset']/*[local-name()='CoverageId']">
+				<ctl:message>[MESSAGE] TBD. Need the support of geometric operationn</ctl:message>
+			</xsl:for-each>
+		</ctl:code>
+	</ctl:test>
+	<ctl:test name="wcseo:req28">
+		<ctl:param name="response"/>
+		<ctl:assertion>Req28:For any given Dataset Series, the timePeriod element shall enclose the temporal validities of all Stitched Mosaics and Datasets the Dataset Series refers to, expressed in ISO 8601 .</ctl:assertion>
+		<ctl:code>
+			<xsl:for-each select="$response//*[local-name()='CoverageDescription']//*[local-name()='EarthObservation']/*[local-name()='phenomenonTime']/*[local-name()='TimePeriod']">
+				<xsl:if test="number(translate($response//*[local-name()='DatasetSeriesDescription']/*[local-name()='TimePeriod']/*[local-name()='beginPosition'], '-WTZ:','0')) &gt; number(translate(./*[local-name()='beginPosition'], '-WTZ:','0'))">
+					<ctl:message>[FAILURE] the gml:beginPosition is invalid</ctl:message>
+					<ctl:fail/>
+				</xsl:if>
+				<xsl:if test="number(translate($response//*[local-name()='DatasetSeriesDescription']/*[local-name()='TimePeriod']/*[local-name()='endPosition'], '-WTZ:','0')) &lt; number(translate(./*[local-name()='endPosition'], '-WTZ:','0'))">
+					<ctl:message>[FAILURE] the gml:endPosition is invalid</ctl:message>
+					<ctl:fail/>
+				</xsl:if>
+			</xsl:for-each>
+		</ctl:code>
+	</ctl:test>
 </ctl:package>

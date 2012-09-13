@@ -44,10 +44,10 @@
 								<ctl:with-param name="Capabilities" select="$Capabilities"/>						
 							</ctl:call-test>   
 							<ctl:message>[MESSAGE] Test the EO data model</ctl:message>
-							<ctl:call-test name="wcseo:EO-data-model">
+							<ctl:call-test name="wcseo:EO-Data-model">
 								<ctl:with-param name="url" select="$url"/>     
 								<ctl:with-param name="Capabilities" select="$Capabilities"/>						
-							</ctl:call-test>  
+							</ctl:call-test>   
 							<ctl:message>[MESSAGE] Test the service model</ctl:message>
 							<ctl:call-test name="wcseo:service-model">
 								<ctl:with-param name="url" select="$url"/>     

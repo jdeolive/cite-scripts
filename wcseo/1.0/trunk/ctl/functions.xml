@@ -1,0 +1,127 @@
+<ctl:package
+ xmlns:ctl="http://www.occamlab.com/ctl"
+ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+ xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+ xmlns:ows='http://www.opengis.net/ows/2.0'
+ xmlns:gml='http://www.opengis.net/gml/3.2'
+ xmlns:wcs='http://www.opengis.net/wcs/2.0'
+ xmlns:ctlp="http://www.occamlab.com/te/parsers"
+ xmlns:wcs2="http://www.opengis.net/wcs/2.0"
+ xmlns:wcseo="http://www.opengis.net/wcseo/1.0"
+ xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+
+  <ctl:test name="wcseo:contain">
+    	<ctl:param name="index"/>
+    	<ctl:param name="low1"/>
+    	<ctl:param name="low2"/>
+    	<ctl:param name="high1"/>
+    	<ctl:param name="high2"/>
+    	<ctl:param name="pos"/>	
+    	<ctl:param name="posList"/>	
+    	<ctl:assertion>test the coordinate</ctl:assertion>			
+    	<ctl:code>     
+ 		<xsl:choose>	
+  			<xsl:when test="number($index) mod 2 =1">
+				<xsl:if test="not((number($low1) &lt;= number($pos)) and (number($high1) &gt;= number($pos)))">
+					<ctl:message>[FAILURE] the coordinate is not contained in the bounding box of the gml:boundedBy element of the gml:Envelope</ctl:message>
+					<ctl:fail/>
+				</xsl:if> 
+  			</xsl:when>
+  			<xsl:when test="number($index) mod 2 =0">
+				<xsl:if test="not((number($low2) &lt;= number($pos)) and (number($high2) &gt;= number($pos)))">
+					<ctl:message>[FAILURE] the coordinate is not contained in the bounding box of the gml:boundedBy element of the gml:Envelope</ctl:message>
+					<ctl:fail/>
+				</xsl:if>
+  			</xsl:when>			
+  			<xsl:otherwise/>
+		</xsl:choose>  		
+				
+ 		<xsl:choose>
+  			<xsl:when test="number($index) + 1 &gt; count($posList)">
+				<ctl:message>[MESSAGE] end of the posList</ctl:message>
+  			</xsl:when>
+  			<xsl:otherwise>
+		 	        <ctl:call-test name="wcseo:contain">
+				        <ctl:with-param name="index" select="number($index) + 1"/>  
+            				<ctl:with-param name="low1" select="$low1"/>
+					<ctl:with-param name="low2" select="$low2"/>
+            				<ctl:with-param name="high1" select="$high1"/>
+					<ctl:with-param name="high2" select="$high2"/>
+					<ctl:with-param name="pos" select="$posList[number($index)]"/>					
+					<ctl:with-param name="posList" select="$posList"/>					
+				</ctl:call-test>   
+			</xsl:otherwise>
+		</xsl:choose>    
+    	</ctl:code>
+  </ctl:test> 
+  
+  <ctl:test name="wcseo:minimal_time_interval">
+     	<ctl:param name="url"/>	
+    	<ctl:param name="index"/>
+    	<ctl:param name="low"/>
+    	<ctl:param name="high"/>
+    	<ctl:param name="low_tmp"/>
+    	<ctl:param name="high_tmp"/>
+    	<ctl:param name="count"/>	
+    	<ctl:param name="datasets"/>	
+    	<ctl:assertion>test the minimal time interval</ctl:assertion>			
+    	<ctl:code>     
+	    	<xsl:variable name="describeeocoverageset">
+			<ctl:request>
+				<ctl:url>
+					<xsl:value-of select="$url"/>
+				</ctl:url>
+				<ctl:param name="service">WCS</ctl:param>
+				<ctl:param name="VERSION">2.0.0</ctl:param>           
+				<ctl:param name="request">describeeocoverageset</ctl:param>      
+				<ctl:param name="eoid"><xsl:value-of select="$datasets[$index]"/></ctl:param>			
+				<ctl:method>get</ctl:method>
+				<parsers:XMLValidatingParser>
+					<parsers:schemas>
+						<parsers:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</parsers:schema>
+					</parsers:schemas>
+				</parsers:XMLValidatingParser>	
+			</ctl:request>
+		</xsl:variable>  	
+ 		<xsl:choose>
+  			<xsl:when test="$low_tmp &gt;number(translate($describeeocoverageset//*[local-name()='EarthObservation']/*[local-name()='phenomenonTime']/*[local-name()='TimePeriod']/*[local-name()='beginPosition'], '-WTZ:','0'))">
+				<xsl:variable name="low_tmp" select="number(translate($describeeocoverageset//*[local-name()='EarthObservation']/*[local-name()='phenomenonTime']/*[local-name()='TimePeriod']/*[local-name()='beginPosition'], '-WTZ:','0'))"/> 
+  			</xsl:when>
+  			<xsl:otherwise/>
+		</xsl:choose> 			
+									
+ 		<xsl:choose>
+  			<xsl:when test="$high_tmp &lt;number(translate($describeeocoverageset//*[local-name()='EarthObservation']/*[local-name()='phenomenonTime']/*[local-name()='TimePeriod']/*[local-name()='endPosition'], '-WTZ:','0'))">
+				<xsl:variable name="high_tmp" select="number(translate($describeeocoverageset//*[local-name()='EarthObservation']/*[local-name()='phenomenonTime']/*[local-name()='TimePeriod']/*[local-name()='endPosition'], '-WTZ:','0'))"/> 
+  			</xsl:when>
+  			<xsl:otherwise/>
+		</xsl:choose> 
+				
+ 		<xsl:choose>
+  			<xsl:when test="number($index) + 1 &gt; $count">
+				<xsl:if test="$low!=$low_tmp or $high!=$high_tmp">
+					<ctl:message>[FAILURE] The time interval is not minimal</ctl:message>
+					<ctl:fail/>
+				</xsl:if>					
+  			</xsl:when>
+  			<xsl:otherwise>
+		 	        <ctl:call-test name="wcseo:minimal_time_interval">
+					<ctl:with-param name="url" select="$url"/>
+				        <ctl:with-param name="index" select="number($index) + 1"/>  
+            				<ctl:with-param name="low" select="$low"/>
+            				<ctl:with-param name="high" select="$high"/>
+            				<ctl:with-param name="low_tmp" select="$low_tmp"/>
+            				<ctl:with-param name="high_tmp" select="$high_tmp"/>
+					<ctl:with-param name="count" select="$count"/>					
+					<ctl:with-param name="datasets" select="$datasets"/>					
+				</ctl:call-test>  
+			</xsl:otherwise>
+		</xsl:choose>    
+    	</ctl:code>
+  </ctl:test>  
+  
+   
+ </ctl:package>
