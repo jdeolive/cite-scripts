@@ -247,6 +247,21 @@
 									<td>--</td>
 								</tr>
 								<tr><th colspan="3" align="left"><input type="checkbox" name="09">09.SOS Transactional: DeleteSensor</input></th></tr>
+								<tr>
+									<td><input type="checkbox" name="0901">09.01.RequestNoService</input></td>
+									<td><input type="checkbox" name="0902">09.02.RequestNullService</input></td>
+									<td><input type="checkbox" name="0903">09.03.RequestInvalidService</input></td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" name="0904">09.04.RequestNoVersion</input></td>
+									<td><input type="checkbox" name="0905">09.05.RequestNullVersion</input></td>
+									<td><input type="checkbox" name="0906">09.06.RequestInvalidVersion</input></td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" name="0907">09.07.RequestNullProcedure</input></td>
+									<td><input type="checkbox" name="0908">09.08.RequestInvalidProcedure</input></td>
+									<td><input type="checkbox" name="0909">09.13.RequestValidRequest</input></td>
+								</tr>
 								<tr><th colspan="3" align="left"><input type="checkbox" name="10">10.SOS Transactional: InsertObservation</input></th></tr>
 								<tr><th colspan="3" align="left"><input type="checkbox" name="11">11.SOS resultHandling: InsertResultTemplate</input></th></tr>
 								<tr><th colspan="3" align="left"><input type="checkbox" name="12">12.SOS resultHandling: InsertResult</input></th></tr>
@@ -377,7 +392,17 @@
 						<ctl:fail/>
 					</xsl:if>
 					<xsl:variable name="InsertSensor-URL">
-							<xsl:value-of select="$user-capabilities//ows:Operation[@name='InsertSensor']//ows:POST/@xlink:href"/>
+						<xsl:value-of select="$user-capabilities//ows:Operation[@name='InsertSensor']//ows:POST/@xlink:href"/>
+					</xsl:variable>
+					
+					<xsl:variable name="hasDeleteSensor" select="count($user-capabilities//ows:Operation[@name='DeleteSensor']) > 0" />
+					<xsl:variable name="IsDeleteSensor-POST" select="count($user-capabilities//ows:Operation[@name='DeleteSensor']//ows:POST) > 0" />
+					<xsl:if test="hasDeleteSensor and not($IsDeleteSensor-POST)">
+						<ctl:message>FAILURE: If DeleteSensor Operation is supported by service, the DeleteSensor operation must support Http-post .</ctl:message>
+						<ctl:fail/>
+					</xsl:if>
+					<xsl:variable name="DeleteSensor-URL">
+						<xsl:value-of select="$user-capabilities//ows:Operation[@name='DeleteSensor']//ows:POST/@xlink:href"/>
 					</xsl:variable>
 					
 					<!-- Set selected tests.-->
@@ -583,7 +608,27 @@
 					<xsl:variable name="test0813" select="($which-tests eq 'all' or $t08 eq 'on' or $t0813 eq 'on')"/>
 					<xsl:variable name="test08" select="$test0801 or $test0802 or $test0803 or $test0804 or $test0805 or $test0806 or $test0807 or $test0808 or $test0809 or $test0810 or $test0811 or $test0812 or $test0813"/><!-- all test in 08-->
 					
-					<xsl:variable name="test09" select="'1' eq '2'"/><!-- all test in 09-->
+					<xsl:variable name="t09" select="$form-values/values/value[@key='09']"/>
+					<xsl:variable name="t0901" select="$form-values/values/value[@key='0901']"/>
+					<xsl:variable name="test0901" select="($which-tests eq 'all' or $t09 eq 'on' or $t0901 eq 'on')"/>
+					<xsl:variable name="t0902" select="$form-values/values/value[@key='0902']"/>
+					<xsl:variable name="test0902" select="($which-tests eq 'all' or $t09 eq 'on' or $t0902 eq 'on')"/>
+					<xsl:variable name="t0903" select="$form-values/values/value[@key='0903']"/>
+					<xsl:variable name="test0903" select="($which-tests eq 'all' or $t09 eq 'on' or $t0903 eq 'on')"/>
+					<xsl:variable name="t0904" select="$form-values/values/value[@key='0904']"/>
+					<xsl:variable name="test0904" select="($which-tests eq 'all' or $t09 eq 'on' or $t0904 eq 'on')"/>
+					<xsl:variable name="t0905" select="$form-values/values/value[@key='0905']"/>
+					<xsl:variable name="test0905" select="($which-tests eq 'all' or $t09 eq 'on' or $t0905 eq 'on')"/>
+					<xsl:variable name="t0906" select="$form-values/values/value[@key='0906']"/>
+					<xsl:variable name="test0906" select="($which-tests eq 'all' or $t09 eq 'on' or $t0906 eq 'on')"/>
+					<xsl:variable name="t0907" select="$form-values/values/value[@key='0907']"/>
+					<xsl:variable name="test0907" select="($which-tests eq 'all' or $t09 eq 'on' or $t0907 eq 'on')"/>
+					<xsl:variable name="t0908" select="$form-values/values/value[@key='0908']"/>
+					<xsl:variable name="test0908" select="($which-tests eq 'all' or $t09 eq 'on' or $t0908 eq 'on')"/>
+					<xsl:variable name="t0909" select="$form-values/values/value[@key='0909']"/>
+					<xsl:variable name="test0909" select="($which-tests eq 'all' or $t09 eq 'on' or $t0909 eq 'on')"/>
+					<xsl:variable name="test09" select="$test0901 or $test0902 or $test0903 or $test0904 or $test0905 or $test0906 or $test0907 or $test0908 or $test0909"/><!-- all test in 09-->
+					
 					<xsl:variable name="test10" select="'1' eq '2'"/><!-- all test in 10-->
 					<xsl:variable name="test11" select="'1' eq '2'"/><!-- all test in 11-->
 					<xsl:variable name="test12" select="'1' eq '2'"/><!-- all test in 12-->
@@ -698,6 +743,16 @@
 					<ctl:message select="concat('run 08.13.RequestValidRequest: ',$test0813)"/>
 					
 					<ctl:message select="concat('run 09.SOS Transactional: DeleteSensor: ',$test09)"/>
+					<ctl:message select="concat('run 09.01.RequestNoService: ',$test0901)"/>
+					<ctl:message select="concat('run 09.02.RequestNullService: ',$test0902)"/>
+					<ctl:message select="concat('run 09.03.RequestInvalidService: ',$test0903)"/>
+					<ctl:message select="concat('run 09.04.RequestNoVersion: ',$test0904)"/>
+					<ctl:message select="concat('run 09.05.RequestNullVersion: ',$test0905)"/>
+					<ctl:message select="concat('run 09.06.RequestInvalidVersion: ',$test0906)"/>
+					<ctl:message select="concat('run 09.07.RequestNullProcedure: ',$test0907)"/>
+					<ctl:message select="concat('run 09.08.RequestInvalidProcedure: ',$test0908)"/>
+					<ctl:message select="concat('run 09.09.RequestValidRequest: ',$test0909)"/>
+					
 					<ctl:message select="concat('run 10.SOS Transactional: InsertObservation: ',$test10)"/>
 					<ctl:message select="concat('run 11.SOS resultHandling: InsertResultTemplate: ',$test11)"/>
 					<ctl:message select="concat('run 12.SOS resultHandling: InsertResult: ',$test12)"/>
@@ -710,6 +765,7 @@
 
 					<xsl:variable name="sos.version" select="'2.0.0'"/>		
 					<xsl:variable name="ows.version" select="'1.1.0'"/>
+					<xsl:variable name="swes.version" select="'2.0'"/>
 					<xsl:variable name="exceptionReportSchema" select="sosFunctions:exceptionReportSchemaPath($ogc.schema.root, $ows.version)"/>
 
 
@@ -958,7 +1014,35 @@
 						<ctl:message>****************************</ctl:message>
 						<ctl:message>Running 09.SOS Transactional: DeleteSensor Tests...</ctl:message>
 						<ctl:message>****************************</ctl:message>
+						<ctl:call-test name="sos:DeleteSensor-Test">
+							<ctl:with-param name="GetCapabilitiesURL" select="$GetCapabilities-URL"/>
+							<ctl:with-param name="isGetCapabilitiesGET" select="$IsGetCapabilities-GET"/>
+							<ctl:with-param name="capabilitiesResponseSchemaType" select="string('resource')" />
+							<ctl:with-param name="capabilitiesResponseSchemaLocation" select="sosFunctions:schemaPath($sos.schema.root, $sos.version,'sos', 'sosGetCapabilities.xsd')"/>
+							<ctl:with-param name="serviceURL" select="$DeleteSensor-URL"/>
+							<ctl:with-param name="hasDS" select="$hasDeleteSensor"/>
+							<ctl:with-param name="isSOAP" select="$isSOAP"/>
+							<ctl:with-param name="getCapabilitiesResponse" select="$user-capabilities" />
+							<ctl:with-param name="serviceType" select="string('SOS')"/>
+							<ctl:with-param name="serviceVersion" select="$sos.version" />
+							<ctl:with-param name="DeleteSensorRootElementName" select="string('DeleteSensorResponse')" />
+							<ctl:with-param name="DeleteSensorResponseSchemaLocation" select="sosFunctions:schemaPath($sos.schema.root, $swes.version,'swes', 'swesDeleteSensor.xsd')"/>
+							<ctl:with-param name="DeleteSensorResponseSchemaType" select="string('resource')" />
+							<ctl:with-param name="DeleteSensorResponseContentType" select="string('text/xml')" />
+							<ctl:with-param name="exceptionReportSchemaLocation" select="$exceptionReportSchema"/>
+							<ctl:with-param name="exceptionReportSchemaType" select="string('resource')" />
+							<ctl:with-param name="test0901" select="$test0901"/>
+							<ctl:with-param name="test0902" select="$test0902"/>
+							<ctl:with-param name="test0903" select="$test0903"/>
+							<ctl:with-param name="test0904" select="$test0904"/>
+							<ctl:with-param name="test0905" select="$test0905"/>
+							<ctl:with-param name="test0906" select="$test0906"/>
+							<ctl:with-param name="test0907" select="$test0907"/>
+							<ctl:with-param name="test0908" select="$test0908"/>
+							<ctl:with-param name="test0909" select="$test0909"/>
+						</ctl:call-test>
 					</xsl:if>
+
 					<xsl:if test="$test10">
 						<ctl:message>****************************</ctl:message>
 						<ctl:message>Running 10.SOS Transactional: InsertObservation Tests...</ctl:message>
@@ -8988,7 +9072,7 @@
 			</ctl:code>
 		</ctl:test>
 
-		<!-- 0801 Send InsertSensor request without parameter service ,the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: service in element InsertSensor@http://www.opengis.net/sos/2.0".. -->
+		<!-- 0801 Send InsertSensor request without parameter service ,the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: service in element InsertSensor@http://www.opengis.net/swes/2.0".. -->
 		<ctl:test name="sos:ISRequestNoService">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isSOAP" />
@@ -9312,7 +9396,7 @@
 			</ctl:code>
 		</ctl:test>
 	
-		<!-- 0804 Send InsertSensor request without parameter version ,the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: version in element InsertSensor@http://www.opengis.net/sos/2.0".. -->
+		<!-- 0804 Send InsertSensor request without parameter version ,the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: version in element InsertSensor@http://www.opengis.net/swes/2.0".. -->
 		<ctl:test name="sos:ISRequestNoVersion">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isSOAP" />
@@ -10429,6 +10513,1051 @@
 
 	<!-- 09.SOS Transactional: DeleteSensor -->
 	<ctl:package>
+		<ctl:test name="sos:DeleteSensor-Test">
+			<ctl:param name="GetCapabilitiesURL" />
+			<ctl:param name="isGetCapabilitiesGET" />
+			<ctl:param name="capabilitiesResponseSchemaType" />
+			<ctl:param name="capabilitiesResponseSchemaLocation" />
+			<ctl:param name="serviceURL" />
+			<ctl:param name="hasDS" />
+			<ctl:param name="isSOAP" />
+			<ctl:param name="getCapabilitiesResponse" />
+			<ctl:param name="serviceType" />
+			<ctl:param name="serviceVersion" />
+			<ctl:param name="DeleteSensorRootElementName" />
+			<ctl:param name="DeleteSensorResponseSchemaLocation" />
+			<ctl:param name="DeleteSensorResponseSchemaType" />
+			<ctl:param name="DeleteSensorResponseContentType" />
+			<ctl:param name="exceptionReportSchemaLocation" />
+			<ctl:param name="exceptionReportSchemaType" />
+			<ctl:param name="test0901" />
+			<ctl:param name="test0902" />
+			<ctl:param name="test0903" />
+			<ctl:param name="test0904" />
+			<ctl:param name="test0905" />
+			<ctl:param name="test0906" />
+			<ctl:param name="test0907" />
+			<ctl:param name="test0908" />
+			<ctl:param name="test0909" />
+			<ctl:assertion>Execute DeleteSensor Test.</ctl:assertion>
+			<ctl:comment>Pass if all the subtest not fail; fail otherwise.</ctl:comment>
+			<ctl:code>
+				<xsl:choose>
+					<xsl:when test="not($hasDS)">
+						<ctl:message>The server does not support the operation "DeleteSensor", so skip this test.</ctl:message>
+					</xsl:when>
+					<xsl:otherwise>
+						<!--讓使用者選一個procedure -->
+						<xsl:variable name="form-values">
+							<ctl:form height="750" width="1024">
+								<body>
+									<p>Please select which proceduer will be deleted.</p>
+									<blockquote>
+										<table border="1" padding="4" bgcolor="#00ffff" align="center">
+											<tr>
+												<td>
+													<select name="sensorIDDropDown">
+														<xsl:for-each select="$getCapabilitiesResponse//swes:procedure">
+															<xsl:variable name="sensorID" select="." />
+															<option><xsl:attribute name="value"><xsl:value-of select="$sensorID" /></xsl:attribute><xsl:value-of select="$sensorID" /></option> 
+														</xsl:for-each>
+													</select>
+												</td>
+											</tr>				
+										</table>						
+									</blockquote>
+								</body>
+							</ctl:form>
+						</xsl:variable>
+						<xsl:variable name="procedure" select="$form-values/values/value[@key='sensorIDDropDown']"/>
+						
+						<xsl:if test="$test0901 eq 'true'">
+							<ctl:message select="'******************** 09.01.RequestNoService ********************'"/>
+							<ctl:call-test name="sos:DSRequestNoService">
+								<ctl:with-param name="serviceURL" select="$serviceURL" />
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
+								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
+								<ctl:with-param name="DeleteSensorRootElementName" select="$DeleteSensorRootElementName" />
+								<ctl:with-param name="DeleteSensorResponseSchemaLocation" select="$DeleteSensorResponseSchemaLocation" />
+								<ctl:with-param name="DeleteSensorResponseSchemaType" select="$DeleteSensorResponseSchemaType" />
+								<ctl:with-param name="procedure" select="$procedure" />
+							</ctl:call-test>
+						</xsl:if>
+						<xsl:if test="$test0902 eq 'true'">
+							<ctl:message select="'******************** 09.02.RequestNullService ********************'"/>
+							<ctl:call-test name="sos:DSRequestNullService">
+								<ctl:with-param name="serviceURL" select="$serviceURL" />
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
+								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
+								<ctl:with-param name="DeleteSensorRootElementName" select="$DeleteSensorRootElementName" />
+								<ctl:with-param name="DeleteSensorResponseSchemaLocation" select="$DeleteSensorResponseSchemaLocation" />
+								<ctl:with-param name="DeleteSensorResponseSchemaType" select="$DeleteSensorResponseSchemaType" />
+								<ctl:with-param name="procedure" select="$procedure" />
+							</ctl:call-test>
+						</xsl:if>
+						<xsl:if test="$test0903 eq 'true'">
+							<ctl:message select="'******************** 09.03.RequestInvalidService ********************'"/>
+							<ctl:call-test name="sos:DSRequestInvalidService">
+								<ctl:with-param name="serviceURL" select="$serviceURL" />
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
+								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
+								<ctl:with-param name="DeleteSensorRootElementName" select="$DeleteSensorRootElementName" />
+								<ctl:with-param name="DeleteSensorResponseSchemaLocation" select="$DeleteSensorResponseSchemaLocation" />
+								<ctl:with-param name="DeleteSensorResponseSchemaType" select="$DeleteSensorResponseSchemaType" />
+								<ctl:with-param name="procedure" select="$procedure" />
+							</ctl:call-test>
+						</xsl:if>
+						<xsl:if test="$test0904 eq 'true'">
+							<ctl:message select="'******************** 09.04.RequestNoVersion ********************'"/>
+							<ctl:call-test name="sos:DSRequestNoVersion">
+								<ctl:with-param name="serviceURL" select="$serviceURL" />
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
+								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
+								<ctl:with-param name="DeleteSensorRootElementName" select="$DeleteSensorRootElementName" />
+								<ctl:with-param name="DeleteSensorResponseSchemaLocation" select="$DeleteSensorResponseSchemaLocation" />
+								<ctl:with-param name="DeleteSensorResponseSchemaType" select="$DeleteSensorResponseSchemaType" />
+								<ctl:with-param name="procedure" select="$procedure" />
+							</ctl:call-test>
+						</xsl:if>
+						<xsl:if test="$test0905 eq 'true'">
+							<ctl:message select="'******************** 09.05.RequestNullVersion ********************'"/>
+							<ctl:call-test name="sos:DSRequestNullVersion">
+								<ctl:with-param name="serviceURL" select="$serviceURL" />
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
+								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
+								<ctl:with-param name="DeleteSensorRootElementName" select="$DeleteSensorRootElementName" />
+								<ctl:with-param name="DeleteSensorResponseSchemaLocation" select="$DeleteSensorResponseSchemaLocation" />
+								<ctl:with-param name="DeleteSensorResponseSchemaType" select="$DeleteSensorResponseSchemaType" />
+								<ctl:with-param name="procedure" select="$procedure" />
+							</ctl:call-test>
+						</xsl:if>
+						<xsl:if test="$test0906 eq 'true'">
+							<ctl:message select="'******************** 09.06.RequestInvalidVersion ********************'"/>
+							<ctl:call-test name="sos:DSRequestInvalidVersion">
+								<ctl:with-param name="serviceURL" select="$serviceURL" />
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
+								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
+								<ctl:with-param name="DeleteSensorRootElementName" select="$DeleteSensorRootElementName" />
+								<ctl:with-param name="DeleteSensorResponseSchemaLocation" select="$DeleteSensorResponseSchemaLocation" />
+								<ctl:with-param name="DeleteSensorResponseSchemaType" select="$DeleteSensorResponseSchemaType" />
+								<ctl:with-param name="procedure" select="$procedure" />
+							</ctl:call-test>
+						</xsl:if>
+						<xsl:if test="$test0907 eq 'true'">
+							<ctl:message select="'******************** 09.07.RequestNullProcedure ********************'"/>
+							<ctl:call-test name="sos:DSRequestNullobservation">
+								<ctl:with-param name="serviceURL" select="$serviceURL" />
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
+								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
+								<ctl:with-param name="DeleteSensorRootElementName" select="$DeleteSensorRootElementName" />
+								<ctl:with-param name="DeleteSensorResponseSchemaLocation" select="$DeleteSensorResponseSchemaLocation" />
+								<ctl:with-param name="DeleteSensorResponseSchemaType" select="$DeleteSensorResponseSchemaType" />
+								<ctl:with-param name="procedure" select="$procedure" />
+							</ctl:call-test>
+						</xsl:if>
+						<xsl:if test="$test0908 eq 'true'">
+							<ctl:message select="'******************** 09.08.RequestInvalidProcedure ********************'"/>
+							<ctl:call-test name="sos:DSRequestInvalidobservation">
+								<ctl:with-param name="serviceURL" select="$serviceURL" />
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
+								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
+								<ctl:with-param name="DeleteSensorRootElementName" select="$DeleteSensorRootElementName" />
+								<ctl:with-param name="DeleteSensorResponseSchemaLocation" select="$DeleteSensorResponseSchemaLocation" />
+								<ctl:with-param name="DeleteSensorResponseSchemaType" select="$DeleteSensorResponseSchemaType" />
+								<ctl:with-param name="procedure" select="$procedure" />
+							</ctl:call-test>
+						</xsl:if>
+						<xsl:if test="$test0909 eq 'true'">
+							<ctl:message select="'******************** 09.09.RequestValidRequest ********************'"/>
+							<ctl:call-test name="sos:DSRequestValidRequest">
+								<ctl:with-param name="GetCapabilitiesURL" select="$GetCapabilitiesURL" />
+								<ctl:with-param name="isGetCapabilitiesGET" select="$isGetCapabilitiesGET" />
+								<ctl:with-param name="capabilitiesResponseSchemaType" select="$capabilitiesResponseSchemaType" />
+								<ctl:with-param name="capabilitiesResponseSchemaLocation" select="$capabilitiesResponseSchemaLocation" />
+								<ctl:with-param name="serviceURL" select="$serviceURL" />
+								<ctl:with-param name="isSOAP" select="$isSOAP"/>
+								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
+								<ctl:with-param name="DeleteSensorRootElementName" select="$DeleteSensorRootElementName" />
+								<ctl:with-param name="DeleteSensorResponseSchemaLocation" select="$DeleteSensorResponseSchemaLocation" />
+								<ctl:with-param name="DeleteSensorResponseSchemaType" select="$DeleteSensorResponseSchemaType" />
+								<ctl:with-param name="procedure" select="$procedure" />
+							</ctl:call-test>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</ctl:code>
+		</ctl:test>
+
+		<!-- 0901 Send DeleteSensor request without parameter service ,the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: service in element DeleteSensor@http://www.opengis.net/swes/2.0".. -->
+		<ctl:test name="sos:DSRequestNoService">
+			<ctl:param name="serviceURL" />
+			<ctl:param name="isSOAP" />
+			<ctl:param name="getCapabilitiesResponse" />
+			<ctl:param name="DeleteSensorRootElementName" />
+			<ctl:param name="DeleteSensorResponseSchemaLocation" />
+			<ctl:param name="DeleteSensorResponseSchemaType" />
+			<ctl:param name="procedure" />
+			<ctl:assertion>Send a request without parameter "service",and the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: service in element DeleteSensor@http://www.opengis.net/swes/2.0". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "Expected attribute: service in element DeleteSensor@http://www.opengis.net/swes/2.0"; fail otherwise.</ctl:comment>
+			<ctl:link title=""></ctl:link>
+			<ctl:code>
+				<!-- send request -->
+				<xsl:variable name="DeleteSensorResponse">
+					<xsl:choose>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>
+									<swes:DeleteSensor version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xmlns:swes="http://www.opengis.net/swes/2.0"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<swes:procedure><xsl:value-of select="$procedure" /></swes:procedure>
+									</swes:DeleteSensor>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReportSOAP" />
+							</ctl:soap-request>
+						</xsl:when>
+						<xsl:otherwise>
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL" />
+								</ctl:url>
+								<ctl:method>post</ctl:method>
+								<ctl:body>
+									<swes:DeleteSensor version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xmlns:swes="http://www.opengis.net/swes/2.0"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<swes:procedure><xsl:value-of select="$procedure" /></swes:procedure>
+									</swes:DeleteSensor>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="not($DeleteSensorResponse/*)">
+						<ctl:message>FAILURE:  The server did not return a response, or the response was not valid according to the DeleteSensor response schema for "SOS" />.</ctl:message>
+						<ctl:fail/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:if test="$DeleteSensorResponse/*">
+							<xsl:if test="$isSOAP=string('true')">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfoSOAP($DeleteSensorResponse)" /></ctl:message>
+							</xsl:if>
+							<xsl:if test="not($isSOAP=string('true'))">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfo($DeleteSensorResponse)" /></ctl:message>
+							</xsl:if>
+							<ctl:message>Checking the validity of the response to a DeleteSensor request with no service parameter.</ctl:message>
+							<xsl:variable name="isCorrect">
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$DeleteSensorResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
+									<ctl:with-param name="locatorToCheck" select="string('Expected attribute: service in element DeleteSensor@http://www.opengis.net/swes/2.0')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
+							</xsl:variable>
+							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
+							<xsl:if test="not(xsd:boolean($isCorrect))">
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DeleteSensor request with no service parameter specified. </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: service in element DeleteSensor@http://www.opengis.net/swes/2.0".</ctl:message>
+								<ctl:fail />
+							</xsl:if>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</ctl:code>
+		</ctl:test>
+
+		<!-- 0902 Send DeleteSensor request with null parameter service ,the response must be a valid exception with code "MissingParameterValue" and locator "service".. -->
+		<ctl:test name="sos:DSRequestNullService">
+			<ctl:param name="serviceURL" />
+			<ctl:param name="isSOAP" />
+			<ctl:param name="getCapabilitiesResponse" />
+			<ctl:param name="DeleteSensorRootElementName" />
+			<ctl:param name="DeleteSensorResponseSchemaLocation" />
+			<ctl:param name="DeleteSensorResponseSchemaType" />
+			<ctl:param name="procedure" />
+			<ctl:assertion>Send a request with null parameter "service",and the response must be a valid exception with code "MissingParameterValue" and locator "service". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "MissingParameterValue" and locator is "service"; fail otherwise.</ctl:comment>
+			<ctl:link title=""></ctl:link>
+			<ctl:code>
+				<!-- send request -->
+				<xsl:variable name="DeleteSensorResponse">
+					<xsl:choose>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>
+									<swes:DeleteSensor service="" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xmlns:swes="http://www.opengis.net/swes/2.0"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<swes:procedure><xsl:value-of select="$procedure" /></swes:procedure>
+									</swes:DeleteSensor>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReportSOAP" />
+							</ctl:soap-request>
+						</xsl:when>
+						<xsl:otherwise>
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL" />
+								</ctl:url>
+								<ctl:method>post</ctl:method>
+								<ctl:body>
+									<swes:DeleteSensor service="" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xmlns:swes="http://www.opengis.net/swes/2.0"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<swes:procedure><xsl:value-of select="$procedure" /></swes:procedure>
+									</swes:DeleteSensor>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="not($DeleteSensorResponse/*)">
+						<ctl:message>FAILURE:  The server did not return a response, or the response was not valid according to the DeleteSensor response schema for "SOS" />.</ctl:message>
+						<ctl:fail/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:if test="$DeleteSensorResponse/*">
+							<xsl:if test="$isSOAP=string('true')">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfoSOAP($DeleteSensorResponse)" /></ctl:message>
+							</xsl:if>
+							<xsl:if test="not($isSOAP=string('true'))">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfo($DeleteSensorResponse)" /></ctl:message>
+							</xsl:if>
+							<ctl:message>Checking the validity of the response to a DeleteSensor request with invalid service parameter.</ctl:message>
+							<xsl:variable name="isCorrect">
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$DeleteSensorResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+									<ctl:with-param name="locatorToCheck" select="string('service')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
+							</xsl:variable>
+							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
+							<xsl:if test="not(xsd:boolean($isCorrect))">
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DeleteSensor request with null service parameter specified.  </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "service".</ctl:message>
+								<ctl:fail />
+							</xsl:if>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</ctl:code>
+		</ctl:test>
+
+		<!-- 0903 Send DeleteSensor request with invalid parameter service ,the response must be a valid exception with code "InvalidParameterValue" and locator "service".. -->
+		<ctl:test name="sos:DSRequestInvalidService">
+			<ctl:param name="serviceURL" />
+			<ctl:param name="isSOAP" />
+			<ctl:param name="getCapabilitiesResponse" />
+			<ctl:param name="DeleteSensorRootElementName" />
+			<ctl:param name="DeleteSensorResponseSchemaLocation" />
+			<ctl:param name="DeleteSensorResponseSchemaType" />
+			<ctl:param name="procedure" />
+			<ctl:assertion>Send a request with invalid parameter "procedure",and the response must be a valid exception with code "InvalidParameterValue" and locator "service". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "service"; fail otherwise.</ctl:comment>
+			<ctl:link title=""></ctl:link>
+			<ctl:code>
+				<xsl:variable name="DeleteSensorResponse">
+					<xsl:choose>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>
+									<swes:DeleteSensor service="ASDF" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xmlns:swes="http://www.opengis.net/swes/2.0"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<swes:procedure><xsl:value-of select="$procedure" /></swes:procedure>
+									</swes:DeleteSensor>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReportSOAP" />
+							</ctl:soap-request>
+						</xsl:when>
+						<xsl:otherwise>
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL" />
+								</ctl:url>
+								<ctl:method>post</ctl:method>
+								<ctl:body>
+									<swes:DeleteSensor service="ASDF" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xmlns:swes="http://www.opengis.net/swes/2.0"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<swes:procedure><xsl:value-of select="$procedure" /></swes:procedure>
+									</swes:DeleteSensor>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="not($DeleteSensorResponse/*)">
+						<ctl:message>FAILURE:  The server did not return a response, or the response was not valid according to the DeleteSensor response schema for "SOS" />.</ctl:message>
+						<ctl:fail/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:if test="$DeleteSensorResponse/*">
+							<xsl:if test="$isSOAP=string('true')">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfoSOAP($DeleteSensorResponse)" /></ctl:message>
+							</xsl:if>
+							<xsl:if test="not($isSOAP=string('true'))">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfo($DeleteSensorResponse)" /></ctl:message>
+							</xsl:if>
+							<ctl:message>Checking the validity of the response to a DeleteSensor request with invalid service parameter.</ctl:message>
+							<xsl:variable name="isCorrect">
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$DeleteSensorResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+									<ctl:with-param name="locatorToCheck" select="string('service')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
+							</xsl:variable>
+							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
+							<xsl:if test="not(xsd:boolean($isCorrect))">
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DeleteSensor request with invalid service parameter specified.  </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "service".</ctl:message>
+								<ctl:fail />
+							</xsl:if>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</ctl:code>
+		</ctl:test>
+	
+		<!-- 0904 Send DeleteSensor request without parameter version ,the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: version in element DeleteSensor@http://www.opengis.net/swes/2.0".. -->
+		<ctl:test name="sos:DSRequestNoVersion">
+			<ctl:param name="serviceURL" />
+			<ctl:param name="isSOAP" />
+			<ctl:param name="getCapabilitiesResponse" />
+			<ctl:param name="DeleteSensorRootElementName" />
+			<ctl:param name="DeleteSensorResponseSchemaLocation" />
+			<ctl:param name="DeleteSensorResponseSchemaType" />
+			<ctl:param name="procedure" />
+			<ctl:assertion>Send a request without parameter "version",and the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: version in element DeleteSensor@http://www.opengis.net/swes/2.0". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "Expected attribute: version in element DeleteSensor@http://www.opengis.net/swes/2.0"; fail otherwise.</ctl:comment>
+			<ctl:link title=""></ctl:link>
+			<ctl:code>
+				<!-- send request -->
+				<xsl:variable name="DeleteSensorResponse">
+					<xsl:choose>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>
+									<swes:DeleteSensor service="SOS" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xmlns:swes="http://www.opengis.net/swes/2.0"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<swes:procedure><xsl:value-of select="$procedure" /></swes:procedure>
+									</swes:DeleteSensor>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReportSOAP" />
+							</ctl:soap-request>
+						</xsl:when>
+						<xsl:otherwise>
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL" />
+								</ctl:url>
+								<ctl:method>post</ctl:method>
+								<ctl:body>
+									<swes:DeleteSensor service="SOS" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xmlns:swes="http://www.opengis.net/swes/2.0"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<swes:procedure><xsl:value-of select="$procedure" /></swes:procedure>
+									</swes:DeleteSensor>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="not($DeleteSensorResponse/*)">
+						<ctl:message>FAILURE:  The server did not return a response, or the response was not valid according to the DeleteSensor response schema for "SOS" />.</ctl:message>
+						<ctl:fail/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:if test="$DeleteSensorResponse/*">
+							<xsl:if test="$isSOAP=string('true')">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfoSOAP($DeleteSensorResponse)" /></ctl:message>
+							</xsl:if>
+							<xsl:if test="not($isSOAP=string('true'))">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfo($DeleteSensorResponse)" /></ctl:message>
+							</xsl:if>
+							<ctl:message>Checking the validity of the response to a DeleteSensor request with no version parameter.</ctl:message>
+							<xsl:variable name="isCorrect">
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$DeleteSensorResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
+									<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element DeleteSensor@http://www.opengis.net/swes/2.0')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
+							</xsl:variable>
+							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
+							<xsl:if test="not(xsd:boolean($isCorrect))">
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DeleteSensor request with no version parameter specified.</ctl:message>  
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: version in element DeleteSensor@http://www.opengis.net/swes/2.0".</ctl:message>
+								<ctl:fail />
+							</xsl:if>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</ctl:code>
+		</ctl:test>
+
+		<!-- 0905 Send DeleteSensor request with null parameter version ,the response must be a valid exception with code "MissingParameterValue" and locator "version".. -->
+		<ctl:test name="sos:DSRequestNullVersion">
+			<ctl:param name="serviceURL" />
+			<ctl:param name="isSOAP" />
+			<ctl:param name="getCapabilitiesResponse" />
+			<ctl:param name="DeleteSensorRootElementName" />
+			<ctl:param name="DeleteSensorResponseSchemaLocation" />
+			<ctl:param name="DeleteSensorResponseSchemaType" />
+			<ctl:param name="procedure" />
+			<ctl:assertion>Send a request with null parameter "version",and the response must be a valid exception with code "MissingParameterValue" and locator "version". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "MissingParameterValue" and locator is "version"; fail otherwise.</ctl:comment>
+			<ctl:link title=""></ctl:link>
+			<ctl:code>
+				<!-- send request -->
+				<xsl:variable name="DeleteSensorResponse">
+					<xsl:choose>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>
+									<swes:DeleteSensor service="SOS" version="" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xmlns:swes="http://www.opengis.net/swes/2.0"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<swes:procedure><xsl:value-of select="$procedure" /></swes:procedure>
+									</swes:DeleteSensor>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReportSOAP" />
+							</ctl:soap-request>
+						</xsl:when>
+						<xsl:otherwise>
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL" />
+								</ctl:url>
+								<ctl:method>post</ctl:method>
+								<ctl:body>
+									<swes:DeleteSensor service="SOS" version="" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xmlns:swes="http://www.opengis.net/swes/2.0"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<swes:procedure><xsl:value-of select="$procedure" /></swes:procedure>
+									</swes:DeleteSensor>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="not($DeleteSensorResponse/*)">
+						<ctl:message>FAILURE:  The server did not return a response, or the response was not valid according to the DeleteSensor response schema for "SOS" />.</ctl:message>
+						<ctl:fail/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:if test="$DeleteSensorResponse/*">
+							<xsl:if test="$isSOAP=string('true')">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfoSOAP($DeleteSensorResponse)" /></ctl:message>
+							</xsl:if>
+							<xsl:if test="not($isSOAP=string('true'))">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfo($DeleteSensorResponse)" /></ctl:message>
+							</xsl:if>
+							<ctl:message>Checking the validity of the response to a DeleteSensor request with invalid version parameter.</ctl:message>
+							<xsl:variable name="isCorrect">
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$DeleteSensorResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+									<ctl:with-param name="locatorToCheck" select="string('version')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
+							</xsl:variable>
+							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
+							<xsl:if test="not(xsd:boolean($isCorrect))">
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DeleteSensor request with null version parameter specified. </ctl:message> 
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "version".</ctl:message>
+								<ctl:fail />
+							</xsl:if>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</ctl:code>
+		</ctl:test>
+
+		<!-- 0906 Send DeleteSensor request with invalid parameter version ,the response must be a valid exception with code "InvalidParameterValue" and locator "version".. -->
+		<ctl:test name="sos:DSRequestInvalidVersion">
+			<ctl:param name="serviceURL" />
+			<ctl:param name="isSOAP" />
+			<ctl:param name="getCapabilitiesResponse" />
+			<ctl:param name="DeleteSensorRootElementName" />
+			<ctl:param name="DeleteSensorResponseSchemaLocation" />
+			<ctl:param name="DeleteSensorResponseSchemaType" />
+			<ctl:param name="procedure" />
+			<ctl:assertion>Send a request with invalid parameter "version",and the response must be a valid exception with code "InvalidParameterValue" and locator "version". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "version"; fail otherwise.</ctl:comment>
+			<ctl:link title=""></ctl:link>
+			<ctl:code>
+				<xsl:variable name="DeleteSensorResponse">
+					<xsl:choose>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>
+									<swes:DeleteSensor service="SOS" version="999" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xmlns:swes="http://www.opengis.net/swes/2.0"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<swes:procedure><xsl:value-of select="$procedure" /></swes:procedure>
+									</swes:DeleteSensor>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReportSOAP" />
+							</ctl:soap-request>
+						</xsl:when>
+						<xsl:otherwise>
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL" />
+								</ctl:url>
+								<ctl:method>post</ctl:method>
+								<ctl:body>
+									<swes:DeleteSensor service="SOS" version="999" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xmlns:swes="http://www.opengis.net/swes/2.0"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<swes:procedure><xsl:value-of select="$procedure" /></swes:procedure>
+									</swes:DeleteSensor>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="not($DeleteSensorResponse/*)">
+						<ctl:message>FAILURE:  The server did not return a response, or the response was not valid according to the DeleteSensor response schema for "SOS" />.</ctl:message>
+						<ctl:fail/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:if test="$DeleteSensorResponse/*">
+							<xsl:if test="$isSOAP=string('true')">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfoSOAP($DeleteSensorResponse)" /></ctl:message>
+							</xsl:if>
+							<xsl:if test="not($isSOAP=string('true'))">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfo($DeleteSensorResponse)" /></ctl:message>
+							</xsl:if>
+							<ctl:message>Checking the validity of the response to a DeleteSensor request with invalid version parameter.</ctl:message>
+							<xsl:variable name="isCorrect">
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$DeleteSensorResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+									<ctl:with-param name="locatorToCheck" select="string('version')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
+							</xsl:variable>
+							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
+							<xsl:if test="not(xsd:boolean($isCorrect))">
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DeleteSensor request with invalid version parameter specified.  </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "version".</ctl:message>
+								<ctl:fail />
+							</xsl:if>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</ctl:code>
+		</ctl:test>
+
+		<!-- 0907 Send DeleteSensor request with null Element observation ,the response must be a valid exception with code "MissingParameterValue" and locator "observation".. -->
+		<ctl:test name="sos:DSRequestNullobservation">
+			<ctl:param name="serviceURL" />
+			<ctl:param name="isSOAP" />
+			<ctl:param name="getCapabilitiesResponse" />
+			<ctl:param name="DeleteSensorRootElementName" />
+			<ctl:param name="DeleteSensorResponseSchemaLocation" />
+			<ctl:param name="DeleteSensorResponseSchemaType" />
+			<ctl:param name="procedure" />
+			<ctl:assertion>Send a request with null parameter "observation",and the response must be a valid exception with code "MissingParameterValue" and locator "observation". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "MissingParameterValue" and locator is "observation"; fail otherwise.</ctl:comment>
+			<ctl:link title=""></ctl:link>
+			<ctl:code>
+				<!-- send request -->
+				<xsl:variable name="DeleteSensorResponse">
+					<xsl:choose>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>
+									<swes:DeleteSensor service="SOS" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xmlns:swes="http://www.opengis.net/swes/2.0"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<swes:procedure></swes:procedure>
+									</swes:DeleteSensor>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReportSOAP" />
+							</ctl:soap-request>
+						</xsl:when>
+						<xsl:otherwise>
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL" />
+								</ctl:url>
+								<ctl:method>post</ctl:method>
+								<ctl:body>
+									<swes:DeleteSensor service="SOS" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xmlns:swes="http://www.opengis.net/swes/2.0"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<swes:procedure></swes:procedure>
+									</swes:DeleteSensor>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="not($DeleteSensorResponse/*)">
+						<ctl:message>FAILURE:  The server did not return a response, or the response was not valid according to the DeleteSensor response schema for "SOS" />.</ctl:message>
+						<ctl:fail/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:if test="$DeleteSensorResponse/*">
+							<xsl:if test="$isSOAP=string('true')">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfoSOAP($DeleteSensorResponse)" /></ctl:message>
+							</xsl:if>
+							<xsl:if test="not($isSOAP=string('true'))">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfo($DeleteSensorResponse)" /></ctl:message>
+							</xsl:if>
+							<ctl:message>Checking the validity of the response to a DeleteSensor request with invalid observation parameter.</ctl:message>
+							<xsl:variable name="isCorrect">
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$DeleteSensorResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
+									<ctl:with-param name="locatorToCheck" select="string('observation')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
+							</xsl:variable>
+							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
+							<xsl:if test="not(xsd:boolean($isCorrect))">
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservation request with null observation parameter specified. </ctl:message> 
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "observation".</ctl:message>
+								<ctl:fail />
+							</xsl:if>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</ctl:code>
+		</ctl:test>
+
+		<!-- 0908 Send DeleteSensor request with invalid Element observation ,the response must be an empty DeleteSensorResponse. -->
+		<ctl:test name="sos:DSRequestInvalidobservation">
+			<ctl:param name="serviceURL" />
+			<ctl:param name="isSOAP" />
+			<ctl:param name="getCapabilitiesResponse" />
+			<ctl:param name="DeleteSensorRootElementName" />
+			<ctl:param name="DeleteSensorResponseSchemaLocation" />
+			<ctl:param name="DeleteSensorResponseSchemaType" />
+			<ctl:param name="procedure" />
+			<ctl:assertion>Send a request with invalid parameter "observation",and the response must be an empty DeleteSensorResponse. </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid empty DeleteSensorResponse; fail otherwise.</ctl:comment>
+			<ctl:link title=""></ctl:link>
+			<ctl:code>
+				<xsl:variable name="DeleteSensorResponse">
+					<xsl:choose>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>
+									<swes:DeleteSensor service="SOS" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xmlns:swes="http://www.opengis.net/swes/2.0"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<swes:procedure><xsl:value-of select="current-dateTime()" /></swes:procedure>
+									</swes:DeleteSensor>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReportSOAP" />
+							</ctl:soap-request>
+						</xsl:when>
+						<xsl:otherwise>
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL" />
+								</ctl:url>
+								<ctl:method>post</ctl:method>
+								<ctl:body>
+									<swes:DeleteSensor service="SOS" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xmlns:swes="http://www.opengis.net/swes/2.0"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<swes:procedure><xsl:value-of select="current-dateTime()" /></swes:procedure>
+									</swes:DeleteSensor>
+								</ctl:body>
+								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+							</ctl:request>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="not($DeleteSensorResponse/*)">
+						<ctl:message>FAILURE:  The server did not return a response, or the response was not valid according to the DeleteSensor response schema for "SOS" />.</ctl:message>
+						<ctl:fail/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:if test="$DeleteSensorResponse/*">
+							<!-- check the root is "sos:DeleteSensorResponse" and empty context.-->
+							<xsl:variable name="responseRoot" select="local-name-from-QName(node-name($DeleteSensorResponse/*[1]))" />
+							<xsl:choose>
+								<xsl:when test="not($responseRoot=$DeleteSensorRootElementName)">
+									<ctl:message>FAILURE:  The root element from the response to a DeleteSensor request "<xsl:value-of select="$responseRoot" />" does not match the expected root element of "<xsl:value-of select="$DeleteSensorRootElementName" />"</ctl:message>
+									<ctl:fail />
+								</xsl:when>
+								<xsl:when test="$DeleteSensorResponse/*[1]/*)">
+									<ctl:message>FAILURE:  An empty DeleteSensorResponse should be returned if no observation was found matching one or more of the identifiers provided in the request.</ctl:message>
+									<ctl:fail />
+								</xsl:when>
+								<xsl:otherwise>
+									<ctl:message>Passed.</ctl:message>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</ctl:code>
+		</ctl:test>
+
+		<!-- 0909 Send valid DeleteSensor request, the response must be a valid DeleteSensorResponse. -->
+		<ctl:test name="sos:DSRequestValidRequest">
+			<ctl:param name="GetCapabilitiesURL" />
+			<ctl:param name="isGetCapabilitiesGET" />
+			<ctl:param name="capabilitiesResponseSchemaType" />
+			<ctl:param name="capabilitiesResponseSchemaLocation" />
+			<ctl:param name="serviceURL" />
+			<ctl:param name="isSOAP" />
+			<ctl:param name="getCapabilitiesResponse" />
+			<ctl:param name="DeleteSensorRootElementName" />
+			<ctl:param name="DeleteSensorResponseSchemaLocation" />
+			<ctl:param name="DeleteSensorResponseSchemaType" />
+			<ctl:param name="procedure" />
+			<ctl:assertion>Send a valid request ,and there must be have a valid DeleteSensorResponse returned. </ctl:assertion>
+			<ctl:comment>Pass if the observation listed in DeleteSensorResponse are same to DeleteSensor request; fail otherwise.</ctl:comment>
+			<ctl:link title=""></ctl:link>
+			<ctl:code>
+				<xsl:variable name="DeleteSensorResponse">
+					<xsl:choose>
+						<xsl:when test="($isSOAP)">
+							<ctl:soap-request version="1.2" charset="UTF-8">
+								<ctl:url>
+									<xsl:value-of select="$serviceURL"/>
+								</ctl:url>
+								<ctl:body>
+									<swes:DeleteSensor service="SOS" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xmlns:swes="http://www.opengis.net/swes/2.0"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<swes:procedure><xsl:value-of select="$procedure" /></swes:procedure>
+									</swes:DeleteSensor>
+								</ctl:body>
+								<parsers:SOAPParser return="content">
+									<parsers:XMLValidatingParser>
+										<parsers:schemas>
+											<parsers:schema>
+												<xsl:attribute name="type"><xsl:value-of select="$DeleteSensorResponseSchemaType" /></xsl:attribute>
+												<xsl:value-of select="$DeleteSensorResponseSchemaLocation" />
+											</parsers:schema>
+										</parsers:schemas>
+									</parsers:XMLValidatingParser>
+								</parsers:SOAPParser>
+							</ctl:soap-request>
+						</xsl:when>
+						<xsl:otherwise>
+							<ctl:request>
+								<ctl:url>
+									<xsl:value-of select="$serviceURL" />
+								</ctl:url>
+								<ctl:method>post</ctl:method>
+								<ctl:body>
+									<swes:DeleteSensor service="SOS" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+										xmlns:swes="http://www.opengis.net/swes/2.0"
+										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+										<swes:procedure><xsl:value-of select="$procedure" /></swes:procedure>
+									</swes:DeleteSensor>
+								</ctl:body>
+								<parsers:XMLValidatingParser>
+									<parsers:schemas>
+										<parsers:schema type="resource">xsd/w3c/xml.xsd</parsers:schema>
+										<parsers:schema>
+											<xsl:attribute name="type"><xsl:value-of select="$DeleteSensorResponseSchemaType" /></xsl:attribute>
+											<xsl:value-of select="$DeleteSensorResponseSchemaLocation" />
+										</parsers:schema>
+									</parsers:schemas>
+								</parsers:XMLValidatingParser>
+							</ctl:request>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="not($DeleteSensorResponse/*)">
+						<ctl:message>FAILURE:  The server did not return a response, or the response was not valid according to the DeleteSensor response schema for "SOS" />.</ctl:message>
+						<ctl:fail/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:if test="$DeleteSensorResponse/*">
+							<xsl:variable name="responseRoot" select="local-name-from-QName(node-name($DeleteSensorResponse/*[1]))" />
+							<xsl:if test="not($responseRoot=$DeleteSensorRootElementName)">
+								<ctl:message>FAILURE:  The root element from the response to a DeleteSensor request "<xsl:value-of select="$responseRoot" />" does not match the expected root element of "<xsl:value-of select="$DeleteSensorRootElementName" />"</ctl:message>
+								<ctl:fail />
+							</xsl:if>
+							<!-- 1.response has one and only one deletedProcedure -->
+							<xsl:variable name="deletedProcedureCount" select="count($DeleteSensorResponse//swes:deletedProcedure))" />
+							<xsl:if test="not($deletedProcedureCount=1)">
+								<ctl:message>FAILURE:  The count of swes:deletedProcedure element "<xsl:value-of select="$deletedProcedureCount" />" must be 1.</ctl:message>
+								<ctl:fail />
+							</xsl:if>
+							<!-- 2.Capabilities cannot have the procedure which deleted by request.-->
+							<xsl:variable name="getCapabilitiesResponse2">
+								<xsl:choose>
+									<xsl:when test="($isGetCapabilitiesGET)">
+										<ctl:request>
+											<ctl:url>
+												<xsl:value-of select="$GetCapabilitiesURL"/>
+											</ctl:url>
+											<ctl:method>get</ctl:method>
+											<ctl:param name="request">GetCapabilities</ctl:param>				   
+											<parsers:XMLValidatingParser>
+												<parsers:schemas>
+													<parsers:schema type="resource">xsd/w3c/xml.xsd</parsers:schema>
+													<parsers:schema>
+														<xsl:attribute name="type"><xsl:value-of select="$capabilitiesResponseSchemaType" /></xsl:attribute>
+														<xsl:value-of select="$capabilitiesResponseSchemaLocation" />
+													</parsers:schema>
+												</parsers:schemas>
+											</parsers:XMLValidatingParser>
+										</ctl:request>
+									</xsl:when>
+									<xsl:when test="($isSOAP)">
+										<ctl:soap-request version="1.2" charset="UTF-8">
+											<ctl:url>
+												<xsl:value-of select="$serviceURL"/>
+											</ctl:url>
+											<ctl:body>
+												<sos:GetCapabilities xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+													xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+													http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+													xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+												</sos:GetCapabilities>
+											</ctl:body>
+											<parsers:SOAPParser return="content">
+												<parsers:XMLValidatingParser>
+													<parsers:schemas>
+														<parsers:schema>
+															<xsl:attribute name="type"><xsl:value-of select="$capabilitiesResponseSchemaType" /></xsl:attribute>
+															<xsl:value-of select="$capabilitiesResponseSchemaLocation" />
+														</parsers:schema>
+													</parsers:schemas>
+												</parsers:XMLValidatingParser>
+											</parsers:SOAPParser>
+										</ctl:soap-request>
+									</xsl:when>
+									<xsl:otherwise>
+										<ctl:request>
+											<ctl:url>
+												<xsl:value-of select="$serviceURL" />
+											</ctl:url>
+											<ctl:method>post</ctl:method>
+											<ctl:body>
+												<sos:GetCapabilities xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+													xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
+													http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
+													xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
+												</sos:GetCapabilities>
+											</ctl:body>
+											<parsers:XMLValidatingParser>
+												<parsers:schemas>
+													<parsers:schema type="resource">xsd/w3c/xml.xsd</parsers:schema>
+													<parsers:schema>
+														<xsl:attribute name="type"><xsl:value-of select="$capabilitiesResponseSchemaType" /></xsl:attribute>
+														<xsl:value-of select="$capabilitiesResponseSchemaLocation" />
+													</parsers:schema>
+												</parsers:schemas>
+											</parsers:XMLValidatingParser>
+										</ctl:request>
+									</xsl:otherwise>
+								</xsl:choose>
+							</xsl:variable>	
+							<xsl:choose>
+								<xsl:when test="not($getCapabilitiesResponse2/*)">
+									<ctl:message>FAILURE: Missing or invalid GetCapabilities response entity.</ctl:message>
+									<ctl:fail/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:for-each select="$getCapabilitiesResponse2//swes:procedure">
+										<xsl:variable name="identifier" select="." />
+										<xsl:if test="$identifier eq $procedure">
+											<ctl:message>FAILURE: The deleted procedure "<xsl:value-of select="$identifier" />" should not be listed in the Capabilities.</ctl:message>
+											<ctl:fail/>
+										</xsl:if>
+									</xsl:for-each>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</ctl:code>
+		</ctl:test>
+
 	</ctl:package>
 
 	<!-- 10.SOS Transactional: InsertObservation -->
