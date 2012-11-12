@@ -2686,7 +2686,7 @@
 								</ctl:url>
 								<ctl:method>get</ctl:method>
 								<ctl:param name="request">DescribeSensor</ctl:param>
-								<ctl:param name="service"><xsl:value-of select="String('')" /></ctl:param>
+								<ctl:param name="service"><xsl:value-of select="string('')" /></ctl:param>
 								<ctl:param name="version">2.0.0</ctl:param>
 								<ctl:param name="procedure"><xsl:value-of select="$procedure" /></ctl:param>
 								<ctl:param name="procedureDescriptionFormat"><xsl:value-of select="$procedureDescriptionFormat" /></ctl:param>
@@ -2782,7 +2782,7 @@
 								</ctl:url>
 								<ctl:method>get</ctl:method>
 								<ctl:param name="request">DescribeSensor</ctl:param>
-								<ctl:param name="service"><xsl:value-of select="String('999')" /></ctl:param>
+								<ctl:param name="service"><xsl:value-of select="string('999')" /></ctl:param>
 								<ctl:param name="version">2.0.0</ctl:param>
 								<ctl:param name="procedure"><xsl:value-of select="$procedure" /></ctl:param>
 								<ctl:param name="procedureDescriptionFormat"><xsl:value-of select="$procedureDescriptionFormat" /></ctl:param>
@@ -2878,7 +2878,7 @@
 								</ctl:url>
 								<ctl:method>get</ctl:method>
 								<ctl:param name="request">DescribeSensor</ctl:param>
-								<ctl:param name="service"><xsl:value-of select="String('SOS')" /></ctl:param>
+								<ctl:param name="service"><xsl:value-of select="string('SOS')" /></ctl:param>
 								<ctl:param name="procedure"><xsl:value-of select="$procedure" /></ctl:param>
 								<ctl:param name="procedureDescriptionFormat"><xsl:value-of select="$procedureDescriptionFormat" /></ctl:param>
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
@@ -2973,8 +2973,8 @@
 								</ctl:url>
 								<ctl:method>get</ctl:method>
 								<ctl:param name="request">DescribeSensor</ctl:param>
-								<ctl:param name="service"><xsl:value-of select="String('SOS')" /></ctl:param>
-								<ctl:param name="version"><xsl:value-of select="String('')" /></ctl:param>
+								<ctl:param name="service"><xsl:value-of select="string('SOS')" /></ctl:param>
+								<ctl:param name="version"><xsl:value-of select="string('')" /></ctl:param>
 								<ctl:param name="procedure"><xsl:value-of select="$procedure" /></ctl:param>
 								<ctl:param name="procedureDescriptionFormat"><xsl:value-of select="$procedureDescriptionFormat" /></ctl:param>
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
@@ -3069,8 +3069,8 @@
 								</ctl:url>
 								<ctl:method>get</ctl:method>
 								<ctl:param name="request">DescribeSensor</ctl:param>
-								<ctl:param name="service"><xsl:value-of select="String('SOS')" /></ctl:param>
-								<ctl:param name="version"><xsl:value-of select="String('999')" /></ctl:param>
+								<ctl:param name="service"><xsl:value-of select="string('SOS')" /></ctl:param>
+								<ctl:param name="version"><xsl:value-of select="string('999')" /></ctl:param>
 								<ctl:param name="procedure"><xsl:value-of select="$procedure" /></ctl:param>
 								<ctl:param name="procedureDescriptionFormat"><xsl:value-of select="$procedureDescriptionFormat" /></ctl:param>
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
@@ -3165,8 +3165,8 @@
 								</ctl:url>
 								<ctl:method>get</ctl:method>
 								<ctl:param name="request">DescribeSensor</ctl:param>
-								<ctl:param name="service"><xsl:value-of select="String('SOS')" /></ctl:param>
-								<ctl:param name="version"><xsl:value-of select="String('2.0.0')" /></ctl:param>
+								<ctl:param name="service"><xsl:value-of select="string('SOS')" /></ctl:param>
+								<ctl:param name="version"><xsl:value-of select="string('2.0.0')" /></ctl:param>
 								<ctl:param name="procedure"><xsl:value-of select="$procedure" /></ctl:param>
 								<ctl:param name="procedureDescriptionFormat"><xsl:value-of select="$procedureDescriptionFormat" /></ctl:param>
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
@@ -3261,8 +3261,8 @@
 								</ctl:url>
 								<ctl:method>get</ctl:method>
 								<ctl:param name="request">DescribeSensor</ctl:param>
-								<ctl:param name="service"><xsl:value-of select="String('SOS')" /></ctl:param>
-								<ctl:param name="version"><xsl:value-of select="String('2.0.0')" /></ctl:param>
+								<ctl:param name="service"><xsl:value-of select="string('SOS')" /></ctl:param>
+								<ctl:param name="version"><xsl:value-of select="string('2.0.0')" /></ctl:param>
 								<ctl:param name="procedure"><xsl:value-of select="$procedure" /></ctl:param>
 								<ctl:param name="procedureDescriptionFormat"><xsl:value-of select="$procedureDescriptionFormat" /></ctl:param>
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
@@ -3357,8 +3357,8 @@
 								</ctl:url>
 								<ctl:method>get</ctl:method>
 								<ctl:param name="request">DescribeSensor</ctl:param>
-								<ctl:param name="service"><xsl:value-of select="String('SOS')" /></ctl:param>
-								<ctl:param name="version"><xsl:value-of select="String('2.0.0')" /></ctl:param>
+								<ctl:param name="service"><xsl:value-of select="string('SOS')" /></ctl:param>
+								<ctl:param name="version"><xsl:value-of select="string('2.0.0')" /></ctl:param>
 								<ctl:param name="procedure"><xsl:value-of select="$procedure" /></ctl:param>
 								<ctl:param name="procedureDescriptionFormat"><xsl:value-of select="$procedureDescriptionFormat" /></ctl:param>
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
@@ -3453,8 +3453,8 @@
 								</ctl:url>
 								<ctl:method>get</ctl:method>
 								<ctl:param name="request">DescribeSensor</ctl:param>
-								<ctl:param name="service"><xsl:value-of select="String('SOS')" /></ctl:param>
-								<ctl:param name="version"><xsl:value-of select="String('2.0.0')" /></ctl:param>
+								<ctl:param name="service"><xsl:value-of select="string('SOS')" /></ctl:param>
+								<ctl:param name="version"><xsl:value-of select="string('2.0.0')" /></ctl:param>
 								<ctl:param name="procedure"><xsl:value-of select="$procedure" /></ctl:param>
 								<ctl:param name="procedureDescriptionFormat"><xsl:value-of select="$procedureDescriptionFormat" /></ctl:param>
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
@@ -3555,8 +3555,8 @@
 									</ctl:url>
 									<ctl:method>get</ctl:method>
 									<ctl:param name="request">DescribeSensor</ctl:param>
-									<ctl:param name="service"><xsl:value-of select="String('SOS')" /></ctl:param>
-									<ctl:param name="version"><xsl:value-of select="String('2.0.0')" /></ctl:param>
+									<ctl:param name="service"><xsl:value-of select="string('SOS')" /></ctl:param>
+									<ctl:param name="version"><xsl:value-of select="string('2.0.0')" /></ctl:param>
 									<ctl:param name="procedure"><xsl:value-of select="$procedure" /></ctl:param>
 									<ctl:param name="procedureDescriptionFormat"><xsl:value-of select="$procedureDescriptionFormat" /></ctl:param>
 									<ctl:call-function name="sosFunctions:validateExceptionReport" />
@@ -11080,6 +11080,9 @@
 											</tr>				
 										</table>						
 									</blockquote>
+									<div align="center">
+										<input type="submit" value="Start"/>						
+									</div>
 								</body>
 							</ctl:form>
 						</xsl:variable>

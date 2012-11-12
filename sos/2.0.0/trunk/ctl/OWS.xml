@@ -74,7 +74,7 @@
 					<xsl:when test="($isSOAP)">
 						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
-								<xsl:value-of select="$capabilities-url"/>
+								<xsl:value-of select="$serviceURL"/>
 							</ctl:url>
 							<ctl:body>
 								<sos:GetCapabilities service="SOS" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -805,11 +805,11 @@
 		<ctl:param name="responseSchemaType" />
 		<ctl:param name="rootElementName" />
 		<ctl:assertion>If AcceptVersion is not specified, the service must respond with highest supported version.</ctl:assertion>
-		<ctl:comment>GetCapabilities with no version and service of $serviceType.  Without AcceptVersion, using version negotiation, sends latest copy.  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root document is an wfs:WFS_Capabilities document; (3) the response version must be what was requested.</ctl:comment>
+		<ctl:comment>GetCapabilities with no version and service of $serviceType.  Without AcceptVersion, using version negotiation, sends latest copy.  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root document is an ows:ows_Capabilities document; (3) the response version must be what was requested.</ctl:comment>
 		<ctl:link>ows-1.0.0-metadata-atc3</ctl:link>
 		<ctl:link>OGC 05-008c1, 7.3.2, p.16</ctl:link>
 		<ctl:code>
-			<ctl:message select="concat('GetCapabilities with no version and service of &quot;', $serviceType, '&quot;.  Without AcceptVersion, using version negotiation, sends latest copy.  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root document is an wfs:WFS_Capabilities document; (3) the response version must be what was requested')"/>
+			<ctl:message select="concat('GetCapabilities with no version and service of &quot;', $serviceType, '&quot;.  Without AcceptVersion, using version negotiation, sends latest copy.  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root document is an ows:OWS_Capabilities document; (3) the response version must be what was requested')"/>
 			<xsl:variable name="request1">
 				<xsl:choose>
 					<xsl:when test="($isGET)">
@@ -914,11 +914,11 @@
 		<ctl:param name="responseSchemaType" />
 		<ctl:param name="rootElementName" />
 		<ctl:assertion>Version negotiation using AcceptVersions parameter (preference ordering): Return service metadata corresponding to the most preferred version that is supported. If none of the requested versions are supported, the server must generate an exception with code 'VersionNegotiationFailed'.</ctl:assertion>
-		<ctl:comment>GetCapabilities with no version and service of $serviceType.  With AcceptVersion, expecting one of the versions listed $acceptVersions.  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root document is an wfs:WFS_Capabilities document; (3) the response version must be what was requested. The AcceptVersion element is used with a number of versions, one is expected to return ('1.1.0').</ctl:comment>
+		<ctl:comment>GetCapabilities with no version and service of $serviceType.  With AcceptVersion, expecting one of the versions listed $acceptVersions.  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root document is an ows:OWS_Capabilities document; (3) the response version must be what was requested. The AcceptVersion element is used with a number of versions, one is expected to return ('1.1.0').</ctl:comment>
 		<ctl:link>ows-1.0.0-metadata-atc4</ctl:link>
 		<ctl:link>OGC 05-008c1, 7.3.2, p.16</ctl:link>
 		<ctl:code>
-			<ctl:message select="concat('GetCapabilities with no version and service of &quot;', $serviceType, '&quot;.  With AcceptVersion, expecting one of the versions listed $acceptVersions.  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root document is an wfs:WFS_Capabilities document; (3) the response version must be what was requested. The AcceptVersion element is used with a number of versions, one is expected to return (''1.1.0'').')"/>
+			<ctl:message select="concat('GetCapabilities with no version and service of &quot;', $serviceType, '&quot;.  With AcceptVersion, expecting one of the versions listed $acceptVersions.  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root document is an ows:OWS_Capabilities document; (3) the response version must be what was requested. The AcceptVersion element is used with a number of versions, one is expected to return (''1.1.0'').')"/>
 			<xsl:variable name="request1">
 				<xsl:choose>
 					<xsl:when test="($isGET)">
