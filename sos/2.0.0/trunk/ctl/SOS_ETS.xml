@@ -1394,7 +1394,7 @@
 							<ctl:with-param name="capabilitiesResponseSchemaType" select="string('resource')" />
 							<ctl:with-param name="capabilitiesResponseSchemaLocation" select="sosFunctions:schemaPath($sos.schema.root, $sos.version,'sos', 'sosGetCapabilities.xsd')"/>
 							<ctl:with-param name="serviceURL" select="$DeleteSensor-URL"/>
-							<ctl:with-param name="hasDS" select="$hasDeleteSensor"/>
+							<ctl:with-param name="hasDeS" select="$hasDeleteSensor"/>
 							<ctl:with-param name="isSOAP" select="$isSOAP"/>
 							<ctl:with-param name="getCapabilitiesResponse" select="$user-capabilities" />
 							<ctl:with-param name="serviceType" select="string('SOS')"/>
@@ -11033,7 +11033,7 @@
 			<ctl:param name="capabilitiesResponseSchemaType" />
 			<ctl:param name="capabilitiesResponseSchemaLocation" />
 			<ctl:param name="serviceURL" />
-			<ctl:param name="hasDS" />
+			<ctl:param name="hasDeS" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="serviceType" />
@@ -11057,7 +11057,7 @@
 			<ctl:comment>Pass if all the subtest not fail; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<xsl:choose>
-					<xsl:when test="not($hasDS)">
+					<xsl:when test="not($hasDeS)">
 						<ctl:message>The server does not support the operation "DeleteSensor", so skip this test.</ctl:message>
 					</xsl:when>
 					<xsl:otherwise>
@@ -11090,7 +11090,7 @@
 						
 						<xsl:if test="$test0901 eq 'true'">
 							<ctl:message select="'******************** 09.01.RequestNoService ********************'"/>
-							<ctl:call-test name="sos:DSRequestNoService">
+							<ctl:call-test name="sos:DeSRequestNoService">
 								<ctl:with-param name="serviceURL" select="$serviceURL" />
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
@@ -11102,7 +11102,7 @@
 						</xsl:if>
 						<xsl:if test="$test0902 eq 'true'">
 							<ctl:message select="'******************** 09.02.RequestNullService ********************'"/>
-							<ctl:call-test name="sos:DSRequestNullService">
+							<ctl:call-test name="sos:DeSRequestNullService">
 								<ctl:with-param name="serviceURL" select="$serviceURL" />
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
@@ -11114,7 +11114,7 @@
 						</xsl:if>
 						<xsl:if test="$test0903 eq 'true'">
 							<ctl:message select="'******************** 09.03.RequestInvalidService ********************'"/>
-							<ctl:call-test name="sos:DSRequestInvalidService">
+							<ctl:call-test name="sos:DeSRequestInvalidService">
 								<ctl:with-param name="serviceURL" select="$serviceURL" />
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
@@ -11126,7 +11126,7 @@
 						</xsl:if>
 						<xsl:if test="$test0904 eq 'true'">
 							<ctl:message select="'******************** 09.04.RequestNoVersion ********************'"/>
-							<ctl:call-test name="sos:DSRequestNoVersion">
+							<ctl:call-test name="sos:DeSRequestNoVersion">
 								<ctl:with-param name="serviceURL" select="$serviceURL" />
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
@@ -11138,7 +11138,7 @@
 						</xsl:if>
 						<xsl:if test="$test0905 eq 'true'">
 							<ctl:message select="'******************** 09.05.RequestNullVersion ********************'"/>
-							<ctl:call-test name="sos:DSRequestNullVersion">
+							<ctl:call-test name="sos:DeSRequestNullVersion">
 								<ctl:with-param name="serviceURL" select="$serviceURL" />
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
@@ -11150,7 +11150,7 @@
 						</xsl:if>
 						<xsl:if test="$test0906 eq 'true'">
 							<ctl:message select="'******************** 09.06.RequestInvalidVersion ********************'"/>
-							<ctl:call-test name="sos:DSRequestInvalidVersion">
+							<ctl:call-test name="sos:DeSRequestInvalidVersion">
 								<ctl:with-param name="serviceURL" select="$serviceURL" />
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
@@ -11162,7 +11162,7 @@
 						</xsl:if>
 						<xsl:if test="$test0907 eq 'true'">
 							<ctl:message select="'******************** 09.07.RequestNullProcedure ********************'"/>
-							<ctl:call-test name="sos:DSRequestNullProcedure">
+							<ctl:call-test name="sos:DeSRequestNullProcedure">
 								<ctl:with-param name="serviceURL" select="$serviceURL" />
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
@@ -11174,7 +11174,7 @@
 						</xsl:if>
 						<xsl:if test="$test0908 eq 'true'">
 							<ctl:message select="'******************** 09.08.RequestInvalidProcedure ********************'"/>
-							<ctl:call-test name="sos:DSRequestInvalidProcedure">
+							<ctl:call-test name="sos:DeSRequestInvalidProcedure">
 								<ctl:with-param name="serviceURL" select="$serviceURL" />
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
@@ -11186,7 +11186,7 @@
 						</xsl:if>
 						<xsl:if test="$test0909 eq 'true'">
 							<ctl:message select="'******************** 09.09.RequestValidRequest ********************'"/>
-							<ctl:call-test name="sos:DSRequestValidRequest">
+							<ctl:call-test name="sos:DeSRequestValidRequest">
 								<ctl:with-param name="GetCapabilitiesURL" select="$GetCapabilitiesURL" />
 								<ctl:with-param name="isGetCapabilitiesGET" select="$isGetCapabilitiesGET" />
 								<ctl:with-param name="capabilitiesResponseSchemaType" select="$capabilitiesResponseSchemaType" />
@@ -11206,7 +11206,7 @@
 		</ctl:test>
 
 		<!-- 0901 Send DeleteSensor request without parameter service ,the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: service in element DeleteSensor@http://www.opengis.net/swes/2.0".. -->
-		<ctl:test name="sos:DSRequestNoService">
+		<ctl:test name="sos:DeSRequestNoService">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
@@ -11293,7 +11293,7 @@
 		</ctl:test>
 
 		<!-- 0902 Send DeleteSensor request with null parameter service ,the response must be a valid exception with code "MissingParameterValue" and locator "service".. -->
-		<ctl:test name="sos:DSRequestNullService">
+		<ctl:test name="sos:DeSRequestNullService">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
@@ -11380,7 +11380,7 @@
 		</ctl:test>
 
 		<!-- 0903 Send DeleteSensor request with invalid parameter service ,the response must be a valid exception with code "InvalidParameterValue" and locator "service".. -->
-		<ctl:test name="sos:DSRequestInvalidService">
+		<ctl:test name="sos:DeSRequestInvalidService">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
@@ -11466,7 +11466,7 @@
 		</ctl:test>
 	
 		<!-- 0904 Send DeleteSensor request without parameter version ,the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: version in element DeleteSensor@http://www.opengis.net/swes/2.0".. -->
-		<ctl:test name="sos:DSRequestNoVersion">
+		<ctl:test name="sos:DeSRequestNoVersion">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
@@ -11553,7 +11553,7 @@
 		</ctl:test>
 
 		<!-- 0905 Send DeleteSensor request with null parameter version ,the response must be a valid exception with code "MissingParameterValue" and locator "version".. -->
-		<ctl:test name="sos:DSRequestNullVersion">
+		<ctl:test name="sos:DeSRequestNullVersion">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
@@ -11640,7 +11640,7 @@
 		</ctl:test>
 
 		<!-- 0906 Send DeleteSensor request with invalid parameter version ,the response must be a valid exception with code "InvalidParameterValue" and locator "version".. -->
-		<ctl:test name="sos:DSRequestInvalidVersion">
+		<ctl:test name="sos:DeSRequestInvalidVersion">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
@@ -11726,7 +11726,7 @@
 		</ctl:test>
 
 		<!-- 0907 Send DeleteSensor request with null Element procedure ,the response must be a valid exception with code "MissingParameterValue" and locator "procedure".. -->
-		<ctl:test name="sos:DSRequestNullProcedure">
+		<ctl:test name="sos:DeSRequestNullProcedure">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
@@ -11813,7 +11813,7 @@
 		</ctl:test>
 
 		<!-- 0908 Send DeleteSensor request with invalid Element procedure ,the response must be a valid exception with code "InvalidParameterValue" and locator "procedure".. -->
-		<ctl:test name="sos:DSRequestInvalidProcedure">
+		<ctl:test name="sos:DeSRequestInvalidProcedure">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
@@ -11899,7 +11899,7 @@
 		</ctl:test>
 
 		<!-- 0909 Send valid DeleteSensor request, the response must be a valid DeleteSensorResponse. -->
-		<ctl:test name="sos:DSRequestValidRequest">
+		<ctl:test name="sos:DeSRequestValidRequest">
 			<ctl:param name="GetCapabilitiesURL" />
 			<ctl:param name="isGetCapabilitiesGET" />
 			<ctl:param name="capabilitiesResponseSchemaType" />
