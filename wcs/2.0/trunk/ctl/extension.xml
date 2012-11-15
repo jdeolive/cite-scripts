@@ -1,0 +1,26 @@
+<ctl:package
+ xmlns:ctl="http://www.occamlab.com/ctl"
+ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+ xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+ xmlns:ows='http://www.opengis.net/ows/2.0'
+ xmlns:gml='http://www.opengis.net/gml/3.2'
+ xmlns:wcs='http://www.opengis.net/wcs/2.0'
+ xmlns:ctlp="http://www.occamlab.com/te/parsers"
+ xmlns:wcs2="http://www.opengis.net/wcs/2.0"
+ xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+
+
+  	<ctl:test name="wcs2:req43">
+    		<ctl:param name="Capabilities"/>
+    		<ctl:assertion>Req43:For the transmission of all operation requests and responses, WCS implementations shall support at least one WCS protocol extension, that is: an extension whose URI starts with http://www.opengis.net/spec/WCS_protocol-binding_.</ctl:assertion>
+    		<ctl:code>
+			<xsl:if test="not(contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_protocol-binding_'))">
+				<ctl:message>[FAILURE] For the transmission of all operation requests and responses, WCS imple-mentations shall support at least one WCS protocol extension, that is: an extension whose URI starts with http://www.opengis.net/spec/WCS_protocol-binding_.</ctl:message>
+				<ctl:fail/>
+			</xsl:if>   		
+		</ctl:code>
+  	</ctl:test>    
+  
+</ctl:package>
