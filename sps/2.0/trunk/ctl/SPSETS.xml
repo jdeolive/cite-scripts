@@ -5829,7 +5829,7 @@
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of InvalidParameterValue and a locator of task.</ctl:message>
+							<ctl:message>FAILURE:  The returned exception report was expected to contain an exceptionCode of OptionNotSupported and a locator of since.</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
