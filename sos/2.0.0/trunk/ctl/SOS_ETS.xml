@@ -2345,7 +2345,7 @@
 			</ctl:code>
 		</ctl:test>
 
-		<!-- 0308 Check test03 Capabilities Each ObservationOffering the responseFormat must contain "http://www.opengis.net/om/2.0". -->
+		<!-- 0308 Check test03 Capabilities ,in each ObservationOffering the responseFormat must contain "http://www.opengis.net/om/2.0". -->
 		<ctl:test name="sos:GCResponseFormat">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isGET" />
@@ -2359,22 +2359,14 @@
 			Pass if the responseFormat element which value is "http://www.opengis.net/om/2.0" is listed in the ObservationOffering or Contents element.
 			</ctl:comment>
 			<ctl:code>
-				<xsl:variable name="AllresponseFormat" select="count($CapabilitiesResponse//sos:Contents[sos:responseFormat='http://www.opengis.net/om/2.0']/sos:responseFormat)" />
-				<xsl:choose>
-					<xsl:when test="not($AllresponseFormat=1)">
-						<xsl:for-each select="$CapabilitiesResponse//sos:ObservationOffering">
-							<xsl:variable name="identifier" select="count(./swes:identifier)" />
-							<xsl:variable name="responseFormat" select="count(.[sos:responseFormat='http://www.opengis.net/om/2.0']/sos:responseFormat)" />
-							<xsl:if test="not($responseFormat=1)">
-								<ctl:message>FAILURE: The ObservationOffering (identifier = <xsl:value-of select="$identifier"/>) must contain responseFormat which value is "http://www.opengis.net/om/2.0".</ctl:message>
-								<ctl:fail/>
-							</xsl:if>
-						</xsl:for-each>
-					</xsl:when>
-					<xsl:otherwise>
-						<ctl:message>Passed.</ctl:message>
-					</xsl:otherwise>
-				</xsl:choose>
+				<xsl:for-each select="$CapabilitiesResponse//sos:ObservationOffering">
+					<xsl:variable name="identifier" select="./swes:identifier" />
+					<xsl:variable name="responseFormat" select="count(.[sos:responseFormat='http://www.opengis.net/om/2.0']/sos:responseFormat)" />
+					<xsl:if test="$responseFormat=0">
+						<ctl:message>FAILURE: The ObservationOffering (identifier = <xsl:value-of select="$identifier"/>) must contain responseFormat which value is "http://www.opengis.net/om/2.0".</ctl:message>
+						<ctl:fail/>
+					</xsl:if>
+				</xsl:for-each>
 			</ctl:code>
 		</ctl:test>
 
@@ -3645,6 +3637,7 @@
 			<ctl:param name="test0512" />
 			<ctl:param name="test0513" />
 			<ctl:param name="test0514" />
+			<ctl:param name="test0515" />
 			<ctl:param name="test0516" />
 			<ctl:param name="test0517" />
 			<ctl:param name="test0518" />
