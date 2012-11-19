@@ -1616,78 +1616,89 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="exceptionReportSchema" />
-			<ctl:assertion>Sending a request that is non-conformant to a schema associated with an SOS operation causes the server to return a valid error report message with an exceptionCode value of MissingParameterValue.</ctl:assertion>
-			<ctl:comment>Send several test documents that are invalid according to the schemas associated with some of the SOS operations (i.e. the mandatory operations). Pass if the service returns a valid exception message with an exceptionCode value of InvalidParamterValue; fail otherwise.</ctl:comment>
-			<ctl:link title="Verify that an invalid request produces an appropriate response from the server.">docs/sos/1.0/SOS 1.0 ATS.html#SOS.General-InvalidRequest</ctl:link>
+			<ctl:assertion>Sending a request that is non-conformant to a schema associated with an SOS operation causes the server to return a valid error report message with an exceptionCode value of InvalidRequest.</ctl:assertion>
+			<ctl:comment>Pass if the service returns a valid exception message with an exceptionCode value of InvalidRequest; fail otherwise.</ctl:comment>
+			<ctl:link></ctl:link>
 			<ctl:code>
+			
 				<!--
-                    1.)  Issue several invalid request documents to the service.
-                    2.)  Validate the response against the ExceptionReport schema.
-                    3.)  If the response validates, then check that the exceptionCode value is "MissingParameterValue", not "InvalidRequest" (which is not specified as a valid exception code by the SOS spec)
+					1.)  KVP selected,pass this test.
+                    1.)  Validate the response against the ExceptionReport schema.
+                    2.)  If the response validates, then check that the exceptionCode value is "InvalidRequest".
                 -->
-				<ctl:message>Issuing an invalid request to:  <xsl:value-of select="$serviceURL" /></ctl:message>		     
-				<ctl:message select="'The body of the request will be &quot;test&quot;'"/>
-				<xsl:variable name="invalidRequestResponse">
+				<xsl:if test="($isGET)">
+					<ctl:message select="'This test does not support KVP type request,so passed.'"/>
+					
+				</xsl:if>
+				<xsl:if test="not($isGET)">
+
+					<ctl:message>Issuing an invalid request to:  <xsl:value-of select="$serviceURL" /></ctl:message>		     
+					<ctl:message select="'The body of the request will be &quot;test&quot;'"/>
+					<xsl:variable name="invalidRequestResponse">
+						<xsl:choose>
+							<xsl:when test="($isSOAP)">
+								<ctl:soap-request version="1.2" charset="UTF-8">
+									<ctl:url>
+										<xsl:value-of select="$serviceURL"/>
+									</ctl:url>
+									<ctl:body>test</ctl:body>
+									<parsers:SOAPParser return="content">
+										<parsers:XMLValidatingParser>
+											<parsers:schemas>
+												<parsers:schema>
+													<xsl:attribute name="type"><xsl:value-of select="'resource'" /></xsl:attribute>
+													<xsl:value-of select="$exceptionReportSchema" />
+												</parsers:schema>
+											</parsers:schemas>
+										</parsers:XMLValidatingParser>
+									</parsers:SOAPParser>
+								</ctl:soap-request>
+							</xsl:when>
+							<xsl:otherwise>
+								<ctl:request>
+									<ctl:url>
+										<xsl:value-of select="$serviceURL" />
+									</ctl:url>
+									<ctl:method>post</ctl:method>
+									<ctl:body>test</ctl:body>
+									<ctl:call-function name="sosFunctions:xmlValidatingParser">	
+										<ctl:with-param name="schemaFile" select="$exceptionReportSchema"/>
+									</ctl:call-function>
+								</ctl:request>
+							</xsl:otherwise>
+						</xsl:choose>
+						
+					</xsl:variable>        
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
-							<ctl:soap-request version="1.2" charset="UTF-8">
-								<ctl:url>
-									<xsl:value-of select="$serviceURL"/>
-								</ctl:url>
-								<ctl:body>test</ctl:body>
-								<parsers:SOAPParser return="content">
-									<parsers:XMLValidatingParser>
-										<parsers:schemas>
-											<parsers:schema>
-												<xsl:attribute name="type"><xsl:value-of select="'resource'" /></xsl:attribute>
-												<xsl:value-of select="$exceptionReportSchema" />
-											</parsers:schema>
-										</parsers:schemas>
-									</parsers:XMLValidatingParser>
-								</parsers:SOAPParser>
-							</ctl:soap-request>
+						<xsl:when test="not($invalidRequestResponse/*)">
+							<ctl:message>FAILURE:  The server did not return a response to an invalid request or the response from the server was not a valid exception report.  The response from the server was:  "<xsl:copy-of select="$invalidRequestResponse/*" />"</ctl:message>
+							<ctl:message select="concat('Schema file: ', $exceptionReportSchema)"/>
+							<ctl:fail />
 						</xsl:when>
 						<xsl:otherwise>
-							<ctl:request>
-								<ctl:url>
-									<xsl:value-of select="$serviceURL" />
-								</ctl:url>
-								<ctl:method>post</ctl:method>
-								<ctl:body>test</ctl:body>
-								<ctl:call-function name="sosFunctions:xmlValidatingParser">	
-									<ctl:with-param name="schemaFile" select="$exceptionReportSchema"/>
+							<ctl:message>The response was <xsl:value-of select="sosFunctions:getExceptionInfo($invalidRequestResponse)" /></ctl:message>
+							<ctl:message>Checking the validity of the response to an invalid request.</ctl:message>
+							<xsl:variable name="isCorrect">
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$invalidRequestResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
+									<ctl:with-param name="locatorToCheck" select="string('*')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
 								</ctl:call-function>
-							</ctl:request>
+							</xsl:variable>
+							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
+							<xsl:if test="not(xsd:boolean($isCorrect))">
+								<ctl:message>FAILURE:  The response to an invalid request was expected to be an exception report with an exceptionCode of "InvalidRequest" and a locator value containing the validation issue.  The returned exception report was:  "<xsl:value-of select="$invalidRequestResponse/*" />"</ctl:message>
+								<ctl:message select="concat('Returned exception code was: &quot;', sosFunctions:exceptionCode($invalidRequestResponse), '&quot;')"/>
+								<ctl:message select="'Expected exception code was: &quot;InvalidRequest&quot;'"/>
+								<ctl:fail />
+							</xsl:if>
 						</xsl:otherwise>
 					</xsl:choose>
-					
-				</xsl:variable>        
-				<xsl:choose>
-					<xsl:when test="not($invalidRequestResponse/*)">
-						<ctl:message>FAILURE:  The server did not return a response to an invalid request or the response from the server was not a valid exception report.  The response from the server was:  "<xsl:copy-of select="$invalidRequestResponse/*" />"</ctl:message>
-						<ctl:message select="concat('Schema file: ', $exceptionReportSchema)"/>
-						<ctl:fail />
-					</xsl:when>
-					<xsl:otherwise>
-						<ctl:message>The response was <xsl:value-of select="sosFunctions:getExceptionInfo($invalidRequestResponse)" /></ctl:message>
-						<ctl:message>Checking the validity of the response to an invalid request.</ctl:message>
-						<xsl:variable name="isCorrect">
-							<ctl:call-function name="sosFunctions:checkExceptionReport">
-								<ctl:with-param name="exceptionReport" select="$invalidRequestResponse" />
-								<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
-								<ctl:with-param name="locatorToCheck" select="string('*')" />
-								<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
-							</ctl:call-function>
-						</xsl:variable>
-						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
-						<xsl:if test="not(xsd:boolean($isCorrect))">
-							<ctl:message>FAILURE:  The response to an invalid request was expected to be an exception report with an exceptionCode of "MissingParameterValue" and a locator value containing the validation issue.  The returned exception report was:  "<xsl:value-of select="$invalidRequestResponse/*" />"</ctl:message>
-							<ctl:message select="concat('Returned exception code was: &quot;', sosFunctions:exceptionCode($invalidRequestResponse), '&quot;')"/>
-							<ctl:message select="'Expected exception code was: &quot;MissingParameterValue&quot;'"/>
-							<ctl:fail />
-						</xsl:if>
-					</xsl:otherwise>
-				</xsl:choose>
+				
+				</xsl:if>
+				
+				
 			</ctl:code>
 		</ctl:test>
 	</ctl:package>
