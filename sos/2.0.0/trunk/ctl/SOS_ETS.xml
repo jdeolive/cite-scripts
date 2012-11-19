@@ -2072,7 +2072,7 @@
 			</ctl:code>
 		</ctl:test>
 		
-		<!-- 0304 Send GetCapabilities request with section=WrongSections,server must return complete capabilities (by OWS 1.1.0 table 3) -->
+		<!-- 0304 Send GetCapabilities request with section='WrongSections',server must return an exception with exceptionCode='InvalidParameterValue' and location='section'. -->
 		<ctl:test name="sos:GCWrongSectionParameter">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isGET" />
@@ -2081,11 +2081,11 @@
 			<ctl:param name="capabilitiesResponseSchemaLocation" />
 			<ctl:param name="capabilitiesResponseSchemaType" />
 			<ctl:assertion>
-			The response to a GetCapabilities request that includes a sections parameter 
-			with WRONG VALUE provided shall include an complete capabilities document.
+			The response to a GetCapabilities request that includes a sections parameter with WRONG VALUE provided 
+			shall be an exception with exceptionCode=InvalidParameterValue and location=section.
 			</ctl:assertion>
 			<ctl:comment>
-			Pass if the response is schema valid and contains all sections elements.
+			Pass if the response is an exception response and schema valid and exceptionCode=InvalidParameterValue and location=section.
 			</ctl:comment>
 			<ctl:code>
 				<xsl:variable name="request">
@@ -2170,37 +2170,29 @@
 						<ctl:fail/>
 					</xsl:when>
 					<xsl:otherwise>
-						<!-- 檢查是否所有sections都有 -->
-						<xsl:variable name="CountServiceIdentification" select="count($request/*/ows:ServiceIdentification)" />
-						<xsl:variable name="CountServiceProvider" select="count($request/*/ows:ServiceProvider)" />
-						<xsl:variable name="CountOperationsMetadata" select="count($request/*/ows:OperationsMetadata)" />
-						<xsl:variable name="CountfilterCapabilities" select="count($request/*/sos:filterCapabilities)" />
-						<xsl:variable name="Countcontents" select="count($request/*/sos:contents)" />
-						<xsl:choose>
-							<xsl:when test="not($CountServiceIdentification=1)">
-								<ctl:message>FAILURE: The Capabilities must contains section "ows:ServiceIdentification". </ctl:message>
+						<xsl:if test="$request/*">
+							<xsl:if test="$isSOAP=string('true')">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfoSOAP($request)" /></ctl:message>
+							</xsl:if>
+							<xsl:if test="not($isSOAP=string('true'))">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfo($request)" /></ctl:message>
+							</xsl:if>
+							<ctl:message>Checking the validity of the response to a GetCapabilities request with section= 'WrongSections'.</ctl:message>
+							<xsl:variable name="isCorrect">
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$request" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
+									<ctl:with-param name="locatorToCheck" select="string('section')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
+							</xsl:variable>
+							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
+							<xsl:if test="not(xsd:boolean($isCorrect))">
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetCapabilities request with section= 'WrongSections'. </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "section".</ctl:message>
 								<ctl:fail />
-							</xsl:when>
-							<xsl:when test="not($CountServiceProvider=1)">
-								<ctl:message>FAILURE: The Capabilities must contains section "ows:ServiceProvider". </ctl:message>
-								<ctl:fail />
-							</xsl:when>
-							<xsl:when test="not($CountOperationsMetadata=1)">
-								<ctl:message>FAILURE: The Capabilities must contains section "ows:OperationsMetadata". </ctl:message>
-								<ctl:fail />
-							</xsl:when>
-							<xsl:when test="not($CountfilterCapabilities=1)">
-								<ctl:message>FAILURE: The Capabilities must contains section "sos:filterCapabilities". </ctl:message>
-								<ctl:fail />
-							</xsl:when>
-							<xsl:when test="not($Countcontents=1)">
-								<ctl:message>FAILURE: The Capabilities must contains section "sos:contents". </ctl:message>
-								<ctl:fail />
-							</xsl:when>
-							<xsl:otherwise>
-								<ctl:message>Passed.</ctl:message>
-							</xsl:otherwise>
-						</xsl:choose>
+							</xsl:if>
+						</xsl:if>
 					</xsl:otherwise>
 				</xsl:choose>	
 			</ctl:code>
