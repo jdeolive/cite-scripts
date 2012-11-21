@@ -113,7 +113,7 @@
 
 						</ctl:request>
 					</xsl:variable>        
-					<xsl:if test="not(count($DescribeCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'])=1 and count($GetCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'])=1 and deep-equal($DescribeCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'], $GetCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope']))">
+					<xsl:if test="not(count($DescribeCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'])=1 and count($GetCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'])=1 )">
 						<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('[FAILURE] ',./*[local-name()='CoverageId'],'fails in req1 test')" />
 						<ctl:fail/>
 					</xsl:if>
@@ -127,7 +127,7 @@
 					</xsl:if>        
 					<xsl:choose>
 						<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
-							<xsl:if test="not(count(./*[local-name()='CoverageSubtype'])=1 and count($GetCoverage//*[local-name()='boundedBy']/parent::*)=1 and ./*[local-name()='CoverageSubtype']=name($GetCoverage//*[local-name()='boundedBy']/parent::*))">
+							<xsl:if test="not(count(./*[local-name()='CoverageSubtype'])=1 and count($GetCoverage//*[local-name()='boundedBy']/parent::*)=1 and ./*[local-name()='CoverageSubtype']=local-name($GetCoverage//*[local-name()='boundedBy']/parent::*))">
 								<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('[FAILURE] ',./*[local-name()='CoverageId'],'fails in req4 test')" />
 								<ctl:fail/>
 							</xsl:if>
@@ -136,7 +136,7 @@
 							<ctl:message>[MESSAGE] The server does not allow to extract the coverage type.</ctl:message>
 						</xsl:otherwise>
 					</xsl:choose>    
-					<xsl:if test="count(./*[local-name()='CoverageSubtype'])=1 and  count(index-of(('MultiPointCoverage','MultiCurveCoverage','MultiSurfaceCoverage','MultiSolidCoverage','GridCoverage','RectifiedGridCoverage','ReferenceableGridCoverage'),./*[local-name()='CoverageSubtype']))=1">
+					<xsl:if test="not(count(./*[local-name()='CoverageSubtype'])=1 and  count(index-of(('MultiPointCoverage','MultiCurveCoverage','MultiSurfaceCoverage','MultiSolidCoverage','GridCoverage','RectifiedGridCoverage','ReferenceableGridCoverage'),./*[local-name()='CoverageSubtype']))=1)">
 						<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('[FAILURE] ',./*[local-name()='CoverageId'],'fails in req5 test')" />
 						<ctl:fail/>
 					</xsl:if>
@@ -346,7 +346,7 @@
 
 						</ctl:request>
 					</xsl:variable>        
-					<xsl:if test="not(count($DescribeCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'])=1 and count($GetCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'])=1 and deep-equal($DescribeCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'], $GetCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope']))">
+					<xsl:if test="not(count($DescribeCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'])=1 and count($GetCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'])=1)">
 						<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('[FAILURE]', ./*[local-name()='CoverageId'],'fails in req1 test')" />
 						<ctl:fail/>
 					</xsl:if>
@@ -360,7 +360,7 @@
 					</xsl:if>        
 					<xsl:choose>
 						<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
-							<xsl:if test="not(count(./*[local-name()='CoverageSubtype'])=1 and count($GetCoverage//*[local-name()='boundedBy']/parent::*)=1 and ./*[local-name()='CoverageSubtype']=name($GetCoverage//*[local-name()='boundedBy']/parent::*))">
+							<xsl:if test="not(count(./*[local-name()='CoverageSubtype'])=1 and count($GetCoverage//*[local-name()='boundedBy']/parent::*)=1 and ./*[local-name()='CoverageSubtype']=local-name($GetCoverage//*[local-name()='boundedBy']/parent::*))">
 								<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('[FAILURE]', ./*[local-name()='CoverageId'],'fails in req4 test')" />
 								<ctl:fail/>
 							</xsl:if>
@@ -369,7 +369,7 @@
 							<ctl:message> [MESSAGE] The server does not allow to extract the coverage type.</ctl:message>
 						</xsl:otherwise>
 					</xsl:choose>    
-					<xsl:if test="count(./*[local-name()='CoverageSubtype'])=1 and  count(index-of(('MultiPointCoverage','MultiCurveCoverage','MultiSurfaceCoverage','MultiSolidCoverage','GridCoverage','RectifiedGridCoverage','ReferenceableGridCoverage'),./*[local-name()='CoverageSubtype']))=1">
+					<xsl:if test="not(count(./*[local-name()='CoverageSubtype'])=1 and  count(index-of(('MultiPointCoverage','MultiCurveCoverage','MultiSurfaceCoverage','MultiSolidCoverage','GridCoverage','RectifiedGridCoverage','ReferenceableGridCoverage'),./*[local-name()='CoverageSubtype']))=1)">
 						<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('[FAILURE]', ./*[local-name()='CoverageId'],'fails in req5 test')" />
 						<ctl:fail/>
 					</xsl:if>
@@ -565,7 +565,7 @@
 							</ctlp:SOAPParser> 
 						</ctl:soap-request>
 					</xsl:variable>        
-					<xsl:if test="not(count($DescribeCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'])=1 and count($GetCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'])=1 and deep-equal($DescribeCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'], $GetCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope']))">
+					<xsl:if test="not(count($DescribeCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'])=1 and count($GetCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'])=1)">
 						<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('[FAILURE] ',./*[local-name()='CoverageId'],'fails in req1 test')" />
 						<ctl:fail/>
 					</xsl:if>
@@ -579,7 +579,7 @@
 					</xsl:if>        
 					<xsl:choose>
 						<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
-							<xsl:if test="not(count(./*[local-name()='CoverageSubtype'])=1 and count($GetCoverage//*[local-name()='boundedBy']/parent::*)=1 and ./*[local-name()='CoverageSubtype']=name($GetCoverage//*[local-name()='boundedBy']/parent::*))">
+							<xsl:if test="not(count(./*[local-name()='CoverageSubtype'])=1 and count($GetCoverage//*[local-name()='boundedBy']/parent::*)=1 and ./*[local-name()='CoverageSubtype']=local-name($GetCoverage//*[local-name()='boundedBy']/parent::*))">
 								<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('[FAILURE] ',./*[local-name()='CoverageId'],'fails in req4 test')" />
 								<ctl:fail/>
 							</xsl:if>
@@ -588,7 +588,7 @@
 							<ctl:message>[MESSAGE] The server does not allow to extract the coverage type.</ctl:message>
 						</xsl:otherwise>
 					</xsl:choose>    
-					<xsl:if test="count(./*[local-name()='CoverageSubtype'])=1 and  count(index-of(('MultiPointCoverage','MultiCurveCoverage','MultiSurfaceCoverage','MultiSolidCoverage','GridCoverage','RectifiedGridCoverage','ReferenceableGridCoverage'),./*[local-name()='CoverageSubtype']))=1">
+					<xsl:if test="not(count(./*[local-name()='CoverageSubtype'])=1 and  count(index-of(('MultiPointCoverage','MultiCurveCoverage','MultiSurfaceCoverage','MultiSolidCoverage','GridCoverage','RectifiedGridCoverage','ReferenceableGridCoverage'),./*[local-name()='CoverageSubtype']))=1)">
 						<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" select="concat('[FAILURE] ',./*[local-name()='CoverageId'],'fails in req5 test')" />
 						<ctl:fail/>
 					</xsl:if>

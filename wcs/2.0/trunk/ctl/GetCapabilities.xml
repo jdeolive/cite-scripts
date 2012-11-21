@@ -60,9 +60,12 @@
 	<ctl:test name="wcs2:req15">
    		<ctl:param name="url"/>
 	    	<ctl:param name="Capabilities"/>   		
-    		<ctl:assertion>req15:Test the referenced conformance class of OWS Common.</ctl:assertion>
+    		<ctl:assertion>req15:Test the Contents section component.</ctl:assertion>
     		<ctl:code>
-			<ctl:message>[MESSAGE] TBD.</ctl:message>   
+			<xsl:if test="empty($Capabilities//*[local-name()='Contents'])">
+        			<ctl:message>[FAILURE] The result should contain a Contents section.</ctl:message>
+        			<ctl:fail/>         									
+			</xsl:if>   
     		</ctl:code>
   	</ctl:test>  	
   	

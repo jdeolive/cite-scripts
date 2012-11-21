@@ -263,7 +263,7 @@
 	<ctl:test name="wcs2:req24">
 	    	<ctl:param name="Capabilities"/>
    		<ctl:param name="url"/>
-    		<ctl:assertion>req23:If a geometric or temporal object in the domainSet of a coverageDescription specifies an srsName attribute, the value of this attribute shall be identical to the srsName attribute of the boundedBy element of the containing coverageDescription.</ctl:assertion>
+    		<ctl:assertion>req24:When a WCS server encounters an error while performing a DescribeCoverage operation it shall return an exception report message chosen as specified.</ctl:assertion>
     		<ctl:code>
        			<xsl:choose>
   				<xsl:when test="empty($Capabilities//*[local-name()='CoverageSummary']/*[local-name()='CoverageId'])">
@@ -1766,7 +1766,7 @@
 	<ctl:test name="wcs2:post-xml-core-req24">
 	    	<ctl:param name="Capabilities"/>	
     		<ctl:param name="url"/>
-    		<ctl:assertion>req24:When a WCS server encounters an error while performing a PostXML DescribeCoverage operation it shall return an exception report message chosen as specified in req 23.</ctl:assertion>
+    		<ctl:assertion>req24:When a WCS server encounters an error while performing a PostXML DescribeCoverage operation it shall return an exception report message chosen as specified.</ctl:assertion>
     		<ctl:code>
        			<xsl:variable name="DescribeCoverage">
 				<ctl:request>
@@ -1810,7 +1810,7 @@
 	<ctl:test name="wcs2:get-kvp-core-req24">
     		<ctl:param name="url"/>
     		<ctl:param name="Capabilities"/>
-    		<ctl:assertion>req24:When a WCS server encounters an error while performing a GetKVP DescribeCoverage operation it shall return an exception report message chosen as specified in req 23.</ctl:assertion>
+    		<ctl:assertion>req24:When a WCS server encounters an error while performing a GetKVP DescribeCoverage operation it shall return an exception report message chosen as specified.</ctl:assertion>
     		<ctl:code>
      			<xsl:variable name="DescribeCoverage">
 				<ctl:request>
@@ -1847,7 +1847,7 @@
 	<ctl:test name="wcs2:soap-core-req24">
 	    	<ctl:param name="Capabilities"/>
 	    	<ctl:param name="url"/>
-	    	<ctl:assertion>req24:When a WCS server encounters an error while performing a SOAP DescribeCoverage operation it shall return an exception report message chosen as specified in req 23.</ctl:assertion>
+	    	<ctl:assertion>req24:When a WCS server encounters an error while performing a SOAP DescribeCoverage operation it shall return an exception report message chosen as specified.</ctl:assertion>
     		<ctl:code>
        			<xsl:variable name="DescribeCoverage">
 				<ctl:soap-request version="1.2" charset="UTF-8">
