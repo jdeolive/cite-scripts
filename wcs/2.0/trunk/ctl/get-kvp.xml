@@ -53,7 +53,11 @@
 	  				<ctl:call-test name="wcs2:get-kvp-req8">
 	    					<ctl:with-param name="url" select="$url"/>
 	    					<ctl:with-param name="Capabilities" select="$Capabilities"/>
-	  				</ctl:call-test>	  
+	  				</ctl:call-test>	
+	  				<ctl:call-test name="wcs2:get-kvp-req9">
+	    					<ctl:with-param name="url" select="$url"/>
+	    					<ctl:with-param name="Capabilities" select="$Capabilities"/>
+	  				</ctl:call-test>					  
         			</xsl:when>
         			<xsl:otherwise>
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
@@ -472,15 +476,125 @@
 			</xsl:choose> 
     		</ctl:code>
   	</ctl:test> 
-
-<!--req4-->  
-    
+	
+<!--req4-->
 	<ctl:test name="wcs2:get-kvp-req4">
     		<ctl:param name="url"/>
+    		<ctl:param name="Capabilities"/> 		
+   		<ctl:assertion>Req4: Operation responses shall include the Content-Type header field as defined by IETF RFC 2616.</ctl:assertion>
+    		<ctl:code>        
+      			<xsl:variable name="Capabilities">
+       			<ctl:request>
+          			<ctl:url>
+            				<xsl:value-of select="$url"/>
+          			</ctl:url>
+          			<ctl:method>get</ctl:method>
+          			<ctl:param name="service">WCS</ctl:param>
+          			<ctl:param name="request">GetCapabilities</ctl:param>
+                                <ctlp:HTTPParser>
+                                  <ctlp:parse mime="application/gml+xml">
+				      <ctlp:XMLValidatingParser>
+	       				    <ctlp:schemas>
+                      				 <ctlp:schema type="resource">wcs/2.0/wcsGetCapabilities.xsd</ctlp:schema>
+					    </ctlp:schemas>
+				      </ctlp:XMLValidatingParser>
+				  </ctlp:parse>
+			        </ctlp:HTTPParser>	
+		     
+           		</ctl:request>
+      			</xsl:variable>
+      			<xsl:choose>
+  				<xsl:when test="string-length($Capabilities)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+  				</xsl:when>
+  				<xsl:otherwise>
+        				<xsl:if test="empty($Capabilities//wcs:Capabilities)">
+           					<ctl:message>[FAILURE] Send a valid getCapabilities request, and the result should contain a wcs:Capabilities in application/gml+xml.</ctl:message>
+           					<ctl:fail/>
+        				</xsl:if>  
+  				</xsl:otherwise>
+			</xsl:choose>  
+			
+       			<xsl:variable name="DescribeCoverage">
+         			<ctl:request>
+           				<ctl:url>
+               					<xsl:value-of select="$url"/>
+           				</ctl:url>
+           				<ctl:method>get</ctl:method>
+           				<ctl:param name="service">WCS</ctl:param>
+           				<ctl:param name="VERSION">2.0</ctl:param>           
+           				<ctl:param name="request">DescribeCoverage</ctl:param>      
+           				<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
+           				
+                                        <ctlp:HTTPParser>
+                                          <ctlp:parse mime="application/gml+xml">
+        				      <ctlp:XMLValidatingParser>
+	               				    <ctlp:schemas>
+                              				 <ctlp:schema type="resource">wcs/2.0/wcsDescribeCoverage.xsd</ctlp:schema>
+        					    </ctlp:schemas>
+        				      </ctlp:XMLValidatingParser>
+        				  </ctlp:parse>
+        			        </ctlp:HTTPParser>					
+
+           			</ctl:request>
+        		</xsl:variable>
+
+       			<xsl:choose>
+  				<xsl:when test="string-length($DescribeCoverage)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+  				</xsl:when>
+  				<xsl:otherwise>
+        				<xsl:if test="empty($DescribeCoverage//wcs:CoverageDescriptions)">
+          					<ctl:message>[FAILURE] Send a vaid DescribeCoverage request, and the result should contain a wcs:CoverageDescriptions in application/gml+xml.</ctl:message>
+          					<ctl:fail/>
+        				</xsl:if>
+  				</xsl:otherwise>
+			</xsl:choose>  			
+			<xsl:variable name="GetCoverage">
+				<ctl:request>
+					<ctl:url>
+						<xsl:value-of select="$url"/>
+					</ctl:url>
+					<ctl:method>get</ctl:method>
+					<ctl:param name="service">WCS</ctl:param>
+					<ctl:param name="VERSION">2.0</ctl:param>           
+					<ctl:param name="request">GetCoverage</ctl:param>      
+					<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
+                                        <ctlp:HTTPParser>
+                                          <ctlp:parse mime="application/gml+xml">
+        				      <ctlp:XMLValidatingParser>
+	               				    <ctlp:schemas>
+                              				 <ctlp:schema type="resource">wcs/2.0/wcsGetCoverage.xsd</ctlp:schema>
+        					    </ctlp:schemas>
+        				      </ctlp:XMLValidatingParser>
+        				  </ctlp:parse>
+        			        </ctlp:HTTPParser>
+				</ctl:request>
+			</xsl:variable>
+			<xsl:choose>
+				<xsl:when test="string-length($GetCoverage)=0">
+					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
+					<ctl:fail/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:if test="not(empty($GetCoverage//*[local-name()='ExceptionReport']))">
+						<ctl:message>[FAILURE] Send a valid GetCoverage request without both format and mediaType parameters, and the result should be in application/gml+xml.</ctl:message>
+						<ctl:fail/>
+					</xsl:if>
+				</xsl:otherwise>
+			</xsl:choose> 			
+    		</ctl:code>
+  	</ctl:test> 
+<!--req5-->  
+    
+	<ctl:test name="wcs2:get-kvp-req5">
+    		<ctl:param name="url"/>
     		<ctl:param name="Capabilities"/>    
-    		<ctl:assertion>Req4:The response to a successful GetCapabilities request shall be a valid XML document of type wcs:CapabilitiesType.</ctl:assertion>
+    		<ctl:assertion>Req5:The response to a successful GetCapabilities request shall be a valid XML document of type wcs:CapabilitiesType.</ctl:assertion>
     		<ctl:code>
-      			<xsl:variable name="CapabilitiesReq4">
+      			<xsl:variable name="CapabilitiesReq5">
        			<ctl:request>
           			<ctl:url>
             				<xsl:value-of select="$url"/>
@@ -496,12 +610,12 @@
            		</ctl:request>
       			</xsl:variable>
       			<xsl:choose>
-  				<xsl:when test="string-length($CapabilitiesReq4)=0">
+  				<xsl:when test="string-length($CapabilitiesReq5)=0">
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="empty($CapabilitiesReq4//wcs:Capabilities)">
+        				<xsl:if test="empty($CapabilitiesReq5//wcs:Capabilities)">
            					<ctl:message>[FAILURE] Send a valid getCapabilities request, and the result should contain a wcs:Capabilities according to its schema definition.</ctl:message>
            					<ctl:fail/>
         				</xsl:if>  
@@ -512,14 +626,14 @@
      		</ctl:code>
      	</ctl:test>  
   
-<!--req5-->  
+<!--req6-->  
     
-	<ctl:test name="wcs2:get-kvp-req5">
+	<ctl:test name="wcs2:get-kvp-req6">
     		<ctl:param name="url"/>
     		<ctl:param name="Capabilities"/>    
-    		<ctl:assertion>Req5:The KVP encoding of a DescribeCoverage request shall be as defined in the specification.</ctl:assertion>
+    		<ctl:assertion>Req6:The KVP encoding of a DescribeCoverage request shall be as defined in the specification.</ctl:assertion>
     		<ctl:code>
-       			<xsl:variable name="DescribeCoverageReq5">
+       			<xsl:variable name="DescribeCoverageReq6">
          			<ctl:request>
            				<ctl:url>
                					<xsl:value-of select="$url"/>
@@ -538,19 +652,19 @@
         		</xsl:variable>
 
        			<xsl:choose>
-  				<xsl:when test="string-length($DescribeCoverageReq5)=0">
+  				<xsl:when test="string-length($DescribeCoverageReq6)=0">
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="empty($DescribeCoverageReq5//wcs:CoverageDescriptions)">
+        				<xsl:if test="empty($DescribeCoverageReq6//wcs:CoverageDescriptions)">
           					<ctl:message>[FAILURE] Send a DescribeCoverage request in lower case keys, and the result should contain a wcs:CoverageDescriptions.</ctl:message>
           					<ctl:fail/>
         				</xsl:if>
   				</xsl:otherwise>
 			</xsl:choose>        		
 
-       			<xsl:variable name="DescribeCoverageReq5">
+       			<xsl:variable name="DescribeCoverageReq6">
          			<ctl:request>
            				<ctl:url>
                					<xsl:value-of select="$url"/>
@@ -568,12 +682,12 @@
            			</ctl:request>
         		</xsl:variable>
        			<xsl:choose>
-  				<xsl:when test="string-length($DescribeCoverageReq5)=0">
+  				<xsl:when test="string-length($DescribeCoverageReq6)=0">
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="empty($DescribeCoverageReq5//wcs:CoverageDescriptions)">
+        				<xsl:if test="empty($DescribeCoverageReq6//wcs:CoverageDescriptions)">
           					<ctl:message>[FAILURE] Send a DescribeCoverage request in upper case keys, and the result should contain a wcs:CoverageDescriptions.</ctl:message>
           					<ctl:fail/>
         				</xsl:if>
@@ -581,7 +695,7 @@
 			</xsl:choose>         		
 
         
-       			<xsl:variable name="DescribeCoverageReq5">
+       			<xsl:variable name="DescribeCoverageReq6">
          			<ctl:request>
            				<ctl:url>
                					<xsl:value-of select="$url"/>
@@ -599,12 +713,12 @@
            			</ctl:request>
         		</xsl:variable>
        			<xsl:choose>
-  				<xsl:when test="string-length($DescribeCoverageReq5)=0">
+  				<xsl:when test="string-length($DescribeCoverageReq6)=0">
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="empty($DescribeCoverageReq5//wcs:CoverageDescriptions)">
+        				<xsl:if test="empty($DescribeCoverageReq6//wcs:CoverageDescriptions)">
           					<ctl:message>[FAILURE] Send a DescribeCoverage request in mixed case keys, and the result should contain a wcs:CoverageDescriptions.</ctl:message>
           					<ctl:fail/>
         				</xsl:if>  
@@ -614,18 +728,18 @@
      		</ctl:code>
   	</ctl:test>   
   
-<!--req6-->  
+<!--req7-->  
 
-	<ctl:test name="wcs2:get-kvp-req6">
+	<ctl:test name="wcs2:get-kvp-re7">
     		<ctl:param name="url"/>
     		<ctl:param name="Capabilities"/>    
-    		<ctl:assertion>Req6:The KVP encoding of a GetCoverage request shall be as defined in the specification.</ctl:assertion>
+    		<ctl:assertion>Req7:The KVP encoding of a GetCoverage request shall be as defined in the specification.</ctl:assertion>
     		<ctl:code>
 			<xsl:choose>
 				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
 
      		
-					<xsl:variable name="GetCoverageReq6">
+					<xsl:variable name="GetCoverageReq7">
 						<ctl:request>
 							<ctl:url>
 								<xsl:value-of select="$url"/>
@@ -643,12 +757,12 @@
 						</ctl:request>
 					</xsl:variable>
 					<xsl:choose>
-						<xsl:when test="string-length($GetCoverageReq6)=0">
+						<xsl:when test="string-length($GetCoverageReq7)=0">
 							<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 							<ctl:fail/>
 						</xsl:when>
 						<xsl:otherwise>
-							<xsl:if test="not(empty($GetCoverageReq6//*[local-name()='ExceptionReport']))">
+							<xsl:if test="not(empty($GetCoverageReq7//*[local-name()='ExceptionReport']))">
 								<ctl:message>[FAILURE] Send a GetCoverage request in lower case keys, and the result should not be an ows:ExceptionReport.</ctl:message>
 								<ctl:fail/>
 							</xsl:if>
@@ -656,7 +770,7 @@
 					</xsl:choose>         		
 
 
-					<xsl:variable name="GetCoverageReq6">
+					<xsl:variable name="GetCoverageReq7">
 						<ctl:request>
 							<ctl:url>
 								<xsl:value-of select="$url"/>
@@ -674,12 +788,12 @@
 						</ctl:request>
 					</xsl:variable>
 					<xsl:choose>
-						<xsl:when test="string-length($GetCoverageReq6)=0">
+						<xsl:when test="string-length($GetCoverageReq7)=0">
 							<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 							<ctl:fail/>
 						</xsl:when>
 						<xsl:otherwise>
-							<xsl:if test="not(empty($GetCoverageReq6//*[local-name()='ExceptionReport']))">
+							<xsl:if test="not(empty($GetCoverageReq7//*[local-name()='ExceptionReport']))">
 								<ctl:message>[FAILURE] Send a GetCoverage request in lower case keys, and the result should not be an ows:ExceptionReport.</ctl:message>
 								<ctl:fail/>
 							</xsl:if>
@@ -687,7 +801,7 @@
 					</xsl:choose>         		
 
 
-					<xsl:variable name="GetCoverageReq6">
+					<xsl:variable name="GetCoverageReq7">
 						<ctl:request>
 							<ctl:url>
 								<xsl:value-of select="$url"/>
@@ -705,12 +819,12 @@
 						</ctl:request>
 					</xsl:variable>
 					<xsl:choose>
-						<xsl:when test="string-length($GetCoverageReq6)=0">
+						<xsl:when test="string-length($GetCoverageReq7)=0">
 							<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 							<ctl:fail/>
 						</xsl:when>
 						<xsl:otherwise>
-							<xsl:if test="not(empty($GetCoverageReq6//*[local-name()='ExceptionReport']))">
+							<xsl:if test="not(empty($GetCoverageReq7//*[local-name()='ExceptionReport']))">
 								<ctl:message>[FAILURE] Send a GetCoverage request in lower case keys, and the result should not be an ows:ExceptionReport.</ctl:message>
 								<ctl:fail/>
 							</xsl:if>
@@ -725,11 +839,11 @@
      		</ctl:code>
   	</ctl:test>
   
-<!--req7-->  
-	<ctl:test name="wcs2:get-kvp-req7">
+<!--req8-->  
+	<ctl:test name="wcs2:get-kvp-req8">
     		<ctl:param name="url"/>
     		<ctl:param name="Capabilities"/>    
-    		<ctl:assertion>Req7:getCoverage request subset shall adhere to the EBNF syntax as specified in the specification.</ctl:assertion>
+    		<ctl:assertion>Req8:getCoverage request subset shall adhere to the EBNF syntax as specified in the specification.</ctl:assertion>
     		<ctl:code>
        			<xsl:variable name="DescribeCoverage">
          			<ctl:request>
@@ -765,7 +879,7 @@
 			<xsl:choose>
 				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
 
-					<xsl:variable name="GetCoverageReq7">
+					<xsl:variable name="GetCoverageReq8">
 						<ctl:request>
 							<ctl:url>
 								<xsl:value-of select="$url"/>
@@ -783,12 +897,12 @@
 						</ctl:request>
 					</xsl:variable>
 					<xsl:choose>
-						<xsl:when test="string-length($GetCoverageReq7)=0">
+						<xsl:when test="string-length($GetCoverageReq8)=0">
 							<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 							<ctl:fail/>
 						</xsl:when>
 						<xsl:otherwise>
-							<xsl:if test="not(empty($GetCoverageReq7//*[local-name()='ExceptionReport']))">
+							<xsl:if test="not(empty($GetCoverageReq8//*[local-name()='ExceptionReport']))">
 								<ctl:message>[FAILURE] send a valid getCoverage request without a subsetting parameter, and the result should not be an ows:ExceptionReport.</ctl:message>
 								<ctl:fail/>
 							</xsl:if>
@@ -796,9 +910,8 @@
 					</xsl:choose>        		
 
 		<!--send a valid getCoverage request with one trimming and without a slicing-->
-					<xsl:choose>
-						<xsl:when test="not(contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'crs') )">       
-							<xsl:variable name="GetCoverageReq7">
+  
+							<xsl:variable name="GetCoverageReq8">
 								<ctl:request>
 									<ctl:url>
 										<xsl:value-of select="$url"/>
@@ -817,57 +930,21 @@
 								</ctl:request>
 							</xsl:variable>
 							<xsl:choose>
-								<xsl:when test="string-length($GetCoverageReq7)=0">
+								<xsl:when test="string-length($GetCoverageReq8)=0">
 									<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 									<ctl:fail/>
 								</xsl:when>
 								<xsl:otherwise>
-									<xsl:if test="not(empty($GetCoverageReq7//*[local-name()='ExceptionReport']))">
+									<xsl:if test="not(empty($GetCoverageReq8//*[local-name()='ExceptionReport']))">
 										<ctl:message>[FAILURE] Send a valid getCoverage request with one trimming and without a slicing, and the result should not be an ows:ExceptionReport.</ctl:message>
 										<ctl:fail/>
 									</xsl:if>  
 								</xsl:otherwise>
 							</xsl:choose>               				
 
-						</xsl:when>	  
-						<xsl:otherwise>
-							<xsl:variable name="GetCoverageReq7">
-								<ctl:request>
-									<ctl:url>
-										<xsl:value-of select="$url"/>
-									</ctl:url>
-									<ctl:method>get</ctl:method>
-									<ctl:param name="service">WCS</ctl:param>
-									<ctl:param name="VERSION">2.0</ctl:param>           
-									<ctl:param name="request">GetCoverage</ctl:param>      
-									<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-									<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[1]"/>,$DescribeCoverage//@srsName[1](<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1])"/>,<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope']/*[local-name()='lowerCorner'][1]),' ')[1])"/>)</ctl:param>             
-									<ctlp:XMLValidatingParser>
-										<ctlp:schemas>
-											<ctlp:schema type="resource">wcs/2.0/wcsGetCoverage.xsd</ctlp:schema>
-										</ctlp:schemas>
-									</ctlp:XMLValidatingParser>
-								</ctl:request>
-							</xsl:variable>
-							<xsl:choose>
-								<xsl:when test="string-length($GetCoverageReq7)=0">
-									<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
-									<ctl:fail/>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:if test="not(empty($GetCoverageReq7//*[local-name()='ExceptionReport']))">
-										<ctl:message>[FAILURE] Send a valid getCoverage request with one trimming and without a slicing, and the result should not be an ows:ExceptionReport.</ctl:message>
-										<ctl:fail/>
-									</xsl:if>  
-								</xsl:otherwise>
-							</xsl:choose>              				
-
-						</xsl:otherwise>
-					</xsl:choose>
 		<!--send a valid getCoverage request with more trimmings and without a slicing-->	
-					<xsl:choose>
-						<xsl:when test="not(contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'crs') )">       
-							<xsl:variable name="GetCoverageReq7">
+			      
+							<xsl:variable name="GetCoverageReq8">
 								<ctl:request>
 									<ctl:url>
 										<xsl:value-of select="$url"/>
@@ -877,36 +954,38 @@
 									<ctl:param name="VERSION">2.0</ctl:param>           
 									<ctl:param name="request">GetCoverage</ctl:param>      
 									<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-									<xsl:call-template name="for-loop-req7_1">
+									<xsl:call-template name="for-loop-req8_1">
 										<xsl:with-param name="i">1</xsl:with-param> 
-										<xsl:with-param name="count"> 
+										<xsl:with-param name="count"> 										
 											<xsl:value-of select="number($DescribeCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/@srsDimension)" />
 										</xsl:with-param>  
-										<xsl:with-param name="DescribeCoverage">
-											<xsl:value-of select="$DescribeCoverage" />
-										</xsl:with-param>  	      
+										<xsl:with-param name="axisLabels" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels"/>
+										<xsl:with-param name="low" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]"/>
+										<xsl:with-param name="high" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='upperCorner'][1]"/>	      
 									</xsl:call-template>
-									<xsl:template name="for-loop-req7_1">
+									<xsl:template name="for-loop-req8_1">
 										<xsl:param name="i" as="xs:integer"/>
 										<xsl:param name="count" as="xs:integer"/>
-										<xsl:param name="DescribeCoverage"/>
+										<xsl:param name="axisLabels"/>
+										<xsl:param name="low"/>
+										<xsl:param name="high"/>
 										<xsl:if test="$i &lt;= $count">          
-											<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[$i]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[$i])"/>,<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[$i])"/>)</ctl:param>                               
+											<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($axisLabels),' ')[$i]"/>(<xsl:value-of  select="number(tokenize(normalize-space($low),' ')[$i])"/>,<xsl:value-of  select="number(tokenize(normalize-space($high),' ')[$i])"/>)</ctl:param>                               
 										</xsl:if>
 										<xsl:if test="$i &lt;= $count">
-											<xsl:call-template name="for-loop-req7_1">
+											<xsl:call-template name="for-loop-req8_1">
 												<xsl:with-param name="i">
 													<xsl:value-of select="$i + 1"/>
 												</xsl:with-param>
 												<xsl:with-param name="count">
 													<xsl:value-of select="$count"/>
 												</xsl:with-param>
-												<xsl:with-param name="DescribeCoverage">
-													<xsl:value-of select="$DescribeCoverage" />
-												</xsl:with-param>												
+												<xsl:with-param name="axisLabels" select="$axisLabels"/>
+												<xsl:with-param name="low" select="$low"/>
+												<xsl:with-param name="high" select="$high"/>		
 											</xsl:call-template>
 										</xsl:if>      
-									</xsl:template>	
+									</xsl:template>		
 									<ctlp:XMLValidatingParser>
 										<ctlp:schemas>
 											<ctlp:schema type="resource">wcs/2.0/wcsGetCoverage.xsd</ctlp:schema>
@@ -915,86 +994,21 @@
 								</ctl:request>
 							</xsl:variable>
 							<xsl:choose>
-								<xsl:when test="string-length($GetCoverageReq7)=0">
+								<xsl:when test="string-length($GetCoverageReq8)=0">
 									<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 									<ctl:fail/>
 								</xsl:when>
 								<xsl:otherwise>
-									<xsl:if test="not(empty($GetCoverageReq7//*[local-name()='ExceptionReport']))">
+									<xsl:if test="not(empty($GetCoverageReq8//*[local-name()='ExceptionReport']))">
 										<ctl:message>[FAILURE] Send a valid getCoverage request with two trimmings and without a slicing, and the result should not be an ows:ExceptionReport.</ctl:message>
 										<ctl:fail/>
 									</xsl:if>   
 								</xsl:otherwise>
 							</xsl:choose>            				
 
-						</xsl:when>	  
-						<xsl:otherwise>
-							<xsl:variable name="GetCoverageReq7">
-								<ctl:request>
-									<ctl:url>
-										<xsl:value-of select="$url"/>
-									</ctl:url>
-									<ctl:method>get</ctl:method>
-									<ctl:param name="service">WCS</ctl:param>
-									<ctl:param name="VERSION">2.0</ctl:param>           
-									<ctl:param name="request">GetCoverage</ctl:param>      
-									<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-									<xsl:call-template name="for-loop-req7_2">
-										<xsl:with-param name="i">1</xsl:with-param> 
-										<xsl:with-param name="count"> 
-											<xsl:value-of select="number($DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@srsDimension]/@srsDimension)" />
-										</xsl:with-param>  
-										<xsl:with-param name="DescribeCoverage">
-											<xsl:value-of select="$DescribeCoverage" />
-										</xsl:with-param>  	      
-									</xsl:call-template>
-									<xsl:template name="for-loop-req7_2">
-										<xsl:param name="i" as="xs:integer"/>
-										<xsl:param name="count" as="xs:integer"/>
-										<xsl:param name="DescribeCoverage"/>
-										<xsl:if test="$i &lt;= $count">          
-											<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[$i]"/>,$DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@srsName]/@srsName[1](<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[$i])"/>,<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[$i])"/>)</ctl:param>                       
-										</xsl:if>
-										<xsl:if test="$i &lt;= $count">
-											<xsl:call-template name="for-loop-req7_2">
-												<xsl:with-param name="i">
-													<xsl:value-of select="$i + 1"/>
-												</xsl:with-param>
-												<xsl:with-param name="count">
-													<xsl:value-of select="$count"/>
-												</xsl:with-param>
-												<xsl:with-param name="DescribeCoverage">
-													<xsl:value-of select="$DescribeCoverage" />
-												</xsl:with-param>												
-											</xsl:call-template>
-										</xsl:if>      
-									</xsl:template>               
-									<ctlp:XMLValidatingParser>
-										<ctlp:schemas>
-											<ctlp:schema type="resource">wcs/2.0/wcsGetCoverage.xsd</ctlp:schema>
-										</ctlp:schemas>
-									</ctlp:XMLValidatingParser>
-								</ctl:request>
-							</xsl:variable>
-							<xsl:choose>
-								<xsl:when test="string-length($GetCoverageReq7)=0">
-									<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
-									<ctl:fail/>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:if test="not(empty($GetCoverageReq7//*[local-name()='ExceptionReport']))">
-										<ctl:message>[FAILURE] Send a valid getCoverage request with two trimmings and without a slicing, and the result should not be an ows:ExceptionReport.</ctl:message>
-										<ctl:fail/>
-									</xsl:if>  
-								</xsl:otherwise>
-							</xsl:choose>            				
-
-						</xsl:otherwise>
-					</xsl:choose>
 		<!--send a valid getCoverage request with one slicing and without a trimming-->
-					<xsl:choose>
-						<xsl:when test="not(contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'crs') )">    
-							<xsl:variable name="GetCoverageReq7">
+			  
+							<xsl:variable name="GetCoverageReq8">
 								<ctl:request>
 									<ctl:url>
 										<xsl:value-of select="$url"/>
@@ -1013,57 +1027,21 @@
 								</ctl:request>
 							</xsl:variable>
 							<xsl:choose>
-								<xsl:when test="string-length($GetCoverageReq7)=0">
+								<xsl:when test="string-length($GetCoverageReq8)=0">
 									<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 									<ctl:fail/>
 								</xsl:when>
 								<xsl:otherwise>
-									<xsl:if test="not(empty($GetCoverageReq7//*[local-name()='ExceptionReport']))">
+									<xsl:if test="not(empty($GetCoverageReq8//*[local-name()='ExceptionReport']))">
 										<ctl:message>[FAILURE] send a valid getCoverage request with one slicing and without a trimming, and the result should not be an ows:ExceptionReport.</ctl:message>
 										<ctl:fail/>
 									</xsl:if> 
 								</xsl:otherwise>
 							</xsl:choose>             				
 
-						</xsl:when>	  
-						<xsl:otherwise>
-							<xsl:variable name="GetCoverageReq7">
-								<ctl:request>
-									<ctl:url>
-										<xsl:value-of select="$url"/>
-									</ctl:url>
-									<ctl:method>get</ctl:method>
-									<ctl:param name="service">WCS</ctl:param>
-									<ctl:param name="VERSION">2.0</ctl:param>           
-									<ctl:param name="request">GetCoverage</ctl:param>      
-									<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-									<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[1]"/>,$DescribeCoverage//@srsName[1](<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1])"/>)</ctl:param>             
-									<ctlp:XMLValidatingParser>
-										<ctlp:schemas>
-											<ctlp:schema type="resource">wcs/2.0/wcsGetCoverage.xsd</ctlp:schema>
-										</ctlp:schemas>
-									</ctlp:XMLValidatingParser>
-								</ctl:request>
-							</xsl:variable>
-							<xsl:choose>
-								<xsl:when test="string-length($GetCoverageReq7)=0">
-									<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
-									<ctl:fail/>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:if test="not(empty($GetCoverageReq7//*[local-name()='ExceptionReport']))">
-										<ctl:message>[FAILURE] Send a valid getCoverage request with one slicing and without a trimming, and the result should not be an ows:ExceptionReport.</ctl:message>
-										<ctl:fail/>
-									</xsl:if> 
-								</xsl:otherwise>
-							</xsl:choose>            				
-
-						</xsl:otherwise>
-					</xsl:choose>
 		<!--send a valid getCoverage request with more slicings and without a trimming-->	
-					<xsl:choose>
-						<xsl:when test="not(contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'crs') )">      
-							<xsl:variable name="GetCoverageReq7">
+			   
+							<xsl:variable name="GetCoverageReq8">
 								<ctl:request>
 									<ctl:url>
 										<xsl:value-of select="$url"/>
@@ -1073,33 +1051,35 @@
 									<ctl:param name="VERSION">2.0</ctl:param>           
 									<ctl:param name="request">GetCoverage</ctl:param>      
 									<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-									<xsl:call-template name="for-loop-req7_3">
+									<xsl:call-template name="for-loop-req8_2">
 										<xsl:with-param name="i">1</xsl:with-param> 
-										<xsl:with-param name="count"> 
-											<xsl:value-of select="number($DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@srsDimension]/@srsDimension)" />
+										<xsl:with-param name="count"> 										
+											<xsl:value-of select="number($DescribeCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/@srsDimension)" />
 										</xsl:with-param>  
-										<xsl:with-param name="DescribeCoverage">
-											<xsl:value-of select="$DescribeCoverage" />
-										</xsl:with-param>  	      
+										<xsl:with-param name="axisLabels" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels"/>
+										<xsl:with-param name="low" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]"/>
+										<xsl:with-param name="high" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='upperCorner'][1]"/>	      
 									</xsl:call-template>
-									<xsl:template name="for-loop-req7_3">
+									<xsl:template name="for-loop-req8_2">
 										<xsl:param name="i" as="xs:integer"/>
 										<xsl:param name="count" as="xs:integer"/>
-										<xsl:param name="DescribeCoverage"/>
+										<xsl:param name="axisLabels"/>
+										<xsl:param name="low"/>
+										<xsl:param name="high"/>
 										<xsl:if test="$i &lt;= $count">          
-											<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[$i]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[$i])"/>)</ctl:param>         
+											<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($axisLabels),' ')[$i]"/>(<xsl:value-of  select="number(tokenize(normalize-space($low),' ')[$i])"/>)</ctl:param>                               
 										</xsl:if>
 										<xsl:if test="$i &lt;= $count">
-											<xsl:call-template name="for-loop-req7_3">
+											<xsl:call-template name="for-loop-req8_2">
 												<xsl:with-param name="i">
 													<xsl:value-of select="$i + 1"/>
 												</xsl:with-param>
 												<xsl:with-param name="count">
 													<xsl:value-of select="$count"/>
 												</xsl:with-param>
-												<xsl:with-param name="DescribeCoverage">
-													<xsl:value-of select="$DescribeCoverage" />
-												</xsl:with-param>												
+												<xsl:with-param name="axisLabels" select="$axisLabels"/>
+												<xsl:with-param name="low" select="$low"/>
+												<xsl:with-param name="high" select="$high"/>		
 											</xsl:call-template>
 										</xsl:if>      
 									</xsl:template>
@@ -1111,86 +1091,21 @@
 								</ctl:request>
 							</xsl:variable>
 							<xsl:choose>
-								<xsl:when test="string-length($GetCoverageReq7)=0">
+								<xsl:when test="string-length($GetCoverageReq8)=0">
 									<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 									<ctl:fail/>
 								</xsl:when>
 								<xsl:otherwise>
-									<xsl:if test="not(empty($GetCoverageReq7//*[local-name()='ExceptionReport']))">
+									<xsl:if test="not(empty($GetCoverageReq8//*[local-name()='ExceptionReport']))">
 										<ctl:message>[FAILURE] Send a valid getCoverage request with two slicings and without a trimming, and the result should not be an ows:ExceptionReport.</ctl:message>
 										<ctl:fail/>
 									</xsl:if> 
 								</xsl:otherwise>
 							</xsl:choose>             				
 
-						</xsl:when>	  
-						<xsl:otherwise>
-							<xsl:variable name="GetCoverageReq7">
-								<ctl:request>
-									<ctl:url>
-										<xsl:value-of select="$url"/>
-									</ctl:url>
-									<ctl:method>get</ctl:method>
-									<ctl:param name="service">WCS</ctl:param>
-									<ctl:param name="VERSION">2.0</ctl:param>           
-									<ctl:param name="request">GetCoverage</ctl:param>      
-									<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-									<xsl:call-template name="for-loop-req7_4">
-										<xsl:with-param name="i">1</xsl:with-param> 
-										<xsl:with-param name="count"> 
-											<xsl:value-of select="number($DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@srsDimension]/@srsDimension)" />
-										</xsl:with-param>  
-										<xsl:with-param name="DescribeCoverage">
-											<xsl:value-of select="$DescribeCoverage" />
-										</xsl:with-param>  	      
-									</xsl:call-template>
-									<xsl:template name="for-loop-req7_4">
-										<xsl:param name="i" as="xs:integer"/>
-										<xsl:param name="count" as="xs:integer"/>
-										<xsl:param name="DescribeCoverage"/>
-										<xsl:if test="$i &lt;= $count">          
-											<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[$i]"/>,$DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@srsName]/@srsName[1](<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[$i])"/>)</ctl:param>         
-										</xsl:if>
-										<xsl:if test="$i &lt;= $count">
-											<xsl:call-template name="for-loop-req7_4">
-												<xsl:with-param name="i">
-													<xsl:value-of select="$i + 1"/>
-												</xsl:with-param>
-												<xsl:with-param name="count">
-													<xsl:value-of select="$count"/>
-												</xsl:with-param>
-												<xsl:with-param name="DescribeCoverage">
-													<xsl:value-of select="$DescribeCoverage" />
-												</xsl:with-param>												
-											</xsl:call-template>
-										</xsl:if>      
-									</xsl:template>
-									<ctlp:XMLValidatingParser>
-										<ctlp:schemas>
-											<ctlp:schema type="resource">wcs/2.0/wcsGetCoverage.xsd</ctlp:schema>
-										</ctlp:schemas>
-									</ctlp:XMLValidatingParser>
-								</ctl:request>
-							</xsl:variable>
-							<xsl:choose>
-								<xsl:when test="string-length($GetCoverageReq7)=0">
-									<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
-									<ctl:fail/>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:if test="not(empty($GetCoverageReq7//*[local-name()='ExceptionReport']))">
-										<ctl:message>[FAILURE] Send a valid getCoverage request with two slicings and without a trimming, and the result should not be an ows:ExceptionReport.</ctl:message>
-										<ctl:fail/>
-									</xsl:if>  
-								</xsl:otherwise>
-							</xsl:choose>            				
-
-						</xsl:otherwise>
-					</xsl:choose>
 		<!--send trim operations with trim coordinates and with * for low and high bound-->        
-					<xsl:choose>
-						<xsl:when test="not(contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'crs') )">       
-							<xsl:variable name="GetCoverageReq7">
+			      
+							<xsl:variable name="GetCoverageReq8">
 								<ctl:request>
 									<ctl:url>
 										<xsl:value-of select="$url"/>
@@ -1200,33 +1115,35 @@
 									<ctl:param name="VERSION">2.0</ctl:param>           
 									<ctl:param name="request">GetCoverage</ctl:param>      
 									<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-									<xsl:call-template name="for-loop-req7_5">
+									<xsl:call-template name="for-loop-req8_3">
 										<xsl:with-param name="i">1</xsl:with-param> 
-										<xsl:with-param name="count"> 
-											<xsl:value-of select="number($DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@srsDimension]/@srsDimension)" />
+										<xsl:with-param name="count"> 										
+											<xsl:value-of select="number($DescribeCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/@srsDimension)" />
 										</xsl:with-param>  
-										<xsl:with-param name="DescribeCoverage">
-											<xsl:value-of select="$DescribeCoverage" />
-										</xsl:with-param>  	      
+										<xsl:with-param name="axisLabels" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels"/>
+										<xsl:with-param name="low" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]"/>
+										<xsl:with-param name="high" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='upperCorner'][1]"/>	      
 									</xsl:call-template>
-									<xsl:template name="for-loop-req7_5">
+									<xsl:template name="for-loop-req8_3">
 										<xsl:param name="i" as="xs:integer"/>
 										<xsl:param name="count" as="xs:integer"/>
-										<xsl:param name="DescribeCoverage"/>
+										<xsl:param name="axisLabels"/>
+										<xsl:param name="low"/>
+										<xsl:param name="high"/>
 										<xsl:if test="$i &lt;= $count">          
-											<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[$i]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[$i])"/>,*)</ctl:param>                               
+											<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($axisLabels),' ')[$i]"/>(<xsl:value-of  select="number(tokenize(normalize-space($low),' ')[$i])"/>,*)</ctl:param>                               
 										</xsl:if>
 										<xsl:if test="$i &lt;= $count">
-											<xsl:call-template name="for-loop-req7_5">
+											<xsl:call-template name="for-loop-req8_3">
 												<xsl:with-param name="i">
 													<xsl:value-of select="$i + 1"/>
 												</xsl:with-param>
 												<xsl:with-param name="count">
 													<xsl:value-of select="$count"/>
 												</xsl:with-param>
-												<xsl:with-param name="DescribeCoverage">
-													<xsl:value-of select="$DescribeCoverage" />
-												</xsl:with-param>												
+												<xsl:with-param name="axisLabels" select="$axisLabels"/>
+												<xsl:with-param name="low" select="$low"/>
+												<xsl:with-param name="high" select="$high"/>		
 											</xsl:call-template>
 										</xsl:if>      
 									</xsl:template>	
@@ -1239,84 +1156,18 @@
 								</ctl:request>
 							</xsl:variable>
 							<xsl:choose>
-								<xsl:when test="string-length($GetCoverageReq7)=0">
+								<xsl:when test="string-length($GetCoverageReq8)=0">
 									<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 									<ctl:fail/>
 								</xsl:when>
 								<xsl:otherwise>
-									<xsl:if test="not(empty($GetCoverageReq7//*[local-name()='ExceptionReport']))">
+									<xsl:if test="not(empty($GetCoverageReq8//*[local-name()='ExceptionReport']))">
 										<ctl:message>[FAILURE] Send a valid getCoverage request with two trimmings and without a slicing, and the result should not be an ows:ExceptionReport.</ctl:message>
 										<ctl:fail/>
 									</xsl:if>  
 								</xsl:otherwise>
 							</xsl:choose>            				
 
-						</xsl:when>	  
-						<xsl:otherwise>
-							<xsl:variable name="GetCoverageReq7">
-								<ctl:request>
-									<ctl:url>
-										<xsl:value-of select="$url"/>
-									</ctl:url>
-									<ctl:method>get</ctl:method>
-									<ctl:param name="service">WCS</ctl:param>
-									<ctl:param name="VERSION">2.0</ctl:param>           
-									<ctl:param name="request">GetCoverage</ctl:param>      
-									<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-									<xsl:call-template name="for-loop-req7_6">
-										<xsl:with-param name="i">1</xsl:with-param> 
-										<xsl:with-param name="count"> 
-											<xsl:value-of select="number($DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@srsDimension]/@srsDimension)" />
-										</xsl:with-param>  
-										<xsl:with-param name="DescribeCoverage">
-											<xsl:value-of select="$DescribeCoverage" />
-										</xsl:with-param>  	      
-									</xsl:call-template>
-									<xsl:template name="for-loop-req7_6">
-										<xsl:param name="i" as="xs:integer"/>
-										<xsl:param name="count" as="xs:integer"/>
-										<xsl:param name="DescribeCoverage"/>
-										<xsl:if test="$i &lt;= $count">          
-											<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[$i]"/>,$DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@srsName]/@srsName[1](*,<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[$i])"/>)</ctl:param>                       
-										</xsl:if>
-										<xsl:if test="$i &lt;= $count">
-											<xsl:call-template name="for-loop-req7_6">
-												<xsl:with-param name="i">
-													<xsl:value-of select="$i + 1"/>
-												</xsl:with-param>
-												<xsl:with-param name="count">
-													<xsl:value-of select="$count"/>
-												</xsl:with-param>
-												<xsl:with-param name="DescribeCoverage">
-													<xsl:value-of select="$DescribeCoverage" />
-												</xsl:with-param>												
-											</xsl:call-template>
-										</xsl:if>      
-									</xsl:template>               
-
-									<ctlp:XMLValidatingParser>
-										<ctlp:schemas>
-											<ctlp:schema type="resource">wcs/2.0/wcsGetCoverage.xsd</ctlp:schema>
-										</ctlp:schemas>
-									</ctlp:XMLValidatingParser>
-
-								</ctl:request>
-							</xsl:variable>
-							<xsl:choose>
-								<xsl:when test="string-length($GetCoverageReq7)=0">
-									<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
-									<ctl:fail/>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:if test="not(empty($GetCoverageReq7//*[local-name()='ExceptionReport']))">
-										<ctl:message>[FAILURE] Send a valid getCoverage request with trim coordinates and with * for low and high bound, and the result should not be an ows:ExceptionReport.</ctl:message>
-										<ctl:fail/>
-									</xsl:if>  
-								</xsl:otherwise>
-							</xsl:choose>             				
-
-						</xsl:otherwise>
-					</xsl:choose>
 
 				</xsl:when>
 				<xsl:otherwise>
@@ -1327,13 +1178,13 @@
   	</ctl:test>
   
 <!--req8--> 
-	<ctl:test name="wcs2:get-kvp-req8">
+	<ctl:test name="wcs2:get-kvp-req9">
     		<ctl:param name="url"/>
     		<ctl:param name="Capabilities"/>    
-    		<ctl:assertion>Req8:When a WCS server encounters an error described in column "meaning of exception code" in Table 3 then it shall return the corresponding exception report message with the contents of the locator parameter value as specified in the specification. Test passes if exception is reported according to requirement.</ctl:assertion>
+    		<ctl:assertion>Req9:When a WCS server encounters an error described in column "meaning of exception code" in Table 3 then it shall return the corresponding exception report message with the contents of the locator parameter value as specified in the specification. Test passes if exception is reported according to requirement.</ctl:assertion>
     		<ctl:code>
 <!--The exception test for Capabilities-->    
-      			<xsl:variable name="CapabilitiesReq8">
+      			<xsl:variable name="CapabilitiesReq9">
        				<ctl:request>
           				<ctl:url>
             					<xsl:value-of select="$url"/>
@@ -1351,12 +1202,12 @@
         			</ctl:request>
       			</xsl:variable>
              		<xsl:choose>
-  				<xsl:when test="string-length($CapabilitiesReq8)=0">
+  				<xsl:when test="string-length($CapabilitiesReq9)=0">
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-      					<xsl:for-each select="$CapabilitiesReq8//ows:Exception">
+      					<xsl:for-each select="$CapabilitiesReq9//ows:Exception">
         					<xsl:choose>
       	  						<xsl:when test="./@exceptionCode='InvalidEncodingSyntax'">       
        	        						<xsl:if test="empty(//*[local-name()='ExceptionReport']//*[local-name()='Exception']/@locator)">      	        
@@ -1373,7 +1224,7 @@
 
 <!--The exception test for DescribeCoverage-->   	
 
-       			<xsl:variable name="DescribeCoverageReq8">
+       			<xsl:variable name="DescribeCoverageReq9">
          			<ctl:request>
            				<ctl:url>
                					<xsl:value-of select="$url"/>
@@ -1393,12 +1244,12 @@
          			</ctl:request>
        			</xsl:variable>
               		<xsl:choose>
-  				<xsl:when test="string-length($DescribeCoverageReq8)=0">
+  				<xsl:when test="string-length($DescribeCoverageReq9)=0">
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-      					<xsl:for-each select="$DescribeCoverageReq8//ows:Exception">
+      					<xsl:for-each select="$DescribeCoverageReq9//ows:Exception">
         					<xsl:choose>
       	  						<xsl:when test="./@exceptionCode='InvalidEncodingSyntax'">       
        	       				 			<xsl:if test="empty(//*[local-name()='ExceptionReport']//*[local-name()='Exception']/@locator)">      	        
@@ -1418,7 +1269,7 @@
 			<xsl:choose>
 				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
 
-					<xsl:variable name="GetCoverageReq8">
+					<xsl:variable name="GetCoverageReq9">
 						<ctl:request>
 							<ctl:url>
 								<xsl:value-of select="$url"/>
@@ -1438,12 +1289,12 @@
 						</ctl:request>
 					</xsl:variable>
 					<xsl:choose>
-						<xsl:when test="string-length($GetCoverageReq8)=0">
+						<xsl:when test="string-length($GetCoverageReq9)=0">
 							<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 							<ctl:fail/>
 						</xsl:when>
 						<xsl:otherwise>
-							<xsl:for-each select="$GetCoverageReq8//ows:Exception">
+							<xsl:for-each select="$GetCoverageReq9//ows:Exception">
 								<xsl:choose>
 										<xsl:when test="./@exceptionCode='InvalidEncodingSyntax'">       
 										<xsl:if test="empty(//*[local-name()='ExceptionReport']//*[local-name()='Exception'][@locator]/@locator)">      	        
