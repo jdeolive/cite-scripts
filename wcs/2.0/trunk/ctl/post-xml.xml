@@ -41,7 +41,7 @@
         			</ctl:request>
       			</xsl:variable>
       			<xsl:choose>
-				<xsl:when test="string-length($Capabilities)!=0">
+				<xsl:when test="not(empty($Capabilities))">
 	  				<ctl:call-test name="wcs2:post-xml-req1">
 	    					<ctl:with-param name="Capabilities" select="$Capabilities"/>
 	  				</ctl:call-test>
@@ -146,7 +146,7 @@
         			</ctl:request>
       			</xsl:variable>
       			<xsl:choose>
-  				<xsl:when test="string-length($Capabilities)=0">
+  				<xsl:when test="empty($Capabilities)">
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 					<ctl:fail/>
   				</xsl:when>
@@ -182,12 +182,12 @@
         			</ctl:request>
       			</xsl:variable>
       			<xsl:choose>
-  				<xsl:when test="string-length($Capabilities)=0">
+  				<xsl:when test="empty($Capabilities)">
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-      		  			<xsl:if test="empty($Capabilities//ows:ExceptionReport)">
+      		  			<xsl:if test="empty($Capabilities//*[local-name()='Exception'])">
       		     				<ctl:message>[FAILURE] The result should be an ows:ExceptionReport.</ctl:message>
       		     				<ctl:fail/>
       		  			</xsl:if> 
@@ -229,12 +229,12 @@
          			</ctl:request>
         		</xsl:variable>
     			<xsl:choose>
-  				<xsl:when test="string-length($DescribeCoverage)=0">
+  				<xsl:when test="empty($DescribeCoverage)">
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="not(empty($DescribeCoverage//ows:ExceptionReport))">
+        				<xsl:if test="not(empty($DescribeCoverage//*[local-name()='Exception']))">
         			   		<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
         			   		<ctl:fail/>
         				</xsl:if> 
@@ -267,12 +267,12 @@
          			</ctl:request>
         		</xsl:variable>
        			<xsl:choose>
-  				<xsl:when test="string-length($DescribeCoverage)=0">
+  				<xsl:when test="empty($DescribeCoverage)">
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="empty($DescribeCoverage//ows:ExceptionReport)">
+        				<xsl:if test="empty($DescribeCoverage//*[local-name()='Exception'])">
            					<ctl:message>[FAILURE] The result should be an ows:ExceptionReport.</ctl:message>
            					<ctl:fail/>
         				</xsl:if> 
@@ -316,12 +316,12 @@
 						</ctl:request>
 					</xsl:variable>
 					<xsl:choose>
-						<xsl:when test="string-length($GetCoverage)=0">
+						<xsl:when test="empty($GetCoverage)">
 							<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 							<ctl:fail/>
 						</xsl:when>
 						<xsl:otherwise>
-							<xsl:if test="not(empty($GetCoverage//ows:ExceptionReport))">
+							<xsl:if test="not(empty($GetCoverage//*[local-name()='Exception']))">
 								<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
 								<ctl:fail/>
 							</xsl:if>
@@ -354,12 +354,12 @@
 						</ctl:request>
 					</xsl:variable>
 					<xsl:choose>
-						<xsl:when test="string-length($GetCoverage)=0">
+						<xsl:when test="empty($GetCoverage)">
 							<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 							<ctl:fail/>
 						</xsl:when>
 						<xsl:otherwise>
-							<xsl:if test="empty($GetCoverage//ows:ExceptionReport)">
+							<xsl:if test="empty($GetCoverage//*[local-name()='Exception'])">
 								<ctl:message>[FAILURE] The result should be an ows:ExceptionReport.</ctl:message>
 								<ctl:fail/>
 							</xsl:if> 
@@ -406,7 +406,7 @@
         			</ctl:request>
       			</xsl:variable>
       			<xsl:choose>
-  				<xsl:when test="string-length($Capabilities)=0">
+  				<xsl:when test="empty($Capabilities)">
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 					<ctl:fail/>
   				</xsl:when>
@@ -414,7 +414,7 @@
       					<xsl:for-each select="$Capabilities//ows:Exception">
         					<xsl:choose>
       	  						<xsl:when test="./@exceptionCode='InvalidEncodingSyntax'">       
-       	        						<xsl:if test="empty(//ows:ExceptionReport//*[local-name()='Exception']/@locator)">      	        
+       	        						<xsl:if test="empty(//*[local-name()='Exception']/@locator)">      	        
       		    							<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" >[FAILURE] The violating element is not given</ctl:message>
       		    							<ctl:fail/>
       	        						</xsl:if>      	   
@@ -453,7 +453,7 @@
          			</ctl:request>
         		</xsl:variable>
        			<xsl:choose>
-  				<xsl:when test="string-length($DescribeCoverage)=0">
+  				<xsl:when test="empty($DescribeCoverage)">
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 					<ctl:fail/>
   				</xsl:when>
@@ -461,7 +461,7 @@
       					<xsl:for-each select="$DescribeCoverage//ows:Exception">
         					<xsl:choose>
       	  						<xsl:when test="./@exceptionCode='InvalidEncodingSyntax'">       
-       	        						<xsl:if test="empty(//ows:ExceptionReport//*[local-name()='Exception']/@locator)">      	        
+       	        						<xsl:if test="empty(//*[local-name()='Exception']/@locator)">      	        
       		    							<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" >[FAILURE] The violating element is not given</ctl:message>
       		    							<ctl:fail/>
       	        						</xsl:if>      	   
@@ -501,7 +501,7 @@
 						</ctl:request>
 					</xsl:variable>
 					<xsl:choose>
-						<xsl:when test="string-length($GetCoverage)=0">
+						<xsl:when test="empty($GetCoverage)">
 							<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 							<ctl:fail/>
 						</xsl:when>
@@ -509,7 +509,7 @@
 							<xsl:for-each select="$GetCoverage//ows:Exception">
 								<xsl:choose>
 									<xsl:when test="./@exceptionCode='InvalidEncodingSyntax'">       
-										<xsl:if test="empty(//ows:ExceptionReport//*[local-name()='Exception']/@locator)">      	        
+										<xsl:if test="empty(//*[local-name()='Exception']/@locator)">      	        
 											<ctl:message xmlns:ctl="http://www.occamlab.com/ctl" >[FAILURE] The violating element is not given</ctl:message>
 											<ctl:fail/>
 										</xsl:if>      	   

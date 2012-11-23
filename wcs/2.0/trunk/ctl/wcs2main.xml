@@ -23,7 +23,7 @@
         			</ctl:request>
       			</xsl:variable>      
       			<xsl:choose>
-        			<xsl:when test="string-length($Capabilities)!=0">
+        			<xsl:when test="not(empty($Capabilities))">
          
 					<ctl:message>[MESSAGE] Test the three protocol extensions(GetKVP, PostXML and SOAP) when they are available</ctl:message>
 					<xsl:choose>

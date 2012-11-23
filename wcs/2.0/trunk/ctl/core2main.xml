@@ -38,7 +38,7 @@
       
 <!--Invoke the core tests--> 
 	<xsl:choose>
-        	<xsl:when test="string-length($response)!=0">
+        	<xsl:when test="not(empty($response))">
           		<ctl:call-test name="wcs2:req1-9">
 	    			<ctl:with-param name="url" select="$url"/>
 	    			<ctl:with-param name="Capabilities" select="$response"/>

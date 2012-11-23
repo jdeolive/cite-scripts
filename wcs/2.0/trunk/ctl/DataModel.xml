@@ -76,13 +76,13 @@
             			</ctl:request>
         		</xsl:variable>
     			<xsl:choose>
-  				<xsl:when test="string-length($DescribeCoverage)=0">
+  				<xsl:when test="empty($DescribeCoverage)">
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="not(empty($DescribeCoverage//ows:ExceptionReport))">
-        			   		<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
+        				<xsl:if test="not(empty($DescribeCoverage//*[local-name()='Exception']))">
+        			   		<ctl:message>[FAILURE] The result should not contain an ows:Exception.</ctl:message>
         			   		<ctl:fail/>
         				</xsl:if> 
   				</xsl:otherwise>
@@ -175,7 +175,7 @@
               					</ctl:request>
             				</xsl:variable>
       					<xsl:choose>
-  						<xsl:when test="string-length($Capabilities)=0">
+  						<xsl:when test="empty($Capabilities)">
 							<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 							<ctl:fail/>
   						</xsl:when>
@@ -212,13 +212,13 @@
               					</ctl:request>
             				</xsl:variable>
     					<xsl:choose>
-  						<xsl:when test="string-length($DescribeCoverage)=0">
+  						<xsl:when test="empty($DescribeCoverage)">
 							<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 							<ctl:fail/>
   						</xsl:when>
   						<xsl:otherwise>
-        						<xsl:if test="not(empty($DescribeCoverage//ows:ExceptionReport))">
-        			   				<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
+        						<xsl:if test="not(empty($DescribeCoverage//*[local-name()='Exception']))">
+        			   				<ctl:message>[FAILURE] The result should not contain an ows:Exception.</ctl:message>
         			   				<ctl:fail/>
         						</xsl:if> 
   						</xsl:otherwise>
@@ -252,13 +252,13 @@
 								</ctl:request>
 							</xsl:variable>
 							<xsl:choose>
-								<xsl:when test="string-length($GetCoverage)=0">
+								<xsl:when test="empty($GetCoverage)">
 									<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 									<ctl:fail/>
 								</xsl:when>
 								<xsl:otherwise>
-									<xsl:if test="not(empty($GetCoverage//ows:ExceptionReport))">
-										<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
+									<xsl:if test="not(empty($GetCoverage//*[local-name()='Exception']))">
+										<ctl:message>[FAILURE] The result should not contain an ows:Exception.</ctl:message>
 										<ctl:fail/>
 									</xsl:if>
 								</xsl:otherwise>
@@ -301,7 +301,7 @@
                				</ctl:url>
                				<ctl:method>get</ctl:method>
            				<ctl:param name="service">WCS</ctl:param>
-           				<ctl:param name="VERSION">2.0</ctl:param>           
+           				<ctl:param name="VERSION">2.0.1</ctl:param>           
            				<ctl:param name="request">DescribeCoverage</ctl:param>  
             				<ctl:param name="CoverageId"><xsl:value-of select="./*[local-name()='CoverageId']"/></ctl:param>             				
  
@@ -313,13 +313,13 @@
             			</ctl:request>
         		</xsl:variable>
     			<xsl:choose>
-  				<xsl:when test="string-length($DescribeCoverage)=0">
+  				<xsl:when test="empty($DescribeCoverage)">
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="not(empty($DescribeCoverage//ows:ExceptionReport))">
-        			   		<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
+        				<xsl:if test="not(empty($DescribeCoverage//*[local-name()='Exception']))">
+        			   		<ctl:message>[FAILURE] The result should not contain an ows:Exception.</ctl:message>
         			   		<ctl:fail/>
         				</xsl:if> 
   				</xsl:otherwise>
@@ -334,7 +334,7 @@
 							</ctl:url>
 							<ctl:method>get</ctl:method>
 							<ctl:param name="service">WCS</ctl:param>
-							<ctl:param name="VERSION">2.0</ctl:param>           
+							<ctl:param name="VERSION">2.0.1</ctl:param>           
 							<ctl:param name="request">GetCoverage</ctl:param>  
 							<ctl:param name="CoverageId"><xsl:value-of select="./*[local-name()='CoverageId']"/></ctl:param>             				
 
@@ -400,7 +400,7 @@
               					</ctl:request>
             				</xsl:variable>
       					<xsl:choose>
-  						<xsl:when test="string-length($Capabilities)=0">
+  						<xsl:when test="empty($Capabilities)">
 							<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 							<ctl:fail/>
   						</xsl:when>
@@ -420,7 +420,7 @@
                 					</ctl:url>
                						<ctl:method>get</ctl:method>
            						<ctl:param name="service">WCS</ctl:param>
-           						<ctl:param name="VERSION">2.0</ctl:param>           
+           						<ctl:param name="VERSION">2.0.1</ctl:param>           
            						<ctl:param name="request">DescribeCoverage</ctl:param>  
             						<ctl:param name="CoverageId"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/></ctl:param>             				
                  				
@@ -432,13 +432,13 @@
               					</ctl:request>
             				</xsl:variable>
     					<xsl:choose>
-  						<xsl:when test="string-length($DescribeCoverage)=0">
+  						<xsl:when test="empty($DescribeCoverage)">
 							<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 							<ctl:fail/>
   						</xsl:when>
   						<xsl:otherwise>
-        						<xsl:if test="not(empty($DescribeCoverage//ows:ExceptionReport))">
-        			   				<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
+        						<xsl:if test="not(empty($DescribeCoverage//*[local-name()='Exception']))">
+        			   				<ctl:message>[FAILURE] The result should not contain an ows:Exception.</ctl:message>
         			   				<ctl:fail/>
         						</xsl:if> 
   						</xsl:otherwise>
@@ -455,7 +455,7 @@
 									</ctl:url>
 									<ctl:method>get</ctl:method>
 									<ctl:param name="service">WCS</ctl:param>
-									<ctl:param name="VERSION">2.0</ctl:param>           
+									<ctl:param name="VERSION">2.0.1</ctl:param>           
 									<ctl:param name="request">GetCoverage</ctl:param>  
 									<ctl:param name="CoverageId"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/></ctl:param>             				
 
@@ -467,13 +467,13 @@
 								</ctl:request>
 							</xsl:variable>
 							<xsl:choose>
-								<xsl:when test="string-length($GetCoverage)=0">
+								<xsl:when test="empty($GetCoverage)">
 									<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 									<ctl:fail/>
 								</xsl:when>
 								<xsl:otherwise>
-									<xsl:if test="not(empty($GetCoverage//ows:ExceptionReport))">
-										<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
+									<xsl:if test="not(empty($GetCoverage//*[local-name()='Exception']))">
+										<ctl:message>[FAILURE] The result should not contain an ows:Exception.</ctl:message>
 										<ctl:fail/>
 									</xsl:if>
 								</xsl:otherwise>
@@ -530,13 +530,13 @@
             			</ctl:soap-request>
         		</xsl:variable>
     			<xsl:choose>
-  				<xsl:when test="string-length($DescribeCoverage)=0">
+  				<xsl:when test="empty($DescribeCoverage)">
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 					<ctl:fail/>
   				</xsl:when>
   				<xsl:otherwise>
-        				<xsl:if test="not(empty($DescribeCoverage//ows:ExceptionReport))">
-        			   		<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
+        				<xsl:if test="not(empty($DescribeCoverage//*[local-name()='Exception']))">
+        			   		<ctl:message>[FAILURE] The result should not contain an ows:Exception.</ctl:message>
         			   		<ctl:fail/>
         				</xsl:if> 
   				</xsl:otherwise>
@@ -627,7 +627,7 @@
               					</ctl:soap-request>
             				</xsl:variable>
       					<xsl:choose>
-  						<xsl:when test="string-length($Capabilities)=0">
+  						<xsl:when test="empty($Capabilities)">
 							<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 							<ctl:fail/>
   						</xsl:when>
@@ -663,13 +663,13 @@
               					</ctl:soap-request>
             				</xsl:variable>
     					<xsl:choose>
-  						<xsl:when test="string-length($DescribeCoverage)=0">
+  						<xsl:when test="empty($DescribeCoverage)">
 							<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 							<ctl:fail/>
   						</xsl:when>
   						<xsl:otherwise>
-        						<xsl:if test="not(empty($DescribeCoverage//ows:ExceptionReport))">
-        			   				<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
+        						<xsl:if test="not(empty($DescribeCoverage//*[local-name()='Exception']))">
+        			   				<ctl:message>[FAILURE] The result should not contain an ows:Exception.</ctl:message>
         			   				<ctl:fail/>
         						</xsl:if> 
   						</xsl:otherwise>
@@ -703,13 +703,13 @@
 								</ctl:soap-request>
 							</xsl:variable>
 							<xsl:choose>
-								<xsl:when test="string-length($GetCoverage)=0">
+								<xsl:when test="empty($GetCoverage)">
 									<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 									<ctl:fail/>
 								</xsl:when>
 								<xsl:otherwise>
-									<xsl:if test="not(empty($GetCoverage//ows:ExceptionReport))">
-										<ctl:message>[FAILURE] The result should not be an ows:ExceptionReport.</ctl:message>
+									<xsl:if test="not(empty($GetCoverage//*[local-name()='Exception']))">
+										<ctl:message>[FAILURE] The result should not contain an ows:Exception.</ctl:message>
 										<ctl:fail/>
 									</xsl:if>
 								</xsl:otherwise>
