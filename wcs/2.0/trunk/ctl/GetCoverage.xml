@@ -407,19 +407,19 @@
   				</xsl:when>
   				<xsl:otherwise>
 					<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_protocol-binding_get-kvp/1.0')">
-						<ctl:call-test name="wcs2:get-kvp-core-req35">
+						<ctl:call-test name="wcs2:get-kvp-core-req36">
 							<ctl:with-param name="url" select="$url"/>    
 							<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 						</ctl:call-test>            									
 					</xsl:if>
 					<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_protocol-binding_post-xml/1.0')">
-						<ctl:call-test name="wcs2:post-xml-core-req35">
+						<ctl:call-test name="wcs2:post-xml-core-req36">
 							<ctl:with-param name="url" select="$url"/>     
 							<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 						</ctl:call-test>             
 					</xsl:if>
 					<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_protocol-binding_soap/1.0')">
-						<ctl:call-test name="wcs2:soap-core-req35">
+						<ctl:call-test name="wcs2:soap-core-req36">
 							<ctl:with-param name="url" select="$url"/>  
 							<ctl:with-param name="Capabilities" select="$Capabilities"/> 					
 						</ctl:call-test>              
@@ -1212,8 +1212,6 @@
     		<ctl:param name="Capabilities"/>
     		<ctl:assertion>req30:Every dimension value in a GetKVP GetCoverage request shall be equal to one of the axisLabels dimension names specified in the gml:SRSInformationGroup of the coverage gml:Envelope, unless the server offers a WCS CRS extension which overrides this requirement.</ctl:assertion>
        		<ctl:code>
-			<xsl:choose>
-				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
 					<xsl:variable name="DescribeCoverage">
 						<ctl:request>
 							<ctl:url>
@@ -1235,7 +1233,10 @@
 							<xsl:if test="empty($DescribeCoverage//wcs:CoverageDescriptions)">
 								<ctl:message>[FAILURE] send a valid DescribeCoverage request, and the result should contain a wcs:CoverageDescriptions.</ctl:message>
 								<ctl:fail/>
-							</xsl:if>
+							</xsl:if>		
+			<xsl:choose>
+				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
+
 
  						
 					<xsl:variable name="GetCoverage">
@@ -1248,38 +1249,39 @@
 							<ctl:param name="VERSION">2.0.1</ctl:param>           
 							<ctl:param name="request">GetCoverage</ctl:param>      
 							<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-				<ctl:param name="format"><xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported']"/></ctl:param>    
-				<ctl:param name="mediatype"><xsl:value-of select="multipart/mixed"/></ctl:param> 							
-							<xsl:call-template name="for-loop-get-kvp-core-req26">
-								<xsl:with-param name="i">1</xsl:with-param> 
-								<xsl:with-param name="count"> 
-									<xsl:value-of select="number($DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@srsDimension]/@srsDimension)" />
-								</xsl:with-param>  
-								<xsl:with-param name="DescribeCoverage">
-									<xsl:value-of select="$DescribeCoverage" />
-								</xsl:with-param>  	      
-							</xsl:call-template>
-							<xsl:template name="for-loop-get-kvp-core-req26">
-								<xsl:param name="i" as="xs:integer"/>
-								<xsl:param name="count" as="xs:integer"/>
-								<xsl:param name="DescribeCoverage"/>
-								<xsl:if test="$i &lt;= $count">          
-									<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[$i]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[$i])"/>,<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[$i])"/>)</ctl:param>                       
-								</xsl:if>
-								<xsl:if test="$i &lt;= $count">
-									<xsl:call-template name="for-loop-get-kvp-core-req26">
-										<xsl:with-param name="i">
-											<xsl:value-of select="$i + 1"/>
-										</xsl:with-param>
-										<xsl:with-param name="count">
-											<xsl:value-of select="$count"/>
-										</xsl:with-param>
-										<xsl:with-param name="DescribeCoverage">
-											<xsl:value-of select="$DescribeCoverage" />
-										</xsl:with-param> 										
+							
+									<xsl:call-template name="for-loop-get-kvp-core-req30">
+										<xsl:with-param name="i">1</xsl:with-param> 
+										<xsl:with-param name="count"> 										
+											<xsl:value-of select="number($DescribeCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/@srsDimension)" />
+										</xsl:with-param>  
+										<xsl:with-param name="axisLabels" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels"/>
+										<xsl:with-param name="low" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]"/>
+										<xsl:with-param name="high" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='upperCorner'][1]"/>	      
 									</xsl:call-template>
-								</xsl:if>      
-							</xsl:template>               
+									<xsl:template name="for-loop-get-kvp-core-req30">
+										<xsl:param name="i" as="xs:integer"/>
+										<xsl:param name="count" as="xs:integer"/>
+										<xsl:param name="axisLabels"/>
+										<xsl:param name="low"/>
+										<xsl:param name="high"/>
+										<xsl:if test="$i &lt;= $count">          
+											<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($axisLabels),' ')[$i]"/>(<xsl:value-of  select="number(tokenize(normalize-space($low),' ')[$i])"/>,<xsl:value-of  select="number(tokenize(normalize-space($high),' ')[$i])"/>)</ctl:param>                               
+										</xsl:if>
+										<xsl:if test="$i &lt;= $count">
+											<xsl:call-template name="for-loop-get-kvp-core-req30">
+												<xsl:with-param name="i">
+													<xsl:value-of select="$i + 1"/>
+												</xsl:with-param>
+												<xsl:with-param name="count">
+													<xsl:value-of select="$count"/>
+												</xsl:with-param>
+												<xsl:with-param name="axisLabels" select="$axisLabels"/>
+												<xsl:with-param name="low" select="$low"/>
+												<xsl:with-param name="high" select="$high"/>		
+											</xsl:call-template>
+										</xsl:if>      
+									</xsl:template>	        
 
 						<parsers:HTTPParser>
 							<parsers:parse mime="application/gml+xml">
@@ -1365,6 +1367,23 @@
     		<ctl:param name="Capabilities"/>
     		<ctl:assertion>req31:A GetKVP GetCoverage request shall contain at most one subsetting operation for each of the dimensions of the coverage addressed.</ctl:assertion>
       		<ctl:code>
+					<xsl:variable name="DescribeCoverage">
+						<ctl:request>
+							<ctl:url>
+								<xsl:value-of select="$url"/>
+							</ctl:url>
+							<ctl:method>get</ctl:method>
+							<ctl:param name="service">WCS</ctl:param>
+							<ctl:param name="VERSION">2.0.1</ctl:param>           
+							<ctl:param name="request">DescribeCoverage</ctl:param>      
+							<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
+							<ctlp:XMLValidatingParser>
+								<ctlp:schemas>
+									<ctlp:schema type="file">resources/wcs/2.0/wcsAll.xsd</ctlp:schema>
+								</ctlp:schemas>
+							</ctlp:XMLValidatingParser>
+						</ctl:request>
+					</xsl:variable>		
 			<xsl:choose>
 				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
 	
@@ -1379,8 +1398,6 @@
 							<ctl:param name="VERSION">2.0.1</ctl:param>           
 							<ctl:param name="request">GetCoverage</ctl:param>      
 							<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-				<ctl:param name="format"><xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported']"/></ctl:param>    
-				<ctl:param name="mediatype"><xsl:value-of select="multipart/mixed"/></ctl:param> 
 	<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[1]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1])"/>,<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='upperCorner'][1]),' ')[1])"/>)</ctl:param>                       
 	<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[2]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[2])"/>)</ctl:param>                       
 																	
@@ -1420,8 +1437,6 @@
 							<ctl:param name="VERSION">2.0.1</ctl:param>           
 							<ctl:param name="request">GetCoverage</ctl:param>      
 							<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-				<ctl:param name="format"><xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported']"/></ctl:param>    
-				<ctl:param name="mediatype"><xsl:value-of select="multipart/mixed"/></ctl:param> 
 	<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[1]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1])"/>,<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='upperCorner'][1]),' ')[1])"/>)</ctl:param>                       
 	<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[1]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[2])"/>)</ctl:param>                       
 																	
@@ -1465,6 +1480,23 @@
     		<ctl:param name="Capabilities"/>
     		<ctl:assertion>req32:Send otherwise GetKVP valid GetCoverage requests with matching and with violat-ing trimming positions to server under test. Check if appropriate results are returned if and only if the requirement is fulfilled, and an exception other-wise. Pass test if all checks succeed.</ctl:assertion>
       		<ctl:code>
+					<xsl:variable name="DescribeCoverage">
+						<ctl:request>
+							<ctl:url>
+								<xsl:value-of select="$url"/>
+							</ctl:url>
+							<ctl:method>get</ctl:method>
+							<ctl:param name="service">WCS</ctl:param>
+							<ctl:param name="VERSION">2.0.1</ctl:param>           
+							<ctl:param name="request">DescribeCoverage</ctl:param>      
+							<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
+							<ctlp:XMLValidatingParser>
+								<ctlp:schemas>
+									<ctlp:schema type="file">resources/wcs/2.0/wcsAll.xsd</ctlp:schema>
+								</ctlp:schemas>
+							</ctlp:XMLValidatingParser>
+						</ctl:request>
+					</xsl:variable>			
 			<xsl:choose>
 				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
 					<xsl:variable name="DescribeCoverage">
@@ -1501,38 +1533,38 @@
 							<ctl:param name="VERSION">2.0.1</ctl:param>           
 							<ctl:param name="request">GetCoverage</ctl:param>      
 							<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-				<ctl:param name="format"><xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported']"/></ctl:param>    
-				<ctl:param name="mediatype"><xsl:value-of select="multipart/mixed"/></ctl:param> 							
-							<xsl:call-template name="for-loop-get-kvp-core-req32">
-								<xsl:with-param name="i">1</xsl:with-param> 
-								<xsl:with-param name="count"> 
-									<xsl:value-of select="number($DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@srsDimension]/@srsDimension)" />
-								</xsl:with-param>  
-								<xsl:with-param name="DescribeCoverage">
-									<xsl:value-of select="$DescribeCoverage" />
-								</xsl:with-param>  	      
-							</xsl:call-template>
-							<xsl:template name="for-loop-get-kvp-core-req32">
-								<xsl:param name="i" as="xs:integer"/>
-								<xsl:param name="count" as="xs:integer"/>
-								<xsl:param name="DescribeCoverage"/>
-								<xsl:if test="$i &lt;= $count">          
-									<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[$i]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[$i])"/>,<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[$i])"/>)</ctl:param>                       
-								</xsl:if>
-								<xsl:if test="$i &lt;= $count">
-									<xsl:call-template name="for-loop-get-kvp-core-req26">
-										<xsl:with-param name="i">
-											<xsl:value-of select="$i + 1"/>
-										</xsl:with-param>
-										<xsl:with-param name="count">
-											<xsl:value-of select="$count"/>
-										</xsl:with-param>
-										<xsl:with-param name="DescribeCoverage">
-											<xsl:value-of select="$DescribeCoverage" />
-										</xsl:with-param> 										
+						<xsl:call-template name="for-loop-get-kvp-core-req32">
+										<xsl:with-param name="i">1</xsl:with-param> 
+										<xsl:with-param name="count"> 										
+											<xsl:value-of select="number($DescribeCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/@srsDimension)" />
+										</xsl:with-param>  
+										<xsl:with-param name="axisLabels" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels"/>
+										<xsl:with-param name="low" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]"/>
+										<xsl:with-param name="high" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='upperCorner'][1]"/>	      
 									</xsl:call-template>
-								</xsl:if>      
-							</xsl:template>               
+									<xsl:template name="for-loop-get-kvp-core-req32">
+										<xsl:param name="i" as="xs:integer"/>
+										<xsl:param name="count" as="xs:integer"/>
+										<xsl:param name="axisLabels"/>
+										<xsl:param name="low"/>
+										<xsl:param name="high"/>
+										<xsl:if test="$i &lt;= $count">          
+											<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($axisLabels),' ')[$i]"/>(<xsl:value-of  select="number(tokenize(normalize-space($low),' ')[$i])"/>,<xsl:value-of  select="number(tokenize(normalize-space($high),' ')[$i])"/>)</ctl:param>                               
+										</xsl:if>
+										<xsl:if test="$i &lt;= $count">
+											<xsl:call-template name="for-loop-get-kvp-core-req32">
+												<xsl:with-param name="i">
+													<xsl:value-of select="$i + 1"/>
+												</xsl:with-param>
+												<xsl:with-param name="count">
+													<xsl:value-of select="$count"/>
+												</xsl:with-param>
+												<xsl:with-param name="axisLabels" select="$axisLabels"/>
+												<xsl:with-param name="low" select="$low"/>
+												<xsl:with-param name="high" select="$high"/>		
+											</xsl:call-template>
+										</xsl:if>      
+									</xsl:template>             
 
 
 						<parsers:HTTPParser>
@@ -1572,9 +1604,7 @@
 							<ctl:param name="VERSION">2.0.1</ctl:param>           
 							<ctl:param name="request">GetCoverage</ctl:param>      
 							<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-				<ctl:param name="format"><xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported']"/></ctl:param>    
-				<ctl:param name="mediatype"><xsl:value-of select="multipart/mixed"/></ctl:param> 
-	<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[1]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1])"/>,<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='upperCorner'][1]),' ')[1]) + 1"/>)</ctl:param>                       
+	<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[1]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='upperCorner'][1]),' ')[1]) + 1"/>,<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='upperCorner'][1]),' ')[1]) + 2"/>)</ctl:param>                       
 																	
 							<ctlp:XMLValidatingParser>
 								<ctlp:schemas>
@@ -1619,8 +1649,6 @@
     		<ctl:param name="Capabilities"/>
     		<ctl:assertion>req33:Send otherwise valid GetKVP GetCoverage requests with matching and with violating slicing positions to server under test. Check if appropriate results are returned if and only if the requirement is fulfilled, and an exception otherwise. Pass test if all checks succeed.</ctl:assertion>
       		<ctl:code>
-               <xsl:choose>
-				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
 					<xsl:variable name="DescribeCoverage">
 						<ctl:request>
 							<ctl:url>
@@ -1643,7 +1671,10 @@
 							<xsl:if test="empty($DescribeCoverage//wcs:CoverageDescriptions)">
 								<ctl:message>[FAILURE] send a valid DescribeCoverage request, and the result should contain a wcs:CoverageDescriptions.</ctl:message>
 								<ctl:fail/>
-							</xsl:if>
+							</xsl:if>	
+               <xsl:choose>
+				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
+	
 				
  						
 					<xsl:variable name="GetCoverage">
@@ -1656,43 +1687,42 @@
 							<ctl:param name="VERSION">2.0.1</ctl:param>           
 							<ctl:param name="request">GetCoverage</ctl:param>      
 							<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-				<ctl:param name="format"><xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported']"/></ctl:param>    
-				<ctl:param name="mediatype"><xsl:value-of select="multipart/mixed"/></ctl:param> 							
-							<xsl:call-template name="for-loop-get-kvp-core-req33">
-								<xsl:with-param name="i">1</xsl:with-param> 
-								<xsl:with-param name="count"> 
-									<xsl:value-of select="number($DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@srsDimension]/@srsDimension)" />
-								</xsl:with-param>  
-								<xsl:with-param name="DescribeCoverage">
-									<xsl:value-of select="$DescribeCoverage" />
-								</xsl:with-param>  	      
-							</xsl:call-template>
-							<xsl:template name="for-loop-get-kvp-core-req33">
-								<xsl:param name="i" as="xs:integer"/>
-								<xsl:param name="count" as="xs:integer"/>
-								<xsl:param name="DescribeCoverage"/>
-								<xsl:if test="$i &lt;= $count">          
-									<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[1]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[$i])"/>,<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[$i])"/>)</ctl:param>                       
-								</xsl:if>
-								<xsl:if test="$i &lt;= $count">
-									<xsl:call-template name="for-loop-get-kvp-core-req26">
-										<xsl:with-param name="i">
-											<xsl:value-of select="$i + 1"/>
-										</xsl:with-param>
-										<xsl:with-param name="count">
-											<xsl:value-of select="$count"/>
-										</xsl:with-param>
-										<xsl:with-param name="DescribeCoverage">
-											<xsl:value-of select="$DescribeCoverage"/>
-										</xsl:with-param> 										
+						<xsl:call-template name="for-loop-get-kvp-core-req33">
+										<xsl:with-param name="i">1</xsl:with-param> 
+										<xsl:with-param name="count"> 										
+											<xsl:value-of select="number($DescribeCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/@srsDimension)" />
+										</xsl:with-param>  
+										<xsl:with-param name="axisLabels" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels"/>
+										<xsl:with-param name="low" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]"/>
+										<xsl:with-param name="high" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='upperCorner'][1]"/>	      
 									</xsl:call-template>
-								</xsl:if>      
-							</xsl:template>               
+									<xsl:template name="for-loop-get-kvp-core-req33">
+										<xsl:param name="i" as="xs:integer"/>
+										<xsl:param name="count" as="xs:integer"/>
+										<xsl:param name="axisLabels"/>
+										<xsl:param name="low"/>
+										<xsl:param name="high"/>
+										<xsl:if test="$i &lt;= $count">          
+											<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($axisLabels),' ')[$i]"/>(<xsl:value-of  select="number(tokenize(normalize-space($low),' ')[$i])"/>,<xsl:value-of  select="number(tokenize(normalize-space($high),' ')[$i])"/>)</ctl:param>                               
+										</xsl:if>
+										<xsl:if test="$i &lt;= $count">
+											<xsl:call-template name="for-loop-get-kvp-core-req33">
+												<xsl:with-param name="i">
+													<xsl:value-of select="$i + 1"/>
+												</xsl:with-param>
+												<xsl:with-param name="count">
+													<xsl:value-of select="$count"/>
+												</xsl:with-param>
+												<xsl:with-param name="axisLabels" select="$axisLabels"/>
+												<xsl:with-param name="low" select="$low"/>
+												<xsl:with-param name="high" select="$high"/>		
+											</xsl:call-template>
+										</xsl:if>      
+									</xsl:template>               
 
 
 						<parsers:HTTPParser>
-							<parsers:parse mime="application/gml+xml">
-							
+							<parsers:parse mime="application/gml+xml">				
 								<parsers:XMLValidatingParser>
 									<parsers:schemas>
 										<parsers:schema type="resource">wcs/2.0/wcsAll.xsd</parsers:schema>
@@ -1726,8 +1756,7 @@
 							<ctl:param name="VERSION">2.0.1</ctl:param>           
 							<ctl:param name="request">GetCoverage</ctl:param>      
 							<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-				<ctl:param name="format"><xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported']"/></ctl:param>    
-				<ctl:param name="mediatype"><xsl:value-of select="multipart/mixed"/></ctl:param> 
+		
 	<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[1]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='upperCorner'][1]),' ')[1]) + 1"/>)</ctl:param>                       
 																	
 							<ctlp:XMLValidatingParser>
@@ -1791,8 +1820,7 @@
 				<ctl:param name="VERSION">2.0.1</ctl:param>           
 				<ctl:param name="request">GetCoverage</ctl:param>  
 				<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param> 
-				<ctl:param name="format"><xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported'][1]"/></ctl:param>    
-				<ctl:param name="mediatype"><xsl:value-of select="multipart/mixed"/></ctl:param> 										  										
+ 										  										
 				<ctl:method>get</ctl:method>
 
 						<parsers:HTTPParser>
@@ -1899,12 +1927,12 @@
 				<ctl:param name="request">GetCoverage</ctl:param>  
 				<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param> 
 				<ctl:param name="format"><xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported'][1]"/></ctl:param>    
-				<ctl:param name="mediatype"><xsl:value-of select="multipart/mixed"/></ctl:param> 										  										
+				<ctl:param name="mediatype">multipart/mixed</ctl:param> 										  										
 				<ctl:method>get</ctl:method>
 
 						<parsers:HTTPParser>
-							<parsers:parse mime="application/gml+xml">
-							
+							<parsers:parse mime="application/gml+xml"/>
+							<parsers:parse>
 								<parsers:XMLValidatingParser>
 									<parsers:schemas>
 										<parsers:schema type="resource">wcs/2.0/wcsAll.xsd</parsers:schema>
@@ -2035,9 +2063,6 @@
     		<ctl:param name="Capabilities"/>
     		<ctl:assertion>req38:Send valid GetKVP GetCoverage requests to the server under test with a single trimming as the only subsetting operation. Check correctness of the coverage response returned. Do so up to the maximum number of dimensions supported by the server and for subsetting dimensions at any position in the list of dimensions. Pass test if all checks succeed.</ctl:assertion>
      		<ctl:code>
-		
-			<xsl:choose>
-				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
 					<xsl:variable name="DescribeCoverage">
 						<ctl:request>
 							<ctl:url>
@@ -2059,7 +2084,11 @@
 							<xsl:if test="empty($DescribeCoverage//wcs:CoverageDescriptions)">
 								<ctl:message>[FAILURE] send a valid DescribeCoverage request, and the result should contain a wcs:CoverageDescriptions.</ctl:message>
 								<ctl:fail/>
-							</xsl:if>
+							</xsl:if>		
+		
+			<xsl:choose>
+				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
+
 			
  						
 					<xsl:variable name="GetCoverage">
@@ -2072,38 +2101,39 @@
 							<ctl:param name="VERSION">2.0.1</ctl:param>           
 							<ctl:param name="request">GetCoverage</ctl:param>      
 							<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-				<ctl:param name="format"><xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported']"/></ctl:param>    
-				<ctl:param name="mediatype"><xsl:value-of select="multipart/mixed"/></ctl:param> 							
-							<xsl:call-template name="for-loop-get-kvp-core-req26">
-								<xsl:with-param name="i">1</xsl:with-param> 
-								<xsl:with-param name="count"> 
-									<xsl:value-of select="number($DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@srsDimension]/@srsDimension)" />
-								</xsl:with-param>  
-								<xsl:with-param name="DescribeCoverage">
-									<xsl:value-of select="$DescribeCoverage" />
-								</xsl:with-param>  	      
-							</xsl:call-template>
-							<xsl:template name="for-loop-get-kvp-core-req38">
-								<xsl:param name="i" as="xs:integer"/>
-								<xsl:param name="count" as="xs:integer"/>
-								<xsl:param name="DescribeCoverage"/>
-								<xsl:if test="$i &lt;= $count">          
-									<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[$i]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[$i])"/>,<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[$i])"/>)</ctl:param>                       
-								</xsl:if>
-								<xsl:if test="$i &lt;= $count">
-									<xsl:call-template name="for-loop-get-kvp-core-req38">
-										<xsl:with-param name="i">
-											<xsl:value-of select="$i + 1"/>
-										</xsl:with-param>
-										<xsl:with-param name="count">
-											<xsl:value-of select="$count"/>
-										</xsl:with-param>
-										<xsl:with-param name="DescribeCoverage">
-											<xsl:value-of select="$DescribeCoverage" />
-										</xsl:with-param> 										
+							
+				<xsl:call-template name="for-loop-get-kvp-core-req38">
+										<xsl:with-param name="i">1</xsl:with-param> 
+										<xsl:with-param name="count"> 										
+											<xsl:value-of select="number($DescribeCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/@srsDimension)" />
+										</xsl:with-param>  
+										<xsl:with-param name="axisLabels" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels"/>
+										<xsl:with-param name="low" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]"/>
+										<xsl:with-param name="high" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='upperCorner'][1]"/>	      
 									</xsl:call-template>
-								</xsl:if>      
-							</xsl:template>               
+									<xsl:template name="for-loop-get-kvp-core-req38">
+										<xsl:param name="i" as="xs:integer"/>
+										<xsl:param name="count" as="xs:integer"/>
+										<xsl:param name="axisLabels"/>
+										<xsl:param name="low"/>
+										<xsl:param name="high"/>
+										<xsl:if test="$i &lt;= $count">          
+											<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($axisLabels),' ')[$i]"/>(<xsl:value-of  select="number(tokenize(normalize-space($low),' ')[$i])"/>,<xsl:value-of  select="number(tokenize(normalize-space($low),' ')[$i])"/>)</ctl:param>                               
+										</xsl:if>
+										<xsl:if test="$i &lt;= $count">
+											<xsl:call-template name="for-loop-get-kvp-core-req38">
+												<xsl:with-param name="i">
+													<xsl:value-of select="$i + 1"/>
+												</xsl:with-param>
+												<xsl:with-param name="count">
+													<xsl:value-of select="$count"/>
+												</xsl:with-param>
+												<xsl:with-param name="axisLabels" select="$axisLabels"/>
+												<xsl:with-param name="low" select="$low"/>
+												<xsl:with-param name="high" select="$high"/>		
+											</xsl:call-template>
+										</xsl:if>      
+									</xsl:template>                
 
 						<parsers:HTTPParser>
 							<parsers:parse mime="application/gml+xml">
@@ -2143,9 +2173,8 @@
 							<ctl:param name="VERSION">2.0.1</ctl:param>           
 							<ctl:param name="request">GetCoverage</ctl:param>      
 							<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-				<ctl:param name="format"><xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported']"/></ctl:param>    
-				<ctl:param name="mediatype"><xsl:value-of select="multipart/mixed"/></ctl:param> 
-	<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[$i]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1])"/>,<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='upperCorner'][1]),' ')[1])"/>)</ctl:param>                       
+
+	<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[1]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1])"/>,<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='upperCorner'][1]),' ')[1])"/>)</ctl:param>                       
 																	
 						<parsers:HTTPParser>
 							<parsers:parse mime="application/gml+xml">
@@ -2197,9 +2226,6 @@
     		<ctl:param name="Capabilities"/>
     		<ctl:assertion>req39:Send valid GetKVP GetCoverage requests to the server under test with a single slicing as the only subsetting operation. Check correctness of the coverage response returned. Do so up to the maximum number of dimensions supported by the server and for subsetting dimensions at any position in the list of dimensions. Pass test if all checks succeed.</ctl:assertion>
      		<ctl:code>
-
-			<xsl:choose>
-				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
 					<xsl:variable name="DescribeCoverage">
 						<ctl:request>
 							<ctl:url>
@@ -2221,7 +2247,11 @@
 							<xsl:if test="empty($DescribeCoverage//wcs:CoverageDescriptions)">
 								<ctl:message>[FAILURE] send a valid DescribeCoverage request, and the result should contain a wcs:CoverageDescriptions.</ctl:message>
 								<ctl:fail/>
-							</xsl:if>
+							</xsl:if>		
+
+			<xsl:choose>
+				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
+
 			
 					<xsl:variable name="GetCoverage">
 						<ctl:request>
@@ -2233,38 +2263,39 @@
 							<ctl:param name="VERSION">2.0.1</ctl:param>           
 							<ctl:param name="request">GetCoverage</ctl:param>      
 							<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-				<ctl:param name="format"><xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported']"/></ctl:param>    
-				<ctl:param name="mediatype"><xsl:value-of select="multipart/mixed"/></ctl:param> 							
-							<xsl:call-template name="for-loop-get-kvp-core-req26">
-								<xsl:with-param name="i">1</xsl:with-param> 
-								<xsl:with-param name="count"> 
-									<xsl:value-of select="number($DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@srsDimension]/@srsDimension)" />
-								</xsl:with-param>  
-								<xsl:with-param name="DescribeCoverage">
-									<xsl:value-of select="$DescribeCoverage" />
-								</xsl:with-param>  	      
-							</xsl:call-template>
-							<xsl:template name="for-loop-get-kvp-core-req39">
-								<xsl:param name="i" as="xs:integer"/>
-								<xsl:param name="count" as="xs:integer"/>
-								<xsl:param name="DescribeCoverage"/>
-								<xsl:if test="$i &lt;= $count">          
-									<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[$i]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[$i])"/>)</ctl:param>                       
-								</xsl:if>
-								<xsl:if test="$i &lt;= $count">
-									<xsl:call-template name="for-loop-get-kvp-core-req39">
-										<xsl:with-param name="i">
-											<xsl:value-of select="$i + 1"/>
-										</xsl:with-param>
-										<xsl:with-param name="count">
-											<xsl:value-of select="$count"/>
-										</xsl:with-param>
-										<xsl:with-param name="DescribeCoverage">
-											<xsl:value-of select="$DescribeCoverage" />
-										</xsl:with-param> 										
+			
+				<xsl:call-template name="for-loop-get-kvp-core-req38">
+										<xsl:with-param name="i">1</xsl:with-param> 
+										<xsl:with-param name="count"> 										
+											<xsl:value-of select="number($DescribeCoverage//*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/@srsDimension)" />
+										</xsl:with-param>  
+										<xsl:with-param name="axisLabels" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels"/>
+										<xsl:with-param name="low" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]"/>
+										<xsl:with-param name="high" select="$DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='upperCorner'][1]"/>	      
 									</xsl:call-template>
-								</xsl:if>      
-							</xsl:template>               
+									<xsl:template name="for-loop-get-kvp-core-req38">
+										<xsl:param name="i" as="xs:integer"/>
+										<xsl:param name="count" as="xs:integer"/>
+										<xsl:param name="axisLabels"/>
+										<xsl:param name="low"/>
+										<xsl:param name="high"/>
+										<xsl:if test="$i &lt;= $count">          
+											<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($axisLabels),' ')[$i]"/>(<xsl:value-of  select="number(tokenize(normalize-space($low),' ')[$i])"/>)</ctl:param>                               
+										</xsl:if>
+										<xsl:if test="$i &lt;= $count">
+											<xsl:call-template name="for-loop-get-kvp-core-req38">
+												<xsl:with-param name="i">
+													<xsl:value-of select="$i + 1"/>
+												</xsl:with-param>
+												<xsl:with-param name="count">
+													<xsl:value-of select="$count"/>
+												</xsl:with-param>
+												<xsl:with-param name="axisLabels" select="$axisLabels"/>
+												<xsl:with-param name="low" select="$low"/>
+												<xsl:with-param name="high" select="$high"/>		
+											</xsl:call-template>
+										</xsl:if>      
+									</xsl:template>         
 
 						<parsers:HTTPParser>
 							<parsers:parse mime="application/gml+xml">
@@ -2304,9 +2335,8 @@
 							<ctl:param name="VERSION">2.0.1</ctl:param>           
 							<ctl:param name="request">GetCoverage</ctl:param>      
 							<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-				<ctl:param name="format"><xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported']"/></ctl:param>    
-				<ctl:param name="mediatype"><xsl:value-of select="multipart/mixed"/></ctl:param> 
-	<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[$i]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1])"/>)</ctl:param>                       
+
+	<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[1]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1])"/>)</ctl:param>                       
 																	
 
 						<parsers:HTTPParser>
@@ -2357,11 +2387,7 @@
     		<ctl:param name="Capabilities"/>
     		<ctl:assertion>req40:Pick some combination of trimming and slicing operations on a given coverage. Construct a set of GetKVP GetCoverage requests by building all permutations of these subsetting operations. Compare the results of all requests whether the result returned is identical. Pass test if all checks succeed.</ctl:assertion>
      		<ctl:code>
-
-			<xsl:choose>
-				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
-	
-					<xsl:variable name="DescribeCoverage">
+				<xsl:variable name="DescribeCoverage">
 						<ctl:request>
 							<ctl:url>
 								<xsl:value-of select="$url"/>
@@ -2384,6 +2410,10 @@
 								<ctl:fail/>
 							</xsl:if>
 			
+			<xsl:choose>
+				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
+	
+	
  						
 					<xsl:variable name="GetCoverage">
 						<ctl:request>
@@ -2395,9 +2425,8 @@
 							<ctl:param name="VERSION">2.0.1</ctl:param>           
 							<ctl:param name="request">GetCoverage</ctl:param>      
 							<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-				<ctl:param name="format"><xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported']"/></ctl:param>    
-				<ctl:param name="mediatype"><xsl:value-of select="multipart/mixed"/></ctl:param> 
-	<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[1]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1])"/>, <xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1])"/>)</ctl:param>                       
+
+	<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[1]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1])"/>,<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1])"/>)</ctl:param>                       
 	<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[2]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[2])"/>)</ctl:param>                       
 																	
 
@@ -2462,10 +2491,9 @@
 							<ctl:param name="VERSION">2.0.1</ctl:param>           
 							<ctl:param name="request">GetCoverage</ctl:param>      
 							<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-				<ctl:param name="format"><xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported']"/></ctl:param>    
-				<ctl:param name="mediatype"><xsl:value-of select="multipart/mixed"/></ctl:param> 
+
 	<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[1]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1])"/>)</ctl:param>                       
-	<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[2]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[2])"/>, <xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[2])"/>)</ctl:param>                       
+	<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[2]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[2])"/>,<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[2])"/>)</ctl:param>                       
 																	
 
 						<parsers:HTTPParser>
@@ -2528,8 +2556,7 @@
 							<ctl:param name="VERSION">2.0.1</ctl:param>           
 							<ctl:param name="request">GetCoverage</ctl:param>      
 							<ctl:param name="coverageid">coverage_bogus</ctl:param>   
-				<ctl:param name="format"><xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported']"/></ctl:param>    
-				<ctl:param name="mediatype"><xsl:value-of select="multipart/mixed"/></ctl:param> 
+		
 																	
 
 						<parsers:HTTPParser>
@@ -2547,7 +2574,8 @@
 					</xsl:variable>
 
 					<xsl:if test="not(not(empty($GetCoverage//*[local-name()='Exception'])) and $GetCoverage//@*[local-name()='exceptionCode']='NoSuchCoverage') ">
-					    	<ctl:fail/>
+					    	<ctl:message>[FAILURE] the result should contain a 'NoSuchCoverage' Exception.</ctl:message>
+						<ctl:fail/>
 					</xsl:if>
 						
 				       					
@@ -2587,8 +2615,7 @@
 							<ctl:param name="VERSION">2.0.1</ctl:param>           
 							<ctl:param name="request">GetCoverage</ctl:param>      
 							<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-				<ctl:param name="format"><xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported']"/></ctl:param>    
-				<ctl:param name="mediatype"><xsl:value-of select="multipart/mixed"/></ctl:param> 
+
 	<ctl:param name="subset">dimension_bogus(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1])"/>)</ctl:param>                       
 																	
 
@@ -2607,7 +2634,8 @@
 		
 
 					<xsl:if test="not(not(empty($GetCoverage1//*[local-name()='Exception'])) and $GetCoverage1//@*[local-name()='exceptionCode']='InvalidAxisLabel') ">
-					    	<ctl:fail/>
+					    	<ctl:message>[FAILURE] the result should contain a 'InvalidAxisLabel' Exception.</ctl:message>
+						<ctl:fail/>
 					</xsl:if>
 		
 
@@ -2621,10 +2649,9 @@
 							<ctl:param name="VERSION">2.0.1</ctl:param>           
 							<ctl:param name="request">GetCoverage</ctl:param>      
 							<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-				<ctl:param name="format"><xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported']"/></ctl:param>    
-				<ctl:param name="mediatype"><xsl:value-of select="multipart/mixed"/></ctl:param> 
+			
 	<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[1]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1])"/>)</ctl:param>                       
-	<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[1]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[2])"/>, <xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[2])"/>)</ctl:param>                       
+	<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[1]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1])"/>,<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1])"/>)</ctl:param>                       
 																	
 
 						<parsers:HTTPParser>
@@ -2641,7 +2668,8 @@
 					</xsl:variable>
 
 					<xsl:if test="not(not(empty($GetCoverage2//*[local-name()='Exception'])) and $GetCoverage2//@*[local-name()='exceptionCode']='InvalidAxisLabel') ">
-					    	<ctl:fail/>
+					    	<ctl:message>[FAILURE] the result should contain a 'InvalidAxisLabel' Exception.</ctl:message>
+						<ctl:fail/>
 					</xsl:if>
 			
  						
@@ -2655,8 +2683,7 @@
 							<ctl:param name="VERSION">2.0.1</ctl:param>           
 							<ctl:param name="request">GetCoverage</ctl:param>      
 							<ctl:param name="coverageid"><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>   
-				<ctl:param name="format"><xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported']"/></ctl:param>    
-				<ctl:param name="mediatype"><xsl:value-of select="multipart/mixed"/></ctl:param> 
+		
 	<ctl:param name="subset"><xsl:value-of  select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[1]"/>(<xsl:value-of  select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1]) -1"/>)</ctl:param>                       
 																	
 
@@ -2674,7 +2701,8 @@
 					</xsl:variable>
 
 					<xsl:if test="not(not(empty($GetCoverage3//*[local-name()='Exception'])) and $GetCoverage3//@*[local-name()='exceptionCode']='InvalidSubsetting') ">
-					    	<ctl:fail/>
+					    	<ctl:message>[FAILURE] the result should contain a 'InvalidSubsetting' Exception.</ctl:message>
+						<ctl:fail/>
 					</xsl:if>
 
 
@@ -2740,7 +2768,7 @@
 				<ctl:param name="VERSION">2.0.1</ctl:param>           
 				<ctl:param name="request">GetCoverage</ctl:param>  
 				<ctl:param name="coverageid"><xsl:value-of select="."/></ctl:param>    
-				<ctl:param name="mediatype"><xsl:value-of select="multipart/mixed"/></ctl:param> 										  										
+										  										
 				<ctl:method>get</ctl:method>
 						<parsers:HTTPParser>
 							<parsers:parse mime="application/gml+xml">
@@ -2755,7 +2783,7 @@
 						</ctl:request>
 					</xsl:variable>											
 
-							<xsl:if test="deepequal($DescribeCoverage//*[local-name()='boundedBy'], $GetCoverage//*[local-name()='boundedBy']) and deepequal($DescribeCoverage//*[local-name()='domainSet'], $GetCoverage//*[local-name()='domainSet']) and deepequal($DescribeCoverage//*[local-name()='rangeType'], $GetCoverage//*[local-name()='rangeType'])">
+							<xsl:if test="deep-equal($DescribeCoverage//*[local-name()='boundedBy'], $GetCoverage//*[local-name()='boundedBy']) and deep-equal($DescribeCoverage//*[local-name()='domainSet'], $GetCoverage//*[local-name()='domainSet']) and deep-equal($DescribeCoverage//*[local-name()='rangeType'], $GetCoverage//*[local-name()='rangeType'])">
 								<ctl:message> the coverage description should be equal</ctl:message>
 								<ctl:fail/>
 							</xsl:if>
