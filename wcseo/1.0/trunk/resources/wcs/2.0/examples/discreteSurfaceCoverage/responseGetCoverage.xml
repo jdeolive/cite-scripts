@@ -64,8 +64,7 @@
     <gmlcov:rangeType><swe:DataRecord>
         <swe:field name="SoilMoisture">
             <swe:Quantity>
-                <gml:description>Moisture</gml:description>
-                <gml:name>Temp</gml:name>
+                <swe:description>Moisture</swe:description>
                 <swe:uom code="Cel"></swe:uom>
                 <swe:constraint>
                     <swe:AllowedValues>
