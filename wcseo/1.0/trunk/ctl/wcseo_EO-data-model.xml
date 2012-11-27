@@ -1,7 +1,9 @@
 <ctl:package xmlns:ctl="http://www.occamlab.com/ctl" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ows="http://www.opengis.net/ows/2.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:wcs="http://www.opengis.net/wcs/2.0" xmlns:ctlp="http://www.occamlab.com/te/parsers" xmlns:wcs2="http://www.opengis.net/wcs/2.0" xmlns:wcseo="http://www.opengis.net/wcseo/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 	<ctl:test name="wcseo:EO-Data-model">
+		<ctl:param name="Capabilities"/>
 		<ctl:param name="url"/>
 		<ctl:assertion>Test the EO data model.</ctl:assertion>
+		<ctl:code>
 		<xsl:for-each select="$Capabilities//*[local-name()='CoverageSummary'][*[local-name()='CoverageSubtype']='ReferenceableDataset']/*[local-name()='CoverageId']|$Capabilities//*[local-name()='CoverageSummary'][*[local-name()='CoverageSubtype']='RectifiedDataset']/*[local-name()='CoverageId']|$Capabilities//*[local-name()='CoverageSummary'][*[local-name()='CoverageSubtype']='ReferenceableStitchedMosaic']/*[local-name()='CoverageId']|$Capabilities//*[local-name()='CoverageSummary'][*[local-name()='CoverageSubtype']='RectifiedStitchedMosaic']/*[local-name()='CoverageId']">
 			<xsl:variable name="describeeocoverage">
 				<ctl:request>
@@ -15,11 +17,11 @@
 						<xsl:value-of select="."/>
 					</ctl:param>
 					<ctl:method>get</ctl:method>
-					<parsers:XMLValidatingParser>
-						<parsers:schemas>
-							<parsers:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</parsers:schema>
-						</parsers:schemas>
-					</parsers:XMLValidatingParser>
+					<ctlp:XMLValidatingParser>
+						<ctlp:schemas>
+							<ctlp:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</ctlp:schema>
+						</ctlp:schemas>
+					</ctlp:XMLValidatingParser>
 				</ctl:request>
 			</xsl:variable>
 			<xsl:choose>
@@ -50,11 +52,11 @@
 						<xsl:value-of select="."/>
 					</ctl:param>
 					<ctl:method>get</ctl:method>
-					<parsers:XMLValidatingParser>
-						<parsers:schemas>
-							<parsers:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</parsers:schema>
-						</parsers:schemas>
-					</parsers:XMLValidatingParser>
+					<ctlp:XMLValidatingParser>
+						<ctlp:schemas>
+							<ctlp:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</ctlp:schema>
+						</ctlp:schemas>
+					</ctlp:XMLValidatingParser>
 				</ctl:request>
 			</xsl:variable>
 			<xsl:choose>
@@ -106,11 +108,11 @@
 						<xsl:value-of select="."/>
 					</ctl:param>
 					<ctl:method>get</ctl:method>
-					<parsers:XMLValidatingParser>
-						<parsers:schemas>
-							<parsers:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</parsers:schema>
-						</parsers:schemas>
-					</parsers:XMLValidatingParser>
+					<ctlp:XMLValidatingParser>
+						<ctlp:schemas>
+							<ctlp:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</ctlp:schema>
+						</ctlp:schemas>
+					</ctlp:XMLValidatingParser>
 				</ctl:request>
 			</xsl:variable>
 			<xsl:choose>
@@ -135,11 +137,11 @@
 						<ctl:with-param name="response" select="$describeeocoverage"/>
 					</ctl:call-test>
 					<ctl:call-test name="wcseo:req22">
-					        <ctl:with-param name="url" select="$url"/>
+							<ctl:with-param name="url" select="$url"/>
 						<ctl:with-param name="response" select="$describeeocoverage"/>
 					</ctl:call-test>
 					<ctl:call-test name="wcseo:req23">
-					        <ctl:with-param name="url" select="$url"/>
+							<ctl:with-param name="url" select="$url"/>
 						<ctl:with-param name="response" select="$describeeocoverage"/>
 					</ctl:call-test>
 					<ctl:call-test name="wcseo:req24">
@@ -164,11 +166,11 @@
 						<xsl:value-of select="."/>
 					</ctl:param>
 					<ctl:method>get</ctl:method>
-					<parsers:XMLValidatingParser>
-						<parsers:schemas>
-							<parsers:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</parsers:schema>
-						</parsers:schemas>
-					</parsers:XMLValidatingParser>
+					<ctlp:XMLValidatingParser>
+						<ctlp:schemas>
+							<ctlp:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</ctlp:schema>
+						</ctlp:schemas>
+					</ctlp:XMLValidatingParser>
 				</ctl:request>
 			</xsl:variable>
 			<xsl:choose>
@@ -199,11 +201,11 @@
 						<xsl:value-of select="."/>
 					</ctl:param>
 					<ctl:method>get</ctl:method>
-					<parsers:XMLValidatingParser>
-						<parsers:schemas>
-							<parsers:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</parsers:schema>
-						</parsers:schemas>
-					</parsers:XMLValidatingParser>
+					<ctlp:XMLValidatingParser>
+						<ctlp:schemas>
+							<ctlp:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</ctlp:schema>
+						</ctlp:schemas>
+					</ctlp:XMLValidatingParser>
 				</ctl:request>
 			</xsl:variable>
 			<xsl:choose>
@@ -216,11 +218,11 @@
 						<ctl:with-param name="response" select="$describeeocoverage"/>
 					</ctl:call-test>
 					<ctl:call-test name="wcseo:req19">
-					        <ctl:with-param name="url" select="$url"/>
+							<ctl:with-param name="url" select="$url"/>
 						<ctl:with-param name="response" select="$describeeocoverage"/>
 					</ctl:call-test>
 					<ctl:call-test name="wcseo:req20">
-					        <ctl:with-param name="url" select="$url"/>
+							<ctl:with-param name="url" select="$url"/>
 						<ctl:with-param name="response" select="$describeeocoverage"/>
 					</ctl:call-test>
 				</xsl:otherwise>
@@ -264,6 +266,7 @@
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:for-each>
+		</ctl:code>
 	</ctl:test>
 	<ctl:test name="wcseo:req1">
 		<ctl:param name="response"/>
@@ -309,7 +312,7 @@
 		<ctl:param name="response"/>
 		<ctl:assertion>Req5:The WCSEO::EOMetadata element of WCSEO::ReferenceableEOCoverage and WCSEO::RectifiedEOCoverage instances shall contain an element eop:EarthObservation/eop:metadataProperty/eop:EarthObservationMetaData/eop:identifier whose first word is identical to the EO Coverage identifier.</ctl:assertion>
 		<ctl:code>
-			<xsl:if test="not(($response//*[local-name()='EOMetadata']/*[local-name()='EarthObservation']/*[local-name()='metaDataProperty']/*[local-name()='EarthObservationMetaData']/*[local-name()='identifier']=$response//*[local-name()='RectifiedDataset']/@*[local-name()='id']) or ($response//*[local-name()='EOMetadata']/*[local-name()='EarthObservation']/*[local-name()='metaDataProperty']/*[local-name()='EarthObservationMetaData']/*[local-name()='identifier']=$response//*[local-name()='ReferenceableDataset']/@*[local-name()='id']))">
+			<xsl:if test="not($response//*[local-name()='EOMetadata']/*[local-name()='EarthObservation']/*[local-name()='metaDataProperty']/*[local-name()='EarthObservationMetaData']/*[local-name()='identifier']=$response//*[local-name()='CoverageDescription']/*[local-name()='CoverageId'])">
 				<ctl:message>[FAILURE] eop:EarthObservation/eop:metadataProperty/eop:EarthObservationMetaData/eop:identifier is not valid</ctl:message>
 				<ctl:fail/>
 			</xsl:if>
@@ -493,11 +496,11 @@
 							<xsl:value-of select="."/>
 						</ctl:param>
 						<ctl:method>get</ctl:method>
-						<parsers:XMLValidatingParser>
-							<parsers:schemas>
-								<parsers:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</parsers:schema>
-							</parsers:schemas>
-						</parsers:XMLValidatingParser>
+						<ctlp:XMLValidatingParser>
+							<ctlp:schemas>
+								<ctlp:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</ctlp:schema>
+							</ctlp:schemas>
+						</ctlp:XMLValidatingParser>
 					</ctl:request>
 				</xsl:variable>
 				<xsl:if test="not(deep-equal($response//*[local-name()='domainSet']/*[local-name()='offsetVector'], $describeeocoverageset//*[local-name()='domainSet']/*[local-name()='offsetVector']))">
@@ -525,11 +528,11 @@
 							<xsl:value-of select="."/>
 						</ctl:param>
 						<ctl:method>get</ctl:method>
-						<parsers:XMLValidatingParser>
-							<parsers:schemas>
-								<parsers:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</parsers:schema>
-							</parsers:schemas>
-						</parsers:XMLValidatingParser>
+						<ctlp:XMLValidatingParser>
+							<ctlp:schemas>
+								<ctlp:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</ctlp:schema>
+							</ctlp:schemas>
+						</ctlp:XMLValidatingParser>
 					</ctl:request>
 				</xsl:variable>
 				<xsl:if test="not(deep-equal($response//*[local-name()='domainSet']/*[local-name()='offsetVector'], $describeeocoverageset//*[local-name()='domainSet']/*[local-name()='offsetVector']))">
@@ -591,11 +594,11 @@
 							<xsl:value-of select="."/>
 						</ctl:param>
 						<ctl:method>get</ctl:method>
-						<parsers:XMLValidatingParser>
-							<parsers:schemas>
-								<parsers:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</parsers:schema>
-							</parsers:schemas>
-						</parsers:XMLValidatingParser>
+						<ctlp:XMLValidatingParser>
+							<ctlp:schemas>
+								<ctlp:schema type="file">resources/wcseo/1.0/wcsEOAll.xsd</ctlp:schema>
+							</ctlp:schemas>
+						</ctlp:XMLValidatingParser>
 					</ctl:request>
 				</xsl:variable>
 				<xsl:if test="not(deep-equal($response//*[local-name()='rangeType'], $describeeocoverageset//*[local-name()='rangeType']))">
