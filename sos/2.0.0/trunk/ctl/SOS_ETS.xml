@@ -45,7 +45,7 @@
 									<td align="center">
 										<input name="service-url" size="128" 
 										type="text" 
-										value=""/>
+										value="http://sensorweb.demo.52north.org/52nSOSv4.0.0/sos/kvp"/>
 									</td>
 								</tr>				
 							</table>
@@ -3681,7 +3681,7 @@
 								<ctl:param name="request">GetObservation</ctl:param>	
 								<ctl:param name="procedure"><xsl:value-of select="$procedure" /></ctl:param>
 								<ctl:param name="offering"><xsl:value-of select="$offering" /></ctl:param>
-								<ctl:param name="observableProperty"><xsl:value-of select="$observableProperty" /></ctl:param>								
+								<ctl:param name="observedProperty"><xsl:value-of select="$observableProperty" /></ctl:param>								
 								<parsers:XMLValidatingParser>
 									<parsers:schemas>
 										<parsers:schema type="resource">xsd/w3c/xml.xsd</parsers:schema>
@@ -4832,7 +4832,7 @@
 										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
 										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
 										<sos:procedure><xsl:value-of select="$procedure" /></sos:procedure>
-										<sos:offering><xsl:value-of select="$current-dateTime()" /></sos:offering>
+										<sos:offering><xsl:value-of select="current-dateTime()" /></sos:offering>
 										<sos:observedProperty><xsl:value-of select="$observableProperty" /></sos:observedProperty>
 									</sos:GetObservation>
 								</ctl:body>
@@ -4850,7 +4850,7 @@
 										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
 										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd" >
 										<sos:procedure><xsl:value-of select="$procedure" /></sos:procedure>
-										<sos:offering><xsl:value-of select="$current-dateTime()" /></sos:offering>
+										<sos:offering><xsl:value-of select="current-dateTime()" /></sos:offering>
 										<sos:observedProperty><xsl:value-of select="$observableProperty" /></sos:observedProperty>
 									</sos:GetObservation>
 								</ctl:body>
@@ -18279,7 +18279,7 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservation request with null template parameter specified. </ctl:message> 
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertResult request with null template parameter specified. </ctl:message> 
 								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "template".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
@@ -18458,7 +18458,7 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservation request with null resultValues parameter specified. </ctl:message> 
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertResult request with null resultValues parameter specified. </ctl:message> 
 								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "resultValues".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
@@ -18702,9 +18702,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultTemplateRootElementName" select="$GetResultTemplateRootElementName" />
+								<ctl:with-param name="GetResultTemplateResponseSchemaLocation" select="$GetResultTemplateResponseSchemaLocation" />
+								<ctl:with-param name="GetResultTemplateResponseSchemaType" select="$GetResultTemplateResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -18716,9 +18716,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultTemplateRootElementName" select="$GetResultTemplateRootElementName" />
+								<ctl:with-param name="GetResultTemplateResponseSchemaLocation" select="$GetResultTemplateResponseSchemaLocation" />
+								<ctl:with-param name="GetResultTemplateResponseSchemaType" select="$GetResultTemplateResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -18730,9 +18730,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultTemplateRootElementName" select="$GetResultTemplateRootElementName" />
+								<ctl:with-param name="GetResultTemplateResponseSchemaLocation" select="$GetResultTemplateResponseSchemaLocation" />
+								<ctl:with-param name="GetResultTemplateResponseSchemaType" select="$GetResultTemplateResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -18744,9 +18744,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultTemplateRootElementName" select="$GetResultTemplateRootElementName" />
+								<ctl:with-param name="GetResultTemplateResponseSchemaLocation" select="$GetResultTemplateResponseSchemaLocation" />
+								<ctl:with-param name="GetResultTemplateResponseSchemaType" select="$GetResultTemplateResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -18758,9 +18758,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultTemplateRootElementName" select="$GetResultTemplateRootElementName" />
+								<ctl:with-param name="GetResultTemplateResponseSchemaLocation" select="$GetResultTemplateResponseSchemaLocation" />
+								<ctl:with-param name="GetResultTemplateResponseSchemaType" select="$GetResultTemplateResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -18772,9 +18772,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultTemplateRootElementName" select="$GetResultTemplateRootElementName" />
+								<ctl:with-param name="GetResultTemplateResponseSchemaLocation" select="$GetResultTemplateResponseSchemaLocation" />
+								<ctl:with-param name="GetResultTemplateResponseSchemaType" select="$GetResultTemplateResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -18786,9 +18786,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultTemplateRootElementName" select="$GetResultTemplateRootElementName" />
+								<ctl:with-param name="GetResultTemplateResponseSchemaLocation" select="$GetResultTemplateResponseSchemaLocation" />
+								<ctl:with-param name="GetResultTemplateResponseSchemaType" select="$GetResultTemplateResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -18800,9 +18800,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultTemplateRootElementName" select="$GetResultTemplateRootElementName" />
+								<ctl:with-param name="GetResultTemplateResponseSchemaLocation" select="$GetResultTemplateResponseSchemaLocation" />
+								<ctl:with-param name="GetResultTemplateResponseSchemaType" select="$GetResultTemplateResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -18814,9 +18814,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultTemplateRootElementName" select="$GetResultTemplateRootElementName" />
+								<ctl:with-param name="GetResultTemplateResponseSchemaLocation" select="$GetResultTemplateResponseSchemaLocation" />
+								<ctl:with-param name="GetResultTemplateResponseSchemaType" select="$GetResultTemplateResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -18828,9 +18828,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultTemplateRootElementName" select="$GetResultTemplateRootElementName" />
+								<ctl:with-param name="GetResultTemplateResponseSchemaLocation" select="$GetResultTemplateResponseSchemaLocation" />
+								<ctl:with-param name="GetResultTemplateResponseSchemaType" select="$GetResultTemplateResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -18842,9 +18842,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultTemplateRootElementName" select="$GetResultTemplateRootElementName" />
+								<ctl:with-param name="GetResultTemplateResponseSchemaLocation" select="$GetResultTemplateResponseSchemaLocation" />
+								<ctl:with-param name="GetResultTemplateResponseSchemaType" select="$GetResultTemplateResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -18864,9 +18864,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultTemplateRootElementName" />
+			<ctl:param name="GetResultTemplateResponseSchemaLocation" />
+			<ctl:param name="GetResultTemplateResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a request without parameter "service",and the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: service in element GetResultTemplate@http://www.opengis.net/sos/2.0". </ctl:assertion>
@@ -18966,9 +18966,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultTemplateRootElementName" />
+			<ctl:param name="GetResultTemplateResponseSchemaLocation" />
+			<ctl:param name="GetResultTemplateResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a request with null parameter "service",and the response must be a valid exception with code "MissingParameterValue" and locator "service". </ctl:assertion>
@@ -19069,9 +19069,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultTemplateRootElementName" />
+			<ctl:param name="GetResultTemplateResponseSchemaLocation" />
+			<ctl:param name="GetResultTemplateResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a request with invalid parameter "procedure",and the response must be a valid exception with code "InvalidParameterValue" and locator "service". </ctl:assertion>
@@ -19171,9 +19171,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultTemplateRootElementName" />
+			<ctl:param name="GetResultTemplateResponseSchemaLocation" />
+			<ctl:param name="GetResultTemplateResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a request without parameter "version",and the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: version in element GetResultTemplate@http://www.opengis.net/sos/2.0". </ctl:assertion>
@@ -19273,9 +19273,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultTemplateRootElementName" />
+			<ctl:param name="GetResultTemplateResponseSchemaLocation" />
+			<ctl:param name="GetResultTemplateResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a request with null parameter "version",and the response must be a valid exception with code "MissingParameterValue" and locator "version". </ctl:assertion>
@@ -19376,9 +19376,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultTemplateRootElementName" />
+			<ctl:param name="GetResultTemplateResponseSchemaLocation" />
+			<ctl:param name="GetResultTemplateResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a request with invalid parameter "version",and the response must be a valid exception with code "InvalidParameterValue" and locator "version". </ctl:assertion>
@@ -19478,9 +19478,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultTemplateRootElementName" />
+			<ctl:param name="GetResultTemplateResponseSchemaLocation" />
+			<ctl:param name="GetResultTemplateResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a request with null parameter "offering",and the response must be a valid exception with code "MissingParameterValue" and locator "offering". </ctl:assertion>
@@ -19565,7 +19565,7 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservation request with null offering parameter specified. </ctl:message> 
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetResultTemplate request with null offering parameter specified. </ctl:message> 
 								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "offering".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
@@ -19581,9 +19581,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultTemplateRootElementName" />
+			<ctl:param name="GetResultTemplateResponseSchemaLocation" />
+			<ctl:param name="GetResultTemplateResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a request with invalid parameter "offering",and the response must be a valid exception with code "InvalidParameterValue" and locator "offering". </ctl:assertion>
@@ -19683,9 +19683,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultTemplateRootElementName" />
+			<ctl:param name="GetResultTemplateResponseSchemaLocation" />
+			<ctl:param name="GetResultTemplateResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a request with null parameter "observedProperty",and the response must be a valid exception with code "MissingParameterValue" and locator "observedProperty". </ctl:assertion>
@@ -19786,9 +19786,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultTemplateRootElementName" />
+			<ctl:param name="GetResultTemplateResponseSchemaLocation" />
+			<ctl:param name="GetResultTemplateResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a request with invalid parameter "observableProperty",and the response must be a valid exception with code "InvalidParameterValue" and locator "observableProperty". </ctl:assertion>
@@ -19888,9 +19888,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultTemplateRootElementName" />
+			<ctl:param name="GetResultTemplateResponseSchemaLocation" />
+			<ctl:param name="GetResultTemplateResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a valid request ,and there must be have a valid GetResultTemplateResponse returned. </ctl:assertion>
@@ -20020,9 +20020,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultRootElementName" select="$GetResultRootElementName" />
+								<ctl:with-param name="GetResultResponseSchemaLocation" select="$GetResultResponseSchemaLocation" />
+								<ctl:with-param name="GetResultResponseSchemaType" select="$GetResultResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -20034,9 +20034,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultRootElementName" select="$GetResultRootElementName" />
+								<ctl:with-param name="GetResultResponseSchemaLocation" select="$GetResultResponseSchemaLocation" />
+								<ctl:with-param name="GetResultResponseSchemaType" select="$GetResultResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -20048,9 +20048,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultRootElementName" select="$GetResultRootElementName" />
+								<ctl:with-param name="GetResultResponseSchemaLocation" select="$GetResultResponseSchemaLocation" />
+								<ctl:with-param name="GetResultResponseSchemaType" select="$GetResultResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -20062,9 +20062,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultRootElementName" select="$GetResultRootElementName" />
+								<ctl:with-param name="GetResultResponseSchemaLocation" select="$GetResultResponseSchemaLocation" />
+								<ctl:with-param name="GetResultResponseSchemaType" select="$GetResultResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -20076,9 +20076,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultRootElementName" select="$GetResultRootElementName" />
+								<ctl:with-param name="GetResultResponseSchemaLocation" select="$GetResultResponseSchemaLocation" />
+								<ctl:with-param name="GetResultResponseSchemaType" select="$GetResultResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -20090,9 +20090,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultRootElementName" select="$GetResultRootElementName" />
+								<ctl:with-param name="GetResultResponseSchemaLocation" select="$GetResultResponseSchemaLocation" />
+								<ctl:with-param name="GetResultResponseSchemaType" select="$GetResultResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -20104,9 +20104,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultRootElementName" select="$GetResultRootElementName" />
+								<ctl:with-param name="GetResultResponseSchemaLocation" select="$GetResultResponseSchemaLocation" />
+								<ctl:with-param name="GetResultResponseSchemaType" select="$GetResultResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -20118,9 +20118,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultRootElementName" select="$GetResultRootElementName" />
+								<ctl:with-param name="GetResultResponseSchemaLocation" select="$GetResultResponseSchemaLocation" />
+								<ctl:with-param name="GetResultResponseSchemaType" select="$GetResultResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -20132,9 +20132,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultRootElementName" select="$GetResultRootElementName" />
+								<ctl:with-param name="GetResultResponseSchemaLocation" select="$GetResultResponseSchemaLocation" />
+								<ctl:with-param name="GetResultResponseSchemaType" select="$GetResultResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -20146,9 +20146,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultRootElementName" select="$GetResultRootElementName" />
+								<ctl:with-param name="GetResultResponseSchemaLocation" select="$GetResultResponseSchemaLocation" />
+								<ctl:with-param name="GetResultResponseSchemaType" select="$GetResultResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -20160,9 +20160,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultRootElementName" select="$GetResultRootElementName" />
+								<ctl:with-param name="GetResultResponseSchemaLocation" select="$GetResultResponseSchemaLocation" />
+								<ctl:with-param name="GetResultResponseSchemaType" select="$GetResultResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -20174,9 +20174,9 @@
 								<ctl:with-param name="isGET" select="$isGET"/>
 								<ctl:with-param name="isSOAP" select="$isSOAP"/>
 								<ctl:with-param name="getCapabilitiesResponse" select="$getCapabilitiesResponse" />
-								<ctl:with-param name="featureOfInterestRootElementName" select="$featureOfInterestRootElementName" />
-								<ctl:with-param name="featureOfInterestResponseSchemaLocation" select="$featureOfInterestResponseSchemaLocation" />
-								<ctl:with-param name="featureOfInterestResponseSchemaType" select="$featureOfInterestResponseSchemaType" />
+								<ctl:with-param name="GetResultRootElementName" select="$GetResultRootElementName" />
+								<ctl:with-param name="GetResultResponseSchemaLocation" select="$GetResultResponseSchemaLocation" />
+								<ctl:with-param name="GetResultResponseSchemaType" select="$GetResultResponseSchemaType" />
 								<ctl:with-param name="offering" select="$offering" />
 								<ctl:with-param name="observedProperty" select="$observedProperty" />
 							</ctl:call-test>
@@ -20196,9 +20196,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultRootElementName" />
+			<ctl:param name="GetResultResponseSchemaLocation" />
+			<ctl:param name="GetResultResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a request without parameter "service",and the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: service in element GetResult@http://www.opengis.net/sos/2.0". </ctl:assertion>
@@ -20298,9 +20298,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultRootElementName" />
+			<ctl:param name="GetResultResponseSchemaLocation" />
+			<ctl:param name="GetResultResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a request with null parameter "service",and the response must be a valid exception with code "MissingParameterValue" and locator "service". </ctl:assertion>
@@ -20401,9 +20401,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultRootElementName" />
+			<ctl:param name="GetResultResponseSchemaLocation" />
+			<ctl:param name="GetResultResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a request with invalid parameter "procedure",and the response must be a valid exception with code "InvalidParameterValue" and locator "service". </ctl:assertion>
@@ -20503,9 +20503,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultRootElementName" />
+			<ctl:param name="GetResultResponseSchemaLocation" />
+			<ctl:param name="GetResultResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a request without parameter "version",and the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: version in element GetResult@http://www.opengis.net/sos/2.0". </ctl:assertion>
@@ -20605,9 +20605,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultRootElementName" />
+			<ctl:param name="GetResultResponseSchemaLocation" />
+			<ctl:param name="GetResultResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a request with null parameter "version",and the response must be a valid exception with code "MissingParameterValue" and locator "version". </ctl:assertion>
@@ -20708,9 +20708,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultRootElementName" />
+			<ctl:param name="GetResultResponseSchemaLocation" />
+			<ctl:param name="GetResultResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a request with invalid parameter "version",and the response must be a valid exception with code "InvalidParameterValue" and locator "version". </ctl:assertion>
@@ -20810,9 +20810,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultRootElementName" />
+			<ctl:param name="GetResultResponseSchemaLocation" />
+			<ctl:param name="GetResultResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a request with null parameter "offering",and the response must be a valid exception with code "MissingParameterValue" and locator "offering". </ctl:assertion>
@@ -20897,7 +20897,7 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservation request with null offering parameter specified. </ctl:message> 
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetResult request with null offering parameter specified. </ctl:message> 
 								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "offering".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
@@ -20913,9 +20913,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultRootElementName" />
+			<ctl:param name="GetResultResponseSchemaLocation" />
+			<ctl:param name="GetResultResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a request with invalid parameter "offering",and the response must be a valid exception with code "InvalidParameterValue" and locator "offering". </ctl:assertion>
@@ -21015,9 +21015,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultRootElementName" />
+			<ctl:param name="GetResultResponseSchemaLocation" />
+			<ctl:param name="GetResultResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a request with null parameter "observedProperty",and the response must be a valid exception with code "MissingParameterValue" and locator "observedProperty". </ctl:assertion>
@@ -21118,9 +21118,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultRootElementName" />
+			<ctl:param name="GetResultResponseSchemaLocation" />
+			<ctl:param name="GetResultResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a request with invalid parameter "observableProperty",and the response must be a valid exception with code "InvalidParameterValue" and locator "observableProperty". </ctl:assertion>
@@ -21220,9 +21220,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultRootElementName" />
+			<ctl:param name="GetResultResponseSchemaLocation" />
+			<ctl:param name="GetResultResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a valid request ,and there must be have a valid GetResultResponse returned. </ctl:assertion>
@@ -21308,9 +21308,9 @@
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
 			<ctl:param name="getCapabilitiesResponse" />
-			<ctl:param name="featureOfInterestRootElementName" />
-			<ctl:param name="featureOfInterestResponseSchemaLocation" />
-			<ctl:param name="featureOfInterestResponseSchemaType" />
+			<ctl:param name="GetResultRootElementName" />
+			<ctl:param name="GetResultResponseSchemaLocation" />
+			<ctl:param name="GetResultResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
 			<ctl:assertion>Send a valid request ,and there must be have a valid GetResultResponse returned. </ctl:assertion>
@@ -21652,32 +21652,13 @@
 			<parsers:XMLValidatingParser>
 				<parsers:schemas>
 					<parsers:schema type="resource">
-						<xsl:value-of select="spsFunctions:getSchemaLocation(string('sosGetObservation.xsd'))" />
+						<xsl:value-of select="sosFunctions:getSchemaLocation(string('sosGetObservation.xsd'))" />
 					</parsers:schema>
 					<parsers:schema type="resource">
-						<xsl:value-of select="spsFunctions:getSchemaLocation(string('owsExceptionReport.xsd'))" />
+						<xsl:value-of select="sosFunctions:getSchemaLocation(string('owsExceptionReport.xsd'))" />
 					</parsers:schema>
 				</parsers:schemas>
 			</parsers:XMLValidatingParser>
-        </ctl:code>
-    </ctl:function>
-	
-	<ctl:function name="sosFunctions:validateGetCapabilitiesResponseSOAP">
-        <ctl:return>The GetObservationResponse document if it's valid</ctl:return>
-        <ctl:description>Validates a GetObservationResponse document according to its schema</ctl:description>
-        <ctl:code>
-			<parsers:SOAPParser return="content">
-				<parsers:XMLValidatingParser>
-					<parsers:schemas>
-						<parsers:schema type="resource">
-							<xsl:value-of select="spsFunctions:getSchemaLocation(string('sosGetObservation.xsd'))" />
-						</parsers:schema>
-						<parsers:schema type="resource">
-							<xsl:value-of select="spsFunctions:getSchemaLocation(string('owsExceptionReport.xsd'))" />
-						</parsers:schema>
-					</parsers:schemas>
-				</parsers:XMLValidatingParser>
-			</parsers:SOAPParser>
         </ctl:code>
     </ctl:function>
 	</ctl:package>
