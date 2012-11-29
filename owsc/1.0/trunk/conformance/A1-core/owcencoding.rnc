@@ -27,6 +27,7 @@
    # limitations under the License.
    ######################################################################## 
 
+   namespace owc = "http://www.opengis.net/owc"
 
    
    # owc:offering  
@@ -65,7 +66,6 @@
    } 
     
       
-   
    # owcContent Construct
    owcContent = element owc:content {
        atomCommonAttributes,
@@ -73,7 +73,17 @@
       attribute href { atomUri }.
       (extensionElement*)
    } 
-     	   
+   
+   # owcStyleSet Construct
+   owcStyleSet = element owc:content {
+      atomCommonAttributes,
+      attribute default { "0" | "1" } ?,
+      (element owc:name { text }
+       & element owc:title { text }
+       & element owc:subtitle { text }?
+       & element owc:legendURL { atomUri }?
+       & element owc:content { owcContent }?
+       & extensionElement*)
+   }   	   
    	   
-   	   
-   	   
+   	
