@@ -374,7 +374,7 @@
 								<tr>
 									<td><input type="checkbox" name="1410">14.10.RequestInvalidobservedProperty</input></td>
 									<td><input type="checkbox" name="1411">14.11.RequestValidRequest</input></td>
-									<td><input type="checkbox" name="1411">14.12.RequestEmptyResponse</input></td>
+									<td><input type="checkbox" name="1412">14.12.RequestEmptyResponse</input></td>
 								</tr>
 							</table>						
 						</blockquote>
@@ -940,7 +940,7 @@
 					<xsl:variable name="test1410" select="($which-tests eq 'all' or $t14 eq 'on' or $t1410 eq 'on')"/>
 					<xsl:variable name="t1411" select="$form-values/values/value[@key='1411']"/>
 					<xsl:variable name="test1411" select="($which-tests eq 'all' or $t14 eq 'on' or $t1411 eq 'on')"/>
-					<xsl:variable name="t1412" select="$form-values/values/value[@key='1411']"/>
+					<xsl:variable name="t1412" select="$form-values/values/value[@key='1412']"/>
 					<xsl:variable name="test1412" select="($which-tests eq 'all' or $t14 eq 'on' or $t1412 eq 'on')"/>
 					<xsl:variable name="test14" select="$test1401 or $test1402 or $test1403 or $test1404 or $test1405 or $test1406 or $test1407 or $test1408 or $test1409 or $test1410 or $test1411 or $test1412"/><!-- all test in 14-->
 					
@@ -21303,7 +21303,7 @@
 		</ctl:test>
 
 		<!-- 1412 Send valid GetResult request with temporal filter from the year 40000, the response must be a valid GetResultResponse but empty. -->
-		<ctl:test name="sos:GRRequestValidRequest">
+		<ctl:test name="sos:GRRequestEmptyResponse">
 			<ctl:param name="serviceURL" />
 			<ctl:param name="isGET" />
 			<ctl:param name="isSOAP" />
