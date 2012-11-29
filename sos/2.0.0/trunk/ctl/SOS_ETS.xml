@@ -2404,21 +2404,21 @@
 								<xsl:variable name="procedureDescriptionFormatCount" select="count($CapabilitiesResponse//sos:extension/sos:InsertionCapabilities/sos:procedureDescriptionFormat)" />
 								<xsl:variable name="featureOfInterestTypeCount" select="count($CapabilitiesResponse//sos:extension/sos:InsertionCapabilities/sos:featureOfInterestType)" />
 								<xsl:variable name="observationTypeCount" select="count($CapabilitiesResponse//sos:extension/sos:InsertionCapabilities/sos:observationType)" />
-								<xsl:if test="procedureDescriptionFormatCount eq 0">
+								<xsl:if test="$procedureDescriptionFormatCount eq 0">
 									<ctl:message>Elements "sos:procedureDescriptionFormat" must be contained in sos:InsertionCapabilities (one or many).</ctl:message>
 									<ctl:fail/>
 								</xsl:if>
-								<xsl:if test="featureOfInterestTypeCount eq 0">
+								<xsl:if test="$featureOfInterestTypeCount eq 0">
 									<ctl:message>Elements "sos:featureOfInterestType" must be contained in sos:InsertionCapabilities (one or many).</ctl:message>
 									<ctl:fail/>
 								</xsl:if>
-								<xsl:if test="observationTypeCount eq 0">
+								<xsl:if test="$observationTypeCount eq 0">
 									<ctl:message>Elements "sos:observationType" must be contained in sos:InsertionCapabilities (one or many).</ctl:message>
 									<ctl:fail/>
 								</xsl:if>
 								<xsl:for-each select="$CapabilitiesResponse//sos:extension/sos:InsertionCapabilities/*">
 									<xsl:variable name="target" select="local-name-from-QName(node-name(.))" />
-									<xsl:if test="not($target eq 'procedureDescriptionFormat') or not($target eq 'featureOfInterestType') or not($target eq 'observationType') or not($target eq 'supportedEncoding')">
+									<xsl:if test="not(($target eq string('procedureDescriptionFormat')) or ($target eq string('featureOfInterestType')) or ($target eq string('observationType')) or ($target eq string('supportedEncoding')))">
 										<ctl:message>Elements "<xsl:value-of select="$target"/>" in InsertionCapabilities must be one of "procedureDescriptionFormat,featureOfInterestType,observationType,supportedEncoding".</ctl:message>
 										<ctl:fail/>
 									</xsl:if>
