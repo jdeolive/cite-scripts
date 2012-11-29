@@ -4948,7 +4948,7 @@
 									<ctl:message>FAILURE:  When requestStatus = "Accepted" ,there is one and only one element for each element in "event,percentCompletion,taskStatus" in the response.</ctl:message>
 									<ctl:fail />
 								</xsl:when>
-								<xsl:when test="($submitResponse//sps:requestStatus=string('Accepted')) and not($submitResponse//sps:event=string('TaskSubmitted') and $submitResponse//sps:percentCompletion=string('0') and $submitResponse//sps:taskStatus=string('InExecution')) and not($submitResponse//sps:event=string('TaskCompleted') and $submitResponse//sps:percentCompletion=string('100') and $submitResponse//sps:taskStatus=string('Completed'))">
+								<xsl:when test="($submitResponse//sps:requestStatus=string('Accepted')) and not($submitResponse//sps:event=string('TaskSubmitted') and floor($submitResponse//sps:percentCompletion)=floor(0) and $submitResponse//sps:taskStatus=string('InExecution')) and not($submitResponse//sps:event=string('TaskCompleted') and floor($submitResponse//sps:percentCompletion)=floor(100) and $submitResponse//sps:taskStatus=string('Completed'))">
 									<ctl:message>FAILURE:  When requestStatus = "Accepted" ,the element value is not correct in the Submit response,see SPS 2.0 Standard Table 31 of [OGC 09-000].</ctl:message>
 									<ctl:fail />
 								</xsl:when>
