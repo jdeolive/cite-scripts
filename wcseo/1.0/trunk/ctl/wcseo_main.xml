@@ -29,7 +29,7 @@
           				<ctl:param name="REQUEST">GetCapabilities</ctl:param>
       						<ctlp:XMLValidatingParser>
 	       						<ctlp:schemas>
-                      						<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                      						<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
          					</ctlp:XMLValidatingParser>
         			</ctl:request>
