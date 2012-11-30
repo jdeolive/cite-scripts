@@ -114,7 +114,7 @@
         			</ctl:request>
       			</xsl:variable>
  			<xsl:choose>
-  				<xsl:when test="emtpy($CapabilitiesReq3)">
+  				<xsl:when test="empty($CapabilitiesReq3)">
 					<ctl:message>[FAILURE] Parsing or validation errors.</ctl:message>
 					<ctl:fail/>
   				</xsl:when>

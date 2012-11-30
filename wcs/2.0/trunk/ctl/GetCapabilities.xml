@@ -488,7 +488,7 @@
            				</ctl:url>
            				<ctl:method>get</ctl:method>
            				<ctl:param name="service">WCS</ctl:param>
-           				<ctl:param name="VERSION">2.0</ctl:param>           
+           				<ctl:param name="VERSION">2.0.1</ctl:param>           
            				<ctl:param name="request">DescribeCoverage</ctl:param>      
            				<ctl:param name="CoverageId"><xsl:value-of select="."/></ctl:param>   
 

@@ -1442,7 +1442,7 @@
 																	
 							<ctlp:XMLValidatingParser>
 								<ctlp:schemas>
-									<ctlp:schema type="resource">wcs/2.0/wcsAll.xsd</ctlp:schema>
+									<parsers:schema type="resource">wcs/2.0/wcsAll.xsd</parsers:schema>
 								</ctlp:schemas>
 							</ctlp:XMLValidatingParser>
 						</ctl:request>
