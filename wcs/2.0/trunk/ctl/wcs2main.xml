@@ -25,17 +25,18 @@
       			<xsl:choose>
         			<xsl:when test="not(empty($Capabilities))">
          
-					<ctl:message>[MESSAGE] Test the three protocol extensions(GetKVP, PostXML and SOAP) when they are available</ctl:message>
+					<ctl:message>[MESSAGE] Test the core and extensions when they are available</ctl:message>
 					<xsl:choose>
       			   			<xsl:when test="(contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_protocol-binding_soap/1.0') or  contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_protocol-binding_post-xml/1.0') or contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_protocol-binding_get-kvp/1.0'))">
       			    				<ctl:message>test gml coverage by the supported protocol extensions</ctl:message> 
-  								<!--Get the provided protocol extensions and invoke their tests-->         
+  								
+								<!--Get the provided protocol extensions and invoke their tests-->         
 								<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_protocol-binding_get-kvp/1.0/conf/get-kvp')">
 									<ctl:call-test name="wcs2:get-kvp-main">
 										<ctl:with-param name="url" select="$url"/>        
 									</ctl:call-test>            									
 								</xsl:if>
-								<!--
+								<!-- these two bindings will be reactivated after the corrigenda is available
 								<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_protocol-binding_post-xml/1.0')">
 									<ctl:call-test name="wcs2:post-xml-main">
 										<ctl:with-param name="url" select="$url"/>        
@@ -47,9 +48,16 @@
 									</ctl:call-test>              
 								</xsl:if>  
 								-->
+								<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_service-extension_wcps/1.0')">
+									<ctl:call-test name="wcs2:wcps">
+										<ctl:with-param name="url" select="$url"/>  
+										<ctl:with-param name="Capabilities" select="$Capabilities"/>      
+									</ctl:call-test>             
+								</xsl:if>								
 								<ctl:call-test name="wcs2:core-main">
 									<ctl:with-param name="url" select="$url"/>        
-								</ctl:call-test> 								
+								</ctl:call-test> 
+																
 
       		  				</xsl:when>      
 		
