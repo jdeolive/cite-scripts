@@ -5756,31 +5756,19 @@
 			<ctl:comment>For The GetObservation request without parameter responseFormat ,the response must be a valid GetObservationResponse which format is "OM 2.0"; fail otherwise.</ctl:comment>
 			<ctl:link title=""></ctl:link>
 			<ctl:code>
-				<!-- If O&M 2.0 [OGC 10-004r3/ISO 19156] is returned by an SOS server, the response shall contain an instance of the GetObservationResponse type. -->
-				<!-- In addition to the properties inherited from SWES ExtensibleResponse, the SOS GetObservationResponse shall include the properties observationData. -->
-				<!-- 1.root is sos:GetObservationResponse -->
-				<xsl:variable name="Root" select="local-name-from-QName(node-name($getObservationResponse/*[1]))" />
-				<xsl:choose>			
-					<xsl:when test="not($Root=string('GetObservationResponse'))">
-						<ctl:message>The root element from the response to a GetObservation request "<xsl:value-of select="$Root" />" does not match the expected root element of "<xsl:value-of select="string('GetObservationResponse')" />"</ctl:message>
-						<ctl:fail />
-					</xsl:when>
-					<xsl:otherwise>
-						<!-- 2.sonElement of root is sos:observationData -->
-						<xsl:for-each select="$getObservationResponse/*[1]/*">
-							<xsl:variable name="sonElement" select="local-name-from-QName(node-name(.))" />
-							<xsl:choose>
-								<xsl:when test="not($sonElement=string('observationData'))">
-									<ctl:message>The son element "<xsl:value-of select="$sonElement" />" does not match the expected root element of "<xsl:value-of select="string('observationData')" />"</ctl:message>
-									<ctl:fail />
-								</xsl:when>
-								<xsl:otherwise>
-									<ctl:message>PASS</ctl:message>
-								</xsl:otherwise>
-							</xsl:choose>
-						</xsl:for-each>
-					</xsl:otherwise>
-				</xsl:choose>
+				<!-- to the properties inherited from SWES ExtensibleResponse, the SOS GetObservationResponse shall include the properties observationData. -->
+				<xsl:for-each select="$getObservationResponse/*">
+					<xsl:variable name="sonElement" select="local-name-from-QName(node-name(.))" />
+					<xsl:choose>
+						<xsl:when test="not($sonElement=string('observationData'))">
+							<ctl:message>The son element "<xsl:value-of select="$sonElement" />" does not match the expected root element of "<xsl:value-of select="string('observationData')" />"</ctl:message>
+							<ctl:fail />
+						</xsl:when>
+						<xsl:otherwise>
+							<ctl:message>PASS</ctl:message>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:for-each>
 			</ctl:code>
 		</ctl:test>
 
