@@ -24,6 +24,8 @@
    namespace dc="http://purl.org/dc/elements/1.1/" 
    namespace georss="http://www.georss.org/georss" 
    namespace gml="http://www.opengis.net/gml"
+
+   include "georss.rnc"
    
    include "rfc4287.rnc"
    {
@@ -48,6 +50,7 @@
                ~ "identified with the scheme='http://www.opengis.net/owc/specReference'."
             ]
          ]
+         
       ]
       element atom:feed {
       	 attribute xml:base { atomUri }?,
@@ -66,7 +69,8 @@
           & atomTitle
           & atomUpdated
           & dcPublisher?
-          & georssWhere? 
+          & georssWhere?
+          & dcDate?
           & extensionElement*),
          atomEntry*
       }      
@@ -77,32 +81,8 @@
           	  atomCommonAttributes,
           	  text
         }
-
-        
-   georssWhere = 
-   	element georss:where {
-   		gmlElement
-   	}
-   	
-   	
-   gmlElement =
-      gmlPointElement | gmlLineStringElement | gmlPolygonElement | gmlEnvelopeElement
-      
-   gmlPointElement = 
-      element gml:Point { 
-      	      extensionElement 
-      }
+    
+   dcDate = element dc:date{ atomDateConstruct }
    
-   gmlLineStringElement = 
-      element gml:LineString { 
-      	      extensionElement 
-      }
-       
-   gmlPolygonElement = 
-      element gml:Polygon { 
-      	      extensionElement 
-      }
-   gmlEnvelopeElement = 
-      element  gml:Envelope { 
-      	      extensionElement 
-      }      
+
+  

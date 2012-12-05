@@ -4,7 +4,7 @@
   <id>https://github.com/Terradue/trax/tree/master/owc/bin/../examples/meris_borders_users.atom/</id>
   <subtitle type="text">Two WMS layers from different servers giving an operational setting</subtitle>
   <updated>2012-10-12T19:00:53</updated>
-  <dc:_publisher>Terradue srl.</dc:_publisher>
+  <dc:publisher>Terradue srl.</dc:publisher>
   <generator uri="https://github.com/Terradue/trax/" version="1.0">
         OGC Context CITE Testing XSLT (Extensible Stylesheet Language Transformations)   
   </generator>
@@ -20,13 +20,13 @@
   -->
   <category scheme="http://www.opengis.net/owc/specReference" term="1.0" label="This file is compliant with version 1.0 of OGC Context"/>
 <georss:where>
-    <gml:Polgon>
+    <gml:Polygon>
       <gml:exterior>
         <gml:LinearRing>
           <gml:posList>45 -2 45 8 55 8 55 -2 45 -2</gml:posList>
         </gml:LinearRing>
       </gml:exterior>
-    </gml:Polgon>
+    </gml:Polygon>
   </georss:where>
 <entry>
   <id>http://ows.genesi-dec.eu/geoserver/385d7d71-650a-414b-b8c7-739e2c0b5e76/wms?SERVICE=WMS&amp;/</id>

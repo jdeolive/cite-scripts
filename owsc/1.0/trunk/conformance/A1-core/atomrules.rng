@@ -20,6 +20,7 @@
   limitations under the License.
 -->
 <grammar xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:s="http://www.ascc.net/xml/schematron" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:owc="http://www.opengis.net/owc" xmlns:georss="http://www.georss.org/georss" xmlns:gml="http://www.opengis.net/gml" xmlns="http://relaxng.org/ns/structure/1.0">
+  <include href="georss.rng"/>
   <include href="rfc4287.rng">
     <!-- redefine atomFeed -->
     <define name="atomFeed">
@@ -76,6 +77,9 @@
           <optional>
             <ref name="georssWhere"/>
           </optional>
+          <optional>
+            <ref name="dcDate"/>
+          </optional>
           <zeroOrMore>
             <ref name="extensionElement"/>
           </zeroOrMore>
@@ -92,37 +96,9 @@
       <text/>
     </element>
   </define>
-  <define name="georssWhere">
-    <element name="georss:where">
-      <ref name="gmlElement"/>
-    </element>
-  </define>
-  <define name="gmlElement">
-    <choice>
-      <ref name="gmlPointElement"/>
-      <ref name="gmlLineStringElement"/>
-      <ref name="gmlPolygonElement"/>
-      <ref name="gmlEnvelopeElement"/>
-    </choice>
-  </define>
-  <define name="gmlPointElement">
-    <element name="gml:Point">
-      <ref name="extensionElement"/>
-    </element>
-  </define>
-  <define name="gmlLineStringElement">
-    <element name="gml:LineString">
-      <ref name="extensionElement"/>
-    </element>
-  </define>
-  <define name="gmlPolygonElement">
-    <element name="gml:Polygon">
-      <ref name="extensionElement"/>
-    </element>
-  </define>
-  <define name="gmlEnvelopeElement">
-    <element name="gml:Envelope">
-      <ref name="extensionElement"/>
+  <define name="dcDate">
+    <element name="dc:date">
+      <ref name="atomDateConstruct"/>
     </element>
   </define>
 </grammar>
