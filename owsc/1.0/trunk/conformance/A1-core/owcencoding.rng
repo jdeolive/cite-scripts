@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  -*- rnc -*-
+  RELAX NG Compact Syntax Grammar for the
+  OGC Context Conformance Test Classes (OGC 12-084)
+  A.1 Conformance Test Class Part 1: core 
+-->
+<!--
+  This defines the conformance to the rules of ATOM according to OWC 
+  restrictions and to the rules of the owc:context classes 
+-->
+<!--
+  Copyright 2012 Terradue Srl.
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+   � http://www.apache.org/licenses/LICENSE-2.0
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<grammar xmlns:owc="http://www.opengis.net/owc" xmlns="http://relaxng.org/ns/structure/1.0">
+  <include href="atomrules.rng">
+    <!-- owc:offering  -->
+    <define name="owcOffering">
+      <element name="owc:offering">
+        <ref name="atomCommonAttributes"/>
+        <attribute name="code"/>
+        <interleave>
+          <zeroOrMore>
+            <ref name="owcOperation"/>
+          </zeroOrMore>
+          <zeroOrMore>
+            <ref name="owcContent"/>
+          </zeroOrMore>
+          <zeroOrMore>
+            <ref name="owcStyleSet"/>
+          </zeroOrMore>
+          <zeroOrMore>
+            <ref name="extensionElement"/>
+          </zeroOrMore>
+        </interleave>
+      </element>
+    </define>
+    <!-- owcOperation Construct -->
+    <define name="owcOperation">
+      <element name="owc:operation">
+        <ref name="atomCommonAttributes"/>
+        <attribute name="code"/>
+        <attribute name="method">
+          <choice>
+            <value>GE</value>
+            <value>POST</value>
+          </choice>
+        </attribute>
+        <attribute name="type"/>
+        <attribute name="href">
+          <ref name="atomUri"/>
+        </attribute>
+        <interleave>
+          <optional>
+            <ref name="owcPayload"/>
+          </optional>
+          <optional>
+            <ref name="owcResult"/>
+          </optional>
+          <zeroOrMore>
+            <ref name="extensionElement"/>
+          </zeroOrMore>
+        </interleave>
+      </element>
+    </define>
+    <!-- owcPayload Construct -->
+    <define name="owcPayload">
+      <element name="owc:payload">
+        <ref name="atomCommonAttributes"/>
+        <zeroOrMore>
+          <ref name="extensionElement"/>
+        </zeroOrMore>
+      </element>
+    </define>
+    <!-- owcPayload Construct -->
+    <define name="owcResult">
+      <element name="owc:result">
+        <ref name="atomCommonAttributes"/>
+        <zeroOrMore>
+          <ref name="extensionElement"/>
+        </zeroOrMore>
+      </element>
+    </define>
+    <!-- owcContent Construct -->
+    <define name="owcContent">
+      <element name="owc:content">
+        <ref name="atomCommonAttributes"/>
+        <attribute name="type"/>
+        <attribute name="href">
+          <ref name="atomUri"/>
+        </attribute>
+        <zeroOrMore>
+          <ref name="extensionElement"/>
+        </zeroOrMore>
+      </element>
+    </define>
+    <!-- owcStyleSet Construct -->
+    <define name="owcStyleSet">
+      <element name="owc:content">
+        <ref name="atomCommonAttributes"/>
+        <optional>
+          <attribute name="default">
+            <choice>
+              <value>0</value>
+              <value>1</value>
+            </choice>
+          </attribute>
+        </optional>
+        <interleave>
+          <element name="owc:name">
+            <text/>
+          </element>
+          <element name="owc:title">
+            <text/>
+          </element>
+          <optional>
+            <element name="owc:subtitle">
+              <text/>
+            </element>
+          </optional>
+          <optional>
+            <element name="owc:legendURL">
+              <ref name="atomUri"/>
+            </element>
+          </optional>
+          <optional>
+            <element name="owc:content">
+              <ref name="owcContent"/>
+            </element>
+          </optional>
+          <zeroOrMore>
+            <ref name="extensionElement"/>
+          </zeroOrMore>
+        </interleave>
+      </element>
+    </define>
+  </include>
+</grammar>
+<!-- EOF -->

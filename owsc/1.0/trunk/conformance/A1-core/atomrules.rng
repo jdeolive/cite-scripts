@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  -*- rnc -*-
+  RELAX NG Compact Syntax Grammar for the
+  OGC Context Conformance Test Classes (OGC 12-084)
+  A.1 Conformance Test Class Part 1: core 
+  This defines the conformance to the rules of ATOM according to OWC 
+  restrictions and to the rules of the owc:context classes
+-->
+<!--
+  Copyright 2012 Terradue Srl.
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  http://www.apache.org/licenses/LICENSE-2.0
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<grammar xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:s="http://www.ascc.net/xml/schematron" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:owc="http://www.opengis.net/owc" xmlns:georss="http://www.georss.org/georss" xmlns:gml="http://www.opengis.net/gml" xmlns="http://relaxng.org/ns/structure/1.0">
+  <include href="rfc4287.rng">
+    <!-- redefine atomFeed -->
+    <define name="atomFeed">
+      <element name="atom:feed">
+        <s:rule context="atom:feed">
+          <s:assert test="atom:author or not(atom:entry[not(atom:author)])">An atom:feed must have an atom:author unless all of its atom:entry children have an atom:author.</s:assert>
+        </s:rule>
+        <s:rule context="atom:feed">
+          <s:assert test="atom:category[@scheme='http://www.opengis.net/owc/specReference']">An atom:feed must have an atom:category with the context specification reference identified with the scheme='http://www.opengis.net/owc/specReference'.</s:assert>
+        </s:rule>
+        <optional>
+          <attribute name="xml:base">
+            <ref name="atomUri"/>
+          </attribute>
+        </optional>
+        <!-- xml:lang is mandatory in context -->
+        <attribute name="xml:lang">
+          <ref name="atomLanguageTag"/>
+        </attribute>
+        <interleave>
+          <zeroOrMore>
+            <ref name="atomAuthor"/>
+          </zeroOrMore>
+          <zeroOrMore>
+            <ref name="atomCategory"/>
+          </zeroOrMore>
+          <zeroOrMore>
+            <ref name="atomContributor"/>
+          </zeroOrMore>
+          <optional>
+            <ref name="atomGenerator"/>
+          </optional>
+          <optional>
+            <ref name="atomIcon"/>
+          </optional>
+          <ref name="atomId"/>
+          <zeroOrMore>
+            <ref name="atomLink"/>
+          </zeroOrMore>
+          <optional>
+            <ref name="atomLogo"/>
+          </optional>
+          <optional>
+            <ref name="atomRights"/>
+          </optional>
+          <optional>
+            <ref name="atomSubtitle"/>
+          </optional>
+          <ref name="atomTitle"/>
+          <ref name="atomUpdated"/>
+          <optional>
+            <ref name="dcPublisher"/>
+          </optional>
+          <optional>
+            <ref name="georssWhere"/>
+          </optional>
+          <zeroOrMore>
+            <ref name="extensionElement"/>
+          </zeroOrMore>
+        </interleave>
+        <zeroOrMore>
+          <ref name="atomEntry"/>
+        </zeroOrMore>
+      </element>
+    </define>
+  </include>
+  <define name="dcPublisher">
+    <element name="dc:publisher">
+      <ref name="atomCommonAttributes"/>
+      <text/>
+    </element>
+  </define>
+  <define name="georssWhere">
+    <element name="georss:where">
+      <ref name="gmlElement"/>
+    </element>
+  </define>
+  <define name="gmlElement">
+    <choice>
+      <ref name="gmlPointElement"/>
+      <ref name="gmlLineStringElement"/>
+      <ref name="gmlPolygonElement"/>
+      <ref name="gmlEnvelopeElement"/>
+    </choice>
+  </define>
+  <define name="gmlPointElement">
+    <element name="gml:Point">
+      <ref name="extensionElement"/>
+    </element>
+  </define>
+  <define name="gmlLineStringElement">
+    <element name="gml:LineString">
+      <ref name="extensionElement"/>
+    </element>
+  </define>
+  <define name="gmlPolygonElement">
+    <element name="gml:Polygon">
+      <ref name="extensionElement"/>
+    </element>
+  </define>
+  <define name="gmlEnvelopeElement">
+    <element name="gml:Envelope">
+      <ref name="extensionElement"/>
+    </element>
+  </define>
+</grammar>

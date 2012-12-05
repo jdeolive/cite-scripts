@@ -1,34 +1,108 @@
 # -*- rnc -*-
-   ########################################################################
    # RELAX NG Compact Syntax Grammar for the
    # OGC Context Conformance Test Classes (OGC 12-084)
-   #
    # A.1 Conformance Test Class Part 1: core 
    # This defines the conformance to the rules of ATOM according to OWC 
    # restrictions and to the rules of the owc:context classes
-   # 
-   # 
-   ######################################################################## 
-
    
-   ########################################################################
    # Copyright 2012 Terradue Srl.
-   #
    # Licensed under the Apache License, Version 2.0 (the "License");
    # you may not use this file except in compliance with the License.
    # You may obtain a copy of the License at
-   # 
-   #  Ê http://www.apache.org/licenses/LICENSE-2.0
-   #
+   # http://www.apache.org/licenses/LICENSE-2.0
    # Unless required by applicable law or agreed to in writing, software
    # distributed under the License is distributed on an "AS IS" BASIS,
    # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    # See the License for the specific language governing permissions and
    # limitations under the License.
-   ######################################################################## 
-
-
+   
+   namespace atom = "http://www.w3.org/2005/Atom"
+   namespace xhtml = "http://www.w3.org/1999/xhtml"
+   namespace s = "http://www.ascc.net/xml/schematron"
+   namespace local = ""
+   namespace owc = "http://www.opengis.net/owc"
+   namespace dc="http://purl.org/dc/elements/1.1/" 
+   namespace georss="http://www.georss.org/georss" 
+   namespace gml="http://www.opengis.net/gml"
    
    include "rfc4287.rnc"
+   {
+
+   # redefine atomFeed
+   atomFeed =
+      [
+         s:rule [
+            context = "atom:feed"
+            s:assert [
+               test = "atom:author or not(atom:entry[not(atom:author)])"
+               "An atom:feed must have an atom:author unless all "
+               ~ "of its atom:entry children have an atom:author."
+            ]
+         ]
+         s:rule [
+            context = "atom:feed"
+            s:assert [
+               test = "atom:category[@scheme='http://www.opengis.net/owc/specReference']"
+               "An atom:feed must have an atom:category "
+               ~ "with the context specification reference "
+               ~ "identified with the scheme='http://www.opengis.net/owc/specReference'."
+            ]
+         ]
+      ]
+      element atom:feed {
+      	 attribute xml:base { atomUri }?,
+      	 # xml:lang is mandatory in context
+         attribute xml:lang { atomLanguageTag },
+         (atomAuthor*
+          & atomCategory*
+          & atomContributor*
+          & atomGenerator?
+          & atomIcon?
+          & atomId
+          & atomLink*
+          & atomLogo?
+          & atomRights?
+          & atomSubtitle?
+          & atomTitle
+          & atomUpdated
+          & dcPublisher?
+          & georssWhere? 
+          & extensionElement*),
+         atomEntry*
+      }      
+   }
    
+   dcPublisher =
+      	element dc:publisher  {
+          	  atomCommonAttributes,
+          	  text
+        }
+
+        
+   georssWhere = 
+   	element georss:where {
+   		gmlElement
+   	}
+   	
+   	
+   gmlElement =
+      gmlPointElement | gmlLineStringElement | gmlPolygonElement | gmlEnvelopeElement
+      
+   gmlPointElement = 
+      element gml:Point { 
+      	      extensionElement 
+      }
    
+   gmlLineStringElement = 
+      element gml:LineString { 
+      	      extensionElement 
+      }
+       
+   gmlPolygonElement = 
+      element gml:Polygon { 
+      	      extensionElement 
+      }
+   gmlEnvelopeElement = 
+      element  gml:Envelope { 
+      	      extensionElement 
+      }      
