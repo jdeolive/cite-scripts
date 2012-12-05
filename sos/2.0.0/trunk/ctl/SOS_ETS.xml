@@ -5083,19 +5083,19 @@
 							<xsl:if test="not($isSOAP=string('true'))">
 								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfo($getObservationResponse)" /></ctl:message>
 							</xsl:if>
-							<ctl:message>Checking the validity of the response to a GetObservation request with invalid observableProperty parameter.</ctl:message>
+							<ctl:message>Checking the validity of the response to a GetObservation request with invalid observedProperty parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<ctl:call-function name="sosFunctions:checkExceptionReport">
 									<ctl:with-param name="exceptionReport" select="$getObservationResponse" />
 									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
-									<ctl:with-param name="locatorToCheck" select="string('observableProperty')" />
+									<ctl:with-param name="locatorToCheck" select="string('observedProperty')" />
 									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
 								</ctl:call-function>
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservation request with invalid observableProperty parameter specified.  </ctl:message>
-								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "observableProperty".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservation request with invalid observedProperty parameter specified.  </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "observedProperty".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -19791,8 +19791,8 @@
 			<ctl:param name="GetResultTemplateResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
-			<ctl:assertion>Send a request with invalid parameter "observableProperty",and the response must be a valid exception with code "InvalidParameterValue" and locator "observableProperty". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "observableProperty"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request with invalid parameter "observedProperty",and the response must be a valid exception with code "InvalidParameterValue" and locator "observableProperty". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "observedProperty"; fail otherwise.</ctl:comment>
 			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<xsl:variable name="GetResultTemplateResponse">
@@ -19861,19 +19861,19 @@
 							<xsl:if test="not($isSOAP=string('true'))">
 								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfo($GetResultTemplateResponse)" /></ctl:message>
 							</xsl:if>
-							<ctl:message>Checking the validity of the response to a GetResultTemplate request with invalid observableProperty parameter.</ctl:message>
+							<ctl:message>Checking the validity of the response to a GetResultTemplate request with invalid observedProperty parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<ctl:call-function name="sosFunctions:checkExceptionReport">
 									<ctl:with-param name="exceptionReport" select="$GetResultTemplateResponse" />
 									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
-									<ctl:with-param name="locatorToCheck" select="string('observableProperty')" />
+									<ctl:with-param name="locatorToCheck" select="string('observedProperty')" />
 									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
 								</ctl:call-function>
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetResultTemplate request with invalid observableProperty parameter specified.  </ctl:message>
-								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "observableProperty".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetResultTemplate request with invalid observedProperty parameter specified.  </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "observedProperty".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -21123,8 +21123,8 @@
 			<ctl:param name="GetResultResponseSchemaType" />
 			<ctl:param name="offering" />
 			<ctl:param name="observedProperty" />
-			<ctl:assertion>Send a request with invalid parameter "observableProperty",and the response must be a valid exception with code "InvalidParameterValue" and locator "observableProperty". </ctl:assertion>
-			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "observableProperty"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request with invalid parameter "observedProperty",and the response must be a valid exception with code "InvalidParameterValue" and locator "observableProperty". </ctl:assertion>
+			<ctl:comment>Pass if the server returns a valid exception message with an exceptionCode "InvalidParameterValue" and locator is "observedProperty"; fail otherwise.</ctl:comment>
 			<ctl:link title=""></ctl:link>
 			<ctl:code>
 				<xsl:variable name="GetResultResponse">
@@ -21193,19 +21193,19 @@
 							<xsl:if test="not($isSOAP=string('true'))">
 								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfo($GetResultResponse)" /></ctl:message>
 							</xsl:if>
-							<ctl:message>Checking the validity of the response to a GetResult request with invalid observableProperty parameter.</ctl:message>
+							<ctl:message>Checking the validity of the response to a GetResult request with invalid observedProperty parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<ctl:call-function name="sosFunctions:checkExceptionReport">
 									<ctl:with-param name="exceptionReport" select="$GetResultResponse" />
 									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
-									<ctl:with-param name="locatorToCheck" select="string('observableProperty')" />
+									<ctl:with-param name="locatorToCheck" select="string('observedProperty')" />
 									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
 								</ctl:call-function>
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetResult request with invalid observableProperty parameter specified.  </ctl:message>
-								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "observableProperty".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetResult request with invalid observedProperty parameter specified.  </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "observedProperty".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
