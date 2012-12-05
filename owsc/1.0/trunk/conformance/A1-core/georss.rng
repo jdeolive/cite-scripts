@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  -*- rnc -*-
+  RELAX NG Compact Syntax Grammar for the
+  OGC Context Conformance Test Classes (OGC 12-084)
+  Auxiliar Conformance Test Class for GEORSS 
+  This defines the conformance to the rules of GEORSS
+-->
+<!--
+  Copyright 2012 Terradue Srl.
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  http://www.apache.org/licenses/LICENSE-2.0
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<grammar ns="http://www.opengis.net/gml" xmlns:georss="http://www.georss.org/georss" xmlns:gml="http://www.opengis.net/gml" xmlns="http://relaxng.org/ns/structure/1.0">
+  <define name="georssWhere">
+    <element name="georss:where">
+      <ref name="gmlElement"/>
+    </element>
+  </define>
+  <define name="gmlElement">
+    <choice>
+      <ref name="gmlPointElement"/>
+      <ref name="gmlLineStringElement"/>
+      <ref name="gmlPolygonElement"/>
+      <ref name="gmlEnvelopeElement"/>
+    </choice>
+  </define>
+  <define name="gmlPointElement">
+    <element name="gml:Point">
+      <element>
+        <nsName/>
+        <text/>
+      </element>
+    </element>
+  </define>
+  <define name="gmlLineStringElement">
+    <element name="gml:LineString">
+      <element>
+        <nsName/>
+        <text/>
+      </element>
+    </element>
+  </define>
+  <define name="gmlPolygonElement">
+    <element name="gml:Polygon">
+      <element>
+        <nsName/>
+        <text/>
+      </element>
+    </element>
+  </define>
+  <define name="gmlEnvelopeElement">
+    <element name="gml:Envelope">
+      <element>
+        <nsName/>
+        <text/>
+      </element>
+    </element>
+  </define>
+</grammar>
