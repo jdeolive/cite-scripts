@@ -13,18 +13,13 @@ then
 	exit $res
 fi
 
-
-
 echo "A.1 Conformance Test Class: owcencoding " >&2
 echo "To test requirement http://www.opengis.net/spec/owc/1.0/conf/atom/owcencoding" >&2
-
-java -jar ../utils/bin/trang.jar -I rnc -O rng $conformance/owcencoding.rnc $conformance/owcencoding.rng
-res=`java -jar ../utils/relames/relames.jar $conformance/owcencoding.rng $file`
-if [ "$?"  != "0" ] 
+sh run.sh $file "atomrules" >&2
+res=$?
+if [ $res  != "0" ] 
 then 
-	echo "FAILED:$res"
-	exit 1
+	exit $res
 fi
-echo "PASSED"
 
 exit 0 
