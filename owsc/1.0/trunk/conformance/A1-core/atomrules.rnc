@@ -25,8 +25,6 @@
    namespace georss="http://www.georss.org/georss" 
    namespace gml="http://www.opengis.net/gml"
 
-   include "georss.rnc"
-   
    include "rfc4287.rnc"
    {
 
@@ -69,12 +67,76 @@
           & atomTitle
           & atomUpdated
           & dcPublisher?
-          & georssWhere?
+          #  & external "georss.rnc"?
           & dcDate?
           & extensionElement*),
          atomEntry*
-      }      
+      }    
+      
+   atomContent = atomInlineTextContent
+    | atomInlineXHTMLContent
+   
+   # atom:entry
+   atomEntry =
+      [
+      	 s:rule [
+	    context = "atom:entry"
+	    s:assert [
+	       test = "atom:content"
+	       "An atom:entry must have one atom:content MUST define a generic "
+	       ~ "description of the content in a format understandable by mass "
+	       ~ "market generic atom readers. Type equal to 'html' is recommended."
+	    ]
+	 ]
+	 
+	 s:rule [
+	    context = "atom:entry"
+	    s:assert [
+	       test = "atom:link[@rel='alternate'] "
+	       ~ "or atom:link[not(@rel)] "
+	       ~ "or atom:content"
+	       "An atom:entry must have at least one atom:link element "
+	       ~ "with a rel attribute of 'alternate' "
+	       ~ "or an atom:content."
+	    ]
+	 ]
+	 s:rule [
+	    context = "atom:entry"
+	    s:assert [
+	       test = "atom:author or "
+	       ~ "../atom:author or atom:source/atom:author"
+	       "An atom:entry must have an atom:author "
+	       ~ "if its feed does not."
+	    ]
+	 ]
+      ]
+      element atom:entry {
+	 atomCommonAttributes,
+	 (atomId
+	 & atomTitle	
+	 & atomContent
+	 & atomUpdated
+	 & atomAuthor*
+	 & dcPublisher?
+	 & dcCreator?
+	 & atomRights?
+	 & dcDate?
+	 & atomLink*
+	 & atomCategory*
+	  
+	 & atomContributor*
+	 & atomPublished?
+	 & atomSource?
+	 & atomSummary?
+	 
+	 & external "georss.rnc"
+	 # & external "owcencoding.rnc"?
+	 
+	 & extensionElement*)
+      }
+   
    }
+     
    
    dcPublisher =
       	element dc:publisher  {
@@ -84,5 +146,8 @@
     
    dcDate = element dc:date{ atomDateConstruct }
    
+   dcCreator = element dc:creator{ text }
 
+  
+  
   

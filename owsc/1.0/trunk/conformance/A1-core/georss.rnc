@@ -18,39 +18,47 @@
    namespace georss="http://www.georss.org/georss" 
    namespace gml="http://www.opengis.net/gml"
 
+   start = georssWhere
    
+     georssWhere = 
+		element georss:where {
+			gmlElement
+		}
+	   	
+   anyElement =
+      element * {
+         (attribute * { text }
+          | text
+          | anyElement)*
+      }
 
-   georssWhere = 
-   	element georss:where {
-   		gmlElement
-   	}   	
-   	
-   gmlElement =
-      gmlPointElement | gmlLineStringElement | gmlPolygonElement | gmlEnvelopeElement
+      
+   gmlElement = (gmlPointElement | gmlLineStringElement | gmlPolygonElement | gmlEnvelopeElement )
       
    gmlPointElement = 
       element gml:Point { 
-      	      element gml:*  {
-      	      	      text
-      	      }
+	      element gml:*  {
+		      text
+	      }
       }
    
    gmlLineStringElement = 
       element gml:LineString { 
-      	      element gml:*  {
-      	      	      text
-      	      }
+	      element gml:*  {
+		      text
+	      }
       }
        
    gmlPolygonElement = 
       element gml:Polygon { 
-      	      element gml:*  {
-      	      	      text
-      	      }
+	      element gml:*  {
+		      text
+	      }
       }
    gmlEnvelopeElement = 
       element  gml:Envelope { 
-      	      element gml:*  {
-      	      	      text
-      	      }
-      }      
+	      element gml:*  {
+		      text
+	      }
+      }   
+

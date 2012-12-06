@@ -18,11 +18,6 @@
    # limitations under the License.
  
   namespace owc = "http://www.opengis.net/owc"
-  
-  include "atomrules.rnc"
-   
-  
-  {
    
    # owc:offering  
    owcOffering = element owc:offering {
@@ -38,7 +33,7 @@
    owcOperation = element owc:operation {
       atomCommonAttributes,
       attribute code { text },
-      attribute method { "GE" | "POST" },
+      attribute method { "GET" | "POST" },
       attribute type { text },
       attribute href { atomUri },
       (owcPayload?
@@ -80,7 +75,7 @@
        & extensionElement*)
    }   	   
    
-  }
+  
    
    # EOF
    	

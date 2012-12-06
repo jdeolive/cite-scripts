@@ -19,9 +19,26 @@
   limitations under the License.
 -->
 <grammar ns="http://www.opengis.net/gml" xmlns:georss="http://www.georss.org/georss" xmlns:gml="http://www.opengis.net/gml" xmlns="http://relaxng.org/ns/structure/1.0">
+  <start>
+    <ref name="georssWhere"/>
+  </start>
   <define name="georssWhere">
     <element name="georss:where">
       <ref name="gmlElement"/>
+    </element>
+  </define>
+  <define name="anyElement">
+    <element>
+      <anyName/>
+      <zeroOrMore>
+        <choice>
+          <attribute>
+            <anyName/>
+          </attribute>
+          <text/>
+          <ref name="anyElement"/>
+        </choice>
+      </zeroOrMore>
     </element>
   </define>
   <define name="gmlElement">

@@ -20,7 +20,6 @@
   limitations under the License.
 -->
 <grammar xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:s="http://www.ascc.net/xml/schematron" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:owc="http://www.opengis.net/owc" xmlns:georss="http://www.georss.org/georss" xmlns:gml="http://www.opengis.net/gml" xmlns="http://relaxng.org/ns/structure/1.0">
-  <include href="georss.rng"/>
   <include href="rfc4287.rng">
     <!-- redefine atomFeed -->
     <define name="atomFeed">
@@ -75,9 +74,7 @@
             <ref name="dcPublisher"/>
           </optional>
           <optional>
-            <ref name="georssWhere"/>
-          </optional>
-          <optional>
+            <!--  & external "georss.rnc"? -->
             <ref name="dcDate"/>
           </optional>
           <zeroOrMore>
@@ -87,6 +84,71 @@
         <zeroOrMore>
           <ref name="atomEntry"/>
         </zeroOrMore>
+      </element>
+    </define>
+    <define name="atomContent">
+      <choice>
+        <ref name="atomInlineTextContent"/>
+        <ref name="atomInlineXHTMLContent"/>
+      </choice>
+    </define>
+    <!-- atom:entry -->
+    <define name="atomEntry">
+      <element name="atom:entry">
+        <s:rule context="atom:entry">
+          <s:assert test="atom:content">An atom:entry must have one atom:content MUST define a generic description of the content in a format understandable by mass market generic atom readers. Type equal to 'html' is recommended.</s:assert>
+        </s:rule>
+        <s:rule context="atom:entry">
+          <s:assert test="atom:link[@rel='alternate'] or atom:link[not(@rel)] or atom:content">An atom:entry must have at least one atom:link element with a rel attribute of 'alternate' or an atom:content.</s:assert>
+        </s:rule>
+        <s:rule context="atom:entry">
+          <s:assert test="atom:author or ../atom:author or atom:source/atom:author">An atom:entry must have an atom:author if its feed does not.</s:assert>
+        </s:rule>
+        <ref name="atomCommonAttributes"/>
+        <interleave>
+          <ref name="atomId"/>
+          <ref name="atomTitle"/>
+          <ref name="atomContent"/>
+          <ref name="atomUpdated"/>
+          <zeroOrMore>
+            <ref name="atomAuthor"/>
+          </zeroOrMore>
+          <optional>
+            <ref name="dcPublisher"/>
+          </optional>
+          <optional>
+            <ref name="dcCreator"/>
+          </optional>
+          <optional>
+            <ref name="atomRights"/>
+          </optional>
+          <optional>
+            <ref name="dcDate"/>
+          </optional>
+          <zeroOrMore>
+            <ref name="atomLink"/>
+          </zeroOrMore>
+          <zeroOrMore>
+            <ref name="atomCategory"/>
+          </zeroOrMore>
+          <zeroOrMore>
+            <ref name="atomContributor"/>
+          </zeroOrMore>
+          <optional>
+            <ref name="atomPublished"/>
+          </optional>
+          <optional>
+            <ref name="atomSource"/>
+          </optional>
+          <optional>
+            <ref name="atomSummary"/>
+          </optional>
+          <externalRef href="georss.rng"/>
+          <zeroOrMore>
+            <!-- & external "owcencoding.rnc"? -->
+            <ref name="extensionElement"/>
+          </zeroOrMore>
+        </interleave>
       </element>
     </define>
   </include>
@@ -99,6 +161,11 @@
   <define name="dcDate">
     <element name="dc:date">
       <ref name="atomDateConstruct"/>
+    </element>
+  </define>
+  <define name="dcCreator">
+    <element name="dc:creator">
+      <text/>
     </element>
   </define>
 </grammar>
