@@ -45,7 +45,7 @@
 									<td align="center">
 										<input name="service-url" size="128" 
 										type="text" 
-										value="http://sensorweb.demo.52north.org/52nSOSv4.0.0/sos/kvp"/>
+										value="http://sensorweb.demo.52north.org/52nSOSv4.0.0/sos/soap"/>
 									</td>
 								</tr>				
 							</table>
@@ -54,9 +54,9 @@
 						<blockquote>
 							<table border="1" padding="4" bgcolor="#00ffff" align="center">
 								<tr>
-									<td><input type="radio" name="request-via" checked="true" value="GET">HTTP Get</input></td>
+									<td><input type="radio" name="request-via" value="GET">HTTP Get</input></td>
 									<td><input type="radio" name="request-via" value="POST">HTTP Post</input></td>
-									<td><input type="radio" name="request-via" value="SOAP">SOAP Binding</input></td>
+									<td><input type="radio" name="request-via" checked="true" value="SOAP">SOAP Binding</input></td>
 								</tr>				
 							</table>						
 						</blockquote>
@@ -456,7 +456,7 @@
 							</xsl:otherwise>
 						</xsl:choose>
 					</xsl:variable>
-					<ctl:message select="concat('Run GetCapabilities test via GET: ',$IsGetCapabilities-GET)"/>
+					<ctl:message select="concat('Run GetCapabilities test via GET:',$IsGetCapabilities-GET,', URL:',$GetCapabilities-URL)"/>
 					
 					<!-- DescribeSensor parameters -->
 					<xsl:variable name="IsDescribeSensor-GET" select="($request-via eq 'GET') and (count($user-capabilities//ows:Operation[@name='DescribeSensor']//ows:Get) > 0)" />
@@ -471,7 +471,7 @@
 							</xsl:otherwise>
 						</xsl:choose>
 					</xsl:variable>
-					<ctl:message select="concat('Run DescribeSensor test via GET: ',$IsDescribeSensor-GET)"/>
+					<ctl:message select="concat('Run DescribeSensor test via GET: ',$IsDescribeSensor-GET,', URL:',$DescribeSensor-URL)"/>
 					
 					<!-- GetObservation parameters -->
 					<xsl:variable name="IsGetObservation-GET" select="($request-via eq 'GET') and (count($user-capabilities//ows:Operation[@name='GetObservation']//ows:Get) > 0)" />
@@ -486,7 +486,7 @@
 							</xsl:otherwise>
 						</xsl:choose>
 					</xsl:variable>
-					<ctl:message select="concat('Run GetObservation test via GET: ',$IsGetObservation-GET)"/>
+					<ctl:message select="concat('Run GetObservation test via GET: ',$IsGetObservation-GET,', URL:',$GetObservation-URL)"/>
 					
 					<!-- GetFeatureOfInterest parameters -->
 					<xsl:variable name="hasGetFeatureOfInterest" select="count($user-capabilities//ows:Operation[@name='GetFeatureOfInterest']) > 0" />
@@ -502,7 +502,7 @@
 							</xsl:otherwise>
 						</xsl:choose>
 					</xsl:variable>
-					<ctl:message select="concat('Run GetFeatureOfInterest test via GET: ',$IsGetFeatureOfInterest-GET)"/>
+					<ctl:message select="concat('Run GetFeatureOfInterest test via GET: ',$IsGetFeatureOfInterest-GET,', URL:',$GetFeatureOfInterest-URL)"/>
 					
 					<!-- GetObservationById parameters -->
 					<xsl:variable name="hasGetObservationById" select="count($user-capabilities//ows:Operation[@name='GetObservationById']) > 0" />
@@ -518,11 +518,13 @@
 							</xsl:otherwise>
 						</xsl:choose>
 					</xsl:variable>
-					<ctl:message select="concat('Run GetFeatureOfInterest test via GET: ',$IsGetFeatureOfInterest-GET)"/>
+					<ctl:message select="concat('Run GetFeatureOfInterest test via GET: ',$IsGetObservationById-GET,', URL:',$GetObservationById-URL)"/>
 					
 					<!-- InsertSensor parameters -->
 					<xsl:variable name="hasInsertSensor" select="count($user-capabilities//ows:Operation[@name='InsertSensor']) > 0" />
+					<ctl:message select="concat('hasInsertSensor:',$hasInsertSensor)"/>
 					<xsl:variable name="IsInsertSensor-POST" select="count($user-capabilities//ows:Operation[@name='InsertSensor']//ows:Post) > 0" />
+					<ctl:message select="concat('IsInsertSensor-POST:',$IsInsertSensor-POST)"/>
 					<xsl:if test="hasInsertSensor and not($IsInsertSensor-POST)">
 						<ctl:message>FAILURE: If InsertSensor Operation is supported by service, the InsertSensor operation must support Http-post .</ctl:message>
 						<ctl:fail/>
@@ -530,6 +532,7 @@
 					<xsl:variable name="InsertSensor-URL">
 						<xsl:value-of select="$user-capabilities//ows:Operation[@name='InsertSensor']//ows:Post/@xlink:href"/>
 					</xsl:variable>
+					<ctl:message select="concat('Run InsertSensor test via GET: false, URL:',$InsertSensor-URL)"/>
 					
 					<!-- DeleteSensor parameters -->
 					<xsl:variable name="hasDeleteSensor" select="count($user-capabilities//ows:Operation[@name='DeleteSensor']) > 0" />
@@ -541,6 +544,7 @@
 					<xsl:variable name="DeleteSensor-URL">
 						<xsl:value-of select="$user-capabilities//ows:Operation[@name='DeleteSensor']//ows:Post/@xlink:href"/>
 					</xsl:variable>
+					<ctl:message select="concat('Run DeleteSensor test via GET: false, URL:',$DeleteSensor-URL)"/>
 					
 					<!-- InsertObservation parameters -->
 					<xsl:variable name="hasInsertObservation" select="count($user-capabilities//ows:Operation[@name='InsertObservation']) > 0" />
@@ -552,7 +556,8 @@
 					<xsl:variable name="InsertObservation-URL">
 						<xsl:value-of select="$user-capabilities//ows:Operation[@name='InsertObservation']//ows:Post/@xlink:href"/>
 					</xsl:variable>
-		
+					<ctl:message select="concat('Run InsertObservation test via GET: false, URL:',$InsertObservation-URL)"/>
+					
 					<!-- InsertResultTemplate parameters -->
 					<xsl:variable name="hasInsertResultTemplate" select="count($user-capabilities//ows:Operation[@name='InsertResultTemplate']) > 0" />
 					<xsl:variable name="IsInsertResultTemplate-POST" select="count($user-capabilities//ows:Operation[@name='InsertResultTemplate']//ows:Post) > 0" />
@@ -563,6 +568,7 @@
 					<xsl:variable name="InsertResultTemplate-URL">
 						<xsl:value-of select="$user-capabilities//ows:Operation[@name='InsertResultTemplate']//ows:Post/@xlink:href"/>
 					</xsl:variable>
+					<ctl:message select="concat('Run InsertResultTemplate test via GET: false, URL:',$InsertResultTemplate-URL)"/>
 					
 					<!-- InsertResult parameters -->
 					<xsl:variable name="hasInsertResult" select="count($user-capabilities//ows:Operation[@name='InsertResult']) > 0" />
@@ -574,6 +580,7 @@
 					<xsl:variable name="InsertResult-URL">
 						<xsl:value-of select="$user-capabilities//ows:Operation[@name='InsertResult']//ows:Post/@xlink:href"/>
 					</xsl:variable>
+					<ctl:message select="concat('Run InsertResult test via GET: false, URL:',$InsertResult-URL)"/>
 		
 					<!-- GetResultTemplate parameters -->
 					<xsl:variable name="hasGetResultTemplate" select="count($user-capabilities//ows:Operation[@name='GetResultTemplate']) > 0" />
@@ -589,6 +596,7 @@
 							</xsl:otherwise>
 						</xsl:choose>
 					</xsl:variable>
+					<ctl:message select="concat('Run GetResultTemplate test via GET: ',$IsGetResultTemplate-GET,', URL:',$GetResultTemplate-URL)"/>
 					
 					<!-- GetResult parameters -->
 					<xsl:variable name="hasGetResult" select="count($user-capabilities//ows:Operation[@name='GetResult']) > 0" />
@@ -604,6 +612,7 @@
 							</xsl:otherwise>
 						</xsl:choose>
 					</xsl:variable>
+					<ctl:message select="concat('Run GetResult test via GET: ',$IsGetResult-GET,', URL:',$GetResult-URL)"/>
 					
 					<!-- Set selected tests.-->
 					<xsl:variable name="t01" select="$form-values/values/value[@key='01']"/>
@@ -1653,17 +1662,17 @@
                     1.)  Validate the response against the ExceptionReport schema.
                     2.)  If the response validates, then check that the exceptionCode value is "InvalidRequest".
                 -->
-				<xsl:if test="($isGET)">
+				<xsl:if test="$isGet eq 'true'">
 					<ctl:message select="'This test does not support KVP type request,so passed.'"/>
 					
 				</xsl:if>
-				<xsl:if test="not($isGET)">
+				<xsl:if test="not($isGet eq 'true')">
 
 					<ctl:message>Issuing an invalid request to:  <xsl:value-of select="$serviceURL" /></ctl:message>		     
 					<ctl:message select="'The body of the request will be &quot;test&quot;'"/>
 					<xsl:variable name="invalidRequestResponse">
 						<xsl:choose>
-							<xsl:when test="($isSOAP)">
+							<xsl:when test="$isSOAP eq 'true'">
 								<ctl:soap-request version="1.2" charset="UTF-8">
 									<ctl:url>
 										<xsl:value-of select="$serviceURL"/>
@@ -1759,7 +1768,7 @@
 			<ctl:code>
 				<xsl:variable name="CapabilitiesResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -1777,7 +1786,7 @@
 								</parsers:XMLValidatingParser>
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -1949,7 +1958,7 @@
 			<ctl:code>
 				<xsl:variable name="request">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -1968,7 +1977,7 @@
 								</parsers:XMLValidatingParser>
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -2128,7 +2137,7 @@
 			<ctl:code>
 				<xsl:variable name="request">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -2147,7 +2156,7 @@
 								</parsers:XMLValidatingParser>
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -2613,7 +2622,7 @@
 				<!-- send request -->
 				<xsl:variable name="describeSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -2626,7 +2635,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -2673,7 +2682,7 @@
 							<ctl:message>Checking the validity of the response to a DescribeSensor request with no service parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:call-function name="sosFunctions:checkExceptionReport">
 											<ctl:with-param name="exceptionReport" select="$describeSensorResponse" />
 											<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
@@ -2694,7 +2703,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with no service parameter specified. </ctl:message>
 										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "service".</ctl:message>
 										<ctl:fail />
@@ -2729,7 +2738,7 @@
 				<!-- send request -->
 				<xsl:variable name="describeSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -2743,7 +2752,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -2825,7 +2834,7 @@
 				<!-- send request -->
 				<xsl:variable name="describeSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -2839,7 +2848,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -2928,7 +2937,7 @@
 				<!-- send request -->
 				<xsl:variable name="describeSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -2941,7 +2950,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -2988,7 +2997,7 @@
 							<ctl:message>Checking the validity of the response to a DescribeSensor request with no version parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:call-function name="sosFunctions:checkExceptionReport">
 											<ctl:with-param name="exceptionReport" select="$describeSensorResponse" />
 											<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
@@ -3009,7 +3018,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeSensor request with no version parameter specified.</ctl:message>  
 										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "version".</ctl:message>
 										<ctl:fail />
@@ -3044,7 +3053,7 @@
 				<!-- send request -->
 				<xsl:variable name="describeSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -3058,7 +3067,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -3140,7 +3149,7 @@
 				<!-- send request -->
 				<xsl:variable name="describeSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -3154,7 +3163,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -3236,7 +3245,7 @@
 				<!-- send request -->
 				<xsl:variable name="describeSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -3250,7 +3259,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -3332,7 +3341,7 @@
 				<!-- send request -->
 				<xsl:variable name="describeSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -3346,7 +3355,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -3428,7 +3437,7 @@
 				<!-- send request -->
 				<xsl:variable name="describeSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -3442,7 +3451,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -3524,7 +3533,7 @@
 				<!-- send request -->
 				<xsl:variable name="describeSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -3538,7 +3547,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -3626,7 +3635,7 @@
 					<!-- 對每個 procedure 發出request 檢查回應是否正確 (swes:DescribeSensorResponse 開頭,有相同的 procedureDescriptionFormat )-->
 					<xsl:variable name="describeSensorResponse">
 						<xsl:choose>
-							<xsl:when test="($isGET)">
+							<xsl:when test="$isGET eq 'true'">
 								<ctl:request>
 									<ctl:url>
 										<xsl:value-of select="$serviceURL"/>
@@ -3640,7 +3649,7 @@
 									<ctl:call-function name="sosFunctions:validateExceptionReport" />
 								</ctl:request>
 							</xsl:when>
-							<xsl:when test="($isSOAP)">
+							<xsl:when test="$isSOAP eq 'true'">
 								<ctl:soap-request version="1.2" charset="UTF-8">
 									<ctl:url>
 										<xsl:value-of select="$serviceURL"/>
@@ -3753,7 +3762,7 @@
 				<!-- get a valid getObservationResponse-->
 				<xsl:variable name="getObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -3776,7 +3785,7 @@
 								</parsers:XMLValidatingParser>
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -4159,7 +4168,7 @@
 				<!-- send request -->
 				<xsl:variable name="getObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -4173,7 +4182,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -4227,7 +4236,7 @@
 							<ctl:message>Checking the validity of the response to a GetObservation request with no service parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:call-function name="sosFunctions:checkExceptionReport">
 											<ctl:with-param name="exceptionReport" select="$getObservationResponse" />
 											<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
@@ -4248,7 +4257,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservation request with no service parameter specified. </ctl:message>
 										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "service".</ctl:message>
 										<ctl:fail />
@@ -4285,7 +4294,7 @@
 				<!-- send request -->
 				<xsl:variable name="getObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -4300,7 +4309,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -4390,7 +4399,7 @@
 			<ctl:code>
 				<xsl:variable name="getObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -4405,7 +4414,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -4503,7 +4512,7 @@
 				<!-- send request -->
 				<xsl:variable name="getObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -4517,7 +4526,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -4571,7 +4580,7 @@
 							<ctl:message>Checking the validity of the response to a GetObservation request with no version parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:call-function name="sosFunctions:checkExceptionReport">
 											<ctl:with-param name="exceptionReport" select="$getObservationResponse" />
 											<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
@@ -4592,7 +4601,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservation request with no version parameter specified.</ctl:message>  
 										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "version".</ctl:message>
 										<ctl:fail />
@@ -4629,7 +4638,7 @@
 				<!-- send request -->
 				<xsl:variable name="getObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -4644,7 +4653,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -4734,7 +4743,7 @@
 			<ctl:code>
 				<xsl:variable name="getObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -4749,7 +4758,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -4840,7 +4849,7 @@
 				<!-- send request -->
 				<xsl:variable name="getObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -4855,7 +4864,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -4945,7 +4954,7 @@
 			<ctl:code>
 				<xsl:variable name="getObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -4960,7 +4969,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -5051,7 +5060,7 @@
 				<!-- send request -->
 				<xsl:variable name="getObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -5066,7 +5075,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -5156,7 +5165,7 @@
 			<ctl:code>
 				<xsl:variable name="getObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -5171,7 +5180,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -5262,7 +5271,7 @@
 				<!-- send request -->
 				<xsl:variable name="getObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -5277,7 +5286,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -5367,7 +5376,7 @@
 			<ctl:code>
 				<xsl:variable name="getObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -5382,7 +5391,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -5473,7 +5482,7 @@
 				<!-- send request -->
 				<xsl:variable name="getObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -5489,7 +5498,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -5581,7 +5590,7 @@
 			<ctl:code>
 				<xsl:variable name="getObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -5597,7 +5606,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -5690,7 +5699,7 @@
 				<!-- send request -->
 				<xsl:variable name="getObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -5706,7 +5715,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -5798,7 +5807,7 @@
 			<ctl:code>
 				<xsl:variable name="getObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -5814,7 +5823,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -5930,7 +5939,7 @@
 				<xsl:variable name="targetResponseFormat" select="string('http%3A%2F%2Fwww.opengis.net%2Fom%2F2.0')" />
 				<xsl:variable name="getObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -5954,7 +5963,7 @@
 								</parsers:XMLValidatingParser>
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -6062,7 +6071,7 @@
 				<xsl:variable name="TemporalOperatorTEquals" select="count($getCapabilitiesResponse//sos:filterCapabilities//fes:TemporalOperator[@name='TEquals'])" />
 				<xsl:variable name="getObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -6091,7 +6100,7 @@
 								</parsers:XMLValidatingParser>
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -6229,7 +6238,7 @@
 			<ctl:code>
 				<xsl:variable name="getObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -6241,7 +6250,7 @@
 								<ctl:call-function name="sosFunctions:validateGetObservationResponse" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -6352,7 +6361,7 @@
 				
 
 				<xsl:choose>
-					<xsl:when test="not($hasFOI)">
+					<xsl:when test="$hasFOI eq 'false'">
 						<ctl:message>The server does not support the operation "GetFeatureOfInterest", so skip this test.</ctl:message>
 					</xsl:when>
 					<xsl:otherwise>
@@ -6388,7 +6397,7 @@
 										</parsers:XMLValidatingParser>
 									</ctl:request>
 								</xsl:when>
-								<xsl:when test="($isSOAP)">
+								<xsl:when test="$isSOAP eq 'true'">
 									<ctl:soap-request version="1.2" charset="UTF-8">
 										<ctl:url>
 											<xsl:value-of select="$GetObservationURL"/>
@@ -6447,7 +6456,7 @@
 						<!-- Get a getFeatureOfInterestResponse -->
 						<xsl:variable name="getFeatureOfInterestResponse">
 							<xsl:choose>
-								<xsl:when test="($isGET)">
+								<xsl:when test="$isGET eq 'true'">
 									<ctl:request>
 										<ctl:url>
 											<xsl:value-of select="$serviceURL"/>
@@ -6467,7 +6476,7 @@
 										</parsers:XMLValidatingParser>
 									</ctl:request>
 								</xsl:when>
-								<xsl:when test="($isSOAP)">
+								<xsl:when test="$isSOAP eq 'true'">
 									<ctl:soap-request version="1.2" charset="UTF-8">
 										<ctl:url>
 											<xsl:value-of select="$serviceURL"/>
@@ -6787,7 +6796,7 @@
 				<!-- send request -->
 				<xsl:variable name="getFeatureOfInterestResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -6798,7 +6807,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -6846,7 +6855,7 @@
 							<ctl:message>Checking the validity of the response to a GetFeatureOfInterest request with no service parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:call-function name="sosFunctions:checkExceptionReport">
 											<ctl:with-param name="exceptionReport" select="$getFeatureOfInterestResponse" />
 											<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
@@ -6867,7 +6876,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetFeatureOfInterest request with no service parameter specified. </ctl:message>
 									<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "service".</ctl:message>
 									<ctl:fail />
@@ -6904,7 +6913,7 @@
 				<!-- send request -->
 				<xsl:variable name="getFeatureOfInterestResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -6916,7 +6925,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -7000,7 +7009,7 @@
 			<ctl:code>
 				<xsl:variable name="getFeatureOfInterestResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -7012,7 +7021,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -7104,7 +7113,7 @@
 				<!-- send request -->
 				<xsl:variable name="getFeatureOfInterestResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -7115,7 +7124,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -7163,7 +7172,7 @@
 							<ctl:message>Checking the validity of the response to a GetFeatureOfInterest request with no version parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:call-function name="sosFunctions:checkExceptionReport">
 											<ctl:with-param name="exceptionReport" select="$getFeatureOfInterestResponse" />
 											<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
@@ -7184,7 +7193,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetFeatureOfInterest request with no version parameter specified.</ctl:message>  
 										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "version".</ctl:message>
 										<ctl:fail />
@@ -7229,7 +7238,7 @@
 				<!-- send request -->
 				<xsl:variable name="getFeatureOfInterestResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -7241,7 +7250,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -7325,7 +7334,7 @@
 			<ctl:code>
 				<xsl:variable name="getFeatureOfInterestResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -7337,7 +7346,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -7422,7 +7431,7 @@
 				<!-- send request -->
 				<xsl:variable name="getFeatureOfInterestResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -7435,7 +7444,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -7521,7 +7530,7 @@
 			<ctl:code>
 				<xsl:variable name="getFeatureOfInterestResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -7534,7 +7543,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -7621,7 +7630,7 @@
 				<!-- send request -->
 				<xsl:variable name="getFeatureOfInterestResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -7634,7 +7643,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -7720,7 +7729,7 @@
 			<ctl:code>
 				<xsl:variable name="getFeatureOfInterestResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -7733,7 +7742,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -7820,7 +7829,7 @@
 				<!-- send request -->
 				<xsl:variable name="getFeatureOfInterestResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -7833,7 +7842,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -7919,7 +7928,7 @@
 			<ctl:code>
 				<xsl:variable name="getFeatureOfInterestResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -7932,7 +7941,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -8019,7 +8028,7 @@
 				<!-- send request -->
 				<xsl:variable name="getFeatureOfInterestResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -8032,7 +8041,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -8132,7 +8141,7 @@
 			<ctl:code>
 				<xsl:variable name="getFeatureOfInterestResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -8145,7 +8154,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -8248,7 +8257,7 @@
 			<ctl:code>
 				<xsl:variable name="getFeatureOfInterestResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -8272,7 +8281,7 @@
 								</parsers:XMLValidatingParser>
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -8403,7 +8412,7 @@
 			<ctl:comment>Pass if all the subtest not fail; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<xsl:choose>
-					<xsl:when test="not($hasGOBI)">
+					<xsl:when test="$hasGOBI eq 'false'">
 						<ctl:message>The server does not support the operation "GetObservationById", so skip this test.</ctl:message>
 					</xsl:when>
 					<xsl:otherwise>
@@ -8443,7 +8452,7 @@
 										</parsers:XMLValidatingParser>
 									</ctl:request>
 								</xsl:when>
-								<xsl:when test="($isSOAP)">
+								<xsl:when test="$isSOAP eq 'true'">
 									<ctl:soap-request version="1.2" charset="UTF-8">
 										<ctl:url>
 											<xsl:value-of select="$serviceURL"/>
@@ -8658,7 +8667,7 @@
 				<!-- send request -->
 				<xsl:variable name="GetObservationByIdResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -8670,7 +8679,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -8720,7 +8729,7 @@
 							<ctl:message>Checking the validity of the response to a GetObservationById request with no service parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:call-function name="sosFunctions:checkExceptionReport">
 											<ctl:with-param name="exceptionReport" select="$GetObservationByIdResponse" />
 											<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
@@ -8741,7 +8750,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservationById request with no version parameter specified.</ctl:message>  
 										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "service".</ctl:message>
 										<ctl:fail />
@@ -8776,7 +8785,7 @@
 				<!-- send request -->
 				<xsl:variable name="GetObservationByIdResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -8789,7 +8798,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -8873,7 +8882,7 @@
 			<ctl:code>
 				<xsl:variable name="GetObservationByIdResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -8886,7 +8895,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -8978,7 +8987,7 @@
 				<!-- send request -->
 				<xsl:variable name="GetObservationByIdResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -8990,7 +8999,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -9040,7 +9049,7 @@
 							<ctl:message>Checking the validity of the response to a GetObservationById request with no version parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:call-function name="sosFunctions:checkExceptionReport">
 											<ctl:with-param name="exceptionReport" select="$GetObservationByIdResponse" />
 											<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
@@ -9061,7 +9070,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservationById request with no version parameter specified.</ctl:message>  
 										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "version".</ctl:message>
 										<ctl:fail />
@@ -9096,7 +9105,7 @@
 				<!-- send request -->
 				<xsl:variable name="GetObservationByIdResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -9109,7 +9118,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -9193,7 +9202,7 @@
 			<ctl:code>
 				<xsl:variable name="GetObservationByIdResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -9206,7 +9215,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -9291,7 +9300,7 @@
 				<!-- send request -->
 				<xsl:variable name="GetObservationByIdResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -9304,7 +9313,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -9388,7 +9397,7 @@
 			<ctl:code>
 				<xsl:variable name="GetObservationByIdResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -9401,7 +9410,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -9479,7 +9488,7 @@
 			<ctl:code>
 				<xsl:variable name="GetObservationByIdResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -9500,7 +9509,7 @@
 								</parsers:XMLValidatingParser>
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -9615,19 +9624,19 @@
 			<ctl:comment>Pass if all the subtest not fail; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<xsl:choose>
-					<xsl:when test="not($hasIS)">
+					<xsl:when test="$hasIS eq 'false'">
 						<ctl:message>The server does not support the operation "InsertSensor", so skip this test.</ctl:message>
 					</xsl:when>
 					<xsl:otherwise>
 						<!-- 從GetCapabilities取得有效的 offering,procedure,observedProperty -->
 						<!-- get a valid procedureDescriptionFormat-->
-						<xsl:variable name="procedureDescriptionFormat" select="$CapabilitiesResponse//sos:extension/sos:InsertionCapabilities/sos:procedureDescriptionFormat" />
+						<xsl:variable name="procedureDescriptionFormat" select="$getCapabilitiesResponse//sos:extension/sos:InsertionCapabilities/sos:procedureDescriptionFormat" />
 						<!-- get a valid observableProperty-->
 						<xsl:variable name="observableProperty" select="$getCapabilitiesResponse//sos:contents//swes:observableProperty[1]" />
 						<!-- get a valid observationType-->
-						<xsl:variable name="observationType" select="$CapabilitiesResponse//sos:extension/sos:InsertionCapabilities/sos:observationType[1]" />
+						<xsl:variable name="observationType" select="$getCapabilitiesResponse//sos:extension/sos:InsertionCapabilities/sos:observationType[1]" />
 						<!-- get a valid featureOfInterestType-->
-						<xsl:variable name="featureOfInterestType" select="$CapabilitiesResponse//sos:extension/sos:InsertionCapabilities/sos:featureOfInterestType[1]" />
+						<xsl:variable name="featureOfInterestType" select="$getCapabilitiesResponse//sos:extension/sos:InsertionCapabilities/sos:featureOfInterestType[1]" />
 						
 						<xsl:if test="$test0801 eq 'true'">
 							<ctl:message select="'******************** 08.01.RequestNoService ********************'"/>
@@ -9855,7 +9864,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -9926,47 +9935,18 @@
 							</xsl:if>
 							<ctl:message>Checking the validity of the response to a InsertSensor request with no service parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
-								<xsl:choose>
-									<xsl:when test="($isGET)">
-										<ctl:call-function name="sosFunctions:checkExceptionReport">
-											<ctl:with-param name="exceptionReport" select="$InsertSensorResponse" />
-											<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
-											<ctl:with-param name="locatorToCheck" select="string('service')" />
-											<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
-										</ctl:call-function>
-									</xsl:when>
-									<xsl:otherwise>
-										<ctl:call-function name="sosFunctions:checkExceptionReport">
-											<ctl:with-param name="exceptionReport" select="$InsertSensorResponse" />
-											<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
-											<ctl:with-param name="locatorToCheck" select="string('Expected attribute: service in element InsertSensor@http://www.opengis.net/swes/2.0')" />
-											<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
-										</ctl:call-function>
-									</xsl:otherwise>
-								</xsl:choose>
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$InsertSensorResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
+									<ctl:with-param name="locatorToCheck" select="string('Expected attribute: service in element InsertSensor@http://www.opengis.net/swes/2.0')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<xsl:choose>
-									<xsl:when test="($isGET)">
-										<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertSensor request with no service parameter specified.</ctl:message>  
-										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "service".</ctl:message>
-										<ctl:fail />
-									</xsl:when>
-									<xsl:otherwise>
-										<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertSensor request with no service parameter specified. </ctl:message>
-										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: service in element InsertSensor@http://www.opengis.net/swes/2.0".</ctl:message>
-										<ctl:fail />
-									</xsl:otherwise>
-								</xsl:choose>
-							</xsl:if>
-							
-							<xsl:variable name="isCorrect">
-								
-							</xsl:variable>
-							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
-							<xsl:if test="not(xsd:boolean($isCorrect))">
-								
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertSensor request with no service parameter specified. </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: service in element InsertSensor@http://www.opengis.net/swes/2.0".</ctl:message>
+								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
 					</xsl:otherwise>
@@ -9993,7 +9973,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -10100,7 +10080,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -10215,7 +10195,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -10287,39 +10267,18 @@
 							</xsl:if>
 							<ctl:message>Checking the validity of the response to a InsertSensor request with no version parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
-								<xsl:choose>
-									<xsl:when test="($isGET)">
-										<ctl:call-function name="sosFunctions:checkExceptionReport">
-											<ctl:with-param name="exceptionReport" select="$describeSensorResponse" />
-											<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
-											<ctl:with-param name="locatorToCheck" select="string('version')" />
-											<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
-										</ctl:call-function>
-									</xsl:when>
-									<xsl:otherwise>
-										<ctl:call-function name="sosFunctions:checkExceptionReport">
-											<ctl:with-param name="exceptionReport" select="$InsertSensorResponse" />
-											<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
-											<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element InsertSensor@http://www.opengis.net/swes/2.0')" />
-											<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
-										</ctl:call-function>
-									</xsl:otherwise>
-								</xsl:choose>
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$InsertSensorResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
+									<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element InsertSensor@http://www.opengis.net/swes/2.0')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<xsl:choose>
-									<xsl:when test="($isGET)">
-										<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertSensor request with no version parameter specified.</ctl:message>  
-										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "version".</ctl:message>
-										<ctl:fail />
-									</xsl:when>
-									<xsl:otherwise>
-										<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertSensor request with no version parameter specified.</ctl:message>  
-										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: version in element InsertSensor@http://www.opengis.net/swes/2.0".</ctl:message>
-										<ctl:fail />
-									</xsl:otherwise>
-								</xsl:choose>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertSensor request with no version parameter specified.</ctl:message>  
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: version in element InsertSensor@http://www.opengis.net/swes/2.0".</ctl:message>
+								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
 					</xsl:otherwise>
@@ -10346,7 +10305,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -10455,7 +10414,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -10565,7 +10524,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -10674,7 +10633,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -10784,7 +10743,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -10893,7 +10852,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -11003,7 +10962,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -11112,7 +11071,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -11221,7 +11180,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -11364,7 +11323,7 @@
 			<ctl:comment>Pass if all the subtest not fail; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<xsl:choose>
-					<xsl:when test="not($hasDeS)">
+					<xsl:when test="$hasDeS eq 'false'">
 						<ctl:message>The server does not support the operation "DeleteSensor", so skip this test.</ctl:message>
 					</xsl:when>
 					<xsl:otherwise>
@@ -11535,7 +11494,7 @@
 				<!-- send request -->
 				<xsl:variable name="DeleteSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -11622,7 +11581,7 @@
 				<!-- send request -->
 				<xsl:variable name="DeleteSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -11708,7 +11667,7 @@
 			<ctl:code>
 				<xsl:variable name="DeleteSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -11802,7 +11761,7 @@
 				<!-- send request -->
 				<xsl:variable name="DeleteSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -11889,7 +11848,7 @@
 				<!-- send request -->
 				<xsl:variable name="DeleteSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -11975,7 +11934,7 @@
 			<ctl:code>
 				<xsl:variable name="DeleteSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -12062,7 +12021,7 @@
 				<!-- send request -->
 				<xsl:variable name="DeleteSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -12148,7 +12107,7 @@
 			<ctl:code>
 				<xsl:variable name="DeleteSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -12238,7 +12197,7 @@
 			<ctl:code>
 				<xsl:variable name="DeleteSensorResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -12331,7 +12290,7 @@
 											</parsers:XMLValidatingParser>
 										</ctl:request>
 									</xsl:when>
-									<xsl:when test="($isSOAP)">
+									<xsl:when test="$isSOAP eq 'true'">
 										<ctl:soap-request version="1.2" charset="UTF-8">
 											<ctl:url>
 												<xsl:value-of select="$serviceURL"/>
@@ -12450,14 +12409,14 @@
 			<ctl:comment>Pass if all the subtest not fail; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<xsl:choose>
-					<xsl:when test="not($hasIO)">
+					<xsl:when test="$hasIO eq 'false'">
 						<ctl:message>The server does not support the operation "InsertObservation", so skip this test.</ctl:message>
 					</xsl:when>
 					<xsl:otherwise>
 						<!-- get a valid offering-->
 						<xsl:variable name="offering" select="$getCapabilitiesResponse//sos:contents//swes:offering[1]//swes:identifier" />
 						<!-- Get a valid observationType -->
-						<xsl:variable name="observationType" select="$CapabilitiesResponse//sos:contents//sos:observationType" />
+						<xsl:variable name="observationType" select="$getCapabilitiesResponse//sos:contents//sos:observationType" />
 						<!-- get a valid procedure-->
 						<xsl:variable name="procedure" select="$getCapabilitiesResponse//sos:contents//swes:procedure[1]" />
 						<!-- get a valid observableProperty-->
@@ -12488,7 +12447,7 @@
 										</parsers:XMLValidatingParser>
 									</ctl:request>
 								</xsl:when>
-								<xsl:when test="($isSOAP)">
+								<xsl:when test="$isSOAP eq 'true'">
 									<ctl:soap-request version="1.2" charset="UTF-8">
 										<ctl:url>
 											<xsl:value-of select="$GetObservationURL"/>
@@ -12903,7 +12862,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -12997,7 +12956,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -13090,7 +13049,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -13191,7 +13150,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -13285,7 +13244,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -13378,7 +13337,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -13472,7 +13431,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -13565,7 +13524,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -13660,7 +13619,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -13843,7 +13802,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -14027,7 +13986,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -14210,7 +14169,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -14394,7 +14353,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -14577,7 +14536,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -14761,7 +14720,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -14944,7 +14903,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -15128,7 +15087,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -15311,7 +15270,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -15494,7 +15453,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertObservationResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -15720,14 +15679,14 @@
 			<ctl:comment>Pass if all the subtest not fail; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<xsl:choose>
-					<xsl:when test="not($hasIRT)">
+					<xsl:when test="$hasIRT eq 'false'">
 						<ctl:message>The server does not support the operation "InsertResultTemplate", so skip this test.</ctl:message>
 					</xsl:when>
 					<xsl:otherwise>
 						<!-- get a valid offering-->
 						<xsl:variable name="offering" select="$getCapabilitiesResponse//sos:contents//swes:offering[1]//swes:identifier" />
 						<!-- Get a valid observationType -->
-						<xsl:variable name="observationType" select="$CapabilitiesResponse//sos:contents//sos:observationType" />
+						<xsl:variable name="observationType" select="$getCapabilitiesResponse//sos:contents//sos:observationType" />
 						<!-- get a valid procedure-->
 						<xsl:variable name="procedure" select="$getCapabilitiesResponse//sos:contents//swes:procedure[1]" />
 						<!-- get a valid observableProperty-->
@@ -15758,7 +15717,7 @@
 										</parsers:XMLValidatingParser>
 									</ctl:request>
 								</xsl:when>
-								<xsl:when test="($isSOAP)">
+								<xsl:when test="$isSOAP eq 'true'">
 									<ctl:soap-request version="1.2" charset="UTF-8">
 										<ctl:url>
 											<xsl:value-of select="$GetObservationURL"/>
@@ -16011,7 +15970,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertResultTemplateResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -16208,7 +16167,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertResultTemplateResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -16404,7 +16363,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertResultTemplateResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -16608,7 +16567,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertResultTemplateResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -16805,7 +16764,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertResultTemplateResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -17001,7 +16960,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertResultTemplateResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -17198,7 +17157,7 @@
 				<!-- use OM_GeometryObservation instead of OM_Observation -->
 				<xsl:variable name="InsertResultTemplateResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -17414,7 +17373,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertResultTemplateResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -17582,7 +17541,7 @@
 					<xsl:otherwise>
 						<xsl:if test="$InsertResultTemplateResponse/*">
 							<xsl:variable name="responseRoot" select="local-name-from-QName(node-name($InsertResultTemplateResponse/*[1]))" />
-							<xsl:if test="not($responseRoot=$DeleteSensorRootElementName)">
+							<xsl:if test="not($responseRoot=$InsertResultTemplateRootElementName)">
 								<ctl:message>FAILURE:  The root element from the response to a InsertResultTemplate request "<xsl:value-of select="$responseRoot" />" does not match the expected root element of "<xsl:value-of select="$InsertResultTemplateRootElementName" />"</ctl:message>
 								<ctl:fail />
 							</xsl:if>
@@ -17609,7 +17568,7 @@
 								<ctl:with-param name="serviceType" select="string('SOS')"/>
 								<ctl:with-param name="serviceVersion" select="'2.0.0'" />
 								<ctl:with-param name="InsertResultRootElementName" select="string('InsertResultResponse')" />
-								<ctl:with-param name="InsertResultResponseSchemaLocation" select="sosFunctions:schemaPath($sos.schema.root, $sos.version,'sos', 'sosInsertResult.xsd')"/>
+								<ctl:with-param name="InsertResultResponseSchemaLocation" select="sosFunctions:schemaPath('xsd/ogc/', '2.0.0','sos', 'sosInsertResult.xsd')"/>
 								<ctl:with-param name="InsertResultResponseSchemaType" select="string('resource')" />
 								<ctl:with-param name="InsertResultResponseContentType" select="$InsertResultResponseContentType" />
 								<ctl:with-param name="test1201" select="$test1201"/>
@@ -17653,7 +17612,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertResultTemplateResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -17859,7 +17818,7 @@
 			<ctl:comment>Pass if all the subtest not fail; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<xsl:choose>
-					<xsl:when test="not($hasIR)">
+					<xsl:when test="$hasIR eq 'false'">
 						<ctl:message>The server does not support the operation "InsertResult", so skip this test.</ctl:message>
 					</xsl:when>
 					<xsl:otherwise>
@@ -18038,7 +17997,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -18128,7 +18087,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -18217,7 +18176,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -18314,7 +18273,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -18404,7 +18363,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -18493,7 +18452,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -18583,7 +18542,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -18672,7 +18631,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -18762,7 +18721,7 @@
 				<!-- send request -->
 				<xsl:variable name="InsertResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -18851,7 +18810,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -18940,7 +18899,7 @@
 			<ctl:code>
 				<xsl:variable name="InsertResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -19053,7 +19012,7 @@
 			<ctl:comment>Pass if all the subtest not fail; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<xsl:choose>
-					<xsl:when test="not($hasGRT)">
+					<xsl:when test="$hasGRT eq 'false'">
 						<ctl:message>The server does not support the operation "GetResultTemplate", so skip this test.</ctl:message>
 					</xsl:when>
 					<xsl:otherwise>
@@ -19293,7 +19252,7 @@
 				<!-- send request -->
 				<xsl:variable name="GetResultTemplateResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -19306,7 +19265,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -19359,7 +19318,7 @@
 							<ctl:message>Checking the validity of the response to a GetResultTemplate request with no service parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:call-function name="sosFunctions:checkExceptionReport">
 											<ctl:with-param name="exceptionReport" select="$GetResultTemplateResponse" />
 											<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
@@ -19380,7 +19339,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetResultTemplate request with no service parameter specified.</ctl:message>  
 										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "service".</ctl:message>
 										<ctl:fail />
@@ -19416,7 +19375,7 @@
 				<!-- send request -->
 				<xsl:variable name="GetResultTemplateResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -19430,7 +19389,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -19518,7 +19477,7 @@
 			<ctl:code>
 				<xsl:variable name="GetResultTemplateResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -19532,7 +19491,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -19628,7 +19587,7 @@
 				<!-- send request -->
 				<xsl:variable name="GetResultTemplateResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -19641,7 +19600,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -19694,7 +19653,7 @@
 							<ctl:message>Checking the validity of the response to a GetResultTemplate request with no version parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:call-function name="sosFunctions:checkExceptionReport">
 											<ctl:with-param name="exceptionReport" select="$GetResultTemplateResponse" />
 											<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
@@ -19715,7 +19674,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetResultTemplate request with no version parameter specified.</ctl:message>  
 										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "version".</ctl:message>
 										<ctl:fail />
@@ -19751,7 +19710,7 @@
 				<!-- send request -->
 				<xsl:variable name="GetResultTemplateResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -19765,7 +19724,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -19853,7 +19812,7 @@
 			<ctl:code>
 				<xsl:variable name="GetResultTemplateResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -19867,7 +19826,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -19956,7 +19915,7 @@
 				<!-- send request -->
 				<xsl:variable name="GetResultTemplateResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -19970,7 +19929,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -20058,7 +20017,7 @@
 			<ctl:code>
 				<xsl:variable name="GetResultTemplateResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -20072,7 +20031,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -20161,7 +20120,7 @@
 				<!-- send request -->
 				<xsl:variable name="GetResultTemplateResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -20175,7 +20134,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -20263,7 +20222,7 @@
 			<ctl:code>
 				<xsl:variable name="GetResultTemplateResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -20277,7 +20236,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -20365,7 +20324,7 @@
 			<ctl:code>
 				<xsl:variable name="GetResultTemplateResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -20387,7 +20346,7 @@
 								</parsers:XMLValidatingParser>
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -20495,7 +20454,7 @@
 			<ctl:comment>Pass if all the subtest not fail; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<xsl:choose>
-					<xsl:when test="not($hasGR)">
+					<xsl:when test="$hasGR eq 'false'">
 						<ctl:message>The server does not support the operation "GetResult", so skip this test.</ctl:message>
 					</xsl:when>
 					<xsl:otherwise>
@@ -20748,7 +20707,7 @@
 				<!-- send request -->
 				<xsl:variable name="GetResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -20761,7 +20720,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -20814,7 +20773,7 @@
 							<ctl:message>Checking the validity of the response to a GetResult request with no service parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:call-function name="sosFunctions:checkExceptionReport">
 											<ctl:with-param name="exceptionReport" select="$GetResultResponse" />
 											<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
@@ -20835,7 +20794,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetResult request with no service parameter specified.</ctl:message>  
 										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "service".</ctl:message>
 										<ctl:fail />
@@ -20871,7 +20830,7 @@
 				<!-- send request -->
 				<xsl:variable name="GetResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -20885,7 +20844,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -20973,7 +20932,7 @@
 			<ctl:code>
 				<xsl:variable name="GetResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -20987,7 +20946,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -21083,7 +21042,7 @@
 				<!-- send request -->
 				<xsl:variable name="GetResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -21096,7 +21055,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -21149,7 +21108,7 @@
 							<ctl:message>Checking the validity of the response to a GetResult request with no version parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:call-function name="sosFunctions:checkExceptionReport">
 											<ctl:with-param name="exceptionReport" select="$GetResultResponse" />
 											<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
@@ -21170,7 +21129,7 @@
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
 								<xsl:choose>
-									<xsl:when test="($isGET)">
+									<xsl:when test="$isGET eq 'true'">
 										<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetResult request with no version parameter specified.</ctl:message>  
 										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "version".</ctl:message>
 										<ctl:fail />
@@ -21206,7 +21165,7 @@
 				<!-- send request -->
 				<xsl:variable name="GetResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -21220,7 +21179,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -21308,7 +21267,7 @@
 			<ctl:code>
 				<xsl:variable name="GetResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -21322,7 +21281,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -21411,7 +21370,7 @@
 				<!-- send request -->
 				<xsl:variable name="GetResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -21425,7 +21384,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -21513,7 +21472,7 @@
 			<ctl:code>
 				<xsl:variable name="GetResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -21527,7 +21486,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -21616,7 +21575,7 @@
 				<!-- send request -->
 				<xsl:variable name="GetResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -21630,7 +21589,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -21718,7 +21677,7 @@
 			<ctl:code>
 				<xsl:variable name="GetResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -21732,7 +21691,7 @@
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -21820,7 +21779,7 @@
 			<ctl:code>
 				<xsl:variable name="GetResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -21842,7 +21801,7 @@
 								</parsers:XMLValidatingParser>
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -21934,7 +21893,7 @@
 				<ctl:message>Send a request to service with temporalFilter during 40000-01-10T10:00:00Z/40000-01-10T11:00:00Z</ctl:message>
 				<xsl:variable name="GetResultResponse">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="$isGET eq 'true'">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -21957,7 +21916,7 @@
 								</parsers:XMLValidatingParser>
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="$isSOAP eq 'true'">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
