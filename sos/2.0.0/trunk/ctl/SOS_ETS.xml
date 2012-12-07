@@ -443,139 +443,166 @@
 				<xsl:otherwise>
 					<!-- Set Operations's URL -->
 					<!-- GetCapabilities parameters -->
-					<xsl:variable name="IsGetCapabilities-GET" select="count($user-capabilities//ows:Operation[@name='GetCapabilities']//ows:Get) > 0" />
+					
+					<xsl:variable name="IsGetCapabilities-GET" select="($request-via eq 'GET') and (count($user-capabilities//ows:Operation[@name='GetCapabilities']//ows:Get) > 0)" />
+					<xsl:variable name="IsGetCapabilities-POST" select="count($user-capabilities//ows:Operation[@name='GetCapabilities']//ows:Post) > 0" />
 					<xsl:variable name="GetCapabilities-URL">
-						<xsl:if test="$IsGetCapabilities-GET">
-							<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetCapabilities']//ows:Get/@xlink:href"/>
-						</xsl:if>
-						<xsl:if test="not($IsGetCapabilities-GET)">
-							<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetCapabilities']//ows:Post/@xlink:href"/>
-						</xsl:if>
+						<xsl:choose>
+							<xsl:when test="not($request-via eq 'GET') and ($IsGetCapabilities-POST)">
+								<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetCapabilities']//ows:Post/@xlink:href"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetCapabilities']//ows:Get/@xlink:href"/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:variable>
+					<ctl:message select="concat('Run GetCapabilities test via GET: ',$IsGetCapabilities-GET)"/>
 					
 					<!-- DescribeSensor parameters -->
-					<xsl:variable name="IsDescribeSensor-GET" select="count($user-capabilities//ows:Operation[@name='DescribeSensor']//ows:Get) > 0" />
+					<xsl:variable name="IsDescribeSensor-GET" select="($request-via eq 'GET') and (count($user-capabilities//ows:Operation[@name='DescribeSensor']//ows:Get) > 0)" />
+					<xsl:variable name="IsDescribeSensor-POST" select="count($user-capabilities//ows:Operation[@name='DescribeSensor']//ows:Post) > 0" />
 					<xsl:variable name="DescribeSensor-URL">
-						<xsl:if test="$IsDescribeSensor-GET">
-							<xsl:value-of select="$user-capabilities//ows:Operation[@name='DescribeSensor']//ows:Get/@xlink:href"/>
-						</xsl:if>
-						<xsl:if test="not($IsDescribeSensor-GET)">
-							<xsl:value-of select="$user-capabilities//ows:Operation[@name='DescribeSensor']//ows:Post/@xlink:href"/>
-						</xsl:if>
+						<xsl:choose>
+							<xsl:when test="not($request-via eq 'GET') and ($IsDescribeSensor-POST)">
+								<xsl:value-of select="$user-capabilities//ows:Operation[@name='DescribeSensor']//ows:Post/@xlink:href"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="$user-capabilities//ows:Operation[@name='DescribeSensor']//ows:Get/@xlink:href"/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:variable>
+					<ctl:message select="concat('Run DescribeSensor test via GET: ',$IsDescribeSensor-GET)"/>
 					
 					<!-- GetObservation parameters -->
-					<xsl:variable name="IsGetObservation-GET" select="count($user-capabilities//ows:Operation[@name='GetObservation']//ows:Get) > 0" />
+					<xsl:variable name="IsGetObservation-GET" select="($request-via eq 'GET') and (count($user-capabilities//ows:Operation[@name='GetObservation']//ows:Get) > 0)" />
+					<xsl:variable name="IsGetObservation-POST" select="count($user-capabilities//ows:Operation[@name='GetObservation']//ows:Post) > 0" />
 					<xsl:variable name="GetObservation-URL">
-						<xsl:if test="$IsGetObservation-GET">
-							<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetObservation']//ows:Get/@xlink:href"/>
-						</xsl:if>
-						<xsl:if test="not($IsGetObservation-GET)">
-							<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetObservation']//ows:Post/@xlink:href"/>
-						</xsl:if>
+						<xsl:choose>
+							<xsl:when test="not($request-via eq 'GET') and ($IsGetObservation-POST)">
+								<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetObservation']//ows:Post/@xlink:href"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetObservation']//ows:Get/@xlink:href"/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:variable>
+					<ctl:message select="concat('Run GetObservation test via GET: ',$IsGetObservation-GET)"/>
 					
 					<!-- GetFeatureOfInterest parameters -->
 					<xsl:variable name="hasGetFeatureOfInterest" select="count($user-capabilities//ows:Operation[@name='GetFeatureOfInterest']) > 0" />
-					<xsl:variable name="IsGetFeatureOfInterest-GET" select="count($user-capabilities//ows:Operation[@name='GetFeatureOfInterest']//ows:Get) > 0" />
+					<xsl:variable name="IsGetFeatureOfInterest-GET" select="($request-via eq 'GET') and (count($user-capabilities//ows:Operation[@name='GetFeatureOfInterest']//ows:Get) > 0)" />
+					<xsl:variable name="IsGetFeatureOfInterest-POST" select="count($user-capabilities//ows:Operation[@name='GetFeatureOfInterest']//ows:Post) > 0" />
 					<xsl:variable name="GetFeatureOfInterest-URL">
-						<xsl:if test="$IsGetFeatureOfInterest-GET">
-							<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetFeatureOfInterest']//ows:Get/@xlink:href"/>
-						</xsl:if>
-						<xsl:if test="not($IsGetFeatureOfInterest-GET)">
-							<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetFeatureOfInterest']//ows:Post/@xlink:href"/>
-						</xsl:if>
+						<xsl:choose>
+							<xsl:when test="not($request-via eq 'GET') and ($IsGetFeatureOfInterest-POST)">
+								<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetFeatureOfInterest']//ows:Post/@xlink:href"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetFeatureOfInterest']//ows:Get/@xlink:href"/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:variable>
+					<ctl:message select="concat('Run GetFeatureOfInterest test via GET: ',$IsGetFeatureOfInterest-GET)"/>
 					
 					<!-- GetObservationById parameters -->
 					<xsl:variable name="hasGetObservationById" select="count($user-capabilities//ows:Operation[@name='GetObservationById']) > 0" />
-					<xsl:variable name="IsGetObservationById-GET" select="count($user-capabilities//ows:Operation[@name='GetObservationById']//ows:Get) > 0" />
+					<xsl:variable name="IsGetObservationById-GET" select="($request-via eq 'GET') and (count($user-capabilities//ows:Operation[@name='GetObservationById']//ows:Get) > 0)" />
+					<xsl:variable name="IsGetObservationById-POST" select="count($user-capabilities//ows:Operation[@name='GetObservationById']//ows:Post) > 0" />
 					<xsl:variable name="GetObservationById-URL">
-						<xsl:if test="$IsGetObservationById-GET">
-							<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetObservationById']//ows:Get/@xlink:href"/>
-						</xsl:if>
-						<xsl:if test="not($IsGetObservationById-GET)">
-							<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetObservationById']//ows:Post/@xlink:href"/>
-						</xsl:if>
+						<xsl:choose>
+							<xsl:when test="not($request-via eq 'GET') and ($IsGetObservationById-POST)">
+								<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetObservationById']//ows:Post/@xlink:href"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetObservationById']//ows:Get/@xlink:href"/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:variable>
+					<ctl:message select="concat('Run GetFeatureOfInterest test via GET: ',$IsGetFeatureOfInterest-GET)"/>
 					
 					<!-- InsertSensor parameters -->
 					<xsl:variable name="hasInsertSensor" select="count($user-capabilities//ows:Operation[@name='InsertSensor']) > 0" />
-					<xsl:variable name="IsInsertSensor-POST" select="count($user-capabilities//ows:Operation[@name='InsertSensor']//ows:POST) > 0" />
+					<xsl:variable name="IsInsertSensor-POST" select="count($user-capabilities//ows:Operation[@name='InsertSensor']//ows:Post) > 0" />
 					<xsl:if test="hasInsertSensor and not($IsInsertSensor-POST)">
 						<ctl:message>FAILURE: If InsertSensor Operation is supported by service, the InsertSensor operation must support Http-post .</ctl:message>
 						<ctl:fail/>
 					</xsl:if>
 					<xsl:variable name="InsertSensor-URL">
-						<xsl:value-of select="$user-capabilities//ows:Operation[@name='InsertSensor']//ows:POST/@xlink:href"/>
+						<xsl:value-of select="$user-capabilities//ows:Operation[@name='InsertSensor']//ows:Post/@xlink:href"/>
 					</xsl:variable>
 					
 					<!-- DeleteSensor parameters -->
 					<xsl:variable name="hasDeleteSensor" select="count($user-capabilities//ows:Operation[@name='DeleteSensor']) > 0" />
-					<xsl:variable name="IsDeleteSensor-POST" select="count($user-capabilities//ows:Operation[@name='DeleteSensor']//ows:POST) > 0" />
+					<xsl:variable name="IsDeleteSensor-POST" select="count($user-capabilities//ows:Operation[@name='DeleteSensor']//ows:Post) > 0" />
 					<xsl:if test="hasDeleteSensor and not($IsDeleteSensor-POST)">
 						<ctl:message>FAILURE: If DeleteSensor Operation is supported by service, the DeleteSensor operation must support Http-post .</ctl:message>
 						<ctl:fail/>
 					</xsl:if>
 					<xsl:variable name="DeleteSensor-URL">
-						<xsl:value-of select="$user-capabilities//ows:Operation[@name='DeleteSensor']//ows:POST/@xlink:href"/>
+						<xsl:value-of select="$user-capabilities//ows:Operation[@name='DeleteSensor']//ows:Post/@xlink:href"/>
 					</xsl:variable>
 					
 					<!-- InsertObservation parameters -->
 					<xsl:variable name="hasInsertObservation" select="count($user-capabilities//ows:Operation[@name='InsertObservation']) > 0" />
-					<xsl:variable name="IsInsertObservation-POST" select="count($user-capabilities//ows:Operation[@name='InsertObservation']//ows:POST) > 0" />
+					<xsl:variable name="IsInsertObservation-POST" select="count($user-capabilities//ows:Operation[@name='InsertObservation']//ows:Post) > 0" />
 					<xsl:if test="hasInsertObservation and not($IsInsertObservation-POST)">
 						<ctl:message>FAILURE: If InsertObservation Operation is supported by service, the InsertObservation operation must support Http-post .</ctl:message>
 						<ctl:fail/>
 					</xsl:if>
 					<xsl:variable name="InsertObservation-URL">
-						<xsl:value-of select="$user-capabilities//ows:Operation[@name='InsertObservation']//ows:POST/@xlink:href"/>
+						<xsl:value-of select="$user-capabilities//ows:Operation[@name='InsertObservation']//ows:Post/@xlink:href"/>
 					</xsl:variable>
 		
 					<!-- InsertResultTemplate parameters -->
 					<xsl:variable name="hasInsertResultTemplate" select="count($user-capabilities//ows:Operation[@name='InsertResultTemplate']) > 0" />
-					<xsl:variable name="IsInsertResultTemplate-POST" select="count($user-capabilities//ows:Operation[@name='InsertResultTemplate']//ows:POST) > 0" />
+					<xsl:variable name="IsInsertResultTemplate-POST" select="count($user-capabilities//ows:Operation[@name='InsertResultTemplate']//ows:Post) > 0" />
 					<xsl:if test="hasInsertResultTemplate and not($IsInsertResultTemplate-POST)">
 						<ctl:message>FAILURE: If InsertResultTemplate Operation is supported by service, the InsertResultTemplate operation must support Http-post .</ctl:message>
 						<ctl:fail/>
 					</xsl:if>
 					<xsl:variable name="InsertResultTemplate-URL">
-						<xsl:value-of select="$user-capabilities//ows:Operation[@name='InsertResultTemplate']//ows:POST/@xlink:href"/>
+						<xsl:value-of select="$user-capabilities//ows:Operation[@name='InsertResultTemplate']//ows:Post/@xlink:href"/>
 					</xsl:variable>
 					
 					<!-- InsertResult parameters -->
 					<xsl:variable name="hasInsertResult" select="count($user-capabilities//ows:Operation[@name='InsertResult']) > 0" />
-					<xsl:variable name="IsInsertResult-POST" select="count($user-capabilities//ows:Operation[@name='InsertResult']//ows:POST) > 0" />
+					<xsl:variable name="IsInsertResult-POST" select="count($user-capabilities//ows:Operation[@name='InsertResult']//ows:Post) > 0" />
 					<xsl:if test="hasInsertResult and not($IsInsertResult-POST)">
 						<ctl:message>FAILURE: If InsertResult Operation is supported by service, the InsertResult operation must support Http-post .</ctl:message>
 						<ctl:fail/>
 					</xsl:if>
 					<xsl:variable name="InsertResult-URL">
-						<xsl:value-of select="$user-capabilities//ows:Operation[@name='InsertResult']//ows:POST/@xlink:href"/>
+						<xsl:value-of select="$user-capabilities//ows:Operation[@name='InsertResult']//ows:Post/@xlink:href"/>
 					</xsl:variable>
 		
 					<!-- GetResultTemplate parameters -->
 					<xsl:variable name="hasGetResultTemplate" select="count($user-capabilities//ows:Operation[@name='GetResultTemplate']) > 0" />
-					<xsl:variable name="IsGetResultTemplate-GET" select="count($user-capabilities//ows:Operation[@name='GetResultTemplate']//ows:Get) > 0" />
+					<xsl:variable name="IsGetResultTemplate-GET" select="($request-via eq 'GET') and (count($user-capabilities//ows:Operation[@name='GetResultTemplate']//ows:Get) > 0)" />
+					<xsl:variable name="IsGetResultTemplate-POST" select="count($user-capabilities//ows:Operation[@name='GetResultTemplate']//ows:Post) > 0" />
 					<xsl:variable name="GetResultTemplate-URL">
-						<xsl:if test="$IsGetResultTemplate-GET">
-							<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetResultTemplate']//ows:Get/@xlink:href"/>
-						</xsl:if>
-						<xsl:if test="not($IsGetResultTemplate-GET)">
-							<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetResultTemplate']//ows:Post/@xlink:href"/>
-						</xsl:if>
+						<xsl:choose>
+							<xsl:when test="not($request-via eq 'GET') and ($IsGetResultTemplate-POST)">
+								<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetResultTemplate']//ows:Post/@xlink:href"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetResultTemplate']//ows:Get/@xlink:href"/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:variable>
 					
 					<!-- GetResult parameters -->
 					<xsl:variable name="hasGetResult" select="count($user-capabilities//ows:Operation[@name='GetResult']) > 0" />
-					<xsl:variable name="IsGetResult-GET" select="count($user-capabilities//ows:Operation[@name='GetResult']//ows:Get) > 0" />
+					<xsl:variable name="IsGetResult-GET" select="($request-via eq 'GET') and (count($user-capabilities//ows:Operation[@name='GetResult']//ows:Get) > 0)" />
+					<xsl:variable name="IsGetResult-POST" select="count($user-capabilities//ows:Operation[@name='GetResult']//ows:Post) > 0" />
 					<xsl:variable name="GetResult-URL">
-						<xsl:if test="$IsGetResult-GET">
-							<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetResult']//ows:Get/@xlink:href"/>
-						</xsl:if>
-						<xsl:if test="not($IsGetResult-GET)">
-							<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetResult']//ows:Post/@xlink:href"/>
-						</xsl:if>
+						<xsl:choose>
+							<xsl:when test="not($request-via eq 'GET') and ($IsGetResult-POST)">
+								<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetResult']//ows:Post/@xlink:href"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="$user-capabilities//ows:Operation[@name='GetResult']//ows:Get/@xlink:href"/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:variable>
 					
 					<!-- Set selected tests.-->
@@ -11560,39 +11587,18 @@
 							</xsl:if>
 							<ctl:message>Checking the validity of the response to a DeleteSensor request with no service parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
-								<xsl:choose>
-									<xsl:when test="($isGET)">
-										<ctl:call-function name="sosFunctions:checkExceptionReport">
-											<ctl:with-param name="exceptionReport" select="$DeleteSensorResponse" />
-											<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
-											<ctl:with-param name="locatorToCheck" select="string('service')" />
-											<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
-										</ctl:call-function>
-									</xsl:when>
-									<xsl:otherwise>
-										<ctl:call-function name="sosFunctions:checkExceptionReport">
-											<ctl:with-param name="exceptionReport" select="$DeleteSensorResponse" />
-											<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
-											<ctl:with-param name="locatorToCheck" select="string('Expected attribute: service in element DeleteSensor@http://www.opengis.net/swes/2.0')" />
-											<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
-										</ctl:call-function>
-									</xsl:otherwise>
-								</xsl:choose>
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$DeleteSensorResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
+									<ctl:with-param name="locatorToCheck" select="string('Expected attribute: service in element DeleteSensor@http://www.opengis.net/swes/2.0')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<xsl:choose>
-									<xsl:when test="($isGET)">
-										<ctl:message>FAILURE:  The server did not return the expected exception report response to a DeleteSensor request with no service parameter specified.</ctl:message>  
-										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "service".</ctl:message>
-										<ctl:fail />
-									</xsl:when>
-									<xsl:otherwise>
-										<ctl:message>FAILURE:  The server did not return the expected exception report response to a DeleteSensor request with no service parameter specified. </ctl:message>
-										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: service in element DeleteSensor@http://www.opengis.net/swes/2.0".</ctl:message>
-										<ctl:fail />
-									</xsl:otherwise>
-								</xsl:choose>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DeleteSensor request with no service parameter specified. </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: service in element DeleteSensor@http://www.opengis.net/swes/2.0".</ctl:message>
+								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
 					</xsl:otherwise>
@@ -11848,39 +11854,18 @@
 							</xsl:if>
 							<ctl:message>Checking the validity of the response to a DeleteSensor request with no version parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
-								<xsl:choose>
-									<xsl:when test="($isGET)">
-										<ctl:call-function name="sosFunctions:checkExceptionReport">
-											<ctl:with-param name="exceptionReport" select="$DeleteSensorResponse" />
-											<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
-											<ctl:with-param name="locatorToCheck" select="string('version')" />
-											<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
-										</ctl:call-function>
-									</xsl:when>
-									<xsl:otherwise>
-										<ctl:call-function name="sosFunctions:checkExceptionReport">
-											<ctl:with-param name="exceptionReport" select="$DeleteSensorResponse" />
-											<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
-											<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element DeleteSensor@http://www.opengis.net/swes/2.0')" />
-											<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
-										</ctl:call-function>
-									</xsl:otherwise>
-								</xsl:choose>
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$DeleteSensorResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
+									<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element DeleteSensor@http://www.opengis.net/swes/2.0')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<xsl:choose>
-									<xsl:when test="($isGET)">
-										<ctl:message>FAILURE:  The server did not return the expected exception report response to a DeleteSensor request with no version parameter specified.</ctl:message>  
-										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "version".</ctl:message>
-										<ctl:fail />
-									</xsl:when>
-									<xsl:otherwise>
-										<ctl:message>FAILURE:  The server did not return the expected exception report response to a DeleteSensor request with no version parameter specified.</ctl:message>  
-										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: version in element DeleteSensor@http://www.opengis.net/swes/2.0".</ctl:message>
-										<ctl:fail />
-									</xsl:otherwise>
-								</xsl:choose>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DeleteSensor request with no version parameter specified.</ctl:message>  
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: version in element DeleteSensor@http://www.opengis.net/swes/2.0".</ctl:message>
+								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
 					</xsl:otherwise>
@@ -12972,39 +12957,18 @@
 							</xsl:if>
 							<ctl:message>Checking the validity of the response to a InsertObservation request with no service parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
-								<xsl:choose>
-									<xsl:when test="($isGET)">
-										<ctl:call-function name="sosFunctions:checkExceptionReport">
-											<ctl:with-param name="exceptionReport" select="$InsertObservationResponse" />
-											<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
-											<ctl:with-param name="locatorToCheck" select="string('service')" />
-											<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
-										</ctl:call-function>
-									</xsl:when>
-									<xsl:otherwise>
-										<ctl:call-function name="sosFunctions:checkExceptionReport">
-											<ctl:with-param name="exceptionReport" select="$InsertObservationResponse" />
-											<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
-											<ctl:with-param name="locatorToCheck" select="string('Expected attribute: service in element InsertObservation@http://www.opengis.net/sos/2.0')" />
-											<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
-										</ctl:call-function>
-									</xsl:otherwise>
-								</xsl:choose>
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$InsertObservationResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
+									<ctl:with-param name="locatorToCheck" select="string('Expected attribute: service in element InsertObservation@http://www.opengis.net/sos/2.0')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<xsl:choose>
-									<xsl:when test="($isGET)">
-										<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertObservation request with no service parameter specified. </ctl:message>
-										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "service".</ctl:message>
-										<ctl:fail />
-									</xsl:when>
-									<xsl:otherwise>
-										<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertObservation request with no service parameter specified. </ctl:message>
-										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: service in element InsertObservation@http://www.opengis.net/sos/2.0".</ctl:message>
-										<ctl:fail />
-									</xsl:otherwise>
-								</xsl:choose>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertObservation request with no service parameter specified. </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: service in element InsertObservation@http://www.opengis.net/sos/2.0".</ctl:message>
+								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
 					</xsl:otherwise>
@@ -13281,39 +13245,18 @@
 							</xsl:if>
 							<ctl:message>Checking the validity of the response to a InsertObservation request with no version parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
-								<xsl:choose>
-									<xsl:when test="($isGET)">
-										<ctl:call-function name="sosFunctions:checkExceptionReport">
-											<ctl:with-param name="exceptionReport" select="$InsertObservationResponse" />
-											<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
-											<ctl:with-param name="locatorToCheck" select="string('version')" />
-											<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
-										</ctl:call-function>
-									</xsl:when>
-									<xsl:otherwise>
-										<ctl:call-function name="sosFunctions:checkExceptionReport">
-											<ctl:with-param name="exceptionReport" select="$InsertObservationResponse" />
-											<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
-											<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element InsertObservation@http://www.opengis.net/sos/2.0')" />
-											<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
-										</ctl:call-function>
-									</xsl:otherwise>
-								</xsl:choose>
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$InsertObservationResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
+									<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element InsertObservation@http://www.opengis.net/sos/2.0')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<xsl:choose>
-									<xsl:when test="($isGET)">
-										<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertObservation request with no version parameter specified.</ctl:message>  
-										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "version".</ctl:message>
-										<ctl:fail />
-									</xsl:when>
-									<xsl:otherwise>
-										<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertObservation request with no version parameter specified.</ctl:message>  
-										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: version in element InsertObservation@http://www.opengis.net/sos/2.0".</ctl:message>
-										<ctl:fail />
-									</xsl:otherwise>
-								</xsl:choose>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertObservation request with no version parameter specified.</ctl:message>  
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: version in element InsertObservation@http://www.opengis.net/sos/2.0".</ctl:message>
+								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
 					</xsl:otherwise>
@@ -16226,39 +16169,18 @@
 							</xsl:if>
 							<ctl:message>Checking the validity of the response to a InsertResultTemplate request with no service parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
-								<xsl:choose>
-									<xsl:when test="($isGET)">
-										<ctl:call-function name="sosFunctions:checkExceptionReport">
-											<ctl:with-param name="exceptionReport" select="$InsertResultTemplateResponse" />
-											<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
-											<ctl:with-param name="locatorToCheck" select="string('service')" />
-											<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
-										</ctl:call-function>
-									</xsl:when>
-									<xsl:otherwise>
-										<ctl:call-function name="sosFunctions:checkExceptionReport">
-											<ctl:with-param name="exceptionReport" select="$InsertResultTemplateResponse" />
-											<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
-											<ctl:with-param name="locatorToCheck" select="string('Expected attribute: service in element InsertResultTemplate@http://www.opengis.net/sos/2.0')" />
-											<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
-										</ctl:call-function>
-									</xsl:otherwise>
-								</xsl:choose>
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$InsertResultTemplateResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
+									<ctl:with-param name="locatorToCheck" select="string('Expected attribute: service in element InsertResultTemplate@http://www.opengis.net/sos/2.0')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<xsl:choose>
-									<xsl:when test="($isGET)">
-										<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertResultTemplate request with no service parameter specified.</ctl:message>  
-										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "service".</ctl:message>
-										<ctl:fail />
-									</xsl:when>
-									<xsl:otherwise>
-										<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertResultTemplate request with no service parameter specified. </ctl:message>
-										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: service in element InsertResultTemplate@http://www.opengis.net/sos/2.0".</ctl:message>
-										<ctl:fail />
-									</xsl:otherwise>
-								</xsl:choose>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertResultTemplate request with no service parameter specified. </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: service in element InsertResultTemplate@http://www.opengis.net/sos/2.0".</ctl:message>
+								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
 					</xsl:otherwise>
@@ -16844,39 +16766,18 @@
 							</xsl:if>
 							<ctl:message>Checking the validity of the response to a InsertResultTemplate request with no version parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
-								<xsl:choose>
-									<xsl:when test="($isGET)">
-										<ctl:call-function name="sosFunctions:checkExceptionReport">
-											<ctl:with-param name="exceptionReport" select="$InsertResultTemplateResponse" />
-											<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
-											<ctl:with-param name="locatorToCheck" select="string('version')" />
-											<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
-										</ctl:call-function>
-									</xsl:when>
-									<xsl:otherwise>
-										<ctl:call-function name="sosFunctions:checkExceptionReport">
-											<ctl:with-param name="exceptionReport" select="$InsertResultTemplateResponse" />
-											<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
-											<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element InsertResultTemplate@http://www.opengis.net/sos/2.0')" />
-											<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
-										</ctl:call-function>
-									</xsl:otherwise>
-								</xsl:choose>
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$InsertResultTemplateResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
+									<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element InsertResultTemplate@http://www.opengis.net/sos/2.0')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<xsl:choose>
-									<xsl:when test="($isGET)">
-										<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertResultTemplate request with no version parameter specified.</ctl:message>  
-										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "version".</ctl:message>
-										<ctl:fail />
-									</xsl:when>
-									<xsl:otherwise>
-										<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertResultTemplate request with no version parameter specified.</ctl:message>  
-										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: version in element InsertResultTemplate@http://www.opengis.net/sos/2.0".</ctl:message>
-										<ctl:fail />
-									</xsl:otherwise>
-								</xsl:choose>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertResultTemplate request with no version parameter specified.</ctl:message>  
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: version in element InsertResultTemplate@http://www.opengis.net/sos/2.0".</ctl:message>
+								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
 					</xsl:otherwise>
@@ -18191,39 +18092,18 @@
 							</xsl:if>
 							<ctl:message>Checking the validity of the response to a InsertResult request with no service parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
-								<xsl:choose>
-									<xsl:when test="($isGET)">
-										<ctl:call-function name="sosFunctions:checkExceptionReport">
-											<ctl:with-param name="exceptionReport" select="$InsertResultResponse" />
-											<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
-											<ctl:with-param name="locatorToCheck" select="string('service')" />
-											<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
-										</ctl:call-function>
-									</xsl:when>
-									<xsl:otherwise>
-										<ctl:call-function name="sosFunctions:checkExceptionReport">
-											<ctl:with-param name="exceptionReport" select="$InsertResultResponse" />
-											<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
-											<ctl:with-param name="locatorToCheck" select="string('Expected attribute: service in element InsertResult@http://www.opengis.net/sos/2.0')" />
-											<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
-										</ctl:call-function>
-									</xsl:otherwise>
-								</xsl:choose>
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$InsertResultResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
+									<ctl:with-param name="locatorToCheck" select="string('Expected attribute: service in element InsertResult@http://www.opengis.net/sos/2.0')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<xsl:choose>
-									<xsl:when test="($isGET)">
-										<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertResult request with no service parameter specified.</ctl:message>  
-										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "service".</ctl:message>
-										<ctl:fail />
-									</xsl:when>
-									<xsl:otherwise>
-										<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertResult request with no service parameter specified. </ctl:message>
-										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: service in element InsertResult@http://www.opengis.net/sos/2.0".</ctl:message>
-										<ctl:fail />
-									</xsl:otherwise>
-								</xsl:choose>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertResult request with no service parameter specified. </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: service in element InsertResult@http://www.opengis.net/sos/2.0".</ctl:message>
+								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
 					</xsl:otherwise>
@@ -18488,39 +18368,18 @@
 							</xsl:if>
 							<ctl:message>Checking the validity of the response to a InsertResult request with no version parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
-								<xsl:choose>
-									<xsl:when test="($isGET)">
-										<ctl:call-function name="sosFunctions:checkExceptionReport">
-											<ctl:with-param name="exceptionReport" select="$InsertResultResponse" />
-											<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
-											<ctl:with-param name="locatorToCheck" select="string('version')" />
-											<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
-										</ctl:call-function>
-									</xsl:when>
-									<xsl:otherwise>
-										<ctl:call-function name="sosFunctions:checkExceptionReport">
-											<ctl:with-param name="exceptionReport" select="$InsertResultResponse" />
-											<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
-											<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element InsertResult@http://www.opengis.net/sos/2.0')" />
-											<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
-										</ctl:call-function>
-									</xsl:otherwise>
-								</xsl:choose>
+								<ctl:call-function name="sosFunctions:checkExceptionReport">
+									<ctl:with-param name="exceptionReport" select="$InsertResultResponse" />
+									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
+									<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element InsertResult@http://www.opengis.net/sos/2.0')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
+								</ctl:call-function>
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<xsl:choose>
-									<xsl:when test="($isGET)">
-										<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertResult request with no version parameter specified.</ctl:message>  
-										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "version".</ctl:message>
-										<ctl:fail />
-									</xsl:when>
-									<xsl:otherwise>
-										<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertResult request with no version parameter specified.</ctl:message>  
-										<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: version in element InsertResult@http://www.opengis.net/sos/2.0".</ctl:message>
-										<ctl:fail />
-									</xsl:otherwise>
-								</xsl:choose>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertResult request with no version parameter specified.</ctl:message>  
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: version in element InsertResult@http://www.opengis.net/sos/2.0".</ctl:message>
+								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
 					</xsl:otherwise>
