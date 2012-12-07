@@ -19198,7 +19198,7 @@
 						<ctl:message>The server does not support the operation "GetResultTemplate", so skip this test.</ctl:message>
 					</xsl:when>
 					<xsl:otherwise>
-
+						
 						<!--讓使用者選一個 offering 和 observedProperty -->
 						<xsl:variable name="form-values">
 							<ctl:form height="750" width="1024">
@@ -19209,8 +19209,8 @@
 											<tr>
 												<td>
 													<select name="offeringDropDown">
-														<xsl:for-each select="$getCapabilitiesResponse//sos:contents//swes:offering">
-															<xsl:variable name="offering" select=".//swes:identifier" />
+														<xsl:for-each select="$getCapabilitiesResponse//sos:contents//swes:offering//swes:identifier">
+															<xsl:variable name="offering" select="." />
 															<option><xsl:attribute name="value"><xsl:value-of select="$offering" /></xsl:attribute><xsl:value-of select="$offering" /></option> 
 														</xsl:for-each>
 													</select>
@@ -20517,7 +20517,15 @@
 								<ctl:param name="request">GetResultTemplate</ctl:param>	
 								<ctl:param name="offering"><xsl:value-of select="$offering" /></ctl:param>
 								<ctl:param name="observedProperty"><xsl:value-of select="$observedProperty" /></ctl:param>
-								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+								<parsers:XMLValidatingParser>
+									<parsers:schemas>
+										<parsers:schema type="resource">xsd/w3c/xml.xsd</parsers:schema>
+										<parsers:schema>
+											<xsl:attribute name="type"><xsl:value-of select="$GetResultTemplateResponseSchemaType" /></xsl:attribute>
+												<xsl:value-of select="$GetResultTemplateResponseSchemaLocation" />
+										</parsers:schema>
+									</parsers:schemas>
+								</parsers:XMLValidatingParser>
 							</ctl:request>
 						</xsl:when>
 						<xsl:when test="($isSOAP)">
@@ -20534,7 +20542,16 @@
 										<sos:observedProperty><xsl:value-of select="$observedProperty" /></sos:observedProperty>
 									</sos:GetResultTemplate>
 								</ctl:body>
-								<ctl:call-function name="sosFunctions:validateExceptionReportSOAP" />
+								<parsers:SOAPParser return="content">
+									<parsers:XMLValidatingParser>
+										<parsers:schemas>
+											<parsers:schema>
+												<xsl:attribute name="type"><xsl:value-of select="$GetResultTemplateResponseSchemaType" /></xsl:attribute>
+												<xsl:value-of select="$GetResultTemplateResponseSchemaLocation" />
+											</parsers:schema>
+										</parsers:schemas>
+									</parsers:XMLValidatingParser>
+								</parsers:SOAPParser>
 							</ctl:soap-request>
 						</xsl:when>
 						<xsl:otherwise>
@@ -20552,7 +20569,15 @@
 										<sos:observedProperty><xsl:value-of select="$observedProperty" /></sos:observedProperty>
 									</sos:GetResultTemplate>
 								</ctl:body>
-								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+								<parsers:XMLValidatingParser>
+									<parsers:schemas>
+										<parsers:schema type="resource">xsd/w3c/xml.xsd</parsers:schema>
+										<parsers:schema>
+											<xsl:attribute name="type"><xsl:value-of select="$GetResultTemplateResponseSchemaType" /></xsl:attribute>
+												<xsl:value-of select="$GetResultTemplateResponseSchemaLocation" />
+										</parsers:schema>
+									</parsers:schemas>
+								</parsers:XMLValidatingParser>
 							</ctl:request>
 						</xsl:otherwise>
 					</xsl:choose>
@@ -20615,11 +20640,53 @@
 						<ctl:message>The server does not support the operation "GetResult", so skip this test.</ctl:message>
 					</xsl:when>
 					<xsl:otherwise>
+						<!--讓使用者選一個 offering 和 observedProperty -->
+						<xsl:variable name="form-values">
+							<ctl:form height="750" width="1024">
+								<body>
+									<p>Please select an offering.</p>
+									<blockquote>
+										<table border="1" padding="4" bgcolor="#00ffff" align="center">
+											<tr>
+												<td>
+													<select name="offeringDropDown">
+														<xsl:for-each select="$getCapabilitiesResponse//sos:contents//swes:offering//swes:identifier">
+															<xsl:variable name="offering" select="." />
+															<option><xsl:attribute name="value"><xsl:value-of select="$offering" /></xsl:attribute><xsl:value-of select="$offering" /></option> 
+														</xsl:for-each>
+													</select>
+												</td>
+											</tr>				
+										</table>						
+									</blockquote>
+									<p>Please select an observedProperty.</p>
+									<blockquote>
+										<table border="1" padding="4" bgcolor="#00ffff" align="center">
+											<tr>
+												<td>
+													<select name="observedPropertyDropDown">
+														<xsl:for-each select="$getCapabilitiesResponse//sos:contents//swes:observableProperty">
+															<xsl:variable name="observedProperty" select="." />
+															<option><xsl:attribute name="value"><xsl:value-of select="$observedProperty" /></xsl:attribute><xsl:value-of select="$observedProperty" /></option> 
+														</xsl:for-each>
+													</select>
+												</td>
+											</tr>				
+										</table>						
+									</blockquote>
+									<div align="center">
+										<input type="submit" value="Start"/>						
+									</div>
+								</body>
+							</ctl:form>
+						</xsl:variable>
 						<!-- get a valid offering-->
-						<xsl:variable name="offering" select="$getCapabilitiesResponse//sos:contents//swes:offering[1]//swes:identifier" />
+						<xsl:variable name="offering" select="$form-values/values/value[@key='offeringDropDown']"/>
+						<ctl:message>The offering was:  <xsl:value-of select="$offering" /></ctl:message>
 						<!-- get a valid observableProperty-->
-						<xsl:variable name="observedProperty" select="$getCapabilitiesResponse//sos:contents//swes:observableProperty[1]" />
-
+						<xsl:variable name="observedProperty" select="$form-values/values/value[@key='observedPropertyDropDown']"/>
+						<ctl:message>The observedProperty was:  <xsl:value-of select="$observedProperty" /></ctl:message>
+						
 						<xsl:if test="$test1401 eq 'true'">
 							<ctl:message select="'******************** 14.01.RequestNoService ********************'"/>
 							<ctl:call-test name="sos:GRRequestNoService">
@@ -21905,7 +21972,15 @@
 								<ctl:param name="request">GetResult</ctl:param>	
 								<ctl:param name="offering"><xsl:value-of select="$offering" /></ctl:param>
 								<ctl:param name="observedProperty"><xsl:value-of select="$observedProperty" /></ctl:param>
-								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+								<parsers:XMLValidatingParser>
+									<parsers:schemas>
+										<parsers:schema type="resource">xsd/w3c/xml.xsd</parsers:schema>
+										<parsers:schema>
+											<xsl:attribute name="type"><xsl:value-of select="$GetResultResponseSchemaType" /></xsl:attribute>
+												<xsl:value-of select="$GetResultResponseSchemaLocation" />
+										</parsers:schema>
+									</parsers:schemas>
+								</parsers:XMLValidatingParser>
 							</ctl:request>
 						</xsl:when>
 						<xsl:when test="($isSOAP)">
@@ -21922,7 +21997,16 @@
 										<sos:observedProperty><xsl:value-of select="$observedProperty" /></sos:observedProperty>
 									</sos:GetResult>
 								</ctl:body>
-								<ctl:call-function name="sosFunctions:validateExceptionReportSOAP" />
+								<parsers:SOAPParser return="content">
+									<parsers:XMLValidatingParser>
+										<parsers:schemas>
+											<parsers:schema>
+												<xsl:attribute name="type"><xsl:value-of select="$GetResultResponseSchemaType" /></xsl:attribute>
+												<xsl:value-of select="$GetResultResponseSchemaLocation" />
+											</parsers:schema>
+										</parsers:schemas>
+									</parsers:XMLValidatingParser>
+								</parsers:SOAPParser>
 							</ctl:soap-request>
 						</xsl:when>
 						<xsl:otherwise>
@@ -21940,7 +22024,15 @@
 										<sos:observedProperty><xsl:value-of select="$observedProperty" /></sos:observedProperty>
 									</sos:GetResult>
 								</ctl:body>
-								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+								<parsers:XMLValidatingParser>
+									<parsers:schemas>
+										<parsers:schema type="resource">xsd/w3c/xml.xsd</parsers:schema>
+										<parsers:schema>
+											<xsl:attribute name="type"><xsl:value-of select="$GetResultResponseSchemaType" /></xsl:attribute>
+												<xsl:value-of select="$GetResultResponseSchemaLocation" />
+										</parsers:schema>
+									</parsers:schemas>
+								</parsers:XMLValidatingParser>
 							</ctl:request>
 						</xsl:otherwise>
 					</xsl:choose>
@@ -21995,7 +22087,15 @@
 								<ctl:param name="offering"><xsl:value-of select="$offering" /></ctl:param>
 								<ctl:param name="observedProperty"><xsl:value-of select="$observedProperty" /></ctl:param>
 								<ctl:param name="temporalFilter"><xsl:value-of select="'om:phenomenonTime,40000-01-10T10:00:00Z/40000-01-10T11:00:00Z'" /></ctl:param>
-								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+								<parsers:XMLValidatingParser>
+									<parsers:schemas>
+										<parsers:schema type="resource">xsd/w3c/xml.xsd</parsers:schema>
+										<parsers:schema>
+											<xsl:attribute name="type"><xsl:value-of select="$GetResultResponseSchemaType" /></xsl:attribute>
+												<xsl:value-of select="$GetResultResponseSchemaLocation" />
+										</parsers:schema>
+									</parsers:schemas>
+								</parsers:XMLValidatingParser>
 							</ctl:request>
 						</xsl:when>
 						<xsl:when test="($isSOAP)">
@@ -22021,7 +22121,16 @@
 										</sos:temporalFilter>
 									</sos:GetResult>
 								</ctl:body>
-								<ctl:call-function name="sosFunctions:validateExceptionReportSOAP" />
+								<parsers:SOAPParser return="content">
+									<parsers:XMLValidatingParser>
+										<parsers:schemas>
+											<parsers:schema>
+												<xsl:attribute name="type"><xsl:value-of select="$GetResultResponseSchemaType" /></xsl:attribute>
+												<xsl:value-of select="$GetResultResponseSchemaLocation" />
+											</parsers:schema>
+										</parsers:schemas>
+									</parsers:XMLValidatingParser>
+								</parsers:SOAPParser>
 							</ctl:soap-request>
 						</xsl:when>
 						<xsl:otherwise>
@@ -22048,7 +22157,15 @@
 										</sos:temporalFilter>
 									</sos:GetResult>
 								</ctl:body>
-								<ctl:call-function name="sosFunctions:validateExceptionReport" />
+								<parsers:XMLValidatingParser>
+									<parsers:schemas>
+										<parsers:schema type="resource">xsd/w3c/xml.xsd</parsers:schema>
+										<parsers:schema>
+											<xsl:attribute name="type"><xsl:value-of select="$GetResultResponseSchemaType" /></xsl:attribute>
+												<xsl:value-of select="$GetResultResponseSchemaLocation" />
+										</parsers:schema>
+									</parsers:schemas>
+								</parsers:XMLValidatingParser>
 							</ctl:request>
 						</xsl:otherwise>
 					</xsl:choose>
