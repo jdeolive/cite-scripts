@@ -58,7 +58,7 @@
                   				<xsl:value-of select="$url"/>
                				</ctl:url>
                				<ctl:method>post</ctl:method>
-               				<ctl:header name="Content-type">application/x-www-form-urlencoded</ctl:header>
+               				<ctl:header name="Content-type">application/x-www-form-<ctl:header name="Content-type">text/xml</ctl:header></ctl:header>
 	      				<ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 							<wcs:DescribeCoverage  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
     								xmlns:wcs='http://www.opengis.net/wcs/2.0'
@@ -95,7 +95,7 @@
 								<xsl:value-of select="$url"/>
 							</ctl:url>
 							<ctl:method>post</ctl:method>
-							<ctl:header name="Content-type">application/x-www-form-urlencoded</ctl:header>
+							<ctl:header name="Content-type">application/x-www-form-<ctl:header name="Content-type">text/xml</ctl:header></ctl:header>
 							<ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 								<wcs:GetCoverage xmlns:wcs="http://www.opengis.net/wcs/2.0"
 									xmlns:gml="http://www.opengis.net/gml/3.2"
@@ -156,7 +156,7 @@
                   						<xsl:value-of select=".//@xlink:href"/>
                 					</ctl:url>
                 					<ctl:method>post</ctl:method>
-                					<ctl:header name="Content-type">application/x-www-form-urlencoded</ctl:header>
+                					<ctl:header name="Content-type">application/x-www-form-<ctl:header name="Content-type">text/xml</ctl:header></ctl:header>
 							<ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 								<wcs:GetCapabilities  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 											xmlns:ows="http://www.opengis.net/ows/1.1"
@@ -194,7 +194,7 @@
                   						<xsl:value-of select=".//@xlink:href"/>
                 					</ctl:url>
                 					<ctl:method>post</ctl:method>
-                					<ctl:header name="Content-type">application/x-www-form-urlencoded</ctl:header>
+                					<ctl:header name="Content-type">application/x-www-form-<ctl:header name="Content-type">text/xml</ctl:header></ctl:header>
 	      						<ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 								<wcs:DescribeCoverage  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
     									xmlns:wcs='http://www.opengis.net/wcs/2.0'
@@ -234,7 +234,7 @@
 										<xsl:value-of select=".//@xlink:href"/>
 									</ctl:url>
 									<ctl:method>post</ctl:method>
-									<ctl:header name="Content-type">application/x-www-form-urlencoded</ctl:header>
+									<ctl:header name="Content-type">application/x-www-form-<ctl:header name="Content-type">text/xml</ctl:header></ctl:header>
 									<ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 										<wcs:GetCoverage xmlns:wcs="http://www.opengis.net/wcs/2.0"
 											xmlns:gml="http://www.opengis.net/gml/3.2"

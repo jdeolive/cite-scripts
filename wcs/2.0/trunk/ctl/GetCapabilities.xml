@@ -439,7 +439,7 @@
 							<xsl:value-of select="$url"/>
 						</ctl:url>
 						<ctl:method>post</ctl:method>
-						<ctl:header name="Content-type">application/x-www-form-urlencoded</ctl:header>
+						<ctl:header name="Content-type">text/xml</ctl:header>
 						<ctl:body><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 								<wcs:DescribeCoverage  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
 									xmlns:wcs='http://www.opengis.net/wcs/2.0'
