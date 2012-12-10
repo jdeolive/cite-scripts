@@ -2927,8 +2927,8 @@
 			<ctl:param name="DescribeTasking_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request (POST and SOAP) without parameter "service",and the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: service in element DescribeTasking@http://www.opengis.net/swes/2.0". </ctl:assertion>
-			<ctl:comment>Pass if the server (POST and SOAP) returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "Expected attribute: service in element DescribeTasking@http://www.opengis.net/swes/2.0"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request (POST and SOAP) without parameter "service",and the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: service in element DescribeTasking@http://www.opengis.net/sps/2.0". </ctl:assertion>
+			<ctl:comment>Pass if the server (POST and SOAP) returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "Expected attribute: service in element DescribeTasking@http://www.opengis.net/sps/2.0"; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!--PUT TEST CODE HERE-->
 				<!--
@@ -2986,14 +2986,14 @@
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$describeTaskingResponse" />
 								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
-								<ctl:with-param name="locatorToCheck" select="string('Expected attribute: service in element DescribeTasking@http://www.opengis.net/swes/2.0')" />
+								<ctl:with-param name="locatorToCheck" select="string('Expected attribute: service in element DescribeTasking@http://www.opengis.net/sps/2.0')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
 							<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeTasking request with no service parameter specified. </ctl:message>
-							<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: service in element DescribeTasking@http://www.opengis.net/swes/2.0".</ctl:message>
+							<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: service in element DescribeTasking@http://www.opengis.net/sps/2.0".</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -3156,8 +3156,8 @@
 			<ctl:param name="DescribeTasking_URL" />
 			<ctl:param name="getCapabilitiesResponse" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request (POST and SOAP) without parameter "version",and the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: version in element DescribeTasking@http://www.opengis.net/swes/2.0". </ctl:assertion>
-			<ctl:comment>Pass if the server (POST and SOAP) returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "Expected attribute: version in element DescribeTasking@http://www.opengis.net/swes/2.0"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request (POST and SOAP) without parameter "version",and the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: version in element DescribeTasking@http://www.opengis.net/sps/2.0". </ctl:assertion>
+			<ctl:comment>Pass if the server (POST and SOAP) returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "Expected attribute: version in element DescribeTasking@http://www.opengis.net/sps/2.0"; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!--PUT TEST CODE HERE-->
 				<!--
@@ -3215,14 +3215,14 @@
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$describeTaskingResponse" />
 								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
-								<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element DescribeTasking@http://www.opengis.net/swes/2.0')" />
+								<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element DescribeTasking@http://www.opengis.net/sps/2.0')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
 							<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeTasking request with no version parameter specified.</ctl:message>  
-							<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: version in element DescribeTasking@http://www.opengis.net/swes/2.0".</ctl:message>
+							<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: version in element DescribeTasking@http://www.opengis.net/sps/2.0".</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -3839,8 +3839,8 @@
 			<ctl:param name="TaskingParameters" />
 			<ctl:param name="Submit_URL" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request (POST and SOAP) without parameter "service",and the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: service in element Submit@http://www.opengis.net/swes/2.0". </ctl:assertion>
-			<ctl:comment>Pass if the server (POST and SOAP) returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "Expected attribute: service in element Submit@http://www.opengis.net/swes/2.0"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request (POST and SOAP) without parameter "service",and the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: service in element Submit@http://www.opengis.net/sps/2.0". </ctl:assertion>
+			<ctl:comment>Pass if the server (POST and SOAP) returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "Expected attribute: service in element Submit@http://www.opengis.net/sps/2.0"; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create Submit request without procedure -->
 				<xsl:variable name="submitResponse">
@@ -3906,14 +3906,14 @@
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$submitResponse" />
 								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
-								<ctl:with-param name="locatorToCheck" select="string('Expected attribute: service in element Submit@http://www.opengis.net/swes/2.0')" />
+								<ctl:with-param name="locatorToCheck" select="string('Expected attribute: service in element Submit@http://www.opengis.net/sps/2.0')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
 							<ctl:message>FAILURE:  The server did not return the expected exception report response to a Submit request with no service parameter specified. </ctl:message>
-							<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: service in element Submit@http://www.opengis.net/swes/2.0".</ctl:message>
+							<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: service in element Submit@http://www.opengis.net/sps/2.0".</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -4162,14 +4162,14 @@
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$submitResponse" />
 								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
-								<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element Submit@http://www.opengis.net/swes/2.0')" />
+								<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element Submit@http://www.opengis.net/sps/2.0')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
 							<ctl:message>FAILURE:  The server did not return the expected exception report response to a Submit request with no version parameter specified.</ctl:message>  
-							<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: version in element Submit@http://www.opengis.net/swes/2.0".</ctl:message>
+							<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: version in element Submit@http://www.opengis.net/sps/2.0".</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -5181,8 +5181,8 @@
 			<ctl:param name="GetStatus_URL" />
 			<ctl:param name="task" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request (POST and SOAP) without parameter "service",and the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: service in element GetStatus@http://www.opengis.net/swes/2.0". </ctl:assertion>
-			<ctl:comment>Pass if the server (POST and SOAP) returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "Expected attribute: service in element GetStatus@http://www.opengis.net/swes/2.0"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request (POST and SOAP) without parameter "service",and the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: service in element GetStatus@http://www.opengis.net/sps/2.0". </ctl:assertion>
+			<ctl:comment>Pass if the server (POST and SOAP) returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "Expected attribute: service in element GetStatus@http://www.opengis.net/sps/2.0"; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create GetStatus request without task -->
 				<xsl:variable name="GetStatusResponse">
@@ -5232,14 +5232,14 @@
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$GetStatusResponse" />
 								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
-								<ctl:with-param name="locatorToCheck" select="string('Expected attribute: service in element GetStatus@http://www.opengis.net/swes/2.0')" />
+								<ctl:with-param name="locatorToCheck" select="string('Expected attribute: service in element GetStatus@http://www.opengis.net/sps/2.0')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
 							<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetStatus request with no service parameter specified. </ctl:message>
-							<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: service in element GetStatus@http://www.opengis.net/swes/2.0".</ctl:message>
+							<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: service in element GetStatus@http://www.opengis.net/sps/2.0".</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -5437,14 +5437,14 @@
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$GetStatusResponse" />
 								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
-								<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element GetStatus@http://www.opengis.net/swes/2.0')" />
+								<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element GetStatus@http://www.opengis.net/sps/2.0')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
 							<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetStatus request with no version parameter specified.</ctl:message>  
-							<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: version in element GetStatus@http://www.opengis.net/swes/2.0".</ctl:message>
+							<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: version in element GetStatus@http://www.opengis.net/sps/2.0".</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -6097,8 +6097,8 @@
 			<ctl:param name="GetTask_URL" />
 			<ctl:param name="task" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request (POST and SOAP) without parameter "service",and the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: service in element GetTask@http://www.opengis.net/swes/2.0". </ctl:assertion>
-			<ctl:comment>Pass if the server (POST and SOAP) returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "Expected attribute: service in element GetTask@http://www.opengis.net/swes/2.0"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request (POST and SOAP) without parameter "service",and the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: service in element GetTask@http://www.opengis.net/sps/2.0". </ctl:assertion>
+			<ctl:comment>Pass if the server (POST and SOAP) returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "Expected attribute: service in element GetTask@http://www.opengis.net/sps/2.0"; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create GetTask request without service -->
 				<xsl:variable name="GetTaskResponse">
@@ -6148,14 +6148,14 @@
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$GetTaskResponse" />
 								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
-								<ctl:with-param name="locatorToCheck" select="string('Expected attribute: service in element GetTask@http://www.opengis.net/swes/2.0')" />
+								<ctl:with-param name="locatorToCheck" select="string('Expected attribute: service in element GetTask@http://www.opengis.net/sps/2.0')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
 							<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetTask request with no service parameter specified. </ctl:message>
-							<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: service in element GetTask@http://www.opengis.net/swes/2.0".</ctl:message>
+							<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: service in element GetTask@http://www.opengis.net/sps/2.0".</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -6353,14 +6353,14 @@
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$GetTaskResponse" />
 								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
-								<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element GetTask@http://www.opengis.net/swes/2.0')" />
+								<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element GetTask@http://www.opengis.net/sps/2.0')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
 							<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetTask request with no version parameter specified.</ctl:message>  
-							<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: version in element GetTask@http://www.opengis.net/swes/2.0".</ctl:message>
+							<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: version in element GetTask@http://www.opengis.net/sps/2.0".</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -6917,8 +6917,8 @@
 			<ctl:param name="DescribeResultAccess_URL" />
 			<ctl:param name="procedure" />
 			<ctl:param name="PostEncodingIsSOAP" />
-			<ctl:assertion>Send a request (POST and SOAP) without parameter "service",and the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: service in element DescribeResultAccess@http://www.opengis.net/swes/2.0". </ctl:assertion>
-			<ctl:comment>Pass if the server (POST and SOAP) returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "Expected attribute: service in element DescribeResultAccess@http://www.opengis.net/swes/2.0"; fail otherwise.</ctl:comment>
+			<ctl:assertion>Send a request (POST and SOAP) without parameter "service",and the response must be a valid exception with code "InvalidRequest" and locator "Expected attribute: service in element DescribeResultAccess@http://www.opengis.net/sps/2.0". </ctl:assertion>
+			<ctl:comment>Pass if the server (POST and SOAP) returns a valid exception message with an exceptionCode "InvalidRequest" and locator is "Expected attribute: service in element DescribeResultAccess@http://www.opengis.net/sps/2.0"; fail otherwise.</ctl:comment>
 			<ctl:code>
 				<!-- 1.create DescribeResultAccess request without procedure and without service-->
 				<xsl:variable name="DescribeResultAccessResponse">
@@ -6972,14 +6972,14 @@
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$DescribeResultAccessResponse" />
 								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
-								<ctl:with-param name="locatorToCheck" select="string('Expected attribute: service in element DescribeResultAccess@http://www.opengis.net/swes/2.0')" />
+								<ctl:with-param name="locatorToCheck" select="string('Expected attribute: service in element DescribeResultAccess@http://www.opengis.net/sps/2.0')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
 							<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeResultAccess request with no service parameter specified. </ctl:message>
-							<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: service in element DescribeResultAccess@http://www.opengis.net/swes/2.0".</ctl:message>
+							<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: service in element DescribeResultAccess@http://www.opengis.net/sps/2.0".</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
@@ -7189,14 +7189,14 @@
 							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$DescribeResultAccessResponse" />
 								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
-								<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element DescribeResultAccess@http://www.opengis.net/swes/2.0')" />
+								<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element DescribeResultAccess@http://www.opengis.net/sps/2.0')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
 							<ctl:message>FAILURE:  The server did not return the expected exception report response to a DescribeResultAccess request with no version parameter specified.</ctl:message>  
-							<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: version in element DescribeResultAccess@http://www.opengis.net/swes/2.0".</ctl:message>
+							<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidRequest" and a locator of "Expected attribute: version in element DescribeResultAccess@http://www.opengis.net/sps/2.0".</ctl:message>
 							<ctl:fail />
 						</xsl:if>
 					</xsl:otherwise>
