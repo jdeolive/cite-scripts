@@ -3212,14 +3212,12 @@
 						</xsl:if>
 						<ctl:message>Checking the response for validity...</ctl:message>
 						<xsl:variable name="isCorrect">
-							<xsl:choose>
-								<ctl:call-function name="spsFunctions:checkExceptionReport">
+							<ctl:call-function name="spsFunctions:checkExceptionReport">
 								<ctl:with-param name="exceptionReport" select="$describeTaskingResponse" />
 								<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidRequest')" />
 								<ctl:with-param name="locatorToCheck" select="string('Expected attribute: version in element DescribeTasking@http://www.opengis.net/swes/2.0')" />
 								<ctl:with-param name="PostEncodingIsSOAP" select="$PostEncodingIsSOAP" />
 							</ctl:call-function>
-							</xsl:choose>
 						</xsl:variable>
 						<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 						<xsl:if test="not(xsd:boolean($isCorrect))">
