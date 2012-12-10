@@ -5217,7 +5217,7 @@
 						</ctl:request>
 					</xsl:if>
 				</xsl:variable>
-				<xsl:variable name="TaskingParameters" select="$describeTaskingResponse//sps:DescribeTaskingResponse/sps:taskingParameters/node()" />
+				<xsl:variable name="TaskingParameters" select="spsFunctions:ConcatSubmitValues($describeTaskingResponse//sps:DescribeTaskingResponse/sps:taskingParameters)" />
 				
 				<!-- get a valid task -->
 				<xsl:variable name="submitResponse">
@@ -5229,7 +5229,14 @@
 							<ctl:body>
 								<sps:Submit service="SPS" version="2.0.0" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 									<sps:procedure><xsl:value-of select="$procedure" /></sps:procedure>
-									<sps:taskingParameters><xsl:value-of select="$TaskingParameters" /></sps:taskingParameters>
+									<sps:taskingParameters>
+										<sps:ParameterData>
+											<sps:encoding>
+												<swe:TextEncoding tokenSeparator="," blockSeparator=";"/>
+											</sps:encoding>
+											<sps:values><xsl:value-of select="$TaskingParameters" /></sps:values>
+										</sps:ParameterData>
+									</sps:taskingParameters>
 								</sps:Submit>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateSubmitResponseSOAP" />
@@ -5244,14 +5251,21 @@
 							<ctl:body>
 								<sps:Submit service="SPS" version="2.0.0" xsi:schemaLocation="http://www.opengis.net/sps/2.0 http://schemas.opengis.net/sps/2.0/sps.xsd" xmlns:sps="http://www.opengis.net/sps/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 									<sps:procedure><xsl:value-of select="$procedure" /></sps:procedure>
-									<sps:taskingParameters><xsl:value-of select="$TaskingParameters" /></sps:taskingParameters>
+									<sps:taskingParameters>
+										<sps:ParameterData>
+											<sps:encoding>
+												<swe:TextEncoding tokenSeparator="," blockSeparator=";"/>
+											</sps:encoding>
+											<sps:values><xsl:value-of select="$TaskingParameters" /></sps:values>
+										</sps:ParameterData>
+									</sps:taskingParameters>
 								</sps:Submit>
 							</ctl:body>
 							<ctl:call-function name="spsFunctions:validateSubmitResponse" />
 						</ctl:request>
 					</xsl:if>
 				</xsl:variable>
-				<xsl:variable name="task" select="$submitResponse//sps:SubmitResponse/sps:result/sps:StatusReport/sps:task" />
+				<xsl:variable name="task" select="$submitResponse//sps:task" />
 				
 				<!-- get a GetStatus_URL -->
 				<ctl:message>GetStatus URL:  <xsl:value-of select="$GetStatus_URL" /></ctl:message>
