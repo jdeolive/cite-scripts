@@ -8053,7 +8053,7 @@
 						<ctl:fail />
 					</xsl:when>
 					<xsl:when test="not(count($ReferenceGroup/ows:ReferenceGroup/ows:Reference/ows:Identifier)=1) and not(count($ReferenceGroup/ows:ReferenceGroup/ows:ServiceReference/ows:Identifier)=1)">
-						<ctl:message>FAILURE: The number of attribute:Title in the Reference or ServiceReference is zero or one .[<xsl:value-of select="$ProcedureOrTask"/>=<xsl:value-of select="$ValueOfProcedureOrTask"/>]</ctl:message>
+						<ctl:message>FAILURE: The number of Identifier element in the Reference must be one or the number of Identifier element in the ServiceReference must be one .[<xsl:value-of select="$ProcedureOrTask"/>=<xsl:value-of select="$ValueOfProcedureOrTask"/>]</ctl:message>
 						<ctl:fail />
 					</xsl:when>
 					<!-- situaction 1 -->
