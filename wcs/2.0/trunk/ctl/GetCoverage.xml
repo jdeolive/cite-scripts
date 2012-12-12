@@ -858,7 +858,7 @@
 										<parsers:parse mime="application/gml+xml">
 											<parsers:XMLValidatingParser>
 												<parsers:schemas>
-													<parsers:schema type="file">resources/wcs/2.0/wcsAll.xsd</parsers:schema>
+													<parsers:schema type="resource">wcs/2.0/wcsAll.xsd</parsers:schema>
 												</parsers:schemas>
 											</parsers:XMLValidatingParser>
 										</parsers:parse>
@@ -969,7 +969,7 @@
 										<parsers:parse mime="application/gml+xml">
 											<parsers:XMLValidatingParser>
 												<parsers:schemas>
-													<parsers:schema type="file">resources/wcs/2.0/wcsAll.xsd</parsers:schema>
+													<parsers:schema type="resource">wcs/2.0/wcsAll.xsd</parsers:schema>
 												</parsers:schemas>
 											</parsers:XMLValidatingParser>
 										</parsers:parse>
@@ -1280,7 +1280,7 @@
 					</ctl:param>
 					<ctlp:XMLValidatingParser>
 						<ctlp:schemas>
-							<ctlp:schema type="file">resources/wcs/2.0/wcsAll.xsd</ctlp:schema>
+							<ctlp:schema type="resource">wcs/2.0/wcsAll.xsd</ctlp:schema>
 						</ctlp:schemas>
 					</ctlp:XMLValidatingParser>
 				</ctl:request>
@@ -1392,7 +1392,7 @@
 					</ctl:param>
 					<ctlp:XMLValidatingParser>
 						<ctlp:schemas>
-							<ctlp:schema type="file">resources/wcs/2.0/wcsAll.xsd</ctlp:schema>
+							<ctlp:schema type="resource">wcs/2.0/wcsAll.xsd</ctlp:schema>
 						</ctlp:schemas>
 					</ctlp:XMLValidatingParser>
 				</ctl:request>
