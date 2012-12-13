@@ -93,7 +93,7 @@
            				<ctl:param name="Sections">DatasetSeriesSummary,CoverageSummary</ctl:param>             				
       						<ctlp:XMLValidatingParser>
 	       						<ctlp:schemas>
-                      						<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                      						<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
          					</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -142,7 +142,7 @@
 					<ctlp:SOAPParser return="content">
            					<ctlp:XMLValidatingParser>
 	        					<ctlp:schemas>
-                        					<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                        					<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
            					</ctlp:XMLValidatingParser>
            				</ctlp:SOAPParser>
@@ -238,7 +238,7 @@
 								<ctl:param name="EOID"><xsl:value-of select="."/></ctl:param>             				
 								<ctlp:XMLValidatingParser>
 									<ctlp:schemas>
-										<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+										<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 									</ctlp:schemas>
 								</ctlp:XMLValidatingParser>
 							</ctl:request>
@@ -294,7 +294,7 @@
 								<ctlp:SOAPParser return="content">
 									<ctlp:XMLValidatingParser>
 										<ctlp:schemas>
-											<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+											<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 										</ctlp:schemas>
 									</ctlp:XMLValidatingParser>
 								</ctlp:SOAPParser>
@@ -384,7 +384,7 @@
 								<ctl:param name="CoverageId"><xsl:value-of select="."/></ctl:param>             				
 								<ctlp:XMLValidatingParser>
 									<ctlp:schemas>
-										<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+										<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 									</ctlp:schemas>
 								</ctlp:XMLValidatingParser>
 							</ctl:request>
@@ -437,7 +437,7 @@
 								<ctlp:SOAPParser return="content">
 									<ctlp:XMLValidatingParser>
 										<ctlp:schemas>
-											<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+											<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 										</ctlp:schemas>
 									</ctlp:XMLValidatingParser>
 								</ctlp:SOAPParser>
@@ -496,7 +496,7 @@
            				<ctl:param name="Sections">CoverageSummary</ctl:param>             				
       						<ctlp:XMLValidatingParser>
 	       						<ctlp:schemas>
-                      						<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                      						<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
          					</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -525,7 +525,7 @@
            				<ctl:param name="Sections">Contents</ctl:param>             				
       						<ctlp:XMLValidatingParser>
 	       						<ctlp:schemas>
-                      						<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                      						<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
          					</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -554,7 +554,7 @@
            				<ctl:param name="Sections">All</ctl:param>             				
       						<ctlp:XMLValidatingParser>
 	       						<ctlp:schemas>
-                      						<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                      						<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
          					</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -602,7 +602,7 @@
 					<ctlp:SOAPParser return="content">
            					<ctlp:XMLValidatingParser>
 	        					<ctlp:schemas>
-                        					<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                        					<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
            					</ctlp:XMLValidatingParser>
            				</ctlp:SOAPParser>
@@ -644,7 +644,7 @@
 					<ctlp:SOAPParser return="content">
            					<ctlp:XMLValidatingParser>
 	        					<ctlp:schemas>
-                        					<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                        					<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
            					</ctlp:XMLValidatingParser>
            				</ctlp:SOAPParser>
@@ -686,7 +686,7 @@
 					<ctlp:SOAPParser return="content">
            					<ctlp:XMLValidatingParser>
 	        					<ctlp:schemas>
-                        					<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                        					<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
            					</ctlp:XMLValidatingParser>
            				</ctlp:SOAPParser>
@@ -741,7 +741,7 @@
            				<ctl:param name="Sections">DatasetSeriesSummary</ctl:param>             				
       						<ctlp:XMLValidatingParser>
 	       						<ctlp:schemas>
-                      						<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                      						<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
          					</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -770,7 +770,7 @@
            				<ctl:param name="Sections">Contents</ctl:param>             				
       						<ctlp:XMLValidatingParser>
 	       						<ctlp:schemas>
-                      						<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                      						<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
          					</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -799,7 +799,7 @@
            				<ctl:param name="Sections">All</ctl:param>             				
       						<ctlp:XMLValidatingParser>
 	       						<ctlp:schemas>
-                      						<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                      						<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
          					</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -847,7 +847,7 @@
 					<ctlp:SOAPParser return="content">
            					<ctlp:XMLValidatingParser>
 	        					<ctlp:schemas>
-                        					<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                        					<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
            					</ctlp:XMLValidatingParser>
            				</ctlp:SOAPParser>
@@ -890,7 +890,7 @@
 					<ctlp:SOAPParser return="content">
            					<ctlp:XMLValidatingParser>
 	        					<ctlp:schemas>
-                        					<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                        					<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
            					</ctlp:XMLValidatingParser>
            				</ctlp:SOAPParser>
@@ -933,7 +933,7 @@
 					<ctlp:SOAPParser return="content">
            					<ctlp:XMLValidatingParser>
 	        					<ctlp:schemas>
-                        					<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                        					<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
            					</ctlp:XMLValidatingParser>
            				</ctlp:SOAPParser>

@@ -74,7 +74,7 @@
 								<ctl:param name="CoverageId"><xsl:value-of select="."/></ctl:param>             				
 								<ctlp:XMLValidatingParser>
 									<ctlp:schemas>
-										<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+										<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 									</ctlp:schemas>
 								</ctlp:XMLValidatingParser>
 							</ctl:request>
@@ -126,7 +126,7 @@
 								<ctlp:SOAPParser return="content">
 									<ctlp:XMLValidatingParser>
 										<ctlp:schemas>
-											<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+											<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 										</ctlp:schemas>
 									</ctlp:XMLValidatingParser>
 								</ctlp:SOAPParser>
@@ -194,7 +194,7 @@
 							<ctl:param name="CoverageId"><xsl:value-of select="string-join($Capabilities//*[local-name()='Contents']/*[local-name()='CoverageSummary']/*[local-name()='CoverageId'], ',')"/></ctl:param>             				
 							<ctlp:XMLValidatingParser>
 								<ctlp:schemas>
-									<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+									<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 								</ctlp:schemas>
 							</ctlp:XMLValidatingParser>
 						</ctl:request>
@@ -250,7 +250,7 @@
 							<ctlp:SOAPParser return="content">
 								<ctlp:XMLValidatingParser>
 									<ctlp:schemas>
-										<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+										<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 									</ctlp:schemas>
 								</ctlp:XMLValidatingParser>
 							</ctlp:SOAPParser>

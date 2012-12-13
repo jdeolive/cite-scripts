@@ -28,7 +28,7 @@
           				<ctl:param name="REQUEST">GetCapabilities</ctl:param>
       						<ctlp:XMLValidatingParser>
 	       						<ctlp:schemas>
-                      						<ctlp:schema type="file">resources/wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
+                      						<ctlp:schema type="resource">wcseo/1.0/wcsEOGetCapabilities.xsd</ctlp:schema>
         						</ctlp:schemas>
          					</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -107,7 +107,7 @@
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>
              				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
-                        				<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+                        				<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 	        				</ctlp:schemas>
              				</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -144,7 +144,7 @@
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/>,<xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
              				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
-                        				<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+                        				<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 	        				</ctlp:schemas>
              				</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -184,7 +184,7 @@
              				<ctl:param name="containment">CONTAINS</ctl:param>
              				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
-                        				<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+                        				<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 	        				</ctlp:schemas>
              				</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -215,7 +215,7 @@
             				<ctl:param name="containment">OVERLAPS</ctl:param>
              				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
-                        				<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+                        				<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 	        				</ctlp:schemas>
              				</ctlp:XMLValidatingParser>
         			</ctl:request>
@@ -256,7 +256,7 @@
              				<ctl:param name="subset">phenomenonTime,http://www.opengis.net/def/trs/ISO-8601/0/Gregorian%2BUTC("<xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='TimePeriod']/*[local-name()='beginPosition']"/>")</ctl:param>              			             				
              				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
-                        				<ctlp:schema type="file">resources/wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
+                        				<ctlp:schema type="resource">wcseo/1.0/wcsEODescribeEOCoverageSet.xsd</ctlp:schema>
 	        				</ctlp:schemas>
              				</ctlp:XMLValidatingParser>
         			</ctl:request>
