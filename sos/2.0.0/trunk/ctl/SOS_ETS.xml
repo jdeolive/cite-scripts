@@ -198,11 +198,13 @@
 									<td><input type="checkbox" name="0614">06.14.RequestInvalidSpatialFilter</input></td>
 									<td><input type="checkbox" name="0615">06.15.RequestEmptyResponse</input></td>
 								</tr>
+								<!--
 								<tr>
 									<td><input type="checkbox" name="0616">06.16.RequestValidParameter</input></td>
 									<td><input type="checkbox" name="0617">06.17.RequestValidFilter</input></td>
 									<td><input type="checkbox" name="0618">06.18.RequestNormalRequest</input></td>
 								</tr>
+								-->
 								<tr><th colspan="3" align="left"><input type="checkbox" name="07">07.SOS enhancedOperations: GetObservationById</input></th></tr>
 								<tr>
 									<td><input type="checkbox" name="0701">07.01.RequestNoService</input></td>
@@ -1126,16 +1128,16 @@
 					<ctl:message select="concat('run 11.05.RequestNullVersion: ',$test1105)"/>
 					<ctl:message select="concat('run 11.06.RequestInvalidVersion: ',$test1106)"/>
 					<ctl:message select="concat('run 11.07.RequestInvalidobservationType: ',$test1107)"/>
-					<ctl:message select="concat('run 11.08.RequestInvalidproposedTemplate: ',$test1107)"/>
+					<ctl:message select="concat('run 11.08.RequestInvalidproposedTemplate: ',$test1108)"/>
 					<ctl:message select="concat('run 11.09.RequestValidRequest: ',$test1109)"/>
 					<ctl:message select="'*********************************************************'"/>
 					<ctl:message select="concat('run 12.SOS resultHandling: InsertResult: ',$test12)"/>
-					<ctl:message select="concat('run 12.01.RequestNoService: ',$test1101)"/>
-					<ctl:message select="concat('run 12.02.RequestNullService: ',$test1102)"/>
-					<ctl:message select="concat('run 12.03.RequestInvalidService: ',$test1103)"/>
-					<ctl:message select="concat('run 12.04.RequestNoVersion: ',$test1104)"/>
-					<ctl:message select="concat('run 12.05.RequestNullVersion: ',$test1105)"/>
-					<ctl:message select="concat('run 12.06.RequestInvalidVersion: ',$test1106)"/>
+					<ctl:message select="concat('run 12.01.RequestNoService: ',$test1201)"/>
+					<ctl:message select="concat('run 12.02.RequestNullService: ',$test1202)"/>
+					<ctl:message select="concat('run 12.03.RequestInvalidService: ',$test1203)"/>
+					<ctl:message select="concat('run 12.04.RequestNoVersion: ',$test1204)"/>
+					<ctl:message select="concat('run 12.05.RequestNullVersion: ',$test1205)"/>
+					<ctl:message select="concat('run 12.06.RequestInvalidVersion: ',$test1206)"/>
 					<ctl:message select="concat('run 12.07.RequestNulltemplate: ',$test1207)"/>
 					<ctl:message select="concat('run 12.08.RequestInvalidtemplate: ',$test1208)"/>
 					<ctl:message select="concat('run 12.09.RequestNullresultValues: ',$test1209)"/>
@@ -1546,8 +1548,6 @@
 							<ctl:with-param name="test1205" select="$test1205"/>
 							<ctl:with-param name="test1206" select="$test1206"/>
 							<ctl:with-param name="test1207" select="$test1207"/>
-							<ctl:with-param name="test1208" select="$test1208"/>
-							<ctl:with-param name="test1209" select="$test1209"/>
 							<ctl:with-param name="test1208" select="$test1208"/>
 							<ctl:with-param name="test1209" select="$test1209"/>
 							<ctl:with-param name="test1210" select="$test1210"/>
@@ -3727,6 +3727,8 @@
 			<ctl:assertion>Execute GetObservation Test.</ctl:assertion>
 			<ctl:comment>Pass if all the subtest not fail; fail otherwise.</ctl:comment>
 			<ctl:code>
+				<ctl:message>The observationResponseSchemaType was:  <xsl:value-of select="$observationResponseSchemaType" /></ctl:message>
+				<ctl:message>The observationResponseSchemaLocation was:  <xsl:value-of select="$observationResponseSchemaLocation" /></ctl:message>
 				<!-- 從GetCapabilities取得有效的 offering,procedure,observedProperty -->
 				<!-- get a valid offering-->
 				<xsl:variable name="offering" select="$getCapabilitiesResponse//sos:contents//swes:offering[1]//swes:identifier" />
@@ -7767,19 +7769,19 @@
 							<xsl:if test="not($isSOAP=string('true'))">
 								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfo($getFeatureOfInterestResponse)" /></ctl:message>
 							</xsl:if>
-							<ctl:message>Checking the validity of the response to a GetFeatureOfInterest request with invalid observableProperty parameter.</ctl:message>
+							<ctl:message>Checking the validity of the response to a GetFeatureOfInterest request with invalid observedProperty parameter.</ctl:message>
 							<xsl:variable name="isCorrect">
 								<ctl:call-function name="sosFunctions:checkExceptionReport">
 									<ctl:with-param name="exceptionReport" select="$getFeatureOfInterestResponse" />
 									<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
-									<ctl:with-param name="locatorToCheck" select="string('observableProperty')" />
+									<ctl:with-param name="locatorToCheck" select="string('observedProperty')" />
 									<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
 								</ctl:call-function>
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetFeatureOfInterest request with invalid observableProperty parameter specified.  </ctl:message>
-								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "observableProperty".</ctl:message>
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetFeatureOfInterest request with invalid observedProperty parameter specified.  </ctl:message>
+								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "InvalidParameterValue" and a locator of "observedProperty".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -8033,7 +8035,7 @@
 											<fes:Intersects>
 												<fes:ValueReference></fes:ValueReference>
 												<gml:Point gml:id="point1" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
-												<gml:pos>0.0 10,0</gml:pos>
+												<gml:pos>0.0 10.0</gml:pos>
 												</gml:Point>
 											</fes:Intersects>
 										</sos:spatialFilter>
@@ -8056,7 +8058,7 @@
 											<fes:Intersects>
 												<fes:ValueReference></fes:ValueReference>
 												<gml:Point gml:id="point1" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
-												<gml:pos>0.0 10,0</gml:pos>
+												<gml:pos>0.0 10.0</gml:pos>
 												</gml:Point>
 											</fes:Intersects>
 										</sos:spatialFilter>
@@ -8407,7 +8409,7 @@
 						<!-- get a valid getObservationResponse-->
 						<xsl:variable name="getObservationResponse">
 							<xsl:choose>
-								<xsl:when test="($isGetObservationGET)">
+								<xsl:when test="$isGetObservationGET eq 'true'">
 									<ctl:request>
 										<ctl:url>
 											<xsl:value-of select="$serviceURL"/>
@@ -8418,7 +8420,7 @@
 										<ctl:param name="request">GetObservation</ctl:param>	
 										<ctl:param name="procedure"><xsl:value-of select="$procedure" /></ctl:param>
 										<ctl:param name="offering"><xsl:value-of select="$offering" /></ctl:param>
-										<ctl:param name="observableProperty"><xsl:value-of select="$observableProperty" /></ctl:param>								
+										<ctl:param name="observedProperty"><xsl:value-of select="$observableProperty" /></ctl:param>								
 										<parsers:XMLValidatingParser>
 											<parsers:schemas>
 												<parsers:schema type="resource">xsd/w3c/xml.xsd</parsers:schema>
@@ -11242,8 +11244,8 @@
 						<xsl:if test="$InsertSensorResponse/*">
 							<!-- check the root is "sos:InsertSensorResponse" and empty context.-->
 							<xsl:variable name="responseRoot" select="local-name-from-QName(node-name($InsertSensorResponse/*[1]))" />
-							<xsl:variable name="assignedProcedureCount " select="Count($InsertSensorResponse//swes:InsertSensorResponse//swes:assignedProcedure)" />
-							<xsl:variable name="assignedOfferingCount " select="Count($InsertSensorResponse//swes:assignedOffering//swes:assignedOffering)" />
+							<xsl:variable name="assignedProcedureCount " select="count($InsertSensorResponse//swes:InsertSensorResponse//swes:assignedProcedure)" />
+							<xsl:variable name="assignedOfferingCount " select="count($InsertSensorResponse//swes:assignedOffering//swes:assignedOffering)" />
 							<xsl:choose>
 								<xsl:when test="not($responseRoot=$InsertSensorRootElementName)">
 									<ctl:message>FAILURE:  The root element from the response to a InsertSensor request "<xsl:value-of select="$responseRoot" />" does not match the expected root element of "<xsl:value-of select="$InsertSensorRootElementName" />"</ctl:message>
@@ -15585,13 +15587,13 @@
 					<xsl:otherwise>
 						<xsl:if test="$InsertObservationResponse/*">
 							<xsl:variable name="responseRoot" select="local-name-from-QName(node-name($InsertObservationResponse/*[1]))" />
-							<xsl:if test="not($responseRoot=$DeleteSensorRootElementName)">
+							<xsl:if test="not($responseRoot=$InsertObservationRootElementName)">
 								<ctl:message>FAILURE:  The root element from the response to a InsertObservation request "<xsl:value-of select="$responseRoot" />" does not match the expected root element of "<xsl:value-of select="$InsertObservationRootElementName" />"</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 							<!-- 1.response has one and only one observation -->
-							<xsl:variable name="observationCount" select="count($InsertObservationResponse//sos:observation))" />
-							<xsl:if test="not($deletedProcedureCount=1)">
+							<xsl:variable name="observationCount" select="count($InsertObservationResponse//sos:observation)" />
+							<xsl:if test="not($observationCount=1)">
 								<ctl:message>FAILURE:  The count of sos:observation "<xsl:value-of select="$observationCount" />" must be 1.</ctl:message>
 								<ctl:fail />
 							</xsl:if>
@@ -15649,8 +15651,6 @@
 			<ctl:param name="test1207" />
 			<ctl:param name="test1208" />
 			<ctl:param name="test1209" />
-			<ctl:param name="test1208" />
-			<ctl:param name="test1209" />
 			<ctl:param name="test1210" />
 			<ctl:param name="test1211" />
 			<ctl:assertion>Execute InsertResultTemplate Test.</ctl:assertion>
@@ -15672,7 +15672,7 @@
 						<!-- get a valid featureOfInterest From GetObservation-->
 						<xsl:variable name="getObservationResponse">
 							<xsl:choose>
-								<xsl:when test="($isGetObservationGET)">
+								<xsl:when test="($isGetObservationGET eq 'true')">
 									<ctl:request>
 										<ctl:url>
 											<xsl:value-of select="$GetObservationURL"/>
@@ -15750,7 +15750,7 @@
 								</xsl:otherwise>
 							</xsl:choose>
 						</xsl:variable>
-						<xsl:variable name="featureOfInterest" select="$getObservationResponse//om:featureOfInterest[1]/@href" />
+						<xsl:variable name="featureOfInterest" select="$getObservationResponse//om:featureOfInterest[1]/@xlink:href" />
 
 						<xsl:if test="$test1101 eq 'true'">
 							<ctl:message select="'******************** 11.01.RequestNoService ********************'"/>
@@ -15892,8 +15892,6 @@
 								<ctl:with-param name="test1205" select="$test1205"/>
 								<ctl:with-param name="test1206" select="$test1206"/>
 								<ctl:with-param name="test1207" select="$test1207"/>
-								<ctl:with-param name="test1208" select="$test1208"/>
-								<ctl:with-param name="test1209" select="$test1209"/>
 								<ctl:with-param name="test1208" select="$test1208"/>
 								<ctl:with-param name="test1209" select="$test1209"/>
 								<ctl:with-param name="test1210" select="$test1210"/>
@@ -17341,8 +17339,6 @@
 			<ctl:param name="test1207" />
 			<ctl:param name="test1208" />
 			<ctl:param name="test1209" />
-			<ctl:param name="test1208" />
-			<ctl:param name="test1209" />
 			<ctl:param name="test1210" />
 			<ctl:param name="test1211" />
 			<ctl:assertion>Send a valid request ,and there must be have a valid InsertResultTemplateResponse returned. </ctl:assertion>
@@ -17556,8 +17552,6 @@
 								<ctl:with-param name="test1205" select="$test1205"/>
 								<ctl:with-param name="test1206" select="$test1206"/>
 								<ctl:with-param name="test1207" select="$test1207"/>
-								<ctl:with-param name="test1208" select="$test1208"/>
-								<ctl:with-param name="test1209" select="$test1209"/>
 								<ctl:with-param name="test1208" select="$test1208"/>
 								<ctl:with-param name="test1209" select="$test1209"/>
 								<ctl:with-param name="test1210" select="$test1210"/>
@@ -18946,7 +18940,7 @@
 								<ctl:fail />
 							</xsl:if>
 							<!-- 1.response has one and only one observation -->
-							<xsl:variable name="innerTag" select="count($InsertResultResponse/sos:InsertResultResponse/*[1])" />
+							<xsl:variable name="innerTag" select="ount($InsertResultResponse/sos:InsertResultResponse/*[1])" />
 							<xsl:if test="not($innerTag=0)">
 								<ctl:message>FAILURE:  The response should be empty.</ctl:message>
 								<ctl:fail />
