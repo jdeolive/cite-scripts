@@ -52,7 +52,7 @@
 			<ctl:message>GetCapabilities by GET or POST.  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root element matches the provided root element.</ctl:message>
 			<xsl:variable name="request1">
 				<xsl:choose>
-					<xsl:when test="($isGET)">
+					<xsl:when test="$isGET eq 'true'">
 						<ctl:request>
 							<ctl:url>
 								<xsl:value-of select="$serviceURL"/>
@@ -71,7 +71,7 @@
 							</parsers:XMLValidatingParser>
 						</ctl:request>
 					</xsl:when>
-					<xsl:when test="($isSOAP)">
+					<xsl:when test="($isSOAP eq 'true')">
 						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$serviceURL"/>
@@ -320,7 +320,7 @@
 			<ctl:message select="concat('Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root document matches the root element name; (3) the response Content-Type header must be &quot;', $expectedContentType, '&quot; for XML entities.')"/>
 			<xsl:variable name="request1">
 				<xsl:choose>
-					<xsl:when test="($isGET)">
+					<xsl:when test="($isGET eq 'true')">
 						<ctl:request>
 							<ctl:url>
 								<xsl:value-of select="$serviceURL"/>
@@ -330,7 +330,7 @@
 							<parsers:HTTPParser/>
 						</ctl:request>
 					</xsl:when>
-					<xsl:when test="($isSOAP)">
+					<xsl:when test="($isSOAP eq 'true')">
 						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$serviceURL"/>
@@ -366,25 +366,16 @@
 					<ctl:fail/>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:variable name="request1Root" select="local-name-from-QName(node-name($request1/response/content/*[1]))" />
-					<xsl:choose>
-						<xsl:when test="not($request1Root=$rootElementName)">
-							<ctl:message>FAILURE:  The root element from the response to a GetCapabilities request "<xsl:value-of select="$request1Root" />" does not match the expected root element of "<xsl:value-of select="$rootElementName" />"</ctl:message>
-							<ctl:fail />
-						</xsl:when>
-						<xsl:otherwise>
-							<xsl:variable name="content-type" select="$request1/response/headers/header[@name='Content-Type']"/>
-							<xsl:variable name="isValidMIMEType">
-								<ctl:call-function name="owsFunctions:isValidMIMETypeFormat">
-									<ctl:with-param name="responseFormat" select="$content-type" />
-								</ctl:call-function>
-							</xsl:variable>
-							<xsl:if test="not(starts-with($content-type,$expectedContentType)) and not(xsd:boolean($isValidMIMEType))">
-								<ctl:message>FAILURE: Incorrect response encoding.  "<xsl:value-of select="$expectedContentType" />" was expected, but "<xsl:value-of select="$content-type" />" was returned instead.</ctl:message>
-								<ctl:fail/>
-							</xsl:if>
-						</xsl:otherwise>
-					</xsl:choose>
+					<xsl:variable name="content-type" select="$request1//response/headers/header[@name='Content-Type']"/>
+					<xsl:variable name="isValidMIMEType">
+						<ctl:call-function name="owsFunctions:isValidMIMETypeFormat">
+							<ctl:with-param name="responseFormat" select="$content-type" />
+						</ctl:call-function>
+					</xsl:variable>
+					<xsl:if test="not(starts-with($content-type,$expectedContentType)) and not(xsd:boolean($isValidMIMEType))">
+						<ctl:message>FAILURE: Incorrect response encoding.  "<xsl:value-of select="$expectedContentType" />" was expected, but "<xsl:value-of select="$content-type" />" was returned instead.</ctl:message>
+						<ctl:fail/>
+					</xsl:if>
 				</xsl:otherwise>
 			</xsl:choose>			
 		</ctl:code>
@@ -407,7 +398,7 @@
 			<ctl:message select="concat('Service parameter: ', 'ASDF')"/>
 			<xsl:variable name="response">
 				<xsl:choose>
-					<xsl:when test="($isGET)">
+					<xsl:when test="($isGET eq 'true')">
 						<ctl:request>
 							<ctl:url>
 								<xsl:value-of select="$serviceURL"/>
@@ -426,7 +417,7 @@
 							</parsers:XMLValidatingParser>
 						</ctl:request>
 					</xsl:when>
-					<xsl:when test="($isSOAP)">
+					<xsl:when test="($isSOAP eq 'true')">
 						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$serviceURL"/>
@@ -517,7 +508,7 @@
 			<ctl:message select="concat('UpdateSequence parameter: ', '9999999999')"/>
 			<xsl:variable name="request1">
 				<xsl:choose>
-					<xsl:when test="($isGET)">
+					<xsl:when test="($isGET eq 'true')">
 						<ctl:request>
 							<ctl:url>
 								<xsl:value-of select="$serviceURL"/>
@@ -537,7 +528,7 @@
 							</parsers:XMLValidatingParser>
 						</ctl:request>
 					</xsl:when>
-					<xsl:when test="($isSOAP)">
+					<xsl:when test="($isSOAP eq 'true')">
 						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$serviceURL"/>
@@ -625,7 +616,7 @@
 		<ctl:link>OGC 05-008c1, 7.4.1, p.19</ctl:link>
 		<ctl:code>
 			<xsl:choose>
-				<xsl:when test="($isGET)">
+				<xsl:when test="($isGET eq 'true')">
 					<ctl:message>GetCapabilities with an incorrect KVP query string, triggering the missing parameter value exception.  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root document is an ows:ExceptionReport document; (3) the ExceptionReport shall have the &quot;MissingParameterValue&quot; exception code, for both the request and service.</ctl:message>
 					<!--<xsl:variable name="invalidQueryString" select="concat($serviceURL,'?request~GetCapabilities!service~!',$serviceType,'version~',$serviceVersion)"/> No version parameter for GetCapabilities in Specification fix by rocky 2012/05/10-->
 					<xsl:variable name="invalidQueryString" select="concat($serviceURL,'?request~GetCapabilities!service~!',$serviceType)"/>
@@ -700,7 +691,7 @@
 		<ctl:link>OGC 05-008c1, 11.5.2, p.56</ctl:link>
 		<ctl:code>		
 			<xsl:choose>
-				<xsl:when test="($isGET)">
+				<xsl:when test="($isGET eq 'true')">
 					<ctl:message>GetCapabilities with the KVP parameter names in all uppercase.  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root element matches the provided root element.</ctl:message>
 					<!--Request with all caps parameter keys-->
 					<ctl:message>Executing a GetCapabilities request with upper-case parameter names...</ctl:message>
@@ -812,7 +803,7 @@
 			<ctl:message select="concat('GetCapabilities with no version and service of &quot;', $serviceType, '&quot;.  Without AcceptVersion, using version negotiation, sends latest copy.  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root document is an ows:OWS_Capabilities document; (3) the response version must be what was requested')"/>
 			<xsl:variable name="request1">
 				<xsl:choose>
-					<xsl:when test="($isGET)">
+					<xsl:when test="($isGET eq 'true')">
 						<ctl:request>
 							<ctl:url>
 								<xsl:value-of select="$serviceURL"/>
@@ -831,7 +822,7 @@
 							</parsers:XMLValidatingParser>
 						</ctl:request>
 					</xsl:when>
-					<xsl:when test="($isSOAP)">
+					<xsl:when test="($isSOAP eq 'true')">
 						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$serviceURL"/>
@@ -921,7 +912,7 @@
 			<ctl:message select="concat('GetCapabilities with no version and service of &quot;', $serviceType, '&quot;.  With AcceptVersion, expecting one of the versions listed $acceptVersions.  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root document is an ows:OWS_Capabilities document; (3) the response version must be what was requested. The AcceptVersion element is used with a number of versions, one is expected to return (''1.1.0'').')"/>
 			<xsl:variable name="request1">
 				<xsl:choose>
-					<xsl:when test="($isGET)">
+					<xsl:when test="($isGET eq 'true')">
 						<ctl:request>
 							<ctl:url>
 								<xsl:value-of select="$serviceURL"/>
@@ -941,7 +932,7 @@
 							</parsers:XMLValidatingParser>
 						</ctl:request>
 					</xsl:when>
-					<xsl:when test="($isSOAP)">
+					<xsl:when test="($isSOAP eq 'true')">
 						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$serviceURL"/>
@@ -1039,7 +1030,7 @@
 			<ctl:message select="concat('GetCapabilities with no version and service of &quot;', $serviceType, '&quot;.  With AcceptVersion, using a bogus version number (2000-01-01).  Pass if all of the following conditions are true: (1) the response is schema valid; (2) the root document is an ows:ExceptionReport document; (3) the ExceptionReport shall have the &quot;VersionNegotiationFailed&quot; exception code.')"/>
 			<xsl:variable name="request1">
 				<xsl:choose>
-					<xsl:when test="($isGET)">
+					<xsl:when test="($isGET eq 'true')">
 						<ctl:request>
 							<ctl:url>
 								<xsl:value-of select="$serviceURL"/>
@@ -1059,7 +1050,7 @@
 							</parsers:XMLValidatingParser>
 						</ctl:request>
 					</xsl:when>
-					<xsl:when test="($isSOAP)">
+					<xsl:when test="($isSOAP eq 'true')">
 						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$serviceURL"/>
@@ -1160,7 +1151,7 @@
 			<ctl:message select="concat('Service parameter: ', $serviceType)"/>
 			<xsl:variable name="response">
 				<xsl:choose>
-					<xsl:when test="($isGET)">
+					<xsl:when test="($isGET eq 'true')">
 						<ctl:request>
 							<ctl:url>
 								<xsl:value-of select="$serviceURL"/>
@@ -1180,7 +1171,7 @@
 							</parsers:XMLValidatingParser>
 						</ctl:request>
 					</xsl:when>
-					<xsl:when test="($isSOAP)">
+					<xsl:when test="($isSOAP eq 'true')">
 						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$serviceURL"/>
@@ -1281,7 +1272,7 @@
 			<ctl:message select="concat('Sections parameter: ', 'ServiceIdentification,OperationsMetadata')"/>			
 			<xsl:variable name="response">
 				<xsl:choose>
-					<xsl:when test="($isGET)">
+					<xsl:when test="($isGET eq 'true')">
 						<ctl:request>
 							<ctl:url>
 								<xsl:value-of select="$serviceURL"/>
@@ -1300,7 +1291,7 @@
 							</parsers:XMLValidatingParser>
 						</ctl:request>
 					</xsl:when>
-					<xsl:when test="($isSOAP)">
+					<xsl:when test="($isSOAP eq 'true')">
 						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
 								<xsl:value-of select="$serviceURL"/>
@@ -1398,7 +1389,7 @@
 				<ctl:message select="concat('AcceptsFormats parameter: ', $format)"/>			
 				<xsl:variable name="response">
 					<xsl:choose>
-						<xsl:when test="($isGET)">
+						<xsl:when test="($isGET eq 'true')">
 							<ctl:request>
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>
@@ -1414,7 +1405,7 @@
 								</parsers:HTTPParser>
 							</ctl:request>
 						</xsl:when>
-						<xsl:when test="($isSOAP)">
+						<xsl:when test="($isSOAP eq 'true')">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
 									<xsl:value-of select="$serviceURL"/>

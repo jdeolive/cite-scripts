@@ -1662,48 +1662,26 @@
                     1.)  Validate the response against the ExceptionReport schema.
                     2.)  If the response validates, then check that the exceptionCode value is "InvalidRequest".
                 -->
-				<xsl:if test="$isGet eq 'true'">
+				<xsl:if test="$isGET eq 'true'">
 					<ctl:message select="'This test does not support KVP type request,so passed.'"/>
-					
 				</xsl:if>
-				<xsl:if test="not($isGet eq 'true')">
-
+				<xsl:if test="$isSOAP eq 'true'">
+					<ctl:message select="'This server cannot send soap request which body is only &quot;test&quot;,so passed.'"/>
+				</xsl:if>
+				<xsl:if test="not($isGET eq 'true') and not($isSOAP eq 'true')">
 					<ctl:message>Issuing an invalid request to:  <xsl:value-of select="$serviceURL" /></ctl:message>		     
 					<ctl:message select="'The body of the request will be &quot;test&quot;'"/>
 					<xsl:variable name="invalidRequestResponse">
-						<xsl:choose>
-							<xsl:when test="$isSOAP eq 'true'">
-								<ctl:soap-request version="1.2" charset="UTF-8">
-									<ctl:url>
-										<xsl:value-of select="$serviceURL"/>
-									</ctl:url>
-									<ctl:body>test</ctl:body>
-									<parsers:SOAPParser return="content">
-										<parsers:XMLValidatingParser>
-											<parsers:schemas>
-												<parsers:schema>
-													<xsl:attribute name="type"><xsl:value-of select="'resource'" /></xsl:attribute>
-													<xsl:value-of select="$exceptionReportSchema" />
-												</parsers:schema>
-											</parsers:schemas>
-										</parsers:XMLValidatingParser>
-									</parsers:SOAPParser>
-								</ctl:soap-request>
-							</xsl:when>
-							<xsl:otherwise>
-								<ctl:request>
-									<ctl:url>
-										<xsl:value-of select="$serviceURL" />
-									</ctl:url>
-									<ctl:method>post</ctl:method>
-									<ctl:body>test</ctl:body>
-									<ctl:call-function name="sosFunctions:xmlValidatingParser">	
-										<ctl:with-param name="schemaFile" select="$exceptionReportSchema"/>
-									</ctl:call-function>
-								</ctl:request>
-							</xsl:otherwise>
-						</xsl:choose>
-						
+						<ctl:request>
+							<ctl:url>
+								<xsl:value-of select="$serviceURL" />
+							</ctl:url>
+							<ctl:method>post</ctl:method>
+							<ctl:body>test</ctl:body>
+							<ctl:call-function name="sosFunctions:xmlValidatingParser">	
+								<ctl:with-param name="schemaFile" select="$exceptionReportSchema"/>
+							</ctl:call-function>
+						</ctl:request>
 					</xsl:variable>        
 					<xsl:choose>
 						<xsl:when test="not($invalidRequestResponse/*)">
@@ -3646,7 +3624,7 @@
 									<ctl:param name="version"><xsl:value-of select="string('2.0.0')" /></ctl:param>
 									<ctl:param name="procedure"><xsl:value-of select="$procedure" /></ctl:param>
 									<ctl:param name="procedureDescriptionFormat"><xsl:value-of select="$procedureDescriptionFormat" /></ctl:param>
-									<ctl:call-function name="sosFunctions:validateExceptionReport" />
+									<ctl:call-function name="sosFunctions:validateDescribeSensorResponse" />
 								</ctl:request>
 							</xsl:when>
 							<xsl:when test="$isSOAP eq 'true'">
@@ -3660,7 +3638,7 @@
 											<swes:procedureDescriptionFormat><xsl:value-of select="$procedureDescriptionFormat" /></swes:procedureDescriptionFormat>
 										</swes:DescribeSensor>
 									</ctl:body>
-									<ctl:call-function name="sosFunctions:validateDescribeSensorResponseNoExceptionReportSOAP" />
+									<ctl:call-function name="sosFunctions:validateDescribeSensorResponseSOAP" />
 								</ctl:soap-request>
 							</xsl:when>
 							<xsl:otherwise>
@@ -3675,7 +3653,7 @@
 											<swes:procedureDescriptionFormat><xsl:value-of select="$procedureDescriptionFormat" /></swes:procedureDescriptionFormat>
 										</swes:DescribeSensor>
 									</ctl:body>
-									<ctl:call-function name="sosFunctions:validateDescribeSensorResponseNoExceptionReport" />
+									<ctl:call-function name="sosFunctions:validateDescribeSensorResponse" />
 								</ctl:request>
 							</xsl:otherwise>
 						</xsl:choose>
@@ -6261,7 +6239,7 @@
 										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
 										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" ></sos:GetObservation>
 								</ctl:body>
-								<ctl:call-function name="sosFunctions:validateGetCapabilitiesResponseSOAP" />
+								<ctl:call-function name="sosFunctions:validateGetObservationResponseSOAP" />
 							</ctl:soap-request>
 						</xsl:when>
 						<xsl:otherwise>
@@ -21931,7 +21909,7 @@
 										<sos:temporalFilter>
 											<fes:During>
 												<fes:ValueReference>om:phenomenonTime</fes:ValueReference>
-												<gml:TimePeriod>
+												<gml:TimePeriod gml:id="TimePeriod">
 													<gml:beginPosition>40000-01-10T10:00:00Z</gml:beginPosition>
 													<gml:endPosition>40000-01-10T11:00:00Z</gml:endPosition>
 												</gml:TimePeriod>
@@ -21967,7 +21945,7 @@
 										<sos:temporalFilter>
 											<fes:During>
 												<fes:ValueReference>om:phenomenonTime</fes:ValueReference>
-												<gml:TimePeriod>
+												<gml:TimePeriod gml:id="TimePeriod">
 													<gml:beginPosition>40000-01-10T10:00:00Z</gml:beginPosition>
 													<gml:endPosition>40000-01-10T11:00:00Z</gml:endPosition>
 												</gml:TimePeriod>
@@ -22002,9 +21980,9 @@
 								<ctl:fail />
 							</xsl:if>
 							<!-- check the response is empty -->
-							<xsl:variable name="ifResponseIsEmpty" select="count($GetResultResponse/*[1]/*[1]) = 0" />
+							<xsl:variable name="ifResponseIsEmpty" select="count($GetResultResponse/*[1]/*[1][text()]) = 0" />
 							<xsl:if test="not($ifResponseIsEmpty)">
-								<ctl:message>FAILURE:  The root element from the response to a GetResult request "<xsl:value-of select="$responseRoot" />" does not match the expected root element of "<xsl:value-of select="$GetResultRootElementName" />"</ctl:message>
+								<ctl:message>FAILURE:  The response to a GetResult request "<xsl:value-of select="$responseRoot" />" is not empty.</ctl:message>
 								<ctl:fail />
 							</xsl:if>
 						</xsl:if>
@@ -22259,6 +22237,64 @@
 			</parsers:XMLValidatingParser>
         </ctl:code>
     </ctl:function>
+	
+	<ctl:function name="sosFunctions:validateGetObservationResponseSOAP">
+        <ctl:return>The GetCapabilitiesResponse document if it's valid</ctl:return>
+        <ctl:description>Validates a GetCapabilitiesResponse document according to its schema</ctl:description>
+        <ctl:code>
+			<parsers:SOAPParser return="content">
+				<parsers:XMLValidatingParser>
+					<parsers:schemas>
+						<parsers:schema type="resource">
+							<xsl:value-of select="sosFunctions:getSchemaLocation(string('sosGetObservation.xsd'))" />
+						</parsers:schema>
+						<parsers:schema type="resource">
+							<xsl:value-of select="sosFunctions:getSchemaLocation(string('owsExceptionReport.xsd'))" />
+						</parsers:schema>
+					</parsers:schemas>
+				</parsers:XMLValidatingParser>
+			</parsers:SOAPParser>
+        </ctl:code>
+    </ctl:function>
+	
+	<!--Validates a DescribeSensor response-->
+    <ctl:function name="sosFunctions:validateDescribeSensorResponse">
+        <ctl:return>The GetObservationResponse document if it's valid</ctl:return>
+        <ctl:description>Validates a GetObservationResponse document according to its schema</ctl:description>
+        <ctl:code>
+			<parsers:XMLValidatingParser>
+				<parsers:schemas>
+					<parsers:schema type="resource">
+						<xsl:value-of select="sosFunctions:getSchemaLocation(string('swesDescribeSensor.xsd'))" />
+					</parsers:schema>
+					<parsers:schema type="resource">
+						<xsl:value-of select="sosFunctions:getSchemaLocation(string('owsExceptionReport.xsd'))" />
+					</parsers:schema>
+				</parsers:schemas>
+			</parsers:XMLValidatingParser>
+        </ctl:code>
+    </ctl:function>
+	
+	<ctl:function name="sosFunctions:validateDescribeSensorResponseSOAP">
+        <ctl:return>The GetCapabilitiesResponse document if it's valid</ctl:return>
+        <ctl:description>Validates a GetCapabilitiesResponse document according to its schema</ctl:description>
+        <ctl:code>
+			<parsers:SOAPParser return="content">
+				<parsers:XMLValidatingParser>
+					<parsers:schemas>
+						<parsers:schema type="resource">
+							<xsl:value-of select="sosFunctions:getSchemaLocation(string('swesDescribeSensor.xsd'))" />
+						</parsers:schema>
+						<parsers:schema type="resource">
+							<xsl:value-of select="sosFunctions:getSchemaLocation(string('owsExceptionReport.xsd'))" />
+						</parsers:schema>
+					</parsers:schemas>
+				</parsers:XMLValidatingParser>
+			</parsers:SOAPParser>
+        </ctl:code>
+    </ctl:function>
+	
+	
 	</ctl:package>
 
 </ctl:package>
