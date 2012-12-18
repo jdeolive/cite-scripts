@@ -13,12 +13,15 @@
    namespace georss="http://www.georss.org/georss" 
    namespace atom = "http://www.w3.org/2005/Atom"
    
+   
+   
    # Redefine atom:feed to include new owc and dc elements
    atomFeedConstruct &=
                      owcDisplay?
                      & element dc:publisher { text }
                      & element dc:date { atomDateConstruct }?
-                     & element georss:where { anyElement }?                    
+                     & element georss:where { anyElement }?
+                    
                      
    # Redefine atom:entry to include new owc and dc elements
    atomEntryConstruct &= owcOffering?  
@@ -27,6 +30,7 @@
                       & element georss:where { anyElement }?
                       & element owc:minScaleDenominator { xsd:float }?
                       & element owc:maxScaleDenominator { xsd:float }?
+                      
 
    # owc:offering  
    owcOffering = element owc:offering {
@@ -34,7 +38,8 @@
          (owcOperation*
           & owcContent*
           & owcStyleSet*
-          & extensionElement*)
+          & extensionElement*
+          )
       }
       
    # owcOperation 
@@ -45,7 +50,8 @@
       attribute href { text },
       (owcPayload?
       & owcResult?
-      & extensionElement*)
+      & extensionElement*
+      )
    } 
    
    # owcPayload 
@@ -74,7 +80,8 @@
        & element owc:legendURL { attribute type { text },
        				attribute href { text } }?
        & element owc:content { owcContent }?
-       & extensionElement*)
+       & extensionElement*
+       )
    }   	   
    
    # owc:display  

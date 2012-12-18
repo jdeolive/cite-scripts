@@ -1,7 +1,5 @@
 # -*- rnc -*-
-   # RELAX NG Compact Syntax Grammar for the
-   # OGC Context Conformance Test Classes (OGC 12-084)
-   # Auxiliar Conformance Test Class for GEORSS 
+   # RELAX NG Compact Syntax Grammar for the GEORSS 
    # This defines the conformance to the rules of GEORSS
    
    # Copyright 2012 Terradue Srl.
@@ -17,48 +15,33 @@
    
    namespace georss="http://www.georss.org/georss" 
    namespace gml="http://www.opengis.net/gml"
-
-   start = georssWhere
    
-     georssWhere = 
-		element georss:where {
-			gmlElement
-		}
-	   	
-   anyElement =
-      element * {
-         (attribute * { text }
-          | text
-          | anyElement)*
-      }
-
-      
+   georssWhere = element georss:where { gmlElement }
+	   	      
    gmlElement = (gmlPointElement | gmlLineStringElement | gmlPolygonElement | gmlEnvelopeElement )
       
    gmlPointElement = 
       element gml:Point { 
-	      element gml:*  {
-		      text
-	      }
+        element gml:pos  { list { xsd:decimal, xsd:decimal }}
       }
    
    gmlLineStringElement = 
       element gml:LineString { 
-	      element gml:*  {
-		      text
-	      }
+      	element gml:posList  { list { (xsd:decimal, xsd:decimal)+ }}
       }
-       
+
+	      
    gmlPolygonElement = 
       element gml:Polygon { 
-	      element gml:*  {
-		      text
-	      }
-      }
+        element gml:exterior  { 
+          element gml:LinearRing {
+            element gml:posList  { list { (xsd:decimal, xsd:decimal)+ }}}}
+      }  	      
+
+      
    gmlEnvelopeElement = 
       element  gml:Envelope { 
-	      element gml:*  {
-		      text
-	      }
-      }   
-
+	      element gml:lowerCorner { list { xsd:decimal, xsd:decimal } }
+	      & element gml:upperCorner { list { xsd:decimal, xsd:decimal } } 
+      }    
+	      

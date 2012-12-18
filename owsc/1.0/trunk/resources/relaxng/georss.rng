@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   -*- rnc -*-
-  RELAX NG Compact Syntax Grammar for the
-  OGC Context Conformance Test Classes (OGC 12-084)
-  Auxiliar Conformance Test Class for GEORSS 
+  RELAX NG Compact Syntax Grammar for the GEORSS 
   This defines the conformance to the rules of GEORSS
 -->
 <!--
@@ -18,27 +16,10 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<grammar ns="http://www.opengis.net/gml" xmlns:georss="http://www.georss.org/georss" xmlns:gml="http://www.opengis.net/gml" xmlns="http://relaxng.org/ns/structure/1.0">
-  <start>
-    <ref name="georssWhere"/>
-  </start>
+<grammar xmlns:georss="http://www.georss.org/georss" xmlns:gml="http://www.opengis.net/gml" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <define name="georssWhere">
     <element name="georss:where">
       <ref name="gmlElement"/>
-    </element>
-  </define>
-  <define name="anyElement">
-    <element>
-      <anyName/>
-      <zeroOrMore>
-        <choice>
-          <attribute>
-            <anyName/>
-          </attribute>
-          <text/>
-          <ref name="anyElement"/>
-        </choice>
-      </zeroOrMore>
     </element>
   </define>
   <define name="gmlElement">
@@ -51,34 +32,58 @@
   </define>
   <define name="gmlPointElement">
     <element name="gml:Point">
-      <element>
-        <nsName/>
-        <text/>
+      <element name="gml:pos">
+        <list>
+          <data type="decimal"/>
+          <data type="decimal"/>
+        </list>
       </element>
     </element>
   </define>
   <define name="gmlLineStringElement">
     <element name="gml:LineString">
-      <element>
-        <nsName/>
-        <text/>
+      <element name="gml:posList">
+        <list>
+          <oneOrMore>
+            <data type="decimal"/>
+            <data type="decimal"/>
+          </oneOrMore>
+        </list>
       </element>
     </element>
   </define>
   <define name="gmlPolygonElement">
     <element name="gml:Polygon">
-      <element>
-        <nsName/>
-        <text/>
+      <element name="gml:exterior">
+        <element name="gml:LinearRing">
+          <element name="gml:posList">
+            <list>
+              <oneOrMore>
+                <data type="decimal"/>
+                <data type="decimal"/>
+              </oneOrMore>
+            </list>
+          </element>
+        </element>
       </element>
     </element>
   </define>
   <define name="gmlEnvelopeElement">
     <element name="gml:Envelope">
-      <element>
-        <nsName/>
-        <text/>
-      </element>
+      <interleave>
+        <element name="gml:lowerCorner">
+          <list>
+            <data type="decimal"/>
+            <data type="decimal"/>
+          </list>
+        </element>
+        <element name="gml:upperCorner">
+          <list>
+            <data type="decimal"/>
+            <data type="decimal"/>
+          </list>
+        </element>
+      </interleave>
     </element>
   </define>
 </grammar>

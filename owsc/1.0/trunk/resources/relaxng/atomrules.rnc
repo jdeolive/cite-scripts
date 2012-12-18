@@ -72,7 +72,7 @@
       	 s:rule [
 	    context = "atom:entry"
 	    s:assert [
-	       test = "atom:content"
+	       test = "atom:content"		
 	       "An atom:entry must have one atom:content MUST define a generic "
 	       ~ "description of the content in a format understandable by mass "
 	       ~ "market generic atom readers. Type equal to 'html' is recommended."
