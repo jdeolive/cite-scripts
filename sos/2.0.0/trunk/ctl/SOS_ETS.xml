@@ -8019,7 +8019,7 @@
 								<ctl:param name="service">SOS</ctl:param>	
 								<ctl:param name="version">2.0.0</ctl:param>	
 								<ctl:param name="request">GetFeatureOfInterest</ctl:param>	
-								<ctl:param name="spatialFilter">,0.0,10,0,0.0,10.0,urn:ogc:def:crs:EPSG::4326</ctl:param>								
+								<ctl:param name="spatialFilter">,0.0,10.0,0.0,10.0,urn:ogc:def:crs:EPSG::4326</ctl:param>								
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
@@ -8029,17 +8029,19 @@
 									<xsl:value-of select="$serviceURL"/>
 								</ctl:url>
 								<ctl:body>
-									<sos:GetFeatureOfInterest service="SOS" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+									<sos:GetFeatureOfInterest service="SOS" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:gml="http://www.opengis.net/gml/3.2"
+										xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fes="http://www.opengis.net/fes/2.0"
 										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
 										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
 										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
 										<sos:spatialFilter>
-											<fes:Intersects>
+											<fes:BBOX>
 												<fes:ValueReference></fes:ValueReference>
-												<gml:Point gml:id="point1" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
-												<gml:pos>0.0 10.0</gml:pos>
-												</gml:Point>
-											</fes:Intersects>
+												<gml:Envelope srsName="urn:ogc:def:crs:EPSG::4326">
+													<gml:lowerCorner>0.0 0.0</gml:lowerCorner>
+													<gml:upperCorner>10.0 10.0</gml:upperCorner>
+												</gml:Envelope>
+											</fes:BBOX>
 										</sos:spatialFilter>
 									</sos:GetFeatureOfInterest>
 								</ctl:body>
@@ -8053,16 +8055,18 @@
 								</ctl:url>
 								<ctl:method>post</ctl:method>
 								<ctl:body>
-									<sos:GetFeatureOfInterest service="SOS" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+									<sos:GetFeatureOfInterest service="SOS" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:gml="http://www.opengis.net/gml/3.2"
+										xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fes="http://www.opengis.net/fes/2.0"
 										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
 										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd" >
 										<sos:spatialFilter>
-											<fes:Intersects>
+											<fes:BBOX>
 												<fes:ValueReference></fes:ValueReference>
-												<gml:Point gml:id="point1" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
-												<gml:pos>0.0 10.0</gml:pos>
-												</gml:Point>
-											</fes:Intersects>
+												<gml:Envelope srsName="urn:ogc:def:crs:EPSG::4326">
+													<gml:lowerCorner>0.0 0.0</gml:lowerCorner>
+													<gml:upperCorner>10.0 10.0</gml:upperCorner>
+												</gml:Envelope>
+											</fes:BBOX>
 										</sos:spatialFilter>
 									</sos:GetFeatureOfInterest>
 								</ctl:body>
@@ -8133,7 +8137,7 @@
 								<ctl:param name="service">SOS</ctl:param>	
 								<ctl:param name="version">2.0.0</ctl:param>	
 								<ctl:param name="request">GetFeatureOfInterest</ctl:param>	
-									<ctl:param name="spatialFilter"><xsl:value-of select="current-dateTime()" />,0.0,10,0,0.0,10.0,urn:ogc:def:crs:EPSG::4326</ctl:param>
+								<ctl:param name="spatialFilter"><xsl:value-of select="current-dateTime()" />,0.0,10.0,0.0,10.0,urn:ogc:def:crs:EPSG::4326</ctl:param>
 								<ctl:call-function name="sosFunctions:validateExceptionReport" />
 							</ctl:request>
 						</xsl:when>
@@ -8143,17 +8147,19 @@
 									<xsl:value-of select="$serviceURL"/>
 								</ctl:url>
 								<ctl:body>
-									<sos:GetFeatureOfInterest service="SOS" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+									<sos:GetFeatureOfInterest service="SOS" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:gml="http://www.opengis.net/gml/3.2"
+										xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fes="http://www.opengis.net/fes/2.0"
 										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
 										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
 										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
 										<sos:spatialFilter>
-											<fes:Intersects>
+											<fes:BBOX>
 												<fes:ValueReference><xsl:value-of select="current-dateTime()" /></fes:ValueReference>
-												<gml:Point gml:id="point1" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
-												<gml:pos>0.0 10,0</gml:pos>
-												</gml:Point>
-											</fes:Intersects>
+												<gml:Envelope srsName="urn:ogc:def:crs:EPSG::4326">
+													<gml:lowerCorner>0.0 0.0</gml:lowerCorner>
+													<gml:upperCorner>10.0 10.0</gml:upperCorner>
+												</gml:Envelope>
+											</fes:BBOX>
 										</sos:spatialFilter>
 									</sos:GetFeatureOfInterest>
 								</ctl:body>
@@ -8167,16 +8173,18 @@
 								</ctl:url>
 								<ctl:method>post</ctl:method>
 								<ctl:body>
-									<sos:GetFeatureOfInterest service="SOS" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+									<sos:GetFeatureOfInterest service="SOS" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:gml="http://www.opengis.net/gml/3.2"
+										xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fes="http://www.opengis.net/fes/2.0"
 										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
 										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd" >
 										<sos:spatialFilter>
-											<fes:Intersects>
+											<fes:BBOX>
 												<fes:ValueReference><xsl:value-of select="current-dateTime()" /></fes:ValueReference>
-												<gml:Point gml:id="point1" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
-												<gml:pos>0.0 10,0</gml:pos>
-												</gml:Point>
-											</fes:Intersects>
+												<gml:Envelope srsName="urn:ogc:def:crs:EPSG::4326">
+													<gml:lowerCorner>0.0 0.0</gml:lowerCorner>
+													<gml:upperCorner>10.0 10.0</gml:upperCorner>
+												</gml:Envelope>
+											</fes:BBOX>
 										</sos:spatialFilter>
 									</sos:GetFeatureOfInterest>
 								</ctl:body>
