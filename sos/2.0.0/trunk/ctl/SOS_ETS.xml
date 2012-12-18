@@ -398,6 +398,8 @@
 			<ctl:message select="concat('which tests: ',$which-tests)"/>
 			<xsl:variable name="isSOAP" select="($request-via eq 'SOAP')"/>
 			<ctl:message select="concat('Is SOAP Binding: ',$isSOAP)"/>
+			<ctl:message>($request-via eq 'GET'): <xsl:value-of select="($request-via eq 'GET')"/>.</ctl:message>
+			<ctl:message>($request-via eq 'POST'): <xsl:value-of select="($request-via eq 'POST')"/>.</ctl:message>
 			<!-- Get capabilities, find url and method(GET or POST) for all operations -->
 			<xsl:variable name="user-capabilities">
 				<xsl:if test="($request-via eq 'GET')">
@@ -8077,6 +8079,7 @@
 					<xsl:otherwise>
 						<xsl:if test="$getFeatureOfInterestResponse/*">
 							<xsl:if test="$isSOAP=string('true')">
+								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfoSOAP($getFeatureOfInterestResponse)" /></ctl:message>
 								<ctl:message>The response was:  <xsl:value-of select="sosFunctions:getExceptionInfoSOAP($getFeatureOfInterestResponse)" /></ctl:message>
 							</xsl:if>
 							<xsl:if test="not($isSOAP=string('true'))">

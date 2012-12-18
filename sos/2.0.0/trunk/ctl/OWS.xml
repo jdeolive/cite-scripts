@@ -475,6 +475,7 @@
 							<ctl:with-param name="exceptionReport" select="$response" />
 							<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidParameterValue')" />
 							<ctl:with-param name="locatorToCheck" select="string('service')" />
+							<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
 						</ctl:call-function>
 					</xsl:variable>
 					<xsl:if test="not(xsd:boolean($isValid))">
@@ -588,6 +589,7 @@
 							<ctl:with-param name="exceptionReport" select="$request1" />
 							<ctl:with-param name="exceptionCodeToCheck" select="string('InvalidUpdateSequence')" />
 							<ctl:with-param name="locatorToCheck" select="string('*')" />
+							<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
 						</ctl:call-function>
 					</xsl:variable>
 					<xsl:if test="not(xsd:boolean($isValid))">
@@ -650,6 +652,7 @@
 									<ctl:with-param name="exceptionReport" select="$request1" />
 									<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 									<ctl:with-param name="locatorToCheck" select="string('service')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="'false'" />
 								</ctl:call-function>
 							</xsl:variable>
 							<xsl:variable name="isValid2">
@@ -657,6 +660,7 @@
 									<ctl:with-param name="exceptionReport" select="$request1" />
 									<ctl:with-param name="exceptionCodeToCheck" select="string('MissingParameterValue')" />
 									<ctl:with-param name="locatorToCheck" select="string('request')" />
+									<ctl:with-param name="PostEncodingIsSOAP" select="'false'" />
 								</ctl:call-function>
 							</xsl:variable>
 							<xsl:if test="not(xsd:boolean($isValid1) or xsd:boolean($isValid2))">
@@ -1038,7 +1042,7 @@
 							<ctl:method>get</ctl:method>
 							<ctl:param name="request">GetCapabilities</ctl:param>				   
 							<ctl:param name="service"><xsl:value-of select="$serviceType" /></ctl:param>
-							<ctl:param name="acceptversions">2000-01-01</ctl:param>
+							<ctl:param name="acceptversions">2000.01.01</ctl:param>
 							<parsers:XMLValidatingParser>
 								<parsers:schemas>
 									<parsers:schema type="resource">xsd/w3c/xml.xsd</parsers:schema>
@@ -1061,7 +1065,7 @@
 									http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
 									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
 									<ows:AcceptVersions>
-										<ows:Version>2000-01-01</ows:Version>
+										<ows:Version>2000.01.01</ows:Version>
 									</ows:AcceptVersions>
 								</sos:GetCapabilities>
 							</ctl:body>
@@ -1088,7 +1092,7 @@
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
 									http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd" >
 									<ows:AcceptVersions>
-										<ows:Version>2000-01-01</ows:Version>
+										<ows:Version>2000.01.01</ows:Version>
 									</ows:AcceptVersions>
 								</sos:GetCapabilities>
 							</ctl:body>
@@ -1116,6 +1120,7 @@
 							<ctl:with-param name="exceptionReport" select="$request1" />
 							<ctl:with-param name="exceptionCodeToCheck" select="string('VersionNegotiationFailed')" />
 							<ctl:with-param name="locatorToCheck" select="string('*')" />
+							<ctl:with-param name="PostEncodingIsSOAP" select="$isSOAP" />
 						</ctl:call-function>
 					</xsl:variable>
 					<xsl:if test="not(xsd:boolean($isValid))">
@@ -1302,7 +1307,8 @@
 									http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
 									xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
 									<ows:Sections>
-										<ows:Section>ServiceIdentification,OperationsMetadata</ows:Section>
+										<ows:Section>ServiceIdentification</ows:Section>
+										<ows:Section>OperationsMetadata</ows:Section>
 									</ows:Sections>
 								</sos:GetCapabilities>
 							</ctl:body>
@@ -1329,7 +1335,8 @@
 									xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
 									http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd" >
 									<ows:Sections>
-										<ows:Section>ServiceIdentification,OperationsMetadata</ows:Section>
+										<ows:Section>ServiceIdentification</ows:Section>
+										<ows:Section>OperationsMetadata</ows:Section>
 									</ows:Sections>
 								</sos:GetCapabilities>
 							</ctl:body>
@@ -1415,9 +1422,9 @@
 										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
 										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
 										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
-										<AcceptFormats>
-											<OutputFormat><xsl:value-of select="$format"/></OutputFormat>
-										</AcceptFormats>
+										<ows:AcceptFormats>
+											<ows:OutputFormat><xsl:value-of select="$format"/></ows:OutputFormat>
+										</ows:AcceptFormats>
 									</sos:GetCapabilities>
 								</ctl:body>
 								<parsers:HTTPParser>
@@ -1437,9 +1444,9 @@
 									<sos:GetCapabilities service="SOS" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
 										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd" >
-										<AcceptFormats>
-											<OutputFormat><xsl:value-of select="$format"/></OutputFormat>
-										</AcceptFormats>
+										<ows:AcceptFormats>
+											<ows:OutputFormat><xsl:value-of select="$format"/></ows:OutputFormat>
+										</ows:AcceptFormats>
 									</sos:GetCapabilities>
 								</ctl:body>
 								<parsers:HTTPParser>
@@ -1477,29 +1484,43 @@
 	<!--===========-->
 
 	<!--Validates an ExceptionReport and checks for specific exceptionCode and locator values-->
-	<ctl:function name="owsFunctions:checkExceptionReport">
-		<ctl:param name="exceptionReport">The exception report to check</ctl:param>
-		<ctl:param name="exceptionCodeToCheck">The exceptionCode to check</ctl:param>
-		<ctl:param name="locatorToCheck">The locator to check (a * can be provided to indicate that any locator value is allowed)</ctl:param>
-		<ctl:return>True/false depending on whether or not the exception report is valid</ctl:return>
-		<ctl:description></ctl:description>
-		<ctl:code>
-
-			<xsl:variable name="exceptionElement" select="owsFunctions:exceptionElement($exceptionReport)" />
-			<xsl:variable name="exceptionCodeValue" select="owsFunctions:exceptionCode($exceptionReport)" />
-			<xsl:variable name="locatorValue" select="owsFunctions:exceptionCodeLocator($exceptionReport)" />		
-
-			<xsl:choose>
-				<xsl:when test="$locatorToCheck='*'">
-					<xsl:value-of select="($exceptionCodeToCheck=string($exceptionCodeValue))" />
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:value-of select="($exceptionCodeToCheck=string($exceptionCodeValue)) and (contains(lower-case(string($locatorToCheck)), lower-case($locatorValue)))" />
-				</xsl:otherwise>
-			</xsl:choose>
-		</ctl:code>
-	</ctl:function>	
-
+	<ctl:function name="owsFunctions:checkExceptionReport"><!-- CHECK OK -->
+        <ctl:param name="exceptionReport">The exception report to check</ctl:param>
+        <ctl:param name="exceptionCodeToCheck">The exceptionCode to check</ctl:param>
+        <ctl:param name="locatorToCheck">The locator to check (a * can be provided to indicate that any locator value is allowed)</ctl:param>
+		<ctl:param name="PostEncodingIsSOAP">Encoding Type</ctl:param>
+        <ctl:return>True/false depending on whether or not the exception report is valid</ctl:return>
+        <ctl:description></ctl:description>
+        <ctl:code>
+			<xsl:if test="$PostEncodingIsSOAP=string('true')">
+				<xsl:variable name="exceptionElement" select="$exceptionReport//soap12:Detail/ows:Exception" />
+				<xsl:variable name="exceptionCodeValue" select="$exceptionElement/@exceptionCode" />
+				<xsl:variable name="locatorValue" select="$exceptionElement/@locator" />
+				<xsl:choose>
+					<xsl:when test="$locatorToCheck='*'">
+						<xsl:value-of select="$exceptionElement and ($exceptionCodeToCheck=$exceptionCodeValue) and (string-length(normalize-space($locatorValue))>=0)" />
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="$exceptionElement and ($exceptionCodeToCheck=$exceptionCodeValue) and (lower-case($locatorToCheck)=lower-case($locatorValue))" />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:if>
+			<xsl:if test="not($PostEncodingIsSOAP=string('true'))">
+				<xsl:variable name="exceptionElement" select="$exceptionReport//ows:ExceptionReport/ows:Exception" />
+				<xsl:variable name="exceptionCodeValue" select="$exceptionElement/@exceptionCode" />
+				<xsl:variable name="locatorValue" select="$exceptionElement/@locator" />
+				<xsl:choose>
+					<xsl:when test="$locatorToCheck='*'">
+						<xsl:value-of select="$exceptionElement and ($exceptionCodeToCheck=$exceptionCodeValue) and (string-length(normalize-space($locatorValue))>=0)" />
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="$exceptionElement and ($exceptionCodeToCheck=$exceptionCodeValue) and (lower-case($locatorToCheck)=lower-case($locatorValue))" />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:if>
+        </ctl:code>
+    </ctl:function>
+	
 	<ctl:function name="owsFunctions:exceptionElement">
 		<ctl:param name="exceptionResponse">The exception repsonse</ctl:param>
 		<ctl:code>
