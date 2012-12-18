@@ -58,7 +58,7 @@
           & atomUpdated
           & dcPublisher?
           #  & external "georss.rnc"?
-         
+          & dcDate?
           & extensionElement*),
          atomEntry*
       }    

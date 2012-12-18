@@ -1,5 +1,10 @@
 <?xml version='1.0' encoding="ISO-8859-1" standalone="no" ?>
-<feed xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:georss="http://www.georss.org/georss" xmlns:gml="http://www.opengis.net/gml" xmlns:owc="http://www.opengis.net/owc" xml:lang="en">
+<feed xmlns="http://www.w3.org/2005/Atom" 
+	xmlns:dc="http://purl.org/dc/elements/1.1/" 
+	xmlns:georss="http://www.georss.org/georss" 
+	xmlns:gml="http://www.opengis.net/gml" 
+	xmlns:owc="http://www.opengis.net/owc/1.0/" 
+	xml:lang="en">
   <title>Satellite Image and Countries borders over France and England and the list of OGC users</title>
   <id>https://github.com/Terradue/trax/tree/master/owc/bin/../examples/meris_borders_users.atom/</id>
   <subtitle type="text">Two WMS layers from different servers giving an operational setting</subtitle>
