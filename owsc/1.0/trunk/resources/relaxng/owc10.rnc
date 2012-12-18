@@ -8,7 +8,7 @@
    namespace dc="http://purl.org/dc/elements/1.1/" 
    namespace georss="http://www.georss.org/georss" 
    namespace atom = "http://www.w3.org/2005/Atom"
-   
+
    # Redefine atom:feed to include new owc and dc elements
    atomFeedConstruct &= owcDisplay? 
        & element dc:publisher { text } 
@@ -25,12 +25,6 @@
 
    # owcContent attribute extensions
    owcCommonAttributes = undefinedAttribute*
-   
-   # georss:where 
-   #georssWhere = anyElement
-   
-   # georss:where 
-   include "georss.rnc"
    
    owcHTTPURL = xsd:string { pattern = "https?://.*"}
    	
@@ -74,6 +68,9 @@
        & extensionElement*
    }   
  
+   # Define georss:where 
+   include "georss.rnc"
+   
    # Replacing definitions on RFC4287 
    include "rfc4287.rnc"{
       # Redefine the Simple Extension to exclude owc:* elements
