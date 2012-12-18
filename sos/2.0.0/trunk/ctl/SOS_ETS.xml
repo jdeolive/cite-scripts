@@ -8259,7 +8259,6 @@
 								<ctl:param name="request">GetFeatureOfInterest</ctl:param>	
 								<ctl:param name="procedure"><xsl:value-of select="$procedure" /></ctl:param>
 								<ctl:param name="observedProperty"><xsl:value-of select="$observableProperty" /></ctl:param>
-								<ctl:param name="featureOfInterest"><xsl:value-of select="$featureOfInterest" /></ctl:param>
 								<ctl:param name="spatialFilter">om:featureOfInterest/*/sams:shape,179,90,179,90,urn:ogc:def:crs:EPSG::4326</ctl:param>
 								<parsers:XMLValidatingParser>
 									<parsers:schemas>
@@ -8284,7 +8283,6 @@
 										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
 										<ctl:param name="procedure"><xsl:value-of select="$procedure" /></ctl:param>
 										<ctl:param name="observedProperty"><xsl:value-of select="$observableProperty" /></ctl:param>
-										<ctl:param name="featureOfInterest"><xsl:value-of select="$featureOfInterest" /></ctl:param>
 										<sos:spatialFilter>
 											<fes:BBOX>
 												<fes:ValueReference>om:featureOfInterest/*/sams:shape</fes:ValueReference>
@@ -8320,7 +8318,6 @@
 										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd" >
 										<ctl:param name="procedure"><xsl:value-of select="$procedure" /></ctl:param>
 										<ctl:param name="observedProperty"><xsl:value-of select="$observableProperty" /></ctl:param>
-										<ctl:param name="featureOfInterest"><xsl:value-of select="$featureOfInterest" /></ctl:param>
 										<sos:spatialFilter>
 											<fes:BBOX>
 												<fes:ValueReference>om:featureOfInterest/*/sams:shape</fes:ValueReference>
@@ -8348,7 +8345,7 @@
 				<!-- 1.root is sos:GetFeatureOfInterestResponse -->
 				<xsl:variable name="Root" select="local-name-from-QName(node-name($getFeatureOfInterestResponse/*[1]))" />
 				<xsl:choose>			
-					<xsl:when test="not($Root=string('getFeatureOfInterestResponse'))">
+					<xsl:when test="not($Root=string('GetFeatureOfInterestResponse'))">
 						<ctl:message>The root element from the response to a GetFeatureOfInterest request "<xsl:value-of select="$Root" />" does not match the expected root element of "<xsl:value-of select="string('GetFeatureOfInterestResponse')" />"</ctl:message>
 						<ctl:fail />
 					</xsl:when>
