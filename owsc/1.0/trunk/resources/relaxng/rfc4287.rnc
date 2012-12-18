@@ -2,6 +2,7 @@
    # RELAX NG Compact Syntax Grammar for the
    # Atom Format Specification Version 11
    # Taken from http://tools.ietf.org/html/rfc4287#page-35
+   # Defined a new constructor for ATOM Feed and Entry
 
    namespace atom = "http://www.w3.org/2005/Atom"
    namespace xhtml = "http://www.w3.org/1999/xhtml"
@@ -47,8 +48,7 @@
       xsd:dateTime
 
    # atom:feed
-
-   atomFeed =
+   atomFeed = 
       [
          s:rule [
             context = "atom:feed"
@@ -59,7 +59,9 @@
             ]
          ]
       ]
-      element atom:feed {
+      element atom:feed { atomFeedConstruct } 
+   
+   atomFeedConstruct =
          atomCommonAttributes,
          (atomAuthor*
           & atomCategory*
@@ -75,11 +77,9 @@
           & atomUpdated
           & extensionElement*),
          atomEntry*
-      }
-
+      
    # atom:entry
-
-   atomEntry =
+   atomEntry = 
       [
          s:rule [
             context = "atom:entry"
@@ -102,7 +102,9 @@
             ]
          ]
       ]
-      element atom:entry {
+      element atom:entry { atomEntryConstruct } 
+   
+   atomEntryConstruct = 
          atomCommonAttributes,
          (atomAuthor*
           & atomCategory*
@@ -117,8 +119,8 @@
           & atomTitle
           & atomUpdated
           & extensionElement*)
-      }
-
+        
+          
    # atom:content
 
    atomInlineTextContent =
