@@ -1,0 +1,126 @@
+# -*- rnc -*-
+   # RELAX NG Compact Syntax Grammar for OGC Context Atom Encoding
+   # A.1 Conformance Test Class Part 1: core 
+   # Conformance to the rules of ATOM according and OWC defined in OGC 12-084 
+   
+   namespace owc = "http://www.opengis.net/owc/1.0"
+   namespace s = "http://www.ascc.net/xml/schematron"
+   namespace dc="http://purl.org/dc/elements/1.1/" 
+   namespace georss="http://www.georss.org/georss" 
+   namespace atom = "http://www.w3.org/2005/Atom"
+   
+   # Redefine atom:feed to include new owc and dc elements
+   atomFeedConstruct &= owcDisplay? 
+       & element dc:publisher { text } 
+       & element dc:date { atomDateConstruct }?
+       & georssWhere ?                    
+                     
+   # Redefine atom:entry to include new owc and dc elements
+   atomEntryConstruct &= owcOffering?  
+       & element dc:publisher { text }? 
+       & element dc:date { atomDateConstruct }?
+       & georssWhere ?
+       & element owc:minScaleDenominator { xsd:float }?
+       & element owc:maxScaleDenominator { xsd:float }?
+
+   # owcContent attribute extensions
+   owcCommonAttributes = undefinedAttribute*
+   
+   # georss:where 
+   #georssWhere = anyElement
+   
+   # georss:where 
+   include "georss.rnc"
+   
+   owcHTTPURL = xsd:string { pattern = "https?://.*"}
+   	
+   # owcOffering 
+   owcOffering = element owc:offering { owcCommonAttributes, 
+      attribute code { text },
+      ( owcOperation* & owcContent* & owcStyleSet* & extensionElement*)}
+      
+   # owcOperation 
+   owcOperation = element owc:operation { owcCommonAttributes, 
+      attribute code { text }, attribute href { owcHTTPURL },
+      attribute type { text }?, 
+      ( ( attribute method {"GET"} & 
+                element owc:result{(extensionElement*)}? 
+                & extensionElement* ) |
+        ( attribute method {"POST"} & 
+                element owc:result{(extensionElement*)}? 
+                & element owc:payload {( extensionElement* )}? 
+                & extensionElement* ) )
+   }
+      
+   # owcContent 
+   owcContent = element owc:content { owcCommonAttributes &
+      ( ( attribute type { text }, attribute href { owcHTTPURL }) |  
+        ( attribute type { text }, ( text | anyElement)* )  )} 
+   
+   # owcStyleSet 
+   owcStyleSet = element owc:styleSet { owcCommonAttributes, 
+      attribute default { "0" | "1" } ?,
+      (element owc:name { text } & element owc:title { text }
+       &element owc:abstract { text }?
+       &element owc:legendURL { attribute type { text },
+       				attribute href { owcHTTPURL } }?
+       &element owc:content { owcContent }? & extensionElement*)}  
+   
+   # owc:display  
+   owcDisplay = element owc:display {      
+      (element owc:pixelWidth { xsd:integer }?
+       & element owc:pixelHeight { xsd:integer }?
+       & element owc:pixelPerMM { xsd:integer }?)
+       & extensionElement*
+   }   
+ 
+   # Replacing definitions on RFC4287 
+   include "rfc4287.rnc"{
+      # Redefine the Simple Extension to exclude owc:* elements
+      simpleExtensionElement = element * - 
+          (atom:* | owc:* | dc:publisher | dc:date |  georss:where) { text }
+
+      # Redefine the Structured Extension to exclude owc:* elements
+      structuredExtensionElement = element * - 
+          (atom:* | owc:* | dc:publisher | dc:date | georss:where) {
+             (attribute * { text }+,(text|anyElement)*)
+           | (attribute * { text }*, (text?, anyElement+, (text|anyElement)*))} 
+
+      # Redefine Atom rules    
+      atomFeed = [
+       s:rule [ context = "atom:feed"
+         s:assert [ test = "atom:author or not(atom:entry[not(atom:author)])"
+           "An atom:feed must have an atom:author unless all "
+           ~ "of its atom:entry children have an atom:author."]]
+      
+       s:rule [ context = "atom:feed"
+         s:assert [ test = 
+           "atom:category[@scheme='http://www.opengis.net/owc/specReference']"
+           "An atom:feed must have an atom:category with the OWC "
+           ~ "specification reference identified with the "
+           ~ "  @scheme='http://www.opengis.net/owc/specReference' "]]
+       ]
+       element atom:feed { atomFeedConstruct }     
+       
+      atomEntry =[
+       s:rule [ context = "atom:entry"
+         s:assert [ test = "atom:content"
+          "An atom:entry must have one atom:content MUST have content "
+          ~ "element in a format understandable by generic Atom readers"
+          ~ " ( @type equal to 'html' is recommended)"]]
+	 
+       s:rule [ context = "atom:entry"
+	 s:assert [ test = "atom:link[@rel='alternate'] "
+            ~ "or atom:link[not(@rel)] or atom:content"
+            "An atom:entry must have at least one atom:link element "
+            ~ "with a rel attribute of 'alternate' or an atom:content."]]
+            
+       s:rule [ context = "atom:entry"
+         s:assert [ test = "atom:author or "
+	       ~ "../atom:author or atom:source/atom:author"
+	       "An atom:entry must have an atom:author "
+	       ~ "if its feed does not."]]
+       ]
+      element atom:entry { atomEntryConstruct } 
+   }
+   # EOF

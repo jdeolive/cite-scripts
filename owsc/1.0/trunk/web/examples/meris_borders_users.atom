@@ -3,7 +3,7 @@
 	xmlns:dc="http://purl.org/dc/elements/1.1/" 
 	xmlns:georss="http://www.georss.org/georss" 
 	xmlns:gml="http://www.opengis.net/gml" 
-	xmlns:owc="http://www.opengis.net/owc/1.0/" 
+	xmlns:owc="http://www.opengis.net/owc/1.0" 
 	xml:lang="en">
   <title>Satellite Image and Countries borders over France and England and the list of OGC users</title>
   <id>https://github.com/Terradue/trax/tree/master/owc/bin/../examples/meris_borders_users.atom/</id>
@@ -78,7 +78,7 @@
 	&lt;p style='font-size:small'&gt;OGC Context CITE Testing XSLT (Extensible Stylesheet Language Transformations) by Terradue Srl.&lt;/p&gt;
 	</content>
   <owc:offering code="http://www.opengis.net/spec/owc/1.0/req/atom/wms">
-    <owc:operation method="GET" code="GetCapabilities" href="http://ows.genesi-dec.eu/geoserver/385d7d71-650a-414b-b8c7-739e2c0b5e76/wms?SERVICE=WMS&amp;SERVICE=WMS&amp;VERSION=1.1.1&amp;REQUEST=GetCapabilitiesVERSION=1.3.0&amp;REQUEST=GetCapabilities"/>
+    <owc:operation method="GET" code="GetCapabilities" href="http://ows.genesi-dec.eu/geoserver/385d7d71-650a-414b-b8c7-739e2c0b5e76/wms?SERVICE=WMS&amp;SERVICE=WMS&amp;VERSION=1.3.0&amp;REQUEST=GetCapabilities"/>
     <owc:operation method="GET" code="GetMap" href="http://ows.genesi-dec.eu/geoserver/385d7d71-650a-414b-b8c7-739e2c0b5e76/wms?SERVICE=WMS&amp;SERVICE=WMS&amp;VERSION=1.1.1&amp;REQUEST=GetMap&amp;BBOX=-2,45,8,55SRS=EPSG:4326&amp;WIDTH=500&amp;HEIGHT=500&amp;LAYERS=385d7d71-650a-414b-b8c7-739e2c0b5e76:MER_RR__2PRLRA20120406_102429_000026213113_00238_52838_0211.N1.tif&amp;FORMAT=image/png&amp;BGCOLOR=0xffffff&amp;TRANSPARENT=TRUE&amp;EXCEPTIONS=application/vnd.ogc.se_xml"/>
     <owc:styleSet>
       <owc:name>raster</owc:name>
@@ -87,7 +87,9 @@
       <owc:legendURL href="http://ows.genesi-dec.eu/geoserver/385d7d71-650a-414b-b8c7-739e2c0b5e76/wms?request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=MER_RR__2PRLRA20120406_102429_000026213113_00238_52838_0211.N1.tif" type="image/png"/>
     </owc:styleSet>
   </owc:offering>
-</entry>
+
+
+  </entry>
 <entry>
   <id>http://nsidc.org/cgi-bin/atlas_north?/</id>
   <title>countries</title>
@@ -197,7 +199,7 @@
 	&lt;p style='font-size:small'&gt;OGC Context CITE Testing XSLT (Extensible Stylesheet Language Transformations) by Terradue Srl.&lt;/p&gt;
 	</content>
   <owc:offering code="http://www.opengis.net/spec/owc/1.0/req/atom/wfs">
-    <owc:operation method="GET" code="GetCapabilities" href="http://meet.opengeospatial.org:8080/geoserver/wfs?SERVICE=WFS&amp;VERSION=1.1.0&amp;REQUEST=GetCapabilitiesVERSION=1.3.0&amp;REQUEST=GetCapabilities"/>
+    <owc:operation method="GET" code="GetCapabilities" href="http://meet.opengeospatial.org:8080/geoserver/wfs?SERVICE=WFS&amp;VERSION=1.3.0&amp;REQUEST=GetCapabilities"/>
     <owc:operation method="GET" code="GetFeature" href="http://meet.opengeospatial.org:8080/geoserver/wfs?SERVICE=WFS&amp;VERSION=1.1.0&amp;REQUEST=GetFeature&amp;BBOX=45,-2,55,8&amp;OUTPUTFORMAT=text/xml; subtype=gml/3.1.1&amp;TYPENAME=topp:member_map&amp;MAXFEATURES=10"/>
   </owc:offering>
 </entry>

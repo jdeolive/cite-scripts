@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  -*- rnc -*-
+  RELAX NG Compact Syntax Grammar for OGC Context Atom Encoding
+  A.1 Conformance Test Class Part 1: core 
+  Conformance to the rules of ATOM according and OWC defined in OGC 12-084 
+-->
+<grammar xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:s="http://www.ascc.net/xml/schematron" xmlns:owc="http://www.opengis.net/owc/1.0" xmlns:georss="http://www.georss.org/georss" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <!-- Redefine atom:feed to include new owc and dc elements -->
+  <define name="atomFeedConstruct" combine="interleave">
+    <interleave>
+      <optional>
+        <ref name="owcDisplay"/>
+      </optional>
+      <element name="dc:publisher">
+        <text/>
+      </element>
+      <optional>
+        <element name="dc:date">
+          <ref name="atomDateConstruct"/>
+        </element>
+      </optional>
+      <optional>
+        <ref name="georssWhere"/>
+      </optional>
+    </interleave>
+  </define>
+  <!-- Redefine atom:entry to include new owc and dc elements -->
+  <define name="atomEntryConstruct" combine="interleave">
+    <interleave>
+      <optional>
+        <ref name="owcOffering"/>
+      </optional>
+      <optional>
+        <element name="dc:publisher">
+          <text/>
+        </element>
+      </optional>
+      <optional>
+        <element name="dc:date">
+          <ref name="atomDateConstruct"/>
+        </element>
+      </optional>
+      <optional>
+        <ref name="georssWhere"/>
+      </optional>
+      <optional>
+        <element name="owc:minScaleDenominator">
+          <data type="float"/>
+        </element>
+      </optional>
+      <optional>
+        <element name="owc:maxScaleDenominator">
+          <data type="float"/>
+        </element>
+      </optional>
+    </interleave>
+  </define>
+  <!-- owcContent attribute extensions -->
+  <define name="owcCommonAttributes">
+    <zeroOrMore>
+      <ref name="undefinedAttribute"/>
+    </zeroOrMore>
+  </define>
+  <!--
+    georss:where 
+    georssWhere = anyElement
+  -->
+  <!-- georss:where -->
+  <include href="georss.rng"/>
+  <define name="owcHTTPURL">
+    <data type="string">
+      <param name="pattern">https?://.*</param>
+    </data>
+  </define>
+  <!-- owcOffering -->
+  <define name="owcOffering">
+    <element name="owc:offering">
+      <ref name="owcCommonAttributes"/>
+      <attribute name="code"/>
+      <interleave>
+        <zeroOrMore>
+          <ref name="owcOperation"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="owcContent"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="owcStyleSet"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="extensionElement"/>
+        </zeroOrMore>
+      </interleave>
+    </element>
+  </define>
+  <!-- owcOperation -->
+  <define name="owcOperation">
+    <element name="owc:operation">
+      <ref name="owcCommonAttributes"/>
+      <attribute name="code"/>
+      <attribute name="href">
+        <ref name="owcHTTPURL"/>
+      </attribute>
+      <optional>
+        <attribute name="type"/>
+      </optional>
+      <choice>
+        <interleave>
+          <attribute name="method">
+            <value>GET</value>
+          </attribute>
+          <optional>
+            <element name="owc:result">
+              <zeroOrMore>
+                <ref name="extensionElement"/>
+              </zeroOrMore>
+            </element>
+          </optional>
+          <zeroOrMore>
+            <ref name="extensionElement"/>
+          </zeroOrMore>
+        </interleave>
+        <interleave>
+          <attribute name="method">
+            <value>POST</value>
+          </attribute>
+          <optional>
+            <element name="owc:result">
+              <zeroOrMore>
+                <ref name="extensionElement"/>
+              </zeroOrMore>
+            </element>
+          </optional>
+          <optional>
+            <element name="owc:payload">
+              <zeroOrMore>
+                <ref name="extensionElement"/>
+              </zeroOrMore>
+            </element>
+          </optional>
+          <zeroOrMore>
+            <ref name="extensionElement"/>
+          </zeroOrMore>
+        </interleave>
+      </choice>
+    </element>
+  </define>
+  <!-- owcContent -->
+  <define name="owcContent">
+    <element name="owc:content">
+      <interleave>
+        <ref name="owcCommonAttributes"/>
+        <choice>
+          <group>
+            <attribute name="type"/>
+            <attribute name="href">
+              <ref name="owcHTTPURL"/>
+            </attribute>
+          </group>
+          <group>
+            <attribute name="type"/>
+            <zeroOrMore>
+              <choice>
+                <text/>
+                <ref name="anyElement"/>
+              </choice>
+            </zeroOrMore>
+          </group>
+        </choice>
+      </interleave>
+    </element>
+  </define>
+  <!-- owcStyleSet -->
+  <define name="owcStyleSet">
+    <element name="owc:styleSet">
+      <ref name="owcCommonAttributes"/>
+      <optional>
+        <attribute name="default">
+          <choice>
+            <value>0</value>
+            <value>1</value>
+          </choice>
+        </attribute>
+      </optional>
+      <interleave>
+        <element name="owc:name">
+          <text/>
+        </element>
+        <element name="owc:title">
+          <text/>
+        </element>
+        <optional>
+          <element name="owc:abstract">
+            <text/>
+          </element>
+        </optional>
+        <optional>
+          <element name="owc:legendURL">
+            <attribute name="type"/>
+            <attribute name="href">
+              <ref name="owcHTTPURL"/>
+            </attribute>
+          </element>
+        </optional>
+        <optional>
+          <element name="owc:content">
+            <ref name="owcContent"/>
+          </element>
+        </optional>
+        <zeroOrMore>
+          <ref name="extensionElement"/>
+        </zeroOrMore>
+      </interleave>
+    </element>
+  </define>
+  <!-- owc:display  -->
+  <define name="owcDisplay">
+    <element name="owc:display">
+      <interleave>
+        <interleave>
+          <optional>
+            <element name="owc:pixelWidth">
+              <data type="integer"/>
+            </element>
+          </optional>
+          <optional>
+            <element name="owc:pixelHeight">
+              <data type="integer"/>
+            </element>
+          </optional>
+          <optional>
+            <element name="owc:pixelPerMM">
+              <data type="integer"/>
+            </element>
+          </optional>
+        </interleave>
+        <zeroOrMore>
+          <ref name="extensionElement"/>
+        </zeroOrMore>
+      </interleave>
+    </element>
+  </define>
+  <!-- Replacing definitions on RFC4287 -->
+  <include href="rfc4287.rng">
+    <!-- Redefine the Simple Extension to exclude owc:* elements -->
+    <define name="simpleExtensionElement">
+      <element>
+        <anyName>
+          <except>
+            <nsName ns="http://www.w3.org/2005/Atom"/>
+            <nsName ns="http://www.opengis.net/owc/1.0"/>
+            <name>dc:publisher</name>
+            <name>dc:date</name>
+            <name>georss:where</name>
+          </except>
+        </anyName>
+        <text/>
+      </element>
+    </define>
+    <!-- Redefine the Structured Extension to exclude owc:* elements -->
+    <define name="structuredExtensionElement">
+      <element>
+        <anyName>
+          <except>
+            <nsName ns="http://www.w3.org/2005/Atom"/>
+            <nsName ns="http://www.opengis.net/owc/1.0"/>
+            <name>dc:publisher</name>
+            <name>dc:date</name>
+            <name>georss:where</name>
+          </except>
+        </anyName>
+        <choice>
+          <group>
+            <oneOrMore>
+              <attribute>
+                <anyName/>
+              </attribute>
+            </oneOrMore>
+            <zeroOrMore>
+              <choice>
+                <text/>
+                <ref name="anyElement"/>
+              </choice>
+            </zeroOrMore>
+          </group>
+          <group>
+            <zeroOrMore>
+              <attribute>
+                <anyName/>
+              </attribute>
+            </zeroOrMore>
+            <group>
+              <optional>
+                <text/>
+              </optional>
+              <oneOrMore>
+                <ref name="anyElement"/>
+              </oneOrMore>
+              <zeroOrMore>
+                <choice>
+                  <text/>
+                  <ref name="anyElement"/>
+                </choice>
+              </zeroOrMore>
+            </group>
+          </group>
+        </choice>
+      </element>
+    </define>
+    <!-- Redefine Atom rules    -->
+    <define name="atomFeed">
+      <element name="atom:feed">
+        <s:rule context="atom:feed">
+          <s:assert test="atom:author or not(atom:entry[not(atom:author)])">An atom:feed must have an atom:author unless all of its atom:entry children have an atom:author.</s:assert>
+        </s:rule>
+        <s:rule context="atom:feed">
+          <s:assert test="atom:category[@scheme='http://www.opengis.net/owc/specReference']">An atom:feed must have an atom:category with the OWC specification reference identified with the   @scheme='http://www.opengis.net/owc/specReference' </s:assert>
+        </s:rule>
+        <ref name="atomFeedConstruct"/>
+      </element>
+    </define>
+    <define name="atomEntry">
+      <element name="atom:entry">
+        <s:rule context="atom:entry">
+          <s:assert test="atom:content">An atom:entry must have one atom:content MUST have content element in a format understandable by generic Atom readers ( @type equal to 'html' is recommended)</s:assert>
+        </s:rule>
+        <s:rule context="atom:entry">
+          <s:assert test="atom:link[@rel='alternate'] or atom:link[not(@rel)] or atom:content">An atom:entry must have at least one atom:link element with a rel attribute of 'alternate' or an atom:content.</s:assert>
+        </s:rule>
+        <s:rule context="atom:entry">
+          <s:assert test="atom:author or ../atom:author or atom:source/atom:author">An atom:entry must have an atom:author if its feed does not.</s:assert>
+        </s:rule>
+        <ref name="atomEntryConstruct"/>
+      </element>
+    </define>
+  </include>
+</grammar>
+<!-- EOF -->
