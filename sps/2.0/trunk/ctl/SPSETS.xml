@@ -8150,7 +8150,8 @@
 						</xsl:choose>
 					</xsl:when>
 					<xsl:otherwise><!-- others fail -->
-						<ctl:message>FAILURE: The data in the ReferenceGroup is not valid.[<xsl:value-of select="$ProcedureOrTask"/>=<xsl:value-of select="$ValueOfProcedureOrTask"/>]</ctl:message>
+						<ctl:message>FAILURE: The data in the ReferenceGroup is not valid.It does not comply with situaction 1,2,3,4,and 5.</ctl:message>
+						<ctl:message>Please check SPS 2.0 09-000 Table 41.</ctl:message>
 						<ctl:fail />
 					</xsl:otherwise>
 				</xsl:choose>
