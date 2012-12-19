@@ -21,7 +21,7 @@
 				</ctl:request>
 			</xsl:variable>
 			<xsl:variable name="SupportsGML">false</xsl:variable>
-			<xsl:for-each select="$Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']">
+			<xsl:for-each select="$response//*[local-name()='ServiceIdentification']/*[local-name()='Profile']">
 			  <xsl:if test=". = 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml'">
 			     <xsl:variable name="SupportsGML">true</xsl:variable>
 			  </xsl:if>
