@@ -7484,7 +7484,7 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservation request with null procedure parameter specified. </ctl:message> 
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetFeatureOfInterest request with null procedure parameter specified. </ctl:message> 
 								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "procedure".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
@@ -9359,7 +9359,7 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservation request with null observation parameter specified. </ctl:message> 
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservationById request with null observation parameter specified. </ctl:message> 
 								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "observation".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
@@ -12541,7 +12541,7 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservation request with null procedureDescriptionFormat parameter specified. </ctl:message> 
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertSensor request with null procedureDescriptionFormat parameter specified. </ctl:message> 
 								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "procedureDescriptionFormat".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
@@ -13316,7 +13316,7 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservation request with null featureOfInterestType parameter specified. </ctl:message> 
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertSensor request with null featureOfInterestType parameter specified. </ctl:message> 
 								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "featureOfInterestType".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
@@ -14091,7 +14091,7 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservation request with null observationType parameter specified. </ctl:message> 
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertSensor request with null observationType parameter specified. </ctl:message> 
 								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "observationType".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
@@ -15686,7 +15686,7 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservation request with null procedure parameter specified. </ctl:message> 
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a DeleteSensor request with null procedure parameter specified. </ctl:message> 
 								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "procedure".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
@@ -17098,7 +17098,7 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservation request with null offering parameter specified. </ctl:message> 
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertObservation request with null offering parameter specified. </ctl:message> 
 								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "offering".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
@@ -17376,7 +17376,7 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservation request with null observationType parameter specified. </ctl:message> 
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertObservation request with null observationType parameter specified. </ctl:message> 
 								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "observationType".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
@@ -17743,7 +17743,7 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservation request with null procedure parameter specified. </ctl:message> 
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertObservation request with null procedure parameter specified. </ctl:message> 
 								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "procedure".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
@@ -18110,7 +18110,7 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservation request with null observedProperty parameter specified. </ctl:message> 
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertObservation request with null observedProperty parameter specified. </ctl:message> 
 								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "observedProperty".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
@@ -18477,7 +18477,7 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservation request with null featureOfInterest parameter specified. </ctl:message> 
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertObservation request with null featureOfInterest parameter specified. </ctl:message> 
 								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "featureOfInterest".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
@@ -18844,7 +18844,7 @@
 							</xsl:variable>
 							<ctl:message>The validity check returned:  <xsl:value-of select="$isCorrect" /></ctl:message>
 							<xsl:if test="not(xsd:boolean($isCorrect))">
-								<ctl:message>FAILURE:  The server did not return the expected exception report response to a GetObservation request with null resultType parameter specified. </ctl:message> 
+								<ctl:message>FAILURE:  The server did not return the expected exception report response to a InsertObservation request with null resultType parameter specified. </ctl:message> 
 								<ctl:message>The response was expected to be an ExceptionReport with an exceptionCode of "MissingParameterValue" and a locator of "resultType".</ctl:message>
 								<ctl:fail />
 							</xsl:if>
