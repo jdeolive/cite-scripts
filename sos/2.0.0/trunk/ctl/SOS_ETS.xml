@@ -8281,8 +8281,8 @@
 										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
 										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd"
 										xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" >
-										<ctl:param name="procedure"><xsl:value-of select="$procedure" /></ctl:param>
-										<ctl:param name="observedProperty"><xsl:value-of select="$observableProperty" /></ctl:param>
+										<sos:procedure><xsl:value-of select="$procedure" /></sos:procedure> 
+										<sos:observedProperty><xsl:value-of select="$observableProperty" /></sos:observedProperty>
 										<sos:spatialFilter>
 											<fes:BBOX>
 												<fes:ValueReference>om:featureOfInterest/*/sams:shape</fes:ValueReference>
@@ -8316,8 +8316,8 @@
 									<sos:GetFeatureOfInterest service="SOS" version="2.0.0" xmlns:sos="http://www.opengis.net/sos/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 										xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope/soap-envelope.xsd 
 										http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sos.xsd" >
-										<ctl:param name="procedure"><xsl:value-of select="$procedure" /></ctl:param>
-										<ctl:param name="observedProperty"><xsl:value-of select="$observableProperty" /></ctl:param>
+										<sos:procedure><xsl:value-of select="$procedure" /></sos:procedure> 
+										<sos:observedProperty><xsl:value-of select="$observableProperty" /></sos:observedProperty>
 										<sos:spatialFilter>
 											<fes:BBOX>
 												<fes:ValueReference>om:featureOfInterest/*/sams:shape</fes:ValueReference>
