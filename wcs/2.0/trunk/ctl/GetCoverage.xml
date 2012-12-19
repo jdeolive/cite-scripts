@@ -943,7 +943,7 @@
 									<ctl:param name="format">
 										<xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported'][1]"/>
 									</ctl:param>
-									<ctl:param name="mediatype">multipart/mixed</ctl:param>
+							
 									<ctl:method>get</ctl:method>
 									<parsers:HTTPParser>
 										<parsers:parse mime="application/gml+xml">
@@ -986,7 +986,6 @@
 										<xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/>
 									</ctl:param>
 									<ctl:param name="format">format_bogus</ctl:param>
-									<ctl:param name="mediatype">multipart/mixed</ctl:param>
 									<ctl:method>get</ctl:method>
 									<parsers:HTTPParser>
 										<parsers:parse mime="application/gml+xml">
@@ -1052,9 +1051,6 @@
 									<ctl:param name="coverageid">
 										<xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/>
 									</ctl:param>
-									<ctl:param name="format">
-										<xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported'][1]"/>
-									</ctl:param>
 									<ctl:param name="mediatype">"multipart/mixed</ctl:param>
 									<ctl:method>get</ctl:method>
 									<parsers:HTTPParser>
@@ -1097,9 +1093,7 @@
 									<ctl:param name="coverageid">
 										<xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/>
 									</ctl:param>
-									<ctl:param name="format">
-										<xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported'][1]"/>
-									</ctl:param>
+
 									<ctl:param name="mediatype">mediatype_bogus</ctl:param>
 									<ctl:method>get</ctl:method>
 									<ctlp:XMLValidatingParser>
@@ -1827,9 +1821,6 @@
 									<ctl:param name="request">GetCoverage</ctl:param>
 									<ctl:param name="coverageid">
 										<xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/>
-									</ctl:param>
-									<ctl:param name="format">
-										<xsl:value-of select="$Capabilities//*[local-name()='ServiceMetadata']//*[local-name()='formatSupported'][1]"/>
 									</ctl:param>
 									<ctl:param name="mediatype">multipart/mixed</ctl:param>
 									<ctl:method>get</ctl:method>
