@@ -699,7 +699,6 @@
 	<ctl:test name="wcs2:post-xml-core-req26">
 		<ctl:param name="Capabilities"/>
 		<ctl:param name="url"/>
-		<ctl:param name="SupportsGML" />
 		<ctl:assertion>req26:Send a valid PostXML GetCoverage request to server under test which conforms to the references in the requirement. Check that the response is not an exception.</ctl:assertion>
 		<ctl:code>
 			<ctl:message>[MESSAGE] TBD.</ctl:message>
@@ -708,6 +707,7 @@
 	<ctl:test name="wcs2:get-kvp-core-req26">
 		<ctl:param name="url"/>
 		<ctl:param name="Capabilities"/>
+		<ctl:param name="SupportsGML" />		
 		<ctl:assertion>req26:Send a valid GetKVP GetCoverage request to server under test which conforms to the references in the requirement. Check that the response is not an exception.</ctl:assertion>
 		<ctl:code>
 			<xsl:choose>
@@ -804,7 +804,6 @@
 	<ctl:test name="wcs2:soap-core-req26">
 		<ctl:param name="Capabilities"/>
 		<ctl:param name="url"/>
-		<ctl:param name="SupportsGML" />
 		<ctl:assertion>req26:Send a valid SOAP GetCoverage request to server under test which conforms to the references in the requirement. Check that the response is not an exception.</ctl:assertion>
 		<ctl:code>
 			<ctl:message>[MESSAGE] TBD.</ctl:message>
@@ -1388,7 +1387,6 @@
 	<ctl:test name="wcs2:post-xml-core-req32">
 		<ctl:param name="Capabilities"/>
 		<ctl:param name="url"/>
-		<ctl:param name="SupportsGML" />
 		<ctl:assertion>req32:Send otherwise valid PostXML GetCoverage requests with matching and with violat-ing trimming positions to server under test. Check if appropriate results are returned if and only if the requirement is fulfilled, and an exception other-wise. Pass test if all checks succeed.</ctl:assertion>
 		<ctl:code>
 			<ctl:message>[MESSAGE] TBD.</ctl:message>
@@ -1397,6 +1395,7 @@
 	<ctl:test name="wcs2:get-kvp-core-req32">
 		<ctl:param name="url"/>
 		<ctl:param name="Capabilities"/>
+		<ctl:param name="SupportsGML" />		
 		<ctl:assertion>req32:Send otherwise GetKVP valid GetCoverage requests with matching and with violat-ing trimming positions to server under test. Check if appropriate results are returned if and only if the requirement is fulfilled, and an exception other-wise. Pass test if all checks succeed.</ctl:assertion>
 		<ctl:code>
 			<xsl:variable name="DescribeCoverage">
@@ -1695,7 +1694,6 @@
 	<ctl:test name="wcs2:post-xml-core-req34">
 		<ctl:param name="Capabilities"/>
 		<ctl:param name="url"/>
-		<ctl:param name="SupportsGML" />
 		<ctl:assertion>req34:For each coverage offered by the server on hand, send a valid PostXML GetCoverage request to server under test. Check that the result validates against gmlcov:AbstractCoverage. Test passes if all individual tests pass.</ctl:assertion>
 		<ctl:code>
 			<ctl:message>[MESSAGE] TBD.</ctl:message>
@@ -1704,6 +1702,7 @@
 	<ctl:test name="wcs2:get-kvp-core-req34">
 		<ctl:param name="url"/>
 		<ctl:param name="Capabilities"/>
+		<ctl:param name="SupportsGML" />		
 		<ctl:assertion>req34:For each coverage offered by the server on hand, send a valid GetKVP GetCoverage request to server under test. Check that the result validates against gmlcov:AbstractCoverage. Test passes if all individual tests pass.</ctl:assertion>
 		<ctl:code>
 			<xsl:choose>
