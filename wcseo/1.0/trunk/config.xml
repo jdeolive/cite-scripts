@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Add entry to TE_BASE/config.xml (/config/scripts/organization) -->
+<!-- Add this entry to TE_BASE/config.xml (//organization/standard) -->
 <organization>
   <name>OGC</name>
   <standard>
     <name>Web Coverage Service - Earth Observation Profile</name>
     <version>
-      <name>0.4.0</name>
+      <name>1.0 (pending)</name>
       <suite>
         <namespace-uri>http://www.opengis.net/wcseo/1.0</namespace-uri>
         <prefix>wcseo</prefix>
         <local-name>suite</local-name>
-        <title>WCS-EO Conformance Test Suite</title>
+        <title>WCS-EO 1.0 Conformance Test Suite</title>
         <description>Checks conformance to OGC 10-140.</description>
       </suite>
       <revision>
