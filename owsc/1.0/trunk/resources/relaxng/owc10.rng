@@ -2,8 +2,7 @@
 <!--
   -*- rnc -*-
   RELAX NG Compact Syntax Grammar for OGC Context Atom Encoding
-  A.1 Conformance Test Class Part 1: core 
-  Conformance to the rules of ATOM according and OWC defined in OGC 12-084 
+  ATOM encoding and OWC classes as defined in OGC 12-084 
 -->
 <grammar xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:s="http://www.ascc.net/xml/schematron" xmlns:owc="http://www.opengis.net/owc/1.0" xmlns:georss="http://www.georss.org/georss" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <!-- Redefine atom:feed to include new owc and dc elements -->
@@ -62,12 +61,6 @@
       <ref name="undefinedAttribute"/>
     </zeroOrMore>
   </define>
-  <!--
-    georss:where 
-    georssWhere = anyElement
-  -->
-  <!-- georss:where -->
-  <include href="georss.rng"/>
   <define name="owcHTTPURL">
     <data type="string">
       <param name="pattern">https?://.*</param>
@@ -241,6 +234,8 @@
       </interleave>
     </element>
   </define>
+  <!-- Define georss:where -->
+  <include href="georss.rng"/>
   <!-- Replacing definitions on RFC4287 -->
   <include href="rfc4287.rng">
     <!-- Redefine the Simple Extension to exclude owc:* elements -->
@@ -315,7 +310,7 @@
           <s:assert test="atom:author or not(atom:entry[not(atom:author)])">An atom:feed must have an atom:author unless all of its atom:entry children have an atom:author.</s:assert>
         </s:rule>
         <s:rule context="atom:feed">
-          <s:assert test="atom:category[@scheme='http://www.opengis.net/owc/specReference']">An atom:feed must have an atom:category with the OWC specification reference identified with the   @scheme='http://www.opengis.net/owc/specReference' </s:assert>
+          <s:report test="atom:category[@scheme='http://www.opengis.net/owc/specReference']">An atom:feed must have an atom:category with the OWC specification reference identified with the   @scheme='http://www.opengis.net/owc/specReference' </s:report>
         </s:rule>
         <ref name="atomFeedConstruct"/>
       </element>

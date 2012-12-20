@@ -1,7 +1,6 @@
 # -*- rnc -*-
    # RELAX NG Compact Syntax Grammar for OGC Context Atom Encoding
-   # A.1 Conformance Test Class Part 1: core 
-   # Conformance to the rules of ATOM according and OWC defined in OGC 12-084 
+   # ATOM encoding and OWC classes as defined in OGC 12-084 
    
    namespace owc = "http://www.opengis.net/owc/1.0"
    namespace s = "http://www.ascc.net/xml/schematron"
@@ -10,16 +9,12 @@
    namespace atom = "http://www.w3.org/2005/Atom"
 
    # Redefine atom:feed to include new owc and dc elements
-   atomFeedConstruct &= owcDisplay? 
-       & element dc:publisher { text } 
-       & element dc:date { atomDateConstruct }?
-       & georssWhere ?                    
+   atomFeedConstruct &= owcDisplay? & element dc:publisher { text }  
+       & element dc:date { atomDateConstruct }? & georssWhere ?
                      
    # Redefine atom:entry to include new owc and dc elements
-   atomEntryConstruct &= owcOffering?  
-       & element dc:publisher { text }? 
-       & element dc:date { atomDateConstruct }?
-       & georssWhere ?
+   atomEntryConstruct &= owcOffering? & element dc:publisher { text }? 
+       & element dc:date { atomDateConstruct }? & georssWhere ?
        & element owc:minScaleDenominator { xsd:float }?
        & element owc:maxScaleDenominator { xsd:float }?
 
