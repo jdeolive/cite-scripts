@@ -1,0 +1,8 @@
+WCS 2.0 kvp extansion Test Suite Release Notes
+
+Changes included in latest revision:
+
+
+=== Changes included in R0 ===
+2012-12-15 (jyu):
+- Add test suites according to OGC 09-147r2, tests in kvp and gmlcov are provided
