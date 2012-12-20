@@ -2,6 +2,7 @@
 	<ctl:test name="wcs2:req1-9">
 		<ctl:param name="Capabilities"/>
 		<ctl:param name="url"/>
+		<ctl:param name="SupportsGML" />
 		<ctl:assertion>req1-9:For all coverages offered by the server under test, test coverage structure, service parameters, and service metatada via GetCapabilities, DescribeCoverage and GetCoverage operations. Verify the responses contain the required information.</ctl:assertion>
 		<ctl:code>
 			<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_protocol-binding_get-kvp/1.0')">
@@ -27,6 +28,7 @@
 	<ctl:test name="wcs2:post-xml-core-req1-9">
 		<ctl:param name="Capabilities"/>
 		<ctl:param name="url"/>
+		<ctl:param name="SupportsGML" />
 		<ctl:assertion>req1-9:For all coverages offered by the server under test, test coverage structure, service parameters, and service metatada via PostXML GetCapabilities, DescribeCoverage and GetCoverage operations. Verify the responses contain the required information.</ctl:assertion>
 		<ctl:code>
 			<xsl:if test="empty($Capabilities//*[local-name()='CoverageSummary']/*[local-name()='CoverageId'])">
@@ -70,7 +72,7 @@
 					</xsl:otherwise>
 				</xsl:choose>
 				<xsl:choose>
-					<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
+					<xsl:when test="$SupportsGML = 'true'">
 						<xsl:variable name="GetCoverage">
 							<ctl:request>
 								<ctl:url>
@@ -205,7 +207,7 @@
 					</xsl:when>
 					<xsl:when test="$Capabilities//*[local-name()='OperationsMetadata']/*[local-name()='Operation']//@xlink:href/parent::*/parent::*/parent::*/parent::*//@name='GetCoverage'">
 						<xsl:choose>
-							<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
+							<xsl:when test="$SupportsGML = 'true'">
 								<xsl:variable name="GetCoverage">
 									<ctl:request>
 										<ctl:url>
@@ -260,6 +262,7 @@
 	<ctl:test name="wcs2:get-kvp-core-req1-9">
 		<ctl:param name="Capabilities"/>
 		<ctl:param name="url"/>
+		<ctl:param name="SupportsGML" />
 		<ctl:assertion>req1-9:For all coverages offered by the server under test, test coverage structure, service parameters, and service metatada via GetKVP GetCapabilities, DescribeCoverage and GetCoverage operations. Verify the responses contain the required information.</ctl:assertion>
 		<ctl:code>
 			<xsl:if test="empty($Capabilities//*[local-name()='CoverageSummary']/*[local-name()='CoverageId'])">
@@ -300,7 +303,7 @@
 					</xsl:otherwise>
 				</xsl:choose>
 				<xsl:choose>
-					<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
+					<xsl:when test="$SupportsGML = 'true'">
 						<xsl:variable name="GetCoverage">
 							<ctl:request>
 								<ctl:url>
@@ -421,7 +424,7 @@
 					</xsl:when>
 					<xsl:when test="$Capabilities//*[local-name()='OperationsMetadata']/*[local-name()='Operation']//@xlink:href/parent::*/parent::*/parent::*/parent::*//@name='GetCoverage'">
 						<xsl:choose>
-							<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
+							<xsl:when test="$SupportsGML = 'true'">
 								<xsl:variable name="GetCoverage">
 									<ctl:request>
 										<ctl:url>
@@ -473,6 +476,7 @@
 	<ctl:test name="wcs2:soap-core-req1-9">
 		<ctl:param name="Capabilities"/>
 		<ctl:param name="url"/>
+		<ctl:param name="SupportsGML" />
 		<ctl:assertion>req1-9:For all coverages offered by the server under test, test coverage structure, service parameters, and service metatada via SOAP GetCapabilities, DescribeCoverage and GetCoverage operations. Verify the responses contain the required information.</ctl:assertion>
 		<ctl:code>
 			<xsl:if test="empty($Capabilities//*[local-name()='CoverageSummary']/*[local-name()='CoverageId'])">
@@ -515,7 +519,7 @@
 					</xsl:otherwise>
 				</xsl:choose>
 				<xsl:choose>
-					<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
+					<xsl:when test="$SupportsGML = 'true'">
 						<xsl:variable name="GetCoverage">
 							<ctl:soap-request version="1.2" charset="UTF-8">
 								<ctl:url>
@@ -645,7 +649,7 @@
 					</xsl:when>
 					<xsl:when test="$Capabilities//*[local-name()='OperationsMetadata']/*[local-name()='Operation']//@xlink:href/parent::*/parent::*/parent::*/parent::*//@name='GetCoverage'">
 						<xsl:choose>
-							<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
+							<xsl:when test="$SupportsGML = 'true'">
 								<xsl:variable name="GetCoverage">
 									<ctl:soap-request version="1.2" charset="UTF-8">
 										<ctl:url>
