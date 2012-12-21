@@ -16,11 +16,24 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<grammar xmlns:georss="http://www.georss.org/georss" xmlns:gml="http://www.opengis.net/gml" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+<grammar ns="http://www.opengis.net/gml" xmlns:georss="http://www.georss.org/georss" xmlns:gml="http://www.opengis.net/gml" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <define name="georssWhere">
     <element name="georss:where">
+      <zeroOrMore>
+        <ref name="gmlAttribute"/>
+      </zeroOrMore>
       <ref name="gmlElement"/>
     </element>
+  </define>
+  <define name="gmlAttribute">
+    <attribute>
+      <choice>
+        <name>xml:base</name>
+        <name>xml:lang</name>
+        <nsName ns=""/>
+        <nsName/>
+      </choice>
+    </attribute>
   </define>
   <define name="gmlElement">
     <choice>
@@ -32,7 +45,13 @@
   </define>
   <define name="gmlPointElement">
     <element name="gml:Point">
+      <zeroOrMore>
+        <ref name="gmlAttribute"/>
+      </zeroOrMore>
       <element name="gml:pos">
+        <zeroOrMore>
+          <ref name="gmlAttribute"/>
+        </zeroOrMore>
         <list>
           <data type="decimal"/>
           <data type="decimal"/>
@@ -42,7 +61,13 @@
   </define>
   <define name="gmlLineStringElement">
     <element name="gml:LineString">
+      <zeroOrMore>
+        <ref name="gmlAttribute"/>
+      </zeroOrMore>
       <element name="gml:posList">
+        <zeroOrMore>
+          <ref name="gmlAttribute"/>
+        </zeroOrMore>
         <list>
           <oneOrMore>
             <data type="decimal"/>
@@ -54,9 +79,21 @@
   </define>
   <define name="gmlPolygonElement">
     <element name="gml:Polygon">
+      <zeroOrMore>
+        <ref name="gmlAttribute"/>
+      </zeroOrMore>
       <element name="gml:exterior">
+        <zeroOrMore>
+          <ref name="gmlAttribute"/>
+        </zeroOrMore>
         <element name="gml:LinearRing">
+          <zeroOrMore>
+            <ref name="gmlAttribute"/>
+          </zeroOrMore>
           <element name="gml:posList">
+            <zeroOrMore>
+              <ref name="gmlAttribute"/>
+            </zeroOrMore>
             <list>
               <oneOrMore>
                 <data type="decimal"/>
@@ -70,14 +107,23 @@
   </define>
   <define name="gmlEnvelopeElement">
     <element name="gml:Envelope">
+      <zeroOrMore>
+        <ref name="gmlAttribute"/>
+      </zeroOrMore>
       <interleave>
         <element name="gml:lowerCorner">
+          <zeroOrMore>
+            <ref name="gmlAttribute"/>
+          </zeroOrMore>
           <list>
             <data type="decimal"/>
             <data type="decimal"/>
           </list>
         </element>
         <element name="gml:upperCorner">
+          <zeroOrMore>
+            <ref name="gmlAttribute"/>
+          </zeroOrMore>
           <list>
             <data type="decimal"/>
             <data type="decimal"/>

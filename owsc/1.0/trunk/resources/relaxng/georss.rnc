@@ -15,33 +15,41 @@
    
    namespace georss="http://www.georss.org/georss" 
    namespace gml="http://www.opengis.net/gml"
+   namespace local = ""
    
-   georssWhere = element georss:where { gmlElement }
+   
+   georssWhere = element georss:where { gmlAttribute*, gmlElement }
 	   	      
-   gmlElement = (gmlPointElement | gmlLineStringElement | gmlPolygonElement | gmlEnvelopeElement )
+   gmlAttribute = attribute (xml:base | xml:lang | local:* | gml:* ) { text }
+   
+   gmlElement = (gmlPointElement | gmlLineStringElement | 
+                    gmlPolygonElement | gmlEnvelopeElement )
       
    gmlPointElement = 
-      element gml:Point { 
-        element gml:pos  { list { xsd:decimal, xsd:decimal }}
+      element gml:Point { gmlAttribute*,
+        element gml:pos  { gmlAttribute*, list { xsd:decimal, xsd:decimal }}
       }
    
-   gmlLineStringElement = 
-      element gml:LineString { 
-      	element gml:posList  { list { (xsd:decimal, xsd:decimal)+ }}
+   gmlLineStringElement =
+      element gml:LineString { gmlAttribute*, 
+      	element gml:posList  {gmlAttribute*, list { (xsd:decimal, xsd:decimal)+ }}
       }
 
 	      
    gmlPolygonElement = 
-      element gml:Polygon { 
-        element gml:exterior  { 
-          element gml:LinearRing {
-            element gml:posList  { list { (xsd:decimal, xsd:decimal)+ }}}}
+      element gml:Polygon { gmlAttribute*,
+        element gml:exterior  { gmlAttribute*,
+          element gml:LinearRing { gmlAttribute*,
+            element gml:posList  { gmlAttribute*, 
+                                   list { (xsd:decimal, xsd:decimal)+ }}}}
       }  	      
 
       
    gmlEnvelopeElement = 
-      element  gml:Envelope { 
-	      element gml:lowerCorner { list { xsd:decimal, xsd:decimal } }
-	      & element gml:upperCorner { list { xsd:decimal, xsd:decimal } } 
+      element  gml:Envelope { gmlAttribute*, 
+	    (  element gml:lowerCorner { gmlAttribute*,  
+	                                 list { xsd:decimal, xsd:decimal } }
+	      & element gml:upperCorner { gmlAttribute*, 
+	                                 list { xsd:decimal, xsd:decimal } }) 
       }    
 	      

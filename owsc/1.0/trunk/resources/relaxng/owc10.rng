@@ -310,7 +310,7 @@
           <s:assert test="atom:author or not(atom:entry[not(atom:author)])">An atom:feed must have an atom:author unless all of its atom:entry children have an atom:author.</s:assert>
         </s:rule>
         <s:rule context="atom:feed">
-          <s:report test="atom:category[@scheme='http://www.opengis.net/owc/specReference']">An atom:feed must have an atom:category with the OWC specification reference identified with the   @scheme='http://www.opengis.net/owc/specReference' </s:report>
+          <s:assert test="atom:category[@scheme='http://www.opengis.net/owc/specReference']">An atom:feed must have an atom:category with the OWC specification reference identified with the   @scheme='http://www.opengis.net/owc/specReference' </s:assert>
         </s:rule>
         <ref name="atomFeedConstruct"/>
       </element>

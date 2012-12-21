@@ -59,7 +59,7 @@
    owcDisplay = element owc:display {      
       (element owc:pixelWidth { xsd:integer }?
        & element owc:pixelHeight { xsd:integer }?
-       & element owc:pixelPerMM { xsd:integer }?)
+       & element owc:mmPerPixel { xsd:float }?)
        & extensionElement*
    }   
  
