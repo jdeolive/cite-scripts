@@ -2,6 +2,11 @@ SOS 2.0 Test Suite Release Notes
 
 Changes included in latest revision:
 
+revision r0
+2012-12-21
+	Tested by 52north and many bugs and issues fixed.
+	(There are still some issues that will need to be further discussed and dealt with.)
+
 
 2012-07-25
 	DescribeSensor test scripts updated.
