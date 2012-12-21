@@ -1,0 +1,19 @@
+SPS 2.0 Test Suite Release Notes
+
+Revision r3
+2012-12-21 (rocky)
+- Tested by 52north Henning and bugs fixed.
+
+----r2---
+2012-07-20 (rocky)
+- Update test suite for new xlink policy
+
+
+----r1---
+2012-04-05
+- Update index.html
+- corrected version on config.xml
+
+----r0----
+2012-01-23 (rocky):
+- first revision
