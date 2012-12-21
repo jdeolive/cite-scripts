@@ -1,8 +1,0 @@
-WCS 2.0 Test Suite Release Notes
-
-Changes included in latest revision:
-
-
-=== Changes included in R0 ===
-2012-11-15 (jyu):
-- Add/update test suites according to OGC-09-110r4 and OGC-09-147r2
