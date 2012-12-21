@@ -164,7 +164,7 @@
   <dc:publisher>Open Geospatial Consortium</dc:publisher>
   <updated>2012-10-12T19:00:50Z</updated>
   <dc:rights>Fee:NONE / Contraints:NONE</dc:rights>
-  <georss:where gml:srsDimension="10" axisLabels="A B C" >
+  <georss:where>
     <gml:Polygon>
       <gml:exterior>
         <gml:LinearRing>
