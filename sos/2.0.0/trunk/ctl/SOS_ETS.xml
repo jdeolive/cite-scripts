@@ -45,7 +45,7 @@
 									<td align="center">
 										<input name="service-url" size="128" 
 										type="text" 
-										value="http://sensorweb.demo.52north.org/52nSOSv4.0.0/sos/soap"/>
+										value="http://sensorweb.demo.52north.org/52n-sos-webapp-4.0.0-Beta1/sos/soap"/>
 									</td>
 								</tr>				
 							</table>
@@ -927,9 +927,11 @@
 					<xsl:variable name="test1210" select="($which-tests eq 'all' or $t12 eq 'on' or $t1210 eq 'on')"/>
 					<xsl:variable name="t1211" select="$form-values/values/value[@key='1211']"/>
 					<xsl:variable name="test1211" select="($which-tests eq 'all' or $t12 eq 'on' or $t1211 eq 'on')"/>
-					<xsl:variable name="test12" select="$test1108 and ($test1201 or $test1202 or $test1203 or $test1204 or $test1205 or $test1206 or $test1207 or $test1208 or $test1209 or $test1210 or $test1211)"/><!-- all test in 12-->
-					<xsl:if test="$test12 and not($test1108) ">
+					<xsl:variable name="test12k" select="($test1201 or $test1202 or $test1203 or $test1204 or $test1205 or $test1206 or $test1207 or $test1208 or $test1209 or $test1210 or $test1211)"/><!-- all test in 12-->
+					<xsl:variable name="test12" select="$test1108 and ($test1201 or $test1202 or $test1203 or $test1204 or $test1205 or $test1206 or $test1207 or $test1208 or $test1209 or $test1210 or $test1211)"/><!-- all test in 12 + 1108-->
+					<xsl:if test="($test12k) and not($test1108) ">
 						<ctl:message>*****:If you want to run test12 ,you should run test1108 first.</ctl:message>
+						<ctl:fail />
 					</xsl:if>
 					
 					<xsl:variable name="t13" select="$form-values/values/value[@key='13']"/>
@@ -8407,12 +8409,16 @@
 						<!-- 從GetCapabilities取得有效的 offering,procedure,observedProperty -->
 						<!-- get a valid offering-->
 						<xsl:variable name="offering" select="$getCapabilitiesResponse//sos:contents//swes:offering[1]//swes:identifier" />
+						<ctl:message>The offering: <xsl:value-of select="$offering" />.</ctl:message>
 						<!-- get a valid procedure-->
 						<xsl:variable name="procedure" select="$getCapabilitiesResponse//sos:contents//swes:procedure[1]" />
+						<ctl:message>The procedure: <xsl:value-of select="$procedure" />.</ctl:message>
 						<!-- get a valid observableProperty-->
 						<xsl:variable name="observableProperty" select="$getCapabilitiesResponse//sos:contents//swes:observableProperty[1]" />
+						<ctl:message>The observableProperty: <xsl:value-of select="$observableProperty" />.</ctl:message>
 						<!-- get a valid responseFormat-->
 						<xsl:variable name="responseFormat" select="string('http%3A%2F%2Fwww.opengis.net%2Fom%2F2.0')" />
+						<ctl:message>The responseFormat: <xsl:value-of select="$responseFormat" />.</ctl:message>
 						
 						<!-- get a valid getObservationResponse-->
 						<xsl:variable name="getObservationResponse">
@@ -8458,6 +8464,7 @@
 										<parsers:SOAPParser return="content">
 											<parsers:XMLValidatingParser>
 												<parsers:schemas>
+													<parsers:schema type="resource">xsd/w3c/xml.xsd</parsers:schema>
 													<parsers:schema>
 														<xsl:attribute name="type"><xsl:value-of select="$observationResponseSchemaType" /></xsl:attribute>
 														<xsl:value-of select="$observationResponseSchemaLocation" />
@@ -9446,7 +9453,7 @@
 									<ctl:message>FAILURE:  The root element from the response to a GetObservationById request "<xsl:value-of select="$responseRoot" />" does not match the expected root element of "<xsl:value-of select="$GetObservationByIdRootElementName" />"</ctl:message>
 									<ctl:fail />
 								</xsl:when>
-								<xsl:when test="$GetObservationByIdResponse/*[1]/*)">
+								<xsl:when test="$GetObservationByIdResponse/*[1]/*">
 									<ctl:message>FAILURE:  An empty GetObservationByIdResponse should be returned if no observation was found matching one or more of the identifiers provided in the request.</ctl:message>
 									<ctl:fail />
 								</xsl:when>
@@ -15868,7 +15875,7 @@
 								<ctl:fail />
 							</xsl:if>
 							<!-- 1.response has one and only one deletedProcedure -->
-							<xsl:variable name="deletedProcedureCount" select="count($DeleteSensorResponse//swes:deletedProcedure))" />
+							<xsl:variable name="deletedProcedureCount" select="count($DeleteSensorResponse//swes:deletedProcedure)" />
 							<xsl:if test="not($deletedProcedureCount=1)">
 								<ctl:message>FAILURE:  The count of swes:deletedProcedure element "<xsl:value-of select="$deletedProcedureCount" />" must be 1.</ctl:message>
 								<ctl:fail />
@@ -22564,7 +22571,7 @@
 								<ctl:fail />
 							</xsl:if>
 							<!-- 1.response has one and only one observation -->
-							<xsl:variable name="innerTag" select="ount($InsertResultResponse/sos:InsertResultResponse/*[1])" />
+							<xsl:variable name="innerTag" select="count($InsertResultResponse/sos:InsertResultResponse/*[1])" />
 							<xsl:if test="not($innerTag=0)">
 								<ctl:message>FAILURE:  The response should be empty.</ctl:message>
 								<ctl:fail />
