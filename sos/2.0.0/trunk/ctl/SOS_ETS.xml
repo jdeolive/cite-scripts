@@ -16033,9 +16033,14 @@
 						<!-- get a valid observableProperty-->
 						<xsl:variable name="observableProperty" select="$getCapabilitiesResponse//sos:contents//swes:observableProperty[1]" />
 						<!-- get a valid featureOfInterest From GetObservation-->
+						<ctl:message>The offering:"<xsl:value-of select="$offering" />".</ctl:message>
+						<ctl:message>The observationType:"<xsl:value-of select="$observationType" />".</ctl:message>
+						<ctl:message>The procedure:"<xsl:value-of select="$procedure" />".</ctl:message>
+						<ctl:message>The observableProperty:"<xsl:value-of select="$observableProperty" />".</ctl:message>
+						
 						<xsl:variable name="getObservationResponse">
 							<xsl:choose>
-								<xsl:when test="($isGetObservationGET)">
+								<xsl:when test="($isGetObservationGET eq 'true')">
 									<ctl:request>
 										<ctl:url>
 											<xsl:value-of select="$GetObservationURL"/>
@@ -16114,8 +16119,10 @@
 							</xsl:choose>
 						</xsl:variable>
 						<xsl:variable name="featureOfInterest" select="$getObservationResponse//om:featureOfInterest[1]/@href" />
+						<ctl:message>The featureOfInterest:"<xsl:value-of select="$featureOfInterest" />".</ctl:message>
 						<!-- get a valid observation -->
 						<xsl:variable name="observation" select="$getObservationResponse/sos:GetObservationResponse/sos:observationData/*[1]" />
+						<ctl:message>The observation:"<xsl:value-of select="$observation" />".</ctl:message>
 						
 						<xsl:if test="$test1001 eq 'true'">
 							<ctl:message select="'******************** 10.01.RequestNoService ********************'"/>
