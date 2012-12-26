@@ -6358,7 +6358,7 @@
 						<!-- get a valid featureOfInterest From GetObservation-->
 						<xsl:variable name="getObservationResponse">
 							<xsl:choose>
-								<xsl:when test="($isGetObservationGET)">
+								<xsl:when test="($isGetObservationGET eq 'true')">
 									<ctl:request>
 										<ctl:url>
 											<xsl:value-of select="$GetObservationURL"/>
