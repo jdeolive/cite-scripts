@@ -10,8 +10,8 @@
              xmlns:ctl="http://www.occamlab.com/ctl"
              xmlns:xlink="http://www.w3.org/1999/xlink"
              xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-             xmlns:fn="http://www.w3.org/2005/xpath-functions"
->
+             xmlns:fn="http://www.w3.org/2005/xpath-functions">
+
    <ctl:function name="citef:append-kvp">
       <ctl:param name="url-prefix"/>
       <ctl:var-params max="4" min="1"/>
@@ -63,8 +63,8 @@ Service tests</p>
                   <p>The Web Coverage Service tests scripts are designed to test WCS
 implementations based on the WCS 1.0.0 specification.</p>
                   <p>A complete list of tests in the test suite is available in the
-<a href="wcsats.html" target="otherwindow">Abstract Test Suite</a> document, but note that not
-all of the tests are applicable to all servers. The number of tests
+<a href="/about/wcs/1.0.0/web/docs/wcs/1.0.0/wcs-1.0.0-ats.html" target="_blank">Abstract Test Suite</a> document, 
+but note that not all of the tests are applicable to all servers. The number of tests
 actually executed will depend on the capabilities advertised in the
 capabilities URL supplied below as well as the other options
 selected below.</p>
