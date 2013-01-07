@@ -1,24 +1,26 @@
-<config>
-	<organization>
-		<name>OGC</name>
-	</organization>
-	<standard>
-		<name>WCS</name>
-	</standard>
-	<version>
-		<name>1.1.1</name>
-	</version>
-	<revision>
-		<name>r0</name>
-	</revision>
-	
-	<suite>
-		<namespace-uri>http://schemas.opengis.net/wcs/1.1.1</namespace-uri>
-		<prefix>wcs</prefix>
-		<local-name>suite</local-name>
-	</suite>
-	<source>ctl</source>
-	<resources>resources</resources>
-	<web>web</web>
-</config>
-
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Add this entry to TE_BASE/config.xml (//organization/standard) -->
+<organization>
+  <name>OGC</name>
+  <standard>
+    <name>Web Coverage Service (WCS)</name>
+    <version>
+      <name>1.1.1 (deprecated)</name>
+      <suite>
+        <namespace-uri>http://schemas.opengis.net/wcs/1.1.1</namespace-uri>
+        <prefix>wcs</prefix>
+        <local-name>suite</local-name>
+        <title>WCS 1.1.1 Conformance Test Suite</title>
+        <description>Checks WCS implementations for conformance to OGC 07-067r2.</description>
+      </suite>
+      <revision>
+        <name>r1</name>
+        <sources>
+          <source>wcs/1.1.1/ctl</source>
+        </sources>
+        <resources>wcs/1.1.1/resources</resources>
+        <webdir>wcs/1.1.1/web</webdir>
+      </revision>
+    </version>
+  </standard>
+</organization>
