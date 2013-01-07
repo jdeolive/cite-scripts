@@ -87,28 +87,31 @@ implementations based on the WFS 1.0.0 specification.</p>
                   <p>The test engine will read the capabilities document from the
 server and use the values in this document to identify the tests
 that are to be run. A sample capabilities document can be obtained
-at <a href="OGCTestData/wfs/1.0.0/data/WfsCapabilities.xml">WfsCapabilities.xml</a>
+at <a target="_blank" href="/about/wfs/1.0.0/web/OGCTestData/wfs/1.0.0/data/WfsCapabilities.xml">WfsCapabilities.xml</a>
                   </p>
                   <p>The GML schemas for the test features can be downloaded from
-<a href="OGCTestData/wfs/1.0.0/schemas/dataFeatures.xsd">dataFeatures.xsd</a>,
-<a href="OGCTestData/wfs/1.0.0/schemas/geometryFeatures.xsd">geometryFeatures.xsd</a>
-and <a href="OGCTestData/wfs/1.0.0/schemas/complexFeatures.xsd">complexFeatures.xsd</a>
+<a target="_blank" href="/about/wfs/1.0.0/web/OGCTestData/wfs/1.0.0/schemas/dataFeatures.xsd">dataFeatures.xsd</a>,
+<a target="_blank" href="/about/wfs/1.0.0/web/OGCTestData/wfs/1.0.0/schemas/geometryFeatures.xsd">geometryFeatures.xsd</a>
+and <a target="_blank" href="/about/wfs/1.0.0/web/OGCTestData/wfs/1.0.0/schemas/complexFeatures.xsd">complexFeatures.xsd</a>
 and loaded into the WFS before executing the tests for the first
 time.</p>
                   <p>The tests for a basic WFS require test data to be loaded before
 the tests are run, this test data is not changed by the tests so
 will only need to be only loaded once. The test data can be
-downloaded as a WFS transaction with GML from <a href="OGCTestData/wfs/1.0.0/data/wfsBasicTestData.xml">Wfs basic test
-data</a> and <a href="OGCTestData/wfs/1.0.0/data/wfsComplexTestData.xml">Wfs complex
+downloaded as a WFS transaction with GML from <a target="_blank" href="/about/wfs/1.0.0/web/OGCTestData/wfs/1.0.0/data/wfsBasicTestData.xml">Wfs basic test
+data</a> and <a target="_blank" href="/about/wfs/1.0.0/web/OGCTestData/wfs/1.0.0/data/wfsComplexTestData.xml">Wfs complex
 value test data</a> (if complex values are supported, see checkbox
 below to enable these tests).</p>
                   <p>The tests for a transactional and locking WFS require test data
 to be loaded before the tests are run, this test data is changed by
 the tests so will need to be loaded before every test run. The test
-data can be downloaded as a WFS transaction with GML from <a href="OGCTestData/wfs/1.0.0/data/wfsLockTestData.xml">Wfs lock test
-data</a> and <a href="OGCTestData/wfs/1.0.0/data/wfsTransactionTestData.xml">Wfs
+data can be downloaded as a WFS transaction with GML from <a target="_blank" 
+href="/about/wfs/1.0.0/web/OGCTestData/wfs/1.0.0/data/wfsLockTestData.xml">Wfs lock test
+data</a> and <a target="_blank" href="/about/wfs/1.0.0/web/OGCTestData/wfs/1.0.0/data/wfsTransactionTestData.xml">Wfs
 transaction test data</a>
                   </p>
+                  <p><strong>Note:</strong> All test data are also available in a single <a target="_blank" 
+                  href="/about/wfs/1.0.0/web/data/data-wfs-1.0.0.zip">ZIP archive</a>.</p>
                   <p>Each of the above schemas use a different namespace, if your
 product only supports a single namespace you may run the tests
 multiple times, once for each dataset and then combine the passes

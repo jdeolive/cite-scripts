@@ -1,21 +1,25 @@
-<config>
-	<organization>
-		<name>OGC</name>
-	</organization>
-	<standard>
-		<name>WFS</name>
-	</standard>
-	<version>
-		<name>1.0.0</name>
-	</version>
-	<revision>
-		<name>r4</name>
-	</revision>
-	<suite>
-		<namespace-uri>http://www.opengis.net/wfs</namespace-uri>
-		<prefix>wfs</prefix>
-		<local-name>main_wfs</local-name>
-	</suite>
-	<source>ctl</source>
-	<web>web</web>
-</config>
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Add this entry to TE_BASE/config.xml (//organization/standard) -->
+<organization>
+  <name>OGC</name>
+  <standard>
+    <name>Web Feature Service (WFS)</name>
+    <version>
+      <name>1.0.0 (deprecated)</name>
+      <suite>
+        <namespace-uri>http://www.opengis.net/wfs</namespace-uri>
+        <prefix>wfs</prefix>
+        <local-name>main_wfs</local-name>
+        <title>WFS 1.0 Conformance Test Suite</title>
+        <description>Checks WFS implementations for conformance to OGC 02-058.</description>
+      </suite>
+      <revision>
+        <name>r5</name>
+        <sources>
+          <source>wfs/1.0.0/ctl</source>
+        </sources>
+        <webdir>wfs/1.0.0/web</webdir>
+      </revision>
+    </version>
+  </standard>
+</organization>
