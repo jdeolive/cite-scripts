@@ -281,7 +281,7 @@
             <xsl:choose>
                 <xsl:when test="starts-with($schemaFile,'http')">
                     <parsers:XMLValidatingParser ignoreErrors="false">
-                        <parsers:schema type="resource">../../wfs-1.1.0/resources/xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
+                        <parsers:schema type="resource">xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
                         <parsers:schemas>
                             <parsers:schema type="url">
                                 <xsl:value-of select="$schemaFile"/>								
@@ -292,8 +292,8 @@
                 <xsl:otherwise>
                     <parsers:XMLValidatingParser ignoreErrors="false">
                         <parsers:schemas>
-                            <parsers:schema type="resource">../../wfs-1.1.0/resources/xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>						
-                            <parsers:schema type="file">
+                            <parsers:schema type="resource">xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>						
+                            <parsers:schema type="resource">
                                 <xsl:value-of select="$schemaFile"/>
                             </parsers:schema>						
                         </parsers:schemas>

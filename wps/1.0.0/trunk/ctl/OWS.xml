@@ -84,7 +84,7 @@
                     <param name="request">GetCapabilities</param>
                     <parsers:XMLValidatingParser>						
                         <parsers:schemas>
-                            <parsers:schema type="resource">../../wfs-1.1.0/resources/xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
+                            <parsers:schema type="resource">xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
                             <parsers:schema>
                                 <xsl:attribute name="type">
                                     <xsl:value-of select="$capabilitiesResponseSchemaType" />
@@ -284,7 +284,7 @@
                     <param name="REQUEST">GetCapabilities</param>
                     <parsers:XMLValidatingParser>
                         <parsers:schemas>
-                            <parsers:schema type="resource">../../wfs-1.1.0/resources/xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
+                            <parsers:schema type="resource">xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
                             <parsers:schema>
                                 <xsl:attribute name="type">
                                     <xsl:value-of select="$responseSchemaType" />
@@ -313,7 +313,7 @@
                     <param name="RequesT">GetCapabilities</param>
                     <parsers:XMLValidatingParser>
                         <parsers:schemas>
-                            <parsers:schema type="resource">../../wfs-1.1.0/resources/xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
+                            <parsers:schema type="resource">xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
                             <parsers:schema>
                                 <xsl:attribute name="type">
                                     <xsl:value-of select="$responseSchemaType" />
@@ -342,7 +342,7 @@
                     <param name="request">GetCapabilities</param>
                     <parsers:XMLValidatingParser>
                         <parsers:schemas>
-                            <parsers:schema type="resource">../../wfs-1.1.0/resources/xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
+                            <parsers:schema type="resource">xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
                             <parsers:schema>
                                 <xsl:attribute name="type">
                                     <xsl:value-of select="$responseSchemaType" />
@@ -466,7 +466,7 @@
                     </param>
                     <parsers:XMLValidatingParser>
                         <parsers:schemas>
-                            <parsers:schema type="resource">../../wfs-1.1.0/resources/xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
+                            <parsers:schema type="resource">xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
                             <parsers:schema>
                                 <xsl:attribute name="type">
                                     <xsl:value-of select="$responseSchemaType" />
@@ -537,7 +537,7 @@
                     </param>
                     <parsers:XMLValidatingParser>
                         <parsers:schemas>
-                            <parsers:schema type="resource">../../wfs-1.1.0/resources/xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
+                            <parsers:schema type="resource">xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
                             <parsers:schema>
                                 <xsl:attribute name="type">
                                     <xsl:value-of select="$responseSchemaType" />
@@ -604,7 +604,7 @@
                     <param name="acceptversions">2000-01-01</param>
                     <parsers:XMLValidatingParser>
                         <parsers:schemas>
-                            <parsers:schema type="resource">../../wfs-1.1.0/resources/xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
+                            <parsers:schema type="resource">xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
                             <parsers:schema>
                                 <xsl:attribute name="type">
                                     <xsl:value-of select="$exceptionReportSchemaType" />
@@ -664,7 +664,7 @@
                     <param name="request">GetCapabilities</param>
                     <parsers:XMLValidatingParser>
                         <parsers:schemas>
-                            <parsers:schema type="resource">../../wfs-1.1.0/resources/xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
+                            <parsers:schema type="resource">xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
                             <parsers:schema>
                                 <xsl:attribute name="type">
                                     <xsl:value-of select="$exceptionReportSchemaType" />
@@ -727,7 +727,7 @@
                     <param name="request">GetCapabilities</param>
                     <parsers:XMLValidatingParser>
                         <parsers:schemas>
-                            <parsers:schema type="resource">../../wfs-1.1.0/resources/xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
+                            <parsers:schema type="resource">xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
                             <parsers:schema>
                                 <xsl:attribute name="type">
                                     <xsl:value-of select="$exceptionReportSchemaType" />
@@ -793,7 +793,7 @@
                     <param name="acceptversions">2000-01-01</param>
                     <parsers:XMLValidatingParser>
                         <parsers:schemas>
-                            <parsers:schema type="resource">../../wfs-1.1.0/resources/xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
+                            <parsers:schema type="resource">xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
                             <parsers:schema>
                                 <xsl:attribute name="type">
                                     <xsl:value-of select="$exceptionReportSchemaType" />
@@ -863,7 +863,7 @@
                     </param>
                     <parsers:XMLValidatingParser>
                         <parsers:schemas>
-                            <parsers:schema type="resource">../../wfs-1.1.0/resources/xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
+                            <parsers:schema type="resource">xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
                             <parsers:schema>
                                 <xsl:attribute name="type">
                                     <xsl:value-of select="$exceptionReportSchemaType" />
@@ -921,7 +921,7 @@
                     <method>get</method>
                     <parsers:XMLValidatingParser>
                         <parsers:schemas>
-                            <parsers:schema type="resource">../../wfs-1.1.0/resources/xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
+                            <parsers:schema type="resource">xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
                             <parsers:schema>
                                 <xsl:attribute name="type">
                                     <xsl:value-of select="$exceptionReportSchemaType" />
@@ -993,7 +993,7 @@
                     </param>
                     <parsers:XMLValidatingParser>
                         <parsers:schemas>
-                            <parsers:schema type="resource">../../wfs-1.1.0/resources/xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
+                            <parsers:schema type="resource">xsd/w3c/xmlschema/1.0/XMLSchema.xsd</parsers:schema>
                             <parsers:schema>
                                 <xsl:attribute name="type">
                                     <xsl:value-of select="$responseSchemaType" />

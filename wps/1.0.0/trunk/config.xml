@@ -1,22 +1,26 @@
-<config>
-	<organization>
-		<name>OGC</name>
-	</organization>
-	<standard>
-		<name>WPS</name>
-	</standard>
-	<version>
-		<name>1.0.0</name>
-	</version>
-	<suite>
-		<namespace-uri>http://www.opengis.net/wps/1.0.0</namespace-uri>
-		<prefix>wps</prefix>
-		<local-name>suite</local-name>
-	</suite>
-	<source>ctl</source>
-	<web>web</web>
-	<revision>
-		<name>r0</name>
-	</revision>
-</config>
-
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Add this entry to TE_BASE/config.xml (//organization/standard) -->
+<organization>
+  <name>OGC</name>
+  <standard>
+    <name>Web Processing Service (WPS)</name>
+    <version>
+      <name>1.0.0</name>
+      <suite>
+        <namespace-uri>http://www.opengis.net/wps/1.0.0</namespace-uri>
+        <prefix>wps</prefix>
+        <local-name>suite</local-name>
+        <title>WPS 1.0 Conformance Test Suite</title>
+        <description>Checks WPS implementations for conformance to OGC 05-007r7.</description>
+      </suite>
+      <revision>
+        <name>r1</name>
+        <sources>
+          <source>wps/1.0.0/ctl</source>
+        </sources>
+        <resources>wps/1.0.0/resources</resources>
+        <webdir>wps/1.0.0/web</webdir>
+      </revision>
+    </version>
+  </standard>
+</organization>
