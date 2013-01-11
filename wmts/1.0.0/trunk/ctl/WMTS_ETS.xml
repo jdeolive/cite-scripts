@@ -92,10 +92,10 @@
 				   <xsl:variable name="schemaRoot">
 					   <xsl:choose>
 						   <xsl:when test="te:isWeb() = 'true' ">
-							   <xsl:text>../webapps/teamengine/WEB-INF/scripts/wmts-1.0.0-dev/resources/xsd/ogc/</xsl:text>
+							   <xsl:text>xsd/ogc/</xsl:text>
 						   </xsl:when>
 						   <xsl:otherwise>
-							   <xsl:text>webapps/teamengine/WEB-INF/scripts/wmts-1.0.0-dev/resources/xsd/ogc/</xsl:text>
+							   <xsl:text>xsd/ogc/</xsl:text>
 						   </xsl:otherwise>
 					   </xsl:choose>
 				   </xsl:variable>
@@ -300,7 +300,7 @@
 						</ctl:call-function>
 					</xsl:variable>	
 					<!-- change wmtsSchemaType to string('url') once TileMatrixLimits schema errors are fixed -->
-					<xsl:variable name="wmtsSchemaType" select="string('file')"/>
+					<xsl:variable name="wmtsSchemaType" select="string('resource')"/>
 
 					<ctl:message>Checking prerequisites... </ctl:message>
 					<ctl:call-function name="ctl:startStopwatch">

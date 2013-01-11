@@ -71,7 +71,7 @@
 					<parsers:XMLValidatingParser ignoreErrors="false">
 						<parsers:schemas>
 							<parsers:schema type="url">http://www.w3.org/2001/xml.xsd</parsers:schema>						
-							<parsers:schema type="file">
+							<parsers:schema type="resource">
 								<xsl:value-of select="$schemaFile"/>
 							</parsers:schema>
 							<parsers:schema type="url">http://schemas.opengis.net/ows/1.1.0/owsExceptionReport.xsd</parsers:schema>	
