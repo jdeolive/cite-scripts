@@ -14,7 +14,7 @@
 								<wcs:GetCapabilities  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 											xmlns:ows="http://www.opengis.net/ows/1.1"
 											xmlns:wcs="http://www.opengis.net/wcs/2.0"
-											service="WCS" version="2.0">
+											service="WCS" version="2.0.1">
 									<ows:AcceptVersions>
 										<ows:Version>2.0</ows:Version>
 									</ows:AcceptVersions>
@@ -26,6 +26,12 @@
 					</ctlp:XMLValidatingParser>
 				</ctl:request>
 			</xsl:variable>
+			<xsl:variable name="SupportsGML">false</xsl:variable>
+			<xsl:for-each select="$Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']">
+				<xsl:if test=". = 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml'">
+					<xsl:variable name="SupportsGML">true</xsl:variable>
+			        </xsl:if>
+			</xsl:for-each>			
 			<xsl:choose>
 				<xsl:when test="not(empty($Capabilities))">
 					<ctl:call-test name="wcs2:post-xml-req1">
@@ -114,7 +120,7 @@
 								<wcs:GetCapabilities  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 											xmlns:ows="http://www.opengis.net/ows/1.1"
 											xmlns:wcs="http://www.opengis.net/wcs/2.0"
-											service="WCS" version="2.0">
+											service="WCS" version="2.0.1">
 									<ows:AcceptVersions>
 										<ows:Version>2.0</ows:Version>
 									</ows:AcceptVersions>
@@ -149,7 +155,7 @@
 								<wcs:GetCapabilities_Bogus  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 											xmlns:ows="http://www.opengis.net/ows/1.1"
 											xmlns:wcs="http://www.opengis.net/wcs/2.0"
-											service="WCS" version="2.0">
+											service="WCS" version="2.0.1">
 									<ows:AcceptVersions>
 										<ows:Version>2.0</ows:Version>
 									</ows:AcceptVersions>
@@ -193,7 +199,7 @@
     								xmlns:wcs='http://www.opengis.net/wcs/2.0'
     								xmlns:gml='http://www.opengis.net/gml/3.2'
     								xsi:schemaLocation='http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd'
-    								service="WCS" version="2.0">
+    								service="WCS" version="2.0.1">
     								<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:DescribeCoverage>]]></ctl:body>
 					<ctlp:XMLValidatingParser>
 						<ctlp:schemas>
@@ -226,7 +232,7 @@
     								xmlns:wcs='http://www.opengis.net/wcs/2.0'
     								xmlns:gml='http://www.opengis.net/gml/3.2'
     								xsi:schemaLocation='http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd'
-    								service="WCS" version="2.0">
+    								service="WCS" version="2.0.1">
     							<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:DescribeCoverage>]]></ctl:body>
 					<ctlp:XMLValidatingParser>
 						<ctlp:schemas>
@@ -253,10 +259,11 @@
 	<ctl:test name="wcs2:post-xml-req5">
 		<ctl:param name="url"/>
 		<ctl:param name="Capabilities"/>
+		<ctl:param name="SupportsGML" />		
 		<ctl:assertion>Req5:Send syntactically legal and illegal GetCoverage request to server under test, verify that the server responds appropriately.</ctl:assertion>
 		<ctl:code>
 			<xsl:choose>
-				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
+			        <xsl:when test="$SupportsGML = 'true'">
 					<xsl:variable name="GetCoverage">
 						<ctl:request>
 							<ctl:url>
@@ -269,7 +276,7 @@
 									xmlns:gml="http://www.opengis.net/gml/3.2"
 									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 									xsi:schemaLocation="http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd"
-									service="WCS" version="2.0">
+									service="WCS" version="2.0.1">
 									<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:GetCoverage>]]></ctl:body>
 							<ctlp:XMLValidatingParser>
 								<ctlp:schemas>
@@ -302,7 +309,7 @@
 									xmlns:gml="http://www.opengis.net/gml/3.2"
 									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 									xsi:schemaLocation="http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd"
-									service="WCS" version="2.0">
+									service="WCS" version="2.0.1">
 									<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:GetCoverage>]]></ctl:body>
 							<ctlp:XMLValidatingParser>
 								<ctlp:schemas>
@@ -347,7 +354,7 @@
 						<wcs:GetCapabilities_Bougus  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 							xmlns:ows="http://www.opengis.net/ows/1.1"
 							xmlns:wcs="http://www.opengis.net/wcs/2.0"
-							service="WCS" version="2.0">
+							service="WCS" version="2.0.1">
 							<ows:AcceptVersions>
 								<ows:Version>2.0</ows:Version>
 							</ows:AcceptVersions>
@@ -391,7 +398,7 @@
     							xmlns:wcs='http://www.opengis.net/wcs/2.0'
     							xmlns:gml='http://www.opengis.net/gml/3.2'
     							xsi:schemaLocation='http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd'
-    							service="WCS" version="2.0">
+    							service="WCS" version="2.0.1">
     							<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:DescribeCoverage>]]></ctl:body>
 					<ctlp:XMLValidatingParser>
 						<ctlp:schemas>
@@ -434,7 +441,7 @@
 									xmlns:gml="http://www.opengis.net/gml/3.2"
 									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 									xsi:schemaLocation="http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd"
-									service="WCS" version="2.0">
+									service="WCS" version="2.0.1">
 									<wcs:CoverageId>]]><xsl:value-of select="$Capabilities//*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId']"/><![CDATA[</wcs:CoverageId></wcs:GetCoverage>]]></ctl:body>
 							<ctlp:XMLValidatingParser>
 								<ctlp:schemas>
