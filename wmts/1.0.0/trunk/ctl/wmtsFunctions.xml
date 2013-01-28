@@ -3426,7 +3426,7 @@ xmlns:wwwFunctions="https://cite.opengeospatial.org/wmts-1.0.0/src/ctl/wwwFuncti
 		<ctl:param name="interface"/>
 		<ctl:code>
 			<xsl:for-each select="$selected/sel/*">
-				<xsl:variable name="nodeName" select="node-name(.)"/>
+				<xsl:variable name="nodeName" select="name(.)"/>
 				<xsl:if test="starts-with($nodeName, $interface)">
 					<ctl:message>
 						<xsl:value-of select="node-name(.)"/>:<xsl:value-of select="."/>

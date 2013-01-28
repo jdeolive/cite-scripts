@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wmts="http://www.opengis.net/wmts/1.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:gml="http://www.opengis.net/gml" xmlns:xlink="http://www.w3.org/1999/xlink" targetNamespace="http://www.opengis.net/wmts/1.0" elementFormDefault="qualified" version="1.0.0" xml:lang="en">
+<schema targetNamespace="http://www.opengis.net/wmts/1.0"
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:wmts="http://www.opengis.net/wmts/1.0" 
+	xmlns:ows="http://www.opengis.net/ows/1.1" 
+	xmlns:gml="http://www.opengis.net/gml" 
+	xmlns:xlink="http://www.w3.org/1999/xlink" 
+	elementFormDefault="qualified" xml:lang="en"
+	version="1.0.1">
 	<annotation>
-		<appinfo>wmtsGetCapabilities_response 2009-01-31</appinfo>
+		<appinfo>wmtsGetCapabilities_response</appinfo>
 		<documentation>
 			This XML Schema Document encodes the WMTS GetCapabilities 
 			operations response message.
 			
 			WMTS is an OGC Standard.
-			Copyright (c) 2009,2010 Open Geospatial Consortium, Inc. All Rights Reserved.
+			Copyright (c) 2009,2010 Open Geospatial Consortium.
 			To obtain additional rights of use, visit http://www.opengeospatial.org/legal/.
-			
-			2011-05-05 PwD  data type of TileMatrixLimits min / max tile row / col elements changed from positiveInteger to nonNegativeInteger; 
-			see WMTSerrata.txt
 		</documentation>
+    <documentation>
+    2011-05-05 PwD  data type of TileMatrixLimits min / max tile row / col elements changed 
+    from positiveInteger to nonNegativeInteger; see WMTSerrata.txt
+    </documentation>
 	</annotation>
 	<!-- *********************************************************************
 	             Includes and imports.                            
           ********************************************************************* -->
+	<!--<include schemaLocation="wmts.xsd"/>-->
 	<import namespace="http://www.opengis.net/ows/1.1" schemaLocation="http://schemas.opengis.net/ows/1.1.0/owsAll.xsd"/>
-	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://schemas.opengis.net/xlink/1.0.0/xlinks.xsd"/> 
+	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.w3.org/1999/xlink.xsd"/>
 	<!-- *********************************************************************
 	          The top-level Capabilities element.                            
           ********************************************************************* -->
@@ -122,7 +131,8 @@
 							<documentation>Reference to a tileMatrixSet and limits</documentation>
 						</annotation>
 					</element>
-					<element name="ResourceURL" type="wmts:URLTemplateType" minOccurs="0" maxOccurs="unbounded">
+					<element name="ResourceURL" type="wmts:URLTemplateType" 
+														minOccurs="0" maxOccurs="unbounded">
 						<annotation>
 							<documentation>
 								URL template to a tile or a FeatureInfo resource on 
@@ -333,7 +343,6 @@
 						<documentation>Minimum tile row index valid for this 
 						layer. From 0 to maxTileRow</documentation>
 					</annotation>
-					<!-- was  type="positiveInteger" but that is incorrect per the documentation -->
 				</element>
 				<element name="MaxTileRow" type="nonNegativeInteger">
 					<annotation>
@@ -341,14 +350,12 @@
 						layer. From minTileRow to matrixWidth-1 of the tileMatrix 
 						section of this tileMatrixSet</documentation>
 					</annotation>
-					<!-- was  type="positiveInteger" but that is incorrect per the documentation -->
 				</element>
 				<element name="MinTileCol" type="nonNegativeInteger">
 					<annotation>
 						<documentation>Minimum tile column index valid for this 
 						layer. From 0 to maxTileCol</documentation>
 					</annotation>
-					<!-- was  type="positiveInteger" but that is incorrect per the documentation -->
 				</element>
 				<element name="MaxTileCol" type="nonNegativeInteger">
 					<annotation>
@@ -356,7 +363,6 @@
 						From minTileCol to tileHeight-1 of the tileMatrix section 
 						of this tileMatrixSet.</documentation>
 					</annotation>
-					<!-- was  type="positiveInteger" but that is incorrect per the documentation -->
 				</element>
 			</sequence>
 		</complexType>
