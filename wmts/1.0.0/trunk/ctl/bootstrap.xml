@@ -397,10 +397,10 @@
             <xsl:element name="Server.KVP.POST.GetCapabilities.Response.Dimension.Identifiers.Unique.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
 
             <xsl:variable name="Server.KVP.GET.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisite-2" select="some $wkss in $wmts.capabilities.doc/wmts:Contents/wmts:TileMatrixSet/wmts:WellKnownScaleSet satisfies boolean($wkss = 'urn:ogc:def:wkss:OGC:1.0:GlobalCRS84Scale' or $wkss = 'urn:ogc:def:wkss:OGC:1.0:GlobalCRS84Pixel' or $wkss = 'urn:ogc:def:wkss:OGC:1.0:GoogleCRS84Quad' or $wkss = 'urn:ogc:def:wkss:OGC:1.0:GoogleMapsCompatible')"/>
-            <xsl:element name="Server.KVP.POST.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and ($Server.KVP.GET.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisite-2 = 'true'))"/></xsl:element>
+            <xsl:element name="Server.KVP.POST.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and $Server.KVP.GET.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisite-2)"/></xsl:element>
 
             <xsl:variable name="Server.KVP.GET.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisite-2" select="boolean($wmts.capabilities.doc/wmts:Themes/wmts:Theme/wmts:LayerRef)"/>
-            <xsl:element name="Server.KVP.POST.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and ($Server.KVP.GET.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisite-2 = 'true'))"/></xsl:element>						
+            <xsl:element name="Server.KVP.POST.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisites"><xsl:value-of select="string($getCapabilitiesKVPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and $Server.KVP.GET.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisite-2)"/></xsl:element>						
           </xsl:element>
 
           <!-- GetTile -->
@@ -654,10 +654,10 @@
             <xsl:element name="Server.XML.POST.GetCapabilities.Response.Dimension.Identifiers.Unique.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
 
             <xsl:variable name="Server.KVP.GET.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisite-2" select="some $wkss in $wmts.capabilities.doc/wmts:Contents/wmts:TileMatrixSet/wmts:WellKnownScaleSet satisfies boolean($wkss = 'urn:ogc:def:wkss:OGC:1.0:GlobalCRS84Scale' or $wkss = 'urn:ogc:def:wkss:OGC:1.0:GlobalCRS84Pixel' or $wkss = 'urn:ogc:def:wkss:OGC:1.0:GoogleCRS84Quad' or $wkss = 'urn:ogc:def:wkss:OGC:1.0:GoogleMapsCompatible')"/>
-            <xsl:element name="Server.XML.POST.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and ($Server.KVP.GET.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisite-2 = 'true'))"/></xsl:element>
+            <xsl:element name="Server.XML.POST.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and $Server.KVP.GET.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisite-2)"/></xsl:element>
 
             <xsl:variable name="Server.KVP.GET.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisite-2" select="boolean($wmts.capabilities.doc/wmts:Themes/wmts:Theme/wmts:LayerRef)"/>
-            <xsl:element name="Server.XML.POST.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and ($Server.KVP.GET.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisite-2 = 'true'))"/></xsl:element>	
+            <xsl:element name="Server.XML.POST.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisites"><xsl:value-of select="string($getCapabilitiesXMLPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and $Server.KVP.GET.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisite-2)"/></xsl:element>	
           </xsl:element>
 
           <!-- GetTile -->
@@ -911,10 +911,10 @@
             <xsl:element name="Server.SOAP.POST.GetCapabilities.Response.Dimension.Identifiers.Unique.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid)"/></xsl:element>
 
             <xsl:variable name="Server.KVP.GET.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisite-2" select="some $wkss in $wmts.capabilities.doc/wmts:Contents/wmts:TileMatrixSet/wmts:WellKnownScaleSet satisfies boolean($wkss = 'urn:ogc:def:wkss:OGC:1.0:GlobalCRS84Scale' or $wkss = 'urn:ogc:def:wkss:OGC:1.0:GlobalCRS84Pixel' or $wkss = 'urn:ogc:def:wkss:OGC:1.0:GoogleCRS84Quad' or $wkss = 'urn:ogc:def:wkss:OGC:1.0:GoogleMapsCompatible')"/>
-            <xsl:element name="Server.SOAP.POST.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and ($Server.KVP.GET.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisite-2 = 'true'))"/></xsl:element>
+            <xsl:element name="Server.SOAP.POST.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and $Server.KVP.GET.GetCapabilities.Response.TileMatrixSet.WellKnownScaleSet.Prerequisite-2)"/></xsl:element>
 
             <xsl:variable name="Server.KVP.GET.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisite-2" select="boolean($wmts.capabilities.doc/wmts:Themes/wmts:Theme/wmts:LayerRef)"/>
-            <xsl:element name="Server.SOAP.POST.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and ($Server.KVP.GET.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisite-2 = 'true'))"/></xsl:element>
+            <xsl:element name="Server.SOAP.POST.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisites"><xsl:value-of select="string($getCapabilitiesSOAPPOST and $Server.KVP.GET.GetCapabilities.Response.SchemaValid and $Server.KVP.GET.GetCapabilities.Response.Theme.LayerRef.Valid.Prerequisite-2)"/></xsl:element>
           </xsl:element>
 
           <!-- GetTile -->
