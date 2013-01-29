@@ -738,7 +738,7 @@
         <xsl:element name="Server.XML.POST.GetFeatureInfo.Invalid.TileMatrix.Prerequisites"><xsl:value-of select="string($getFeatureInfoXMLPOST and $Server.KVP.GET.GetFeatureInfo.Invalid.TileMatrix.Prerequisite-2)"/></xsl:element>
 
         <xsl:variable name="Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2" select="boolean($wmts.capabilities.doc/wmts:Contents/wmts:Layer[wmts:InfoFormat and wmts:TileMatrixSetLink[not(wmts:TileMatrixSetLimits)]])"/>
-        <xsl:element name="Server.XML.POST.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getFeatureInfoXMLPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
+        <xsl:element name="Server.XML.POST.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getFeatureInfoXMLPOST and $Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2)"/></xsl:element>
 
         <xsl:variable name="Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-2" select="$Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2"/>
         <xsl:element name="Server.XML.POST.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getFeatureInfoXMLPOST and $Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-2)"/></xsl:element>
@@ -994,7 +994,7 @@
         <xsl:element name="Server.SOAP.POST.GetFeatureInfo.Invalid.TileMatrix.Prerequisites"><xsl:value-of select="string($getFeatureInfoSOAPPOST and $Server.KVP.GET.GetFeatureInfo.Invalid.TileMatrix.Prerequisite-2)"/></xsl:element>
 
         <xsl:variable name="Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2" select="boolean($wmts.capabilities.doc/wmts:Contents/wmts:Layer[wmts:InfoFormat and wmts:TileMatrixSetLink[not(wmts:TileMatrixSetLimits)]])"/>
-        <xsl:element name="Server.SOAP.POST.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getFeatureInfoSOAPPOST and ($Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
+        <xsl:element name="Server.SOAP.POST.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getFeatureInfoSOAPPOST and $Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2)"/></xsl:element>
 
         <xsl:variable name="Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-2" select="$Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2"/>
         <xsl:element name="Server.SOAP.POST.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getFeatureInfoSOAPPOST and $Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-2)"/></xsl:element>
@@ -1189,7 +1189,7 @@
         <xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.TileMatrix.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and $Server.KVP.GET.GetFeatureInfo.Invalid.TileMatrix.Prerequisite-2)"/></xsl:element>
 
         <xsl:variable name="Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2" select="boolean($wmts.capabilities.doc/wmts:Contents/wmts:Layer[wmts:InfoFormat and wmts:TileMatrixSetLink[not(wmts:TileMatrixSetLimits)]])"/>
-        <xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and ($Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2 = 'true'))"/></xsl:element>
+        <xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and $Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2)"/></xsl:element>
 
         <xsl:variable name="Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-2" select="$Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Row.No.TileMatrixSetLimits.Prerequisite-2"/>
         <xsl:element name="Server.RESTful.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisites"><xsl:value-of select="string($getFeatureInfoRESTful and $Server.KVP.GET.GetFeatureInfo.Invalid.Tile.Col.No.TileMatrixSetLimits.Prerequisite-2)"/></xsl:element>

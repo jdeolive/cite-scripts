@@ -30,7 +30,19 @@
           <namespace-uri>http://www.opengis.net/wmts/1.0</namespace-uri>
           <prefix>wmts</prefix>
           <local-name>server.profile.kvp.post</local-name>
-          <title>POST method binding</title>
+          <title>POST/KVP method binding</title>
+        </profile>
+        <profile>
+          <namespace-uri>http://www.opengis.net/wmts/1.0</namespace-uri>
+          <prefix>wmts</prefix>
+          <local-name>server.profile.xml.post</local-name>
+          <title>POST/XML method binding</title>
+        </profile>
+        <profile>
+          <namespace-uri>http://www.opengis.net/wmts/1.0</namespace-uri>
+          <prefix>wmts</prefix>
+          <local-name>server.profile.soap.post</local-name>
+          <title>POST/SOAP method binding</title>
         </profile>
       </revision>
     </version>
