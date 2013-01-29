@@ -270,7 +270,7 @@
     </xsl:when>
     <xsl:otherwise>
       <ctl:message>Server does not support KVP GET GetCapabilities and GetTile ... failed prerequisite check.  No other test will be executed.</ctl:message>
-      <ctl:fail/>
+      <ctl:skipped />
     </xsl:otherwise>
   </xsl:choose>
 </ctl:code>
@@ -530,7 +530,7 @@
   </xsl:when>
   <xsl:otherwise>
     <ctl:message>Server does not support KVP POST GetCapabilities and GetTile ... failed prerequisite check.  No other test will be executed.</ctl:message>
-    <ctl:fail/>
+    <ctl:skipped/>
   </xsl:otherwise>
 </xsl:choose>
 </ctl:code>
@@ -786,7 +786,7 @@
   </xsl:when>
   <xsl:otherwise>
     <ctl:message>Server does not support XML POST GetCapabilities and GetTile ... failed prerequisite check.  No other test will be executed.</ctl:message>
-    <ctl:fail/>
+    <ctl:skipped />
   </xsl:otherwise>
 </xsl:choose>
 </ctl:code>
@@ -1042,7 +1042,7 @@
   </xsl:when>
   <xsl:otherwise>
     <ctl:message>Server does not support SOAP POST GetCapabilities and GetTile ... failed prerequisite check.  No other test will be executed.</ctl:message>
-    <ctl:fail/>
+    <ctl:skipped />
   </xsl:otherwise>
 </xsl:choose>
 </ctl:code>
@@ -1229,7 +1229,7 @@
   </xsl:when>
   <xsl:otherwise>
     <ctl:message>Server does not support KVP POST GetCapabilities and GetTile ... failed prerequisite check.  No other test will be executed.</ctl:message>
-    <ctl:fail/>
+    <ctl:skipped />
   </xsl:otherwise>
 </xsl:choose>
 </ctl:code>

@@ -24,25 +24,31 @@
           <namespace-uri>http://www.opengis.net/wmts/1.0</namespace-uri>
           <prefix>wmts</prefix>
           <local-name>server.profile.kvp.get</local-name>
-          <title>GET method binding</title>
+          <title>GET binding</title>
         </profile>
         <profile>
           <namespace-uri>http://www.opengis.net/wmts/1.0</namespace-uri>
           <prefix>wmts</prefix>
           <local-name>server.profile.kvp.post</local-name>
-          <title>POST/KVP method binding</title>
+          <title>POST/KVP binding</title>
         </profile>
         <profile>
           <namespace-uri>http://www.opengis.net/wmts/1.0</namespace-uri>
           <prefix>wmts</prefix>
           <local-name>server.profile.xml.post</local-name>
-          <title>POST/XML method binding</title>
+          <title>POST/XML binding</title>
         </profile>
         <profile>
           <namespace-uri>http://www.opengis.net/wmts/1.0</namespace-uri>
           <prefix>wmts</prefix>
           <local-name>server.profile.soap.post</local-name>
-          <title>POST/SOAP method binding</title>
+          <title>POST/SOAP binding</title>
+        </profile>
+        <profile>
+          <namespace-uri>http://www.opengis.net/wmts/1.0</namespace-uri>
+          <prefix>wmts</prefix>
+          <local-name>server.profile.restful</local-name>
+          <title>REST binding</title>
         </profile>
       </revision>
     </version>
