@@ -102,7 +102,7 @@
 								<wcs:GetCapabilities  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 											xmlns:ows="http://www.opengis.net/ows/1.1"
 											xmlns:wcs="http://www.opengis.net/wcs/2.0"
-											service="WCS" version="2.0">
+											service="WCS" version="2.0.1">
 									<ows:AcceptVersions>
 										<ows:Version>2.0</ows:Version>
 									</ows:AcceptVersions>
@@ -137,7 +137,7 @@
 								<wcs:GetCapabilities  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 											xmlns:ows="http://www.opengis.net/ows/1.1"
 											xmlns:wcs="http://www.opengis.net/wcs/2.0"
-											service="WCS" version="2.0" service="WCS">
+											service="WCS" version="2.0.1" service="WCS">
 									<ows:AcceptVersions>
 										<ows:Version>2.0</ows:Version>
 									</ows:AcceptVersions>
@@ -174,7 +174,7 @@
 					</ctl:url>
 					<ctl:method>get</ctl:method>
 					<ctl:param name="SERVICE">WCS</ctl:param>
-					<ctl:param name="VERSION">2.0</ctl:param>
+					<ctl:param name="VERSION">2.0.1</ctl:param>
 					<ctl:param name="REQUEST">GetCapabilities</ctl:param>
 					<ctlp:XMLValidatingParser>
 						<ctlp:schemas>
@@ -202,7 +202,7 @@
 					</ctl:url>
 					<ctl:method>get</ctl:method>
 					<ctl:param name="SERVICE">WCS</ctl:param>
-					<ctl:param name="VERSION">2.0</ctl:param>
+					<ctl:param name="VERSION">2.0.1</ctl:param>
 					<ctl:param name="SERVICE">WCS</ctl:param>
 					<ctl:param name="REQUEST">GetCapabilities</ctl:param>
 					<ctlp:XMLValidatingParser>
@@ -237,7 +237,7 @@
 						<xsl:value-of select="$url"/>
 					</ctl:url>
 					<ctl:body>
-						<wcs:GetCapabilities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:wcs="http://www.opengis.net/wcs/2.0" service="WCS" version="2.0">
+						<wcs:GetCapabilities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:wcs="http://www.opengis.net/wcs/2.0" service="WCS" version="2.0.1">
 							<ows:AcceptVersions>
 								<ows:Version>2.0</ows:Version>
 							</ows:AcceptVersions>
@@ -281,7 +281,7 @@
 								<wcs:GetCapabilities  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 											xmlns:ows="http://www.opengis.net/ows/1.1"
 											xmlns:wcs="http://www.opengis.net/wcs/2.0"
-											service="WCS" version="2.0">
+											service="WCS" version="2.0.1">
 									<ows:AcceptVersions>
 										<ows:Version>2.0</ows:Version>
 									</ows:AcceptVersions>
@@ -318,7 +318,7 @@
 					</ctl:url>
 					<ctl:method>get</ctl:method>
 					<ctl:param name="SERVICE">WCS</ctl:param>
-					<ctl:param name="VERSION">2.0</ctl:param>
+					<ctl:param name="VERSION">2.0.1</ctl:param>
 					<ctl:param name="REQUEST">GetCapabilities</ctl:param>
 					<ctlp:XMLValidatingParser>
 						<ctlp:schemas>
@@ -352,7 +352,7 @@
 						<xsl:value-of select="$url"/>
 					</ctl:url>
 					<ctl:body>
-						<wcs:GetCapabilities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:wcs="http://www.opengis.net/wcs/2.0" service="WCS" version="2.0">
+						<wcs:GetCapabilities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:wcs="http://www.opengis.net/wcs/2.0" service="WCS" version="2.0.1">
 							<ows:AcceptVersions>
 								<ows:Version>2.0</ows:Version>
 							</ows:AcceptVersions>
@@ -400,7 +400,7 @@
 									xmlns:wcs='http://www.opengis.net/wcs/2.0'
 									xmlns:gml='http://www.opengis.net/gml/3.2'
 									xsi:schemaLocation='http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd'
-									service="WCS" version="2.0">
+									service="WCS" version="2.0.1">
 									<wcs:CoverageId>]]><xsl:value-of select="."/><![CDATA[</wcs:CoverageId></wcs:DescribeCoverage>]]></ctl:body>
 						<ctlp:XMLValidatingParser>
 							<ctlp:schemas>
@@ -478,7 +478,7 @@
 							<xsl:value-of select="$url"/>
 						</ctl:url>
 						<ctl:body>
-							<wcs:DescribeCoverage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wcs="http://www.opengis.net/wcs/2.0" xmlns:gml="http://www.opengis.net/gml/3.2" xsi:schemaLocation="http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd" service="WCS" version="2.0">
+							<wcs:DescribeCoverage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wcs="http://www.opengis.net/wcs/2.0" xmlns:gml="http://www.opengis.net/gml/3.2" xsi:schemaLocation="http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd" service="WCS" version="2.0.1">
 								<wcs:CoverageId>
 									<xsl:value-of select="."/>
 								</wcs:CoverageId>

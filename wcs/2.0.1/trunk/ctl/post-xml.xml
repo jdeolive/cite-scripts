@@ -341,6 +341,7 @@
 	<ctl:test name="wcs2:post-xml-req6">
 		<ctl:param name="url"/>
 		<ctl:param name="Capabilities"/>
+		<ctl:param name="SupportsGML" />
 		<ctl:assertion>Req6:Send requests of all types supported to the server under test. Each request shall include all (mandatory and) optional parameters and shall be valid except for one parameter which shall contain an encoding error described in the exception specification. Test passes if exception is reported according to requirement.</ctl:assertion>
 		<ctl:code>
 			<xsl:variable name="Capabilities">
@@ -428,7 +429,7 @@
 				</xsl:otherwise>
 			</xsl:choose>
 			<xsl:choose>
-				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml-coverage')">
+				<xsl:when test="$SupportsGML = 'true'">
 					<xsl:variable name="GetCoverage">
 						<ctl:request>
 							<ctl:url>

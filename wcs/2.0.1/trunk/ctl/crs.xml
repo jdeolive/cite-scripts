@@ -45,7 +45,13 @@
 								<ctl:fail/>
 							</xsl:if>
 						</xsl:otherwise>
-					</xsl:choose>     
+					</xsl:choose>   
+			<xsl:variable name="SupportsGML">false</xsl:variable>
+			<xsl:for-each select="$Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']">
+			  <xsl:if test=". = 'http://www.opengis.net/spec/GMLCOV/1.0/conf/gml'">
+			     <xsl:variable name="SupportsGML">true</xsl:variable>
+			  </xsl:if>
+			</xsl:for-each>						  
           		<ctl:call-test name="wcs2:crs-req1">
 	    			<ctl:with-param name="url" select="$url"/>
 	    			<ctl:with-param name="Capabilities" select="$Capabilities"/>
@@ -268,12 +274,12 @@
 	<ctl:test name="wcs2:get-kvp-crs-req6">
    		<ctl:param name="url"/>
 	    	<ctl:param name="Capabilities"/>  
-		<ctl:param name="DescribeCoverage"/>   		
+		<ctl:param name="DescribeCoverage"/>   	
+		<ctl:param name="SupportsGML" />	
     		<ctl:assertion>Req6: Send a valid kvp GetCoverage request to server under test which conforms to the references in the requirement. Check that the response is not an exception..</ctl:assertion>
     		<ctl:code>
 			<xsl:choose>
-				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_coverage-encoding/1.0/conf/coverage-encoding')">
-					
+				<xsl:when test="$SupportsGML = 'true'">				
  						
 					<xsl:variable name="GetCoverage">
 						<ctl:request>
@@ -364,11 +370,12 @@
 	<ctl:test name="wcs2:get-kvp-crs-req7">
    		<ctl:param name="url"/>
 	    	<ctl:param name="Capabilities"/>  
-		<ctl:param name="DescribeCoverage"/>   		
+		<ctl:param name="DescribeCoverage"/>  
+		<ctl:param name="SupportsGML" /> 		
     		<ctl:assertion>Req7: Send a valid kvp GetCoverage request without the subsettingCrs parameter to the service under test. Check that the response coverage is evaluated according to its Native CRS (as provided in the Coverage Description).</ctl:assertion>
     		<ctl:code>
 			<xsl:choose>
-				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_coverage-encoding/1.0/conf/coverage-encoding')">
+				<xsl:when test="$SupportsGML = 'true'">
 					
 					<xsl:variable name="GetCoverage">
 						<ctl:request>
@@ -518,11 +525,12 @@
 	<ctl:test name="wcs2:get-kvp-crs-req8">
    		<ctl:param name="url"/>
 	    	<ctl:param name="Capabilities"/>   
-		<ctl:param name="DescribeCoverage"/>  		
+		<ctl:param name="DescribeCoverage"/> 
+		<ctl:param name="SupportsGML" /> 		
     		<ctl:assertion>Req9: Send resp. valid and invalid kvp GetCoverage requests to  server under test. Check if appropriate valid results or exceptions, resp., are delivered.</ctl:assertion>
     		<ctl:code>
 			<xsl:choose>
-				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_coverage-encoding/1.0/conf/coverage-encoding')">
+				<xsl:when test="$SupportsGML = 'true'">
 
  						
 					<xsl:variable name="GetCoverage">
@@ -676,11 +684,12 @@
 	<ctl:test name="wcs2:get-kvp-crs-req9">
    		<ctl:param name="url"/>
 	    	<ctl:param name="Capabilities"/>   
-		<ctl:param name="DescribeCoverage"/>  		
+		<ctl:param name="DescribeCoverage"/> 
+		<ctl:param name="SupportsGML" /> 		
     		<ctl:assertion>Req9: Send resp. valid and invalid kvp GetCoverage requests with a subsettingCrs parameter to  server under test. Check if appropriate valid results or exceptions, resp., are delivered.</ctl:assertion>
     		<ctl:code>
 			<xsl:choose>
-				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_coverage-encoding/1.0/conf/coverage-encoding')">
+				<xsl:when test="$SupportsGML = 'true'">
 
  						
 					<xsl:variable name="GetCoverage">
@@ -833,11 +842,12 @@
 	<ctl:test name="wcs2:get-kvp-crs-req10">
    		<ctl:param name="url"/>
 	    	<ctl:param name="Capabilities"/>  
-		<ctl:param name="DescribeCoverage"/>   		
+		<ctl:param name="DescribeCoverage"/>   	
+		<ctl:param name="SupportsGML" />	
     		<ctl:assertion>Req10: Send a valid GetCoverage request without the outputCrs parameter to the service under test. Check that the response coverage is provided according to the subsettingCrs parameter value assumed for this request’s evaluation had been provided.</ctl:assertion>
     		<ctl:code>
 			<xsl:choose>
-				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_coverage-encoding/1.0/conf/coverage-encoding')">
+				<xsl:when test="$SupportsGML = 'true'">
 					
 					<xsl:variable name="GetCoverage">
 						<ctl:request>
@@ -989,11 +999,12 @@
 	<ctl:test name="wcs2:get-kvp-crs-req11">
    		<ctl:param name="url"/>
 	    	<ctl:param name="Capabilities"/>   
-		<ctl:param name="DescribeCoverage"/>  		
+		<ctl:param name="DescribeCoverage"/>  	
+		<ctl:param name="SupportsGML" />	
     		<ctl:assertion>Req11: Send resp. valid and invalid kvp GetCoverage requests to  server under test. Check if appropriate valid results or exceptions, resp., are delivered.</ctl:assertion>
     		<ctl:code>
 			<xsl:choose>
-				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_coverage-encoding/1.0/conf/coverage-encoding')">
+				<xsl:when test="$SupportsGML = 'true'">
 
  						
 					<xsl:variable name="GetCoverage">
@@ -1148,11 +1159,12 @@
 	<ctl:test name="wcs2:get-kvp-crs-req12">
    		<ctl:param name="url"/>
 	    	<ctl:param name="Capabilities"/>   
-		<ctl:param name="DescribeCoverage"/>  		
+		<ctl:param name="DescribeCoverage"/>  	
+		<ctl:param name="SupportsGML" />	
     		<ctl:assertion>Req12: Send resp. valid and invalid kvp GetCoverage requests to  server under test. Check if appropriate valid results or exceptions, resp., are delivered.</ctl:assertion>
     		<ctl:code>
 			<xsl:choose>
-				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_coverage-encoding/1.0/conf/coverage-encoding')">
+				<xsl:when test="$SupportsGML = 'true'">
 
  						
 					<xsl:variable name="GetCoverage">
@@ -1306,11 +1318,11 @@
    		<ctl:param name="url"/>
 	    	<ctl:param name="Capabilities"/>   
 		<ctl:param name="DescribeCoverage"/>  		
+		<ctl:param name="SupportsGML" />
     		<ctl:assertion>Req13: The contents of the response to a successful kvp GetCoverage request containing an outputCrs parameter shall have, in the gml:boundedBy element, an srsName value identical to the outputCrs element in the request.</ctl:assertion>
     		<ctl:code>
 			<xsl:choose>
-				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_coverage-encoding/1.0/conf/coverage-encoding')">
-
+				<xsl:when test="$SupportsGML = 'true'">
  						
 					<xsl:variable name="GetCoverage">
 						<ctl:request>
@@ -1403,11 +1415,11 @@
    		<ctl:param name="url"/>
 	    	<ctl:param name="Capabilities"/>   
 		<ctl:param name="DescribeCoverage"/>  		
+		<ctl:param name="SupportsGML" />
     		<ctl:assertion>Req14: For each exception referenced in the requirement: Send an erroneous kvp GetCoverage request to the server under test provoking this exception, as per its definition. Check for proper exception reporting. Pass test if all checks succeed.</ctl:assertion>
     		<ctl:code>
 			<xsl:choose>
-				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_coverage-encoding/1.0/conf/coverage-encoding')">
-
+				<xsl:when test="$SupportsGML = 'true'">
  						
 					<xsl:variable name="GetCoverage">
 						<ctl:request>
@@ -1552,11 +1564,12 @@
 	<ctl:test name="wcs2:get-kvp-crs-req15">
    		<ctl:param name="url"/>
 	    	<ctl:param name="Capabilities"/>  
-		<ctl:param name="DescribeCoverage"/>   		
+		<ctl:param name="DescribeCoverage"/>   	
+		<ctl:param name="SupportsGML" />	
     		<ctl:assertion>Req15: In a GetCoverage request using the GET/KVP protocol, a Crs::subsettingCrs parameter shall be represented as SUBSETTINGCRS=s where s is a URL.</ctl:assertion>
     		<ctl:code>
 			<xsl:choose>
-				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_coverage-encoding/1.0/conf/coverage-encoding')">
+				<xsl:when test="$SupportsGML = 'true'">
 				
  						
 					<xsl:variable name="GetCoverage">
@@ -1632,11 +1645,12 @@
 	<ctl:test name="wcs2:crs-req16">
    		<ctl:param name="url"/>
 	    	<ctl:param name="Capabilities"/>  
-		<ctl:param name="DescribeCoverage"/>   		
+		<ctl:param name="DescribeCoverage"/>   
+		<ctl:param name="SupportsGML" />		
     		<ctl:assertion>Req16: In a GetCoverage request using the GET/KVP protocol, a Crs::outputCrsparameter shall be represented as OUTPUTCRS=s where s is a URL.</ctl:assertion>
     		<ctl:code>
 			<xsl:choose>
-				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_coverage-encoding/1.0/conf/coverage-encoding')">
+				<xsl:when test="$SupportsGML = 'true'">
 				
  						
 					<xsl:variable name="GetCoverage">
@@ -1712,11 +1726,12 @@
 	<ctl:test name="wcs2:crs-req17">
    		<ctl:param name="url"/>
 	    	<ctl:param name="Capabilities"/>  
-		<ctl:param name="DescribeCoverage"/>   		
+		<ctl:param name="DescribeCoverage"/>  
+		<ctl:param name="SupportsGML" /> 		
     		<ctl:assertion>Req17: In a GetCoverage request using the XML/POST protocol, a Crs::GetCoverageCrs parameter shall be represented by a crs::GetCoverageCrs element.</ctl:assertion>
     		<ctl:code>
 			<xsl:choose>
-				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_coverage-encoding/1.0/conf/coverage-encoding')">
+				<xsl:when test="$SupportsGML = 'true'">
 					<xsl:variable name="GetCoverage">
 						<ctl:request>
 							<ctl:url>
@@ -1792,11 +1807,12 @@
 	<ctl:test name="wcs2:crs-req18">
    		<ctl:param name="url"/>
 	    	<ctl:param name="Capabilities"/>  
-		<ctl:param name="DescribeCoverage"/>   		
+		<ctl:param name="DescribeCoverage"/>   	
+		<ctl:param name="SupportsGML" />	
     		<ctl:assertion>Req18: In a GetCoverage request using the SOAP protocol, a Crs::GetCoverageCrs parameter shall be represented by a crs::GetCoverageCrs element.</ctl:assertion>
     		<ctl:code>
 			<xsl:choose>
-				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_coverage-encoding/1.0/conf/coverage-encoding')">
+				<xsl:when test="$SupportsGML = 'true'">
 					<xsl:variable name="GetCoverage">
 						<ctl:soap-request version="1.2" charset="UTF-8">
 							<ctl:url>
@@ -1943,12 +1959,12 @@
 	<ctl:test name="wcs2:get-kvp-crs-req23">
    		<ctl:param name="url"/>
 	    	<ctl:param name="Capabilities"/>  
-		<ctl:param name="DescribeCoverage"/>   		
+		<ctl:param name="DescribeCoverage"/>   	
+		<ctl:param name="SupportsGML" />	
     		<ctl:assertion>Req23: Send valid kvp GetCoverage requests to server under test; check that these results are evaluated properly. </ctl:assertion>
     		<ctl:code>
 			<xsl:choose>
-				<xsl:when test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_coverage-encoding/1.0/conf/coverage-encoding')">
-					
+				<xsl:when test="$SupportsGML = 'true'">
  						
 					<xsl:variable name="GetCoverage">
 						<ctl:request>
