@@ -1,0 +1,14 @@
+
+<ctl:package xmlns:ctl="http://www.occamlab.com/ctl" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ows="http://www.opengis.net/ows/2.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:wcs="http://www.opengis.net/wcs/2.0" xmlns:ctlp="http://www.occamlab.com/te/parsers" xmlns:wcs2="http://www.opengis.net/wcs/2.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<ctl:test name="wcs2:OWSCommon_exception">
+		<ctl:param name="exception"/>
+		<ctl:param name="statusCode"/>
+		<ctl:assertion>OWS common: test HTTP status codes for OGC Exceptions.</ctl:assertion>
+		<ctl:code>
+			<xsl:if test="not(codepoint-equal($statusCode, $exception//status/@code))">
+				<ctl:message>[FAILURE] Standard exception codes should be returned.</ctl:message>
+				<ctl:fail/>
+			</xsl:if>
+		</ctl:code>
+	</ctl:test>
+</ctl:package>
