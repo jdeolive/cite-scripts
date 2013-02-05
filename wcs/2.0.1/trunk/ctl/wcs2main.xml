@@ -3,6 +3,15 @@
 	<!--NOTE: As there is no canonical practice among and within communities dealing with coverages to use one particular protocol none of the protocols specified in WCS extensions is mandatory. In practice, this may lead to a lack of interoperability between client and server implementations. In future user communities might agree eventually to make on particular protocol binding mandatory.We use the GetCapabilities in HTTP Get KVP as a intially starting point-->
 	<ctl:test name="wcs2:main">
 		<ctl:param name="url"/>
+		<ctl:assertion>Prune query parameters if present.</ctl:assertion>
+		<ctl:code>
+			<ctl:call-test name="wcs2:main_test">
+				<ctl:with-param name="url" select="substring-before($url,'?')"/>        
+			</ctl:call-test> 		
+		</ctl:code>
+	</ctl:test>		
+	<ctl:test name="wcs2:main_test">
+		<ctl:param name="url"/>
 		<ctl:assertion>Test the WCS 2.0.</ctl:assertion>
 		<ctl:code>
 			<xsl:variable name="Capabilities">
@@ -26,12 +35,13 @@
 					<ctl:message>[MESSAGE] Test the core and extensions when they are available</ctl:message>
 					<xsl:choose>
 						<xsl:when test="(contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_protocol-binding_soap/1.0') or  contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_protocol-binding_post-xml/1.0') or contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_protocol-binding_get-kvp/1.0'))">
-								<!-- these two bindings will be reactivated after the corrigenda is available
+								
 								<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_protocol-binding_post-xml/1.0')">
 									<ctl:call-test name="wcs2:post-xml-main">
 										<ctl:with-param name="url" select="$url"/>        
 									</ctl:call-test>             
 								</xsl:if>
+								<!-- these binding will be reactivated after the corrigenda is available
 								<xsl:if test="contains(string-join(($Capabilities//*[local-name()='ServiceIdentification']/*[local-name()='Profile']),' '), 'http://www.opengis.net/spec/WCS_protocol-binding_soap/1.0')">
 									<ctl:call-test name="wcs2:soap-main">
 										<ctl:with-param name="url" select="$url"/>        
