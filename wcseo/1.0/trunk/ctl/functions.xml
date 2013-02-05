@@ -75,7 +75,7 @@
 					<xsl:value-of select="$url"/>
 				</ctl:url>
 				<ctl:param name="service">WCS</ctl:param>
-				<ctl:param name="VERSION">2.0.0</ctl:param>           
+				<ctl:param name="VERSION">2.0.1</ctl:param>           
 				<ctl:param name="request">describeeocoverageset</ctl:param>      
 				<ctl:param name="eoid"><xsl:value-of select="$datasets[$index]"/></ctl:param>			
 				<ctl:method>get</ctl:method>

@@ -24,7 +24,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="SERVICE">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="REQUEST">GetCapabilities</ctl:param>
       						<ctlp:XMLValidatingParser>
 	       						<ctlp:schemas>
@@ -102,7 +102,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>
              				<ctlp:XMLValidatingParser>
@@ -139,7 +139,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/>,<xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
              				<ctlp:XMLValidatingParser>
@@ -176,7 +176,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>
              				<ctl:param name="subset">Long,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
@@ -208,7 +208,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>
              				<ctl:param name="subset">phenomenonTime,http://www.opengis.net/def/trs/ISO-8601/0/Gregorian%2BUTC("<xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='TimePeriod']/*[local-name()='endPosition']"/>")</ctl:param>              			
@@ -248,7 +248,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>
              				<ctl:param name="subset">Long,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			

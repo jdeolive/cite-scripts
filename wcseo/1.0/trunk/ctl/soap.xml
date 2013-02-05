@@ -31,7 +31,7 @@
 						    xsi:schemaLocation='http://www.opengis.net/wcs/2.0 wcs/2.0/wcsAll.xsd'
 						    service="WCS">
 						    <ows:AcceptVersions>
-							<ows:Version>2.0.0</ows:Version>
+							<ows:Version>2.0.1</ows:Version>
 						    </ows:AcceptVersions>
 						</wcs:GetCapabilities>
 					</ctl:body>
@@ -115,7 +115,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary']/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						</wcseo:DescribeEOCoverageSet>
     					</ctl:body>
@@ -153,7 +153,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary']/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						</wcseo:DescribeEOCoverageSet>
 						<wcseo:DescribeEOCoverageSet
@@ -161,7 +161,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary']/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						</wcseo:DescribeEOCoverageSet>						
     					</ctl:body>
@@ -228,7 +228,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary']/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						</wcseo:DescribeEOCoverageSet>						
     					</ctl:body>
@@ -238,7 +238,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary']/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						</wcseo:DescribeEOCoverageSet>						
     					</ctl:body>   					
@@ -312,7 +312,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary']/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						</wcseo:DescribeEOCoverageSet>
     					</ctl:body>

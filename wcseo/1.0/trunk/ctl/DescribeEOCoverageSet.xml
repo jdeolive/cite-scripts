@@ -117,7 +117,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>             				
              				<ctlp:XMLValidatingParser>
@@ -146,7 +146,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctlp:XMLValidatingParser>
 	        				<ctlp:schemas>
@@ -186,7 +186,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary']/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						</wcseo:DescribeEOCoverageSet>
     					</ctl:body>
@@ -246,7 +246,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>             				
              				<ctl:param name="Sections">CoverageDescriptions</ctl:param>
@@ -276,7 +276,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>             				
              				<ctl:param name="Sections">DatasetSeriesDescriptions</ctl:param>
@@ -306,7 +306,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>             				
              				<ctl:param name="Sections">All</ctl:param>
@@ -336,7 +336,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>             				
              				<ctl:param name="Sections">InvalidSections</ctl:param>
@@ -378,7 +378,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary']/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						        <wcseo:Sections><wcseo:Section>CoverageDescriptions</wcseo:Section></wcseo:Sections>
 						</wcseo:DescribeEOCoverageSet>
@@ -418,7 +418,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary']/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						        <wcseo:Sections><wcseo:Section>DatasetSeriesDescriptions</wcseo:Section></wcseo:Sections>
 						</wcseo:DescribeEOCoverageSet>
@@ -458,7 +458,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary']/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						        <wcseo:Sections><wcseo:Section>All</wcseo:Section></wcseo:Sections>
 						</wcseo:DescribeEOCoverageSet>
@@ -497,7 +497,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary']/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						        <wcseo:Sections><wcseo:Section>InvalidSections</wcseo:Section></wcseo:Sections>
 						</wcseo:DescribeEOCoverageSet>
@@ -566,7 +566,7 @@
 								</ctl:url>
 								<ctl:method>get</ctl:method>
 								<ctl:param name="service">WCS</ctl:param>
-								<ctl:param name="VERSION">2.0.0</ctl:param>
+								<ctl:param name="VERSION">2.0.1</ctl:param>
 								<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
 								<ctl:param name="EOID"><xsl:value-of select="."/></ctl:param>             				
 								<ctlp:XMLValidatingParser>
@@ -606,7 +606,7 @@
 								</ctl:url>
 								<ctl:method>get</ctl:method>
 								<ctl:param name="service">WCS</ctl:param>
-								<ctl:param name="VERSION">2.0.0</ctl:param>
+								<ctl:param name="VERSION">2.0.1</ctl:param>
 								<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
 								<ctl:param name="EOID"><xsl:value-of select="."/></ctl:param>             				
 								<ctlp:XMLValidatingParser>
@@ -658,7 +658,7 @@
 									    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 									    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 									    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-									    service="WCS" version="2.0.0" count="100">
+									    service="WCS" version="2.0.1" count="100">
 									    <wcseo:eoId><xsl:value-of select="."/></wcseo:eoId>
 									</wcseo:DescribeEOCoverageSet>
 								</ctl:body>
@@ -707,7 +707,7 @@
 									    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 									    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 									    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-									    service="WCS" version="2.0.0" count="100">
+									    service="WCS" version="2.0.1" count="100">
 									    <wcseo:eoId><xsl:value-of select="."/></wcseo:eoId>
 									</wcseo:DescribeEOCoverageSet>
 								</ctl:body>
@@ -772,7 +772,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
              				<ctl:param name="subset">Long,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
@@ -804,7 +804,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
              				<ctl:param name="subset">phenomenonTime,http://www.opengis.net/def/trs/ISO-8601/0/Gregorian%2BUTC("<xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='TimePeriod']/*[local-name()='endPosition']"/>")</ctl:param>              			
@@ -835,7 +835,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
              				<ctl:param name="subset">phenomenonTime,http://www.opengis.net/def/trs/ISO-8601/0/Gregorian%2BUTC("<xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='TimePeriod']/*[local-name()='endPosition']"/>")</ctl:param>              			
@@ -878,7 +878,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						    <wcseo:containment>contains</wcseo:containment>
 						    <wcseo:Sections>
@@ -936,7 +936,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						    <wcseo:containment>overlaps</wcseo:containment>
 						    <wcseo:Sections>
@@ -983,7 +983,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						    <wcseo:containment>InvalidContainment</wcseo:containment>
 						    <wcseo:Sections>
@@ -1053,7 +1053,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
              				<ctl:param name="subset">Long,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
@@ -1085,7 +1085,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
                				<ctl:param name="subset">phenomenonTime,http://www.opengis.net/def/trs/ISO-8601/0/Gregorian%2BUTC("<xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='TimePeriod']/*[local-name()='beginPosition']"/>")</ctl:param>              			             				
@@ -1115,7 +1115,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
           				<ctl:param name="subset">Long,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[2])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[2])"/>)</ctl:param>              			
@@ -1158,7 +1158,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						    
 						    <wcseo:Sections>
@@ -1215,7 +1215,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						    
 						    <wcseo:Sections>
@@ -1262,7 +1262,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						    
 						    <wcseo:Sections>
@@ -1341,7 +1341,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
              				<ctl:param name="subset">Long,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
@@ -1373,7 +1373,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
              				<ctl:param name="subset">Long,http://spatialreference.org/ref/epsg/4324(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
@@ -1417,7 +1417,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						
 						    <wcs:DimensionTrim>
@@ -1472,7 +1472,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						
 						    <wcs:DimensionTrim>
@@ -1549,7 +1549,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/>,<xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
              				<ctlp:XMLValidatingParser>
@@ -1590,7 +1590,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary']/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						</wcseo:DescribeEOCoverageSet>
     					</ctl:body>
@@ -1657,7 +1657,7 @@
 								</ctl:url>
 								<ctl:method>get</ctl:method>
 								<ctl:param name="service">WCS</ctl:param>
-								<ctl:param name="VERSION">2.0.0</ctl:param>
+								<ctl:param name="VERSION">2.0.1</ctl:param>
 								<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
 								<ctl:param name="EOID"><xsl:value-of select="."/></ctl:param>             				
 								<ctlp:XMLValidatingParser>
@@ -1709,7 +1709,7 @@
 									    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 									    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 									    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-									    service="WCS" version="2.0.0" count="100">
+									    service="WCS" version="2.0.1" count="100">
 									    <wcseo:eoId><xsl:value-of select="."/></wcseo:eoId>
 									</wcseo:DescribeEOCoverageSet>
 								</ctl:body>
@@ -1773,7 +1773,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>             				
              				<ctl:param name="Sections">CoverageDescriptions</ctl:param>
@@ -1804,7 +1804,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>             				
              				<ctl:param name="Sections">All</ctl:param>
@@ -1834,7 +1834,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>             				
              				<ctl:param name="Sections">InvalidSections</ctl:param>
@@ -1876,7 +1876,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></wcseo:eoId>
 						    <wcseo:Sections><wcseo:Section>CoverageDescriptions</wcseo:Section></wcseo:Sections>
 						</wcseo:DescribeEOCoverageSet>
@@ -1917,7 +1917,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></wcseo:eoId>
 						    <wcseo:Sections><wcseo:Section>All</wcseo:Section></wcseo:Sections>
 						</wcseo:DescribeEOCoverageSet>
@@ -1957,7 +1957,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></wcseo:eoId>
 						    <wcseo:Sections><wcseo:Section>InvalidSections</wcseo:Section></wcseo:Sections>
 						</wcseo:DescribeEOCoverageSet>
@@ -2019,7 +2019,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
              				<ctl:param name="Sections">DatasetSeriesDescriptions</ctl:param>
@@ -2050,7 +2050,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
              				<ctl:param name="Sections">All</ctl:param>
@@ -2080,7 +2080,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
              				<ctl:param name="Sections">InvalidSections</ctl:param>
@@ -2122,7 +2122,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						    <wcseo:Sections><wcseo:Section>DatasetSeriesDescriptions</wcseo:Section></wcseo:Sections>
 						</wcseo:DescribeEOCoverageSet>
@@ -2163,7 +2163,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						    <wcseo:Sections><wcseo:Section>All</wcseo:Section></wcseo:Sections>
 						</wcseo:DescribeEOCoverageSet>
@@ -2202,7 +2202,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						    <wcseo:Sections><wcseo:Section>InvalidSections</wcseo:Section></wcseo:Sections>
 						</wcseo:DescribeEOCoverageSet>
@@ -2271,7 +2271,7 @@
 								</ctl:url>
 								<ctl:method>get</ctl:method>
 								<ctl:param name="service">WCS</ctl:param>
-								<ctl:param name="VERSION">2.0.0</ctl:param>
+								<ctl:param name="VERSION">2.0.1</ctl:param>
 								<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
 								<ctl:param name="EOID"><xsl:value-of select="."/></ctl:param>  
 								<ctl:param name="Sections">CoverageDescription</ctl:param>							
@@ -2324,7 +2324,7 @@
 									    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 									    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 									    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-									    service="WCS" version="2.0.0" count="100">
+									    service="WCS" version="2.0.1" count="100">
 									    <wcseo:eoId><xsl:value-of select="."/></wcseo:eoId>
 									    <wcseo:Sections><wcseo:Section>CoverageDescription</wcseo:Section></wcseo:Sections>
 									</wcseo:DescribeEOCoverageSet>
@@ -2389,7 +2389,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
                       			<ctl:param name="subset">Long,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
@@ -2444,7 +2444,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						    <wcseo:containment>contains</wcseo:containment>
 						    <wcseo:Sections>
@@ -2529,7 +2529,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
             				<ctl:param name="subset">phenomenonTime,http://www.opengis.net/def/trs/ISO-8601/0/Gregorian%2BUTC("<xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='TimePeriod']/*[local-name()='beginPosition']"/>","<xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='TimePeriod']/*[local-name()='endPosition']"/>")</ctl:param>              			             				
@@ -2579,7 +2579,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></wcseo:eoId>
 						    <wcseo:containment>contains</wcseo:containment>
 						    <wcseo:Sections>
@@ -2655,7 +2655,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
              				<ctl:param name="subset">Long,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
@@ -2687,7 +2687,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='DatasetSeriesSummary'][1]/*[local-name()='DatasetSeriesId'][1]"/></ctl:param>             				
             				<ctlp:XMLValidatingParser>
@@ -2731,7 +2731,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></wcseo:eoId>
 						    <wcseo:Sections>
 							<wcseo:Section>All</wcseo:Section>
@@ -2787,7 +2787,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></wcseo:eoId>
 						</wcseo:DescribeEOCoverageSet>
     					</ctl:body>
@@ -2852,7 +2852,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>             				
              				<ctl:param name="subset">Long,http://www.opengis.net/def/crs/EPSG/0/4326(<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='LowerCorner']),' ')[1])"/>,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
@@ -2884,7 +2884,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="service">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
            				<ctl:param name="EOID"><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></ctl:param>             				
              				<ctl:param name="subset">Long,http://www.opengis.net/def/crs/EPSG/0/4326(*,<xsl:value-of select="number(tokenize(normalize-space($Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='WGS84BoundingBox']/*[local-name()='UpperCorner']),' ')[1])"/>)</ctl:param>              			
@@ -2931,7 +2931,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></wcseo:eoId>
 						    <wcseo:Sections>
 							<wcseo:Section>All</wcseo:Section>
@@ -2987,7 +2987,7 @@
 						    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 						    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-						    service="WCS" version="2.0.0" count="100">
+						    service="WCS" version="2.0.1" count="100">
 						    <wcseo:eoId><xsl:value-of select="$Capabilities//*[local-name()='Contents'][1]/*[local-name()='CoverageSummary'][1]/*[local-name()='CoverageId'][1]"/></wcseo:eoId>
 						    <wcseo:Sections>
 							<wcseo:Section>All</wcseo:Section>
@@ -3072,7 +3072,7 @@
 							</ctl:url>
 							<ctl:method>get</ctl:method>
 							<ctl:param name="service">WCS</ctl:param>
-							<ctl:param name="VERSION">2.0.0</ctl:param>
+							<ctl:param name="VERSION">2.0.1</ctl:param>
 							<ctl:param name="request">DescribeEOCoverageSet</ctl:param>
 							<ctl:param name="eoId"><xsl:value-of select="string-join($Capabilities//*[local-name()='Contents']/*[local-name()='CoverageSummary']/*[local-name()='CoverageId'], ', ')"/></ctl:param>             				
 							<ctlp:XMLValidatingParser>
@@ -3124,7 +3124,7 @@
 								    xmlns:wcs="http://www.opengis.net/wcs/2.0"
 								    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 								    xsi:schemaLocation="http://www.opengis.net/wcseo/1.0 wcseo/1.0/wcsEOAll.xsd"
-								    service="WCS" version="2.0.0" count="100">
+								    service="WCS" version="2.0.1" count="100">
 								    <wcseo:eoId><xsl:value-of select="string-join($Capabilities//*[local-name()='Contents']/*[local-name()='CoverageSummary']/*[local-name()='CoverageId'], ', ')"/></wcseo:eoId>
 								</wcseo:DescribeEOCoverageSet>
 							</ctl:body>

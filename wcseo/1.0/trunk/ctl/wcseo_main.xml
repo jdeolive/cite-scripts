@@ -25,7 +25,7 @@
           				</ctl:url>
           				<ctl:method>get</ctl:method>
           				<ctl:param name="SERVICE">WCS</ctl:param>
-          				<ctl:param name="VERSION">2.0.0</ctl:param>
+          				<ctl:param name="VERSION">2.0.1</ctl:param>
           				<ctl:param name="REQUEST">GetCapabilities</ctl:param>
       						<ctlp:XMLValidatingParser>
 	       						<ctlp:schemas>

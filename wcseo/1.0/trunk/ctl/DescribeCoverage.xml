@@ -69,7 +69,7 @@
 								</ctl:url>
 								<ctl:method>get</ctl:method>
 								<ctl:param name="service">WCS</ctl:param>
-								<ctl:param name="VERSION">2.0.0</ctl:param>
+								<ctl:param name="VERSION">2.0.1</ctl:param>
 								<ctl:param name="request">DescribeCoverage</ctl:param>
 								<ctl:param name="CoverageId"><xsl:value-of select="."/></ctl:param>             				
 								<ctlp:XMLValidatingParser>
@@ -119,7 +119,7 @@
 										xmlns:wcs='http://www.opengis.net/wcs/2.0'
 										xmlns:gml='http://www.opengis.net/gml/3.2'
 										xsi:schemaLocation='http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd'
-										service="WCS" version="2.0.0"><wcs:CoverageId><xsl:value-of select="."/></wcs:CoverageId></wcs:DescribeCoverage>								
+										service="WCS" version="2.0.1"><wcs:CoverageId><xsl:value-of select="."/></wcs:CoverageId></wcs:DescribeCoverage>								
 
 								</ctl:body>
 
@@ -189,7 +189,7 @@
 							</ctl:url>
 							<ctl:method>get</ctl:method>
 							<ctl:param name="service">WCS</ctl:param>
-							<ctl:param name="VERSION">2.0.0</ctl:param>
+							<ctl:param name="VERSION">2.0.1</ctl:param>
 							<ctl:param name="request">DescribeCoverage</ctl:param>
 							<ctl:param name="CoverageId"><xsl:value-of select="string-join($Capabilities//*[local-name()='Contents']/*[local-name()='CoverageSummary']/*[local-name()='CoverageId'], ',')"/></ctl:param>             				
 							<ctlp:XMLValidatingParser>
@@ -239,7 +239,7 @@
 										xmlns:wcs='http://www.opengis.net/wcs/2.0'
 										xmlns:gml='http://www.opengis.net/gml/3.2'
 										xsi:schemaLocation='http://www.opengis.net/wcs/2.0 ../../wcsAll.xsd'
-										service="WCS" version="2.0.0">
+										service="WCS" version="2.0.1">
 											<xsl:for-each select="$Capabilities//*[local-name()='CoverageSummary']/*[local-name()='CoverageId']">
 												<wcs:CoverageId><xsl:value-of select="."/></wcs:CoverageId>
 											</xsl:for-each>										
