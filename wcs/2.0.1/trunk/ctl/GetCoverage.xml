@@ -2457,6 +2457,10 @@
 					</parsers:HTTPParser>
 				</ctl:request>
 			</xsl:variable>
+			<ctl:call-test name="wcs2:OWSCommon_exception">
+				<ctl:with-param name="exception" select="$GetCoverage1"/>
+                                <ctl:with-param name="statusCode" select="404"/>
+			</ctl:call-test>			
 			<xsl:if test="not(not(empty($GetCoverage1//*[local-name()='Exception'])) and $GetCoverage1//@*[local-name()='exceptionCode']='InvalidAxisLabel') ">
 				<ctl:message>[FAILURE] the result should contain a 'InvalidAxisLabel' Exception.</ctl:message>
 				<ctl:fail/>
@@ -2488,6 +2492,10 @@
 					</parsers:HTTPParser>
 				</ctl:request>
 			</xsl:variable>
+			<ctl:call-test name="wcs2:OWSCommon_exception">
+				<ctl:with-param name="exception" select="$GetCoverage2"/>
+                                <ctl:with-param name="statusCode" select="404"/>
+			</ctl:call-test>			
 			<xsl:if test="not(not(empty($GetCoverage2//*[local-name()='Exception'])) and $GetCoverage2//@*[local-name()='exceptionCode']='InvalidAxisLabel') ">
 				<ctl:message>[FAILURE] the result should contain a 'InvalidAxisLabel' Exception.</ctl:message>
 				<ctl:fail/>
@@ -2517,6 +2525,10 @@
 					</parsers:HTTPParser>
 				</ctl:request>
 			</xsl:variable>
+			<ctl:call-test name="wcs2:OWSCommon_exception">
+				<ctl:with-param name="exception" select="$GetCoverage3"/>
+                                <ctl:with-param name="statusCode" select="404"/>
+			</ctl:call-test>			
 			<xsl:if test="not(not(empty($GetCoverage3//*[local-name()='Exception'])) and $GetCoverage3//@*[local-name()='exceptionCode']='InvalidSubsetting') ">
 				<ctl:message>[FAILURE] the result should contain a 'InvalidSubsetting' Exception.</ctl:message>
 				<ctl:fail/>
