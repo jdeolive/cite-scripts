@@ -2396,7 +2396,7 @@
 					<ctl:param name="request">GetCoverage</ctl:param>
 					<ctl:param name="coverageid">coverage_bogus</ctl:param>
 					<parsers:HTTPParser>
-						<parsers:parse mime="application/gml+xml">
+						<parsers:parse>
 							<parsers:XMLValidatingParser>
 								<parsers:schemas>
 									<parsers:schema type="resource">wcs/2.0/wcsAll.xsd</parsers:schema>
@@ -2447,7 +2447,7 @@
 					</ctl:param>
 					<ctl:param name="subset">dimension_bogus(<xsl:value-of select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1])"/>)</ctl:param>
 					<parsers:HTTPParser>
-						<parsers:parse mime="application/gml+xml">
+						<parsers:parse>
 							<parsers:XMLValidatingParser>
 								<parsers:schemas>
 									<parsers:schema type="resource">wcs/2.0/wcsAll.xsd</parsers:schema>
@@ -2482,7 +2482,7 @@
 					<ctl:param name="subset">
 						<xsl:value-of select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[1]"/>(<xsl:value-of select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1])"/>,<xsl:value-of select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1])"/>)</ctl:param>
 					<parsers:HTTPParser>
-						<parsers:parse mime="application/gml+xml">
+						<parsers:parse>
 							<parsers:XMLValidatingParser>
 								<parsers:schemas>
 									<parsers:schema type="resource">wcs/2.0/wcsAll.xsd</parsers:schema>
@@ -2515,7 +2515,7 @@
 					<ctl:param name="subset">
 						<xsl:value-of select="tokenize(normalize-space($DescribeCoverage //*[local-name()='CoverageDescription'][1]//*[local-name()='boundedBy']/*[local-name()='Envelope'][1][@axisLabels]/@axisLabels),' ')[1]"/>(<xsl:value-of select="number(tokenize(normalize-space($DescribeCoverage//*[local-name()='CoverageDescription'][1]/*[local-name()='boundedBy']/*[local-name()='Envelope'][1]/*[local-name()='lowerCorner'][1]),' ')[1]) -1"/>)</ctl:param>
 					<parsers:HTTPParser>
-						<parsers:parse mime="application/gml+xml">
+						<parsers:parse>
 							<parsers:XMLValidatingParser>
 								<parsers:schemas>
 									<parsers:schema type="resource">wcs/2.0/wcsAll.xsd</parsers:schema>
