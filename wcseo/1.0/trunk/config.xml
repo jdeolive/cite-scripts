@@ -1,23 +1,26 @@
-<config>
-	<organization>
-		<name>OGC</name>
-	</organization>
-	<standard>
-		<name>WCS-EO</name>
-	</standard>
-	<version>
-		<name>1.0</name>
-	</version>	
-	<revision>
-		<name>r2</name>
-	</revision>	
-	<suite>
-		<namespace-uri>http://www.opengis.net/wcseo/1.0</namespace-uri>
-		<prefix>wcseo</prefix>
-		<local-name>suite</local-name>
-	</suite>
-	<source>ctl</source>
-	<resources>resources</resources>
-	<web>web</web>
-</config>
-
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Add this entry to TE_BASE/config.xml (//organization/standard) -->
+<organization>
+  <name>OGC</name>
+  <standard>
+    <name>Web Coverage Service - Earth Observation Profile</name>
+    <version>
+      <name>1.0 (pending)</name>
+      <suite>
+        <namespace-uri>http://www.opengis.net/wcseo/1.0</namespace-uri>
+        <prefix>wcseo</prefix>
+        <local-name>suite</local-name>
+        <title>WCS-EO 1.0 Conformance Test Suite</title>
+        <description>Checks conformance to OGC 10-140.</description>
+      </suite>
+      <revision>
+        <name>r2</name>
+        <sources>
+          <source>wcseo/1.0/ctl</source>
+        </sources>
+        <resources>wcseo/1.0/resources</resources>
+        <webdir>wcseo/1.0/web</webdir>
+      </revision>
+    </version>
+  </standard>
+</organization>
